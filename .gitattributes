@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+backend/backend/settings.py merge=ours
+backend/backend/gunicorn.conf.py merge=ours
+backend/apps/ig/instabot/* merge=ours
+**/migrations/** merge=ours
+.gitattributes merge=ours

@@ -1,0 +1,55 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+django-jazzmin = "*"
+djangorestframework = "*"
+gunicorn = "*"
+whitenoise = "==5.0"
+dj-database-url = "*"
+psycopg2-binary = "*"
+python-dotenv = "*"
+django-extensions = "*"
+django-simpleui = "*"
+celery = "*"
+redis = "*"
+pillow = "*"
+django-ltree = "*"
+django-embed-video = "*"
+python-telegram-bot = "*"
+django-filter = "*"
+django-celery-email = "*"
+cryptography = "*"
+django-phonenumber-field = {extras = ["phonenumbers"],version = "*"}
+drf-recaptcha = "*"
+django-bulk-admin = {editable = true, git = "https://github.com/icrazymob/django_bulk_admin@master"}
+django-ckeditor = "*"
+python-telegram-logger = "*"
+django-ordered-model = "*"
+django-anymail = {extras = ["sendinblue"],version = "*"}
+instabot = "*"
+jet-django = "*"
+django-adminlte2 = "*"
+django-related-admin = "*"
+coinbase-commerce = "*"
+pycld2 = "*"
+drf-api-tracking = "==1.8.0"
+django-admin-sortable2 = "*"
+django-admin-tools = "*"
+django-yarnpkg = "*"
+django-recurrence = "*"
+html-sanitizer = "*"
+django-paranoid = "*"
+django-field-history = "*"
+djoser = "*"
+web3 = "*"
+openpyxl = "*"
+
+[dev-packages]
+flake8 = "*"
+
+[requires]
+python_version = "3.11"

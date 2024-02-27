@@ -1,0 +1,72 @@
+//
+// Nav
+//
+
+// Line tabs
+.nav-line-tabs {
+
+
+	.nav-item {
+		margin-bottom: -1px;
+
+		// Base link
+		.nav-link {
+			color: var(--kt-gray-500);
+			border: 0;
+			border-bottom: 1px solid transparent;
+			transition: $transition-link;
+			padding: 18px 0;
+			margin: 0 1rem;
+			font-weight: 400;
+		}
+
+		// First Item
+		&:first-child {
+			.nav-link {
+				margin-left: 0;
+			}
+		}
+
+		// Last Item
+		&:last-child {
+			.nav-link {
+				margin-right: 0;
+			}
+		}
+	}
+
+	// Active & Hover States
+	.nav-item .nav-link.active,
+  	.nav-item.show .nav-link,
+	.nav-item .nav-link:hover:not(.disabled) {
+		// background-color: transparent;
+		// border: -1;
+		// position: relative;
+		// border-bottom: 0px solid var(--kt-primary);
+		transition: $transition-link;
+		color: white !important;
+
+			border-image-slice: 1;
+			border-image-source: linear-gradient(45deg, theme('colors.accent.green') 0%, theme('colors.accent.green') 100%);
+  	}
+
+	// 2x Line
+	&.nav-line-tabs-2x {
+		border-bottom-width: 2px;
+
+		.nav-item {
+			margin-bottom: -2px;
+
+			.nav-link {
+				border-bottom-width: 2px;
+			}
+		}
+
+		// Active & Hover States
+		.nav-item .nav-link.active,
+	  	.nav-item.show .nav-link,
+		.nav-item .nav-link:hover:not(.disabled) {
+			border-bottom-width: 2px;
+		}
+	}
+}
