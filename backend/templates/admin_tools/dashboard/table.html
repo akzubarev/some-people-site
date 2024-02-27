@@ -1,0 +1,14 @@
+{% extends "admin_tools/dashboard/module.html" %}
+{% block module_content %}
+<table>
+	{% for tr in module.data %}
+	<tr>
+		{% for td in tr %}
+		<td>
+			{{ td }}
+		</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

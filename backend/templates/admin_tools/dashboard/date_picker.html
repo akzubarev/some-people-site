@@ -1,0 +1,20 @@
+{% extends "admin_tools/dashboard/module.html" %}
+{% load static %}
+{% block module_content %}
+<script type="text/javascript" src='{% static 'air-datepicker/air-datepicker.js' %}'></script>
+<link rel="stylesheet" href="{% static 'air-datepicker/air-datepicker.css' %}">
+<form action="">
+	<input id="datePicker-{{module.id}}" name="date-range"/>
+	<button>Фильтр</button>
+</form>
+
+<script>
+
+new AirDatepicker('#datePicker-{{module.id}}', {
+	range: true,
+	dateFormat: 'yyyy-MM-dd',
+	selectedDates: (new URL(window.location.href).searchParams.get('date-range')||'').split(', ')
+    // locale: localeEn
+})
+</script>
+{% endblock %}

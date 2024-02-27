@@ -1,0 +1,17 @@
+//
+// Input group
+//
+
+.input-group-text {
+	color: var(--kt-input-group-addon-color);
+	background-color: var(--kt-input-group-addon-bg);
+	border: $input-border-width solid var(--kt-input-group-addon-border-color);
+}
+
+.input-error-message {
+  @apply
+    px-1 pt-[2px]
+    bg-[--kt-input-solid-bg] rounded-sm text-xs text-red-500 leading-3
+    absolute -top-[7px] left-[15px]
+}
+

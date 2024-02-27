@@ -1,0 +1,166 @@
+version: "3.3"
+name: pintopay-prod
+
+
+networks:
+  default-tier:
+    driver: bridge
+
+
+x-backend-base: &backend_base
+  image: pintopay.dev.backend
+  restart: always
+  build:
+    context: ..
+    dockerfile: ./docker/images/backend.Dockerfile
+  env_file: ../backend/.env
+  volumes:
+    - ../backend:/app
+  networks:
+    - default-tier
+
+x-frontend-base: &frontend_base
+  image: pintopay.dev.frontend
+  restart: always
+  build:
+    context: ..
+    dockerfile: ./docker/images/frontend.dev.Dockerfile
+  volumes:
+    - ../frontend:/app/
+  networks:
+    - default-tier
+
+x-container-user: &container_user
+  user: "1018:1018"
+  group_add:
+    - root
+
+
+services:
+
+  ########
+  # CORE #
+  ########
+
+  postgresql:
+    <<: [ *container_user ]
+    image: 'bitnami/postgresql:15'
+    restart: always
+    env_file: ../backend/.env
+    # ports:
+    #   - "8432:5432"
+    networks:
+      - default-tier
+    volumes:
+      - ./postgres/data:/bitnami/postgresql/
+      - ./postgres/initdb:/docker-entrypoint-initdb.d/
+
+  # redis:
+  #   restart: always
+  #   image: "bitnami/redis:latest"
+  #   command: redis-server
+  #       --loglevel debug
+  #       --bind 0.0.0.0
+  #       --port 6379
+  #       --rename-command CONFIG hashrconfig
+  #       --maxmemory 2gb
+  #       --maxmemory-policy allkeys-lru
+  #       --save ""
+  #   networks:
+  #     - rezidual-tier
+
+
+  ##############
+  # INTERFACES #
+  ##############
+
+  interface.api:
+    <<: [ *backend_base, *container_user ]
+    command:
+      - |
+        python manage.py runserver 0:8000
+    ports:
+      - "8101:8000"
+
+
+  ###########
+  # DAEMONS #
+  ###########
+
+  daemon.cache_updater:
+    <<: [ *backend_base ]
+    depends_on:
+      - daemon.echoip
+    command: python daemons/cache_updater/entrypoint.py
+
+  bot:
+    <<: [ *backend_base ]
+    restart: always
+    command:
+      - |
+        python apps/notifications/bot/bot.py
+
+  daemon_events_mailing:
+    <<: [ *backend_base ]
+    restart: always
+    command:
+      - |
+        python apps/events/daemons/daemon_events_mailing.py
+
+  daemon_send_first:
+    <<: [ *backend_base ]
+    restart: always
+    command:
+      - |
+        python apps/notifications/daemons/daemon_send_first.py
+
+  transaction_complete:
+    <<: [ *backend_base ]
+    restart: always
+    command:
+      - |
+        python apps/wallet/daemons/transaction_complete.py
+
+  coinix_payouts:
+    <<: [ *backend_base ]
+    restart: always
+    command:
+      - |
+        python apps/wallet/daemons/coinix_payouts.py
+
+  daemon.echoip:
+    image: mpolden/echoip
+    restart: always
+    ports:
+      - "7778:8080"
+    volumes:
+      - ./geolite_db:/opt/geolite/
+    networks:
+      - default-tier
+    command: '-a /opt/geolite/GeoLite2-ASN.mmdb -c /opt/geolite/GeoLite2-City.mmdb -f /opt/geolite/GeoLite2-Country.mmdb'
+
+
+  ############
+  # BUILDERS #
+  ############
+
+  builder.frontend:
+    <<: [ *frontend_base, *container_user ]
+    restart: "no"
+    profiles:
+      - build
+    command:
+      - |
+        # yarn
+        yarn build
+        rm -rf dist
+        mv dist_tmp dist
+
+  builder.staticfiles:
+    <<: [ *backend_base, *container_user ]
+    restart: "no"
+    profiles:
+      - build
+    command:
+      - |
+        python manage.py collectstatic

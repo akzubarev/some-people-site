@@ -1,0 +1,50 @@
+.TinyImageUploader
+  position: relative
+  z-index: 1
+
+  overflow: hidden
+  height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  cursor: pointer
+
+  &-Image
+    background-size: cover
+
+  &-Icon,
+  &-Image,
+  &-Input,
+  &-Placeholder
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+
+  &-Icon
+    z-index: 2
+
+  &-Image,
+  &-Input
+    z-index: -1
+
+  &-Placeholder
+    z-index: 1
+    background: var(--kt-input-solid-bg)
+
+  &_WithIcon
+    .TinyImageUploader
+      &-Icon
+        width: 50%
+        margin: auto
+        background: url(../../assets/images/icons/common/camera.svg) 50% no-repeat
+
+  &_Loaded
+    .TinyImageUploader
+      &-Image
+        z-index: 1
+
+      &-Icon,
+      &-Placeholder
+        z-index: -1
