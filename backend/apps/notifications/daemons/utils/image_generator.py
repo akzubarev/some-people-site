@@ -12,7 +12,7 @@ palette = {
     "secondary": (255, 255, 255, 178),
     "red": (255, 0, 0),
 }
-default_font_path = 'backend/templates/static/SuisseIntl-Regular.otf'
+default_font_path = 'config/templates/static/SuisseIntl-Regular.otf'
 fonts = {
     "xxs": 65,
     "xs": 70,
@@ -52,7 +52,7 @@ def to_coords(
     return coords
 
 
-def load_image(url, default="backend/templates/static/default.png"):
+def load_image(url, default="config/templates/static/default.png"):
     try:
         path = os.path.join(settings.BASE_DIR, url)
         if os.path.exists(path):
@@ -323,7 +323,7 @@ def get_locale(
 
 
 def make_image(
-        user, text, background_path='backend/templates/static/blue.png',
+        user, text, background_path='config/templates/static/blue.png',
         background_size=(2048, 2048), avatar_size=(760, 760),
         avatar_coords=None,  # (x, y)
         as_bytes=True
@@ -344,7 +344,7 @@ def make_image(
 
     # add watermark
     watermark_image = load_image(
-        f"backend/templates/static/watermark.png").resize(
+        f"config/templates/static/watermark.png").resize(
         (735, 90), Image.Resampling.LANCZOS
     )
     paste_rel(image, watermark_image, (75, 0.055))

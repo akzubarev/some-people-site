@@ -9,7 +9,7 @@
          class="w-full m-auto min-h-screen h-full relative bg-[#404B5F]">
         <img class="absolute ml-2 mt-2 h-22 w-22 z-10 opacity-75"
              :src="require('@/assets/images/logos/moth.svg')"/>
-      <Header @asideToggle="openAside" class="absolute p-3 mt-10 z-20"/>
+      <Header @asideToggle="openAside"/>
       <router-view/>
     </div>
   </div>

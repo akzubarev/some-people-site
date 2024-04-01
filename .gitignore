@@ -1,6 +1,6 @@
 #dev
-# backend/apps/**/migrations/**
-# backend/apps.archive/**/migrations/**
+# config/apps/**/migrations/**
+# config/apps.archive/**/migrations/**
 # !**/migrations
 # !**/migrations/__init__.py
 

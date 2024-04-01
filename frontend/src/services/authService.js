@@ -38,7 +38,6 @@ export default {
         return await request.post(`/api/users/resend_activation/`, payload)
     },
     async register(payload) {
-        console.log(payload)
         return await request.post(`/api/users/`, payload)
     },
     async sendPassReset(payload) {

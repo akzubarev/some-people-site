@@ -19,6 +19,7 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
     def list(self, request, *args, **kwargs):
         game_alias = request.GET.get("game_alias", None)
+        user_id = request.GET.get("user_id")
         queryset = self.get_queryset()
         if game_alias is not None:
             queryset = queryset.filter(game__alias=game_alias)

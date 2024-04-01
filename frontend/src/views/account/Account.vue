@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card mt-48">
     <div class="card-header !pb-0">
       <div class="card-title">
         {{ $t("common.settings") }}

@@ -5,15 +5,14 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-from ..models import Notification
-from ..serializers import NotificationSerializer
-from ..serializers.telegram_serializer import \
-    TelegramSerializer
+from apps.notifications.models import Notification
+from apps.notifications.serializers import NotificationSerializer
 
 
 class IsOwnerFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         return queryset.filter(user=request.user)
+
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 50
@@ -39,13 +38,13 @@ class NotificationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
             viewed=True
         )
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    @action(methods=["post"], detail=False, permission_classes=[AllowAny])
-    def save_settings(self, request, *args, **kwargs):
-        tg = request.user.telegram
-        serializer = TelegramSerializer(tg, data={"settings": request.data})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    #
+    # @action(methods=["post"], detail=False, permission_classes=[AllowAny])
+    # def save_settings(self, request, *args, **kwargs):
+    #     tg = request.user.telegram
+    #     serializer = TelegramSerializer(tg, data={"settings": request.data})
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(status=status.HTTP_204_NO_CONTENT)
+    #
+    #     return Response(status=status.HTTP_400_BAD_REQUEST)

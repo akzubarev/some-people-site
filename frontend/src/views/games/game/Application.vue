@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-3">
+  <div class="flex flex-col gap-3 mt-48">
     <div class="card flex flex-col gap-1 p-6">
       <div class="flex flex-row items-center justify-between gap-3">
         <div class="whitespace-pre-wrap" v-if="application.price">
@@ -28,7 +28,7 @@
         </div>
         <ProgressBar
             :class="progress.length ? 'h-[8px]' : '!h-0'"
-            color="linear-gradient(to right, #00c853, #004bff)"
+            color="linear-gradient(to right, #56405f, #44405f)"
             :progress="progress.length * 100 / questions.length"
         />
       </div>
@@ -50,7 +50,7 @@
           <button id="kt_sign_up_submit" ref="submitButton" type="submit"
                   class="btn btn-lg btn-accent w-full">
             <span class="indicator-label">
-              {{ !!application ? 'Отправить' : 'Сохранить' }} заявку
+              {{ !!application ? 'Сохранить' : 'Отправить' }} заявку
             </span>
             <span class="indicator-progress">
               <span

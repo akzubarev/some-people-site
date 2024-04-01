@@ -1,4 +1,0 @@
-from .user_serializer import UserSerializer
-from .my_user_serializer import MyUserSerializer
-from .user_small_serializer import UserSmallSerializer
-from .user_create_serializer import UserCreateSerializer

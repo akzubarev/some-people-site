@@ -16,6 +16,10 @@ export default {
     async application(user_id, game_alias) {
         return await request.get(`/api/applications/get/?user_id=${user_id}&game_alias=${game_alias}`)
     },
+    async applications(user_id, game_alias = null) {
+        const params = `user_id=${user_id}` + (game_alias ? `&game_alias=${game_alias}` : "")
+        return await request.get(`/api/applications/?${params}`)
+    },
     async questions(game_alias) {
         return await request.get(`/api/questions/?game_alias=${game_alias}`)
     },

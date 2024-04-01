@@ -1,13 +1,5 @@
 <template>
-  <div class="card">
-    <div class="card-header border-0">
-      <div class="card-title">
-        Игры
-      </div>
-    </div>
-  </div>
-
-  <div class="flex flex-col gap-6 mt-6">
+  <div class="flex flex-col gap-6 mt-48">
     <GameBlock
         class="h-[500px]" :class="i % 2 === 1 ? 'justify-end': 'justify-start'"
         v-for="(game, i) in games" :key="game" :game="game"

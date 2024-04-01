@@ -3,7 +3,7 @@ from django import forms
 from django.contrib import admin
 from django.utils.html import strip_tags
 
-from ..models import Mailing, MailingRecipient
+from apps.notifications.models import Mailing
 
 
 class MailingAdminForm(forms.ModelForm):
@@ -20,8 +20,6 @@ class MailingAdminForm(forms.ModelForm):
 class MailingAdmin(admin.ModelAdmin):
     list_display = [
         'id',
-        'locales',
-        'entry_level',
         'display_text',
         'created_at'
     ]
@@ -46,20 +44,3 @@ class MailingAdmin(admin.ModelAdmin):
     #     print(form.data, form.instance.user.select_related())
 
     #     super().save_related(request, form, formsets, change)
-
-
-@admin.register(MailingRecipient)
-class MailingRecipientAdmin(admin.ModelAdmin):
-    list_display = [
-        "id",
-        "user",
-        "mailing",
-        "telegram",
-        "email_status",
-        # "canceled",
-    ]
-    list_display_links = [
-        "id",
-        "user",
-        "mailing",
-    ]

@@ -9,7 +9,7 @@ from django.forms import model_to_dict
 
 sys.path[0] += '/../../..'
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
 from apps.notifications.models import Notification

@@ -1,0 +1,1 @@
+from .sync_user_tg import user_avatar,user_tg
