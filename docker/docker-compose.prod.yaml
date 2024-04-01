@@ -8,19 +8,19 @@ networks:
 
 
 x-backend-base: &backend_base
-  image: pintopay.dev.backend
+  image: some-people.prod.backend
   restart: always
   build:
     context: ..
-    dockerfile: ./docker/images/backend.Dockerfile
-  env_file: ../backend/.env
+    dockerfile: ./docker/images/config.Dockerfile
+  env_file: ../config/.env
   volumes:
-    - ../backend:/app
+    - ../config:/app
   networks:
     - default-tier
 
 x-frontend-base: &frontend_base
-  image: pintopay.dev.frontend
+  image: some-people.prod.frontend
   restart: always
   build:
     context: ..

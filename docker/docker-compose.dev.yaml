@@ -4,7 +4,7 @@ name: some-people
 
 x-inject-external-traefik: &traefik
   name: traefik_default
-  external: true
+#  external: true
 
 x-networks: &networks
   networks:
@@ -22,9 +22,8 @@ networks:
   default:
     driver: bridge
 
-
 x-backend-base: &backend_base
-  image: pintopay.dev.backend
+  image: some-people.dev.backend
   restart: always
   build:
     context: ..
@@ -32,13 +31,14 @@ x-backend-base: &backend_base
   env_file: ../backend/.env
   depends_on:
     - postgresql
+    - traefik
   volumes:
     - ../backend:/app
   networks:
     - default-tier
 
 x-frontend-base: &frontend_base
-  image: pintopay.dev.frontend
+  image: some-people.dev.frontend
   restart: always
   build:
     context: ..
@@ -48,15 +48,15 @@ x-frontend-base: &frontend_base
 
 
 services:
-#  daemon.echoip:
-#    <<: [ *networks, *default_user ]
-#    image: mpolden/echoip
-#    restart: always
-#    ports:
-#      - "7777:8080"
-#    volumes:
-#      - ./geolite_db:/opt/geolite/
-#    command: '-a /opt/geolite/GeoLite2-ASN.mmdb -c /opt/geolite/GeoLite2-City.mmdb -f /opt/geolite/GeoLite2-Country.mmdb'
+  #  daemon.echoip:
+  #    <<: [ *networks, *default_user ]
+  #    image: mpolden/echoip
+  #    restart: always
+  #    ports:
+  #      - "7777:8080"
+  #    volumes:
+  #      - ./geolite_db:/opt/geolite/
+  #    command: '-a /opt/geolite/GeoLite2-ASN.mmdb -c /opt/geolite/GeoLite2-City.mmdb -f /opt/geolite/GeoLite2-Country.mmdb'
 
 
   postgresql:
@@ -69,18 +69,22 @@ services:
       - ./postgres/initdb:/docker-entrypoint-initdb.d/
 
 
-#  daemon.cache_updater:
-#    <<: [ *networks, *default_user, *backend_base ]
-#    restart: "no"
-#    command: python daemons/cache_updater/entrypoint.py
-#    depends_on:
-#      - daemon.echoip
+  #  daemon.cache_updater:
+  #    <<: [ *networks, *default_user, *backend_base ]
+  #    restart: "no"
+  #    command: python daemons/cache_updater/entrypoint.py
+  #    depends_on:
+  #      - daemon.echoip
 
   admin:
     <<: [ *networks, *backend_base ]
     command:
       - |
         python manage.py runserver 0:8000
+    #        python manage.py migrate
+    #        python manage.py loaddata apps/*/fixtures/*.json
+    #        python manage.py createcachetable
+    #        python manage.py createsuperuser
     expose: [ 8000 ]
     labels:
       traefik.enable: true
@@ -103,14 +107,30 @@ services:
         yarn serve
     expose: [ 8080 ]
     environment:
-     - API_URL=http://admin:8000/
-       # - API_URL=https://pintopay.club/
+      - API_URL=http://admin:8000/
+      # - API_URL=https://pintopay.club/
     labels:
       traefik.enable: true
       traefik.docker.network: traefik_default
       traefik.http.routers.some-people-v1-app.rule: Host(`v1.app.some-people.localhost`)
       traefik.http.routers.some-people-v1-app.entrypoints: web
 
-
+  traefik:
+    <<: [ *networks ]
+    container_name: traefik
+    restart: always
+    image: "traefik:v2.10"
+    command:
+      - "--api.insecure=true"
+      - "--log.level=DEBUG"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      #      - "80:80"
+      - "1337:80"
+      - "9090:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 volumes:
   postgres_data: { }

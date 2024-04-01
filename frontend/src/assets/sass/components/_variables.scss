@@ -294,7 +294,7 @@ $position-values: (
 // Body
 //
 // Settings for the `<body>` element.
-$body-bg:                   $white !default;
+$body-bg:                   #404B5F !default;
 $body-bg-rgb:               to-rgb($body-bg) !default;
 $body-bg-dark:              #101214 !default;
 $body-bg-rgb-dark:          to-rgb($body-bg-dark) !default;
@@ -660,7 +660,7 @@ $input-bg:                                  $body-bg !default;
 $input-bg-dark:                             $body-bg-dark !default;
 
 $input-border-width:                    	$input-btn-border-width !default;
-$input-color:                               $gray-700 !default;
+$input-color:                               $white !default;
 $input-color-dark:                          $gray-700-dark !default;
 $input-border-color:                        $gray-300 !default;
 $input-border-color-dark:                   $gray-300-dark !default;
@@ -671,10 +671,10 @@ $input-border-radius:                       $btn-border-radius !default;
 $input-border-radius-sm:                    $btn-border-radius-sm !default;
 $input-border-radius-lg:                    $btn-border-radius-lg !default;
 
-$input-focus-bg:                            $input-bg !default;
-$input-focus-bg-dark:                       $input-bg-dark !default;
-$input-focus-border-color:                  $gray-400 !default;
-$input-focus-border-color-dark:             $gray-400-dark !default;
+$input-focus-bg:                            lighten($input-bg, 2%) !default;
+$input-focus-bg-dark:                       lighten($input-bg, 2%) !default;
+$input-focus-border-color:                  darken($input-border-color, 2%) !default;
+$input-focus-border-color-dark:             lighten($input-border-color-dark, 2%) !default;
 $input-btn-focus-width:         			.25rem !default;
 $input-focus-color:                         $input-color !default;
 $input-focus-color-dark:                    $input-color-dark !default;
@@ -682,12 +682,12 @@ $input-focus-width:                     	$input-btn-focus-width !default;
 //$input-focus-box-shadow:                  none !default;
 //$input-focus-box-shadow-dark:             none !default;
 
-$input-disabled-color:                      null !default;
-$input-disabled-color-dark:                 null !default;
-$input-disabled-bg:                         $gray-200 !default;
-$input-disabled-bg-dark:                    $gray-200-dark !default;
-$input-disabled-border-color:               $input-border-color !default;
-$input-disabled-border-color-dark:          $input-border-color-dark !default;
+$input-disabled-color:                      darken($input-bg, 10%) !default;
+$input-disabled-color-dark:                 darken($input-bg, 10%) !default;
+$input-disabled-bg:                         darken($input-bg, 10%) !default;
+$input-disabled-bg-dark:                    darken($input-bg, 10%) !default;
+$input-disabled-border-color:               darken($input-bg, 10%) !default;
+$input-disabled-border-color-dark:          darken($input-bg, 10%) !default;
 
 $input-placeholder-color:                   $gray-500 !default;
 $input-placeholder-color-dark:              $gray-500-dark !default;
@@ -695,14 +695,14 @@ $input-plaintext-color:                     $gray-700 !default;
 $input-plaintext-color-dark:                $gray-700-dark !default;
 
 // Keenthemes solid input style
-$input-solid-bg:                            $gray-100 !default;
-$input-solid-bg-dark:                       $gray-100-dark !default;
-$input-solid-bg-focus:                      darken($gray-100, 2%) !default;
-$input-solid-bg-focus-dark:                 lighten($gray-100-dark, 2%) !default;
+$input-solid-bg:                            $input-bg !default;
+$input-solid-bg-dark:                       $input-bg !default;
+$input-solid-bg-focus:                      $input-focus-bg !default;
+$input-solid-bg-focus-dark:                 $input-focus-bg-dark !default;
 $input-solid-placeholder-color:             $input-placeholder-color !default;
 $input-solid-placeholder-color-dark:        $input-placeholder-color-dark !default;
-$input-solid-color:         	            $gray-700 !default;
-$input-solid-color-dark:                    $gray-700-dark !default;
+$input-solid-color:         	            $input-color !default;
+$input-solid-color-dark:                    $input-color !default;
 
 // Form checks
 $form-check-input-width:                    1.75rem !default;

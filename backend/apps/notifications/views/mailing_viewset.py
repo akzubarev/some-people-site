@@ -4,10 +4,9 @@ from django.core.files.base import ContentFile
 from rest_framework import generics
 from rest_framework.response import Response
 
-from apps.notifications.models import MailingRecipient
+from apps.notifications.models import Notification
 from apps.notifications.serializers import MailingSerializer
 from apps.users.models import User
-from mixins.enums import MatrixPermissionLevel
 
 
 class MailingViewSet(generics.GenericAPIView):
@@ -32,7 +31,6 @@ class MailingViewSet(generics.GenericAPIView):
             "image": self.convert_image(data["image"]),
             "text": "\n".join(data["text"]),
             "locales": [request.user.locale],
-            "entry_level": MatrixPermissionLevel.free,
             "private": True,
         })
         serializer = self.serializer_class(data=data)
@@ -42,7 +40,7 @@ class MailingViewSet(generics.GenericAPIView):
             # search_query=search, filters=filters,
         )
         for target in targets:
-            MailingRecipient.objects.create(user=target.user, mailing=mailing)
+            Notification.objects.create(user=target.user, mailing=mailing)
         return Response(serializer.data)
 
     def convert_image(self, image):

@@ -18,7 +18,15 @@ const routes: Array<RouteRecordRaw> = [
                 name: "dashboard",
                 component: () => import("@/views/dashboard/Dashboard.vue"),
                 meta: {
-                    middleware: [isAuth, loadUser]
+                    // middleware: [isAuth, loadUser]
+                }
+            },
+            {
+                path: "/mg",
+                name: "mg",
+                component: () => import("@/views/dashboard/MG.vue"),
+                meta: {
+                    // middleware: [isAuth, loadUser]
                 }
             },
             {
@@ -66,7 +74,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "games",
                 component: () => import("@/views/games/Games.vue"),
                 meta: {
-                    middleware: [loadUser]
+                    // middleware: [loadUser]
                 }
             },
             {
@@ -82,7 +90,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/About.vue"),
                         props: true,
                         meta: {
-                            middleware: [loadUser]
+                            // middleware: [loadUser]
                         }
                     },
                     {
@@ -91,7 +99,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Roles.vue"),
                         props: true,
                         meta: {
-                            middleware: [loadUser]
+                            // middleware: [loadUser]
                         }
                     },
                     {
@@ -100,7 +108,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/CharacterList.vue"),
                         props: true,
                         meta: {
-                            middleware: [loadUser]
+                            // middleware: [loadUser]
                         }
                     },
                     {
@@ -118,7 +126,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Application.vue"),
                         props: true,
                         meta: {
-                            middleware: [loadUser]
+                            // middleware: [loadUser]
                         }
                     },
                     {
@@ -127,7 +135,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Players.vue"),
                         props: true,
                         meta: {
-                            middleware: [loadUser]
+                            // middleware: [loadUser]
                         }
                     },
                 ]

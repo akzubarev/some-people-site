@@ -171,7 +171,7 @@
       <!--      bg-[#02122E]-->
       <div class="card relative">
         <img
-            class="absolute" :src="require('@/assets/images/dashboard/tg.png')"
+            class="absolute" :src="require('@/assets/images/mg/tg.png')"
             style="right: 2em; height: 60%;top:20%;max-height: 100px;"
         />
         <div class="card-header border-0 ">
@@ -190,7 +190,7 @@
       <div v-if="['ru','uk'].includes(lang)"
            class="card relative">
         <img class="absolute"
-             :src="require('@/assets/images/dashboard/tg-chat.png')"
+             :src="require('@/assets/images/mg/tg-chat.png')"
              style="right: 2em; height: 60%;top:20%;max-height: 100px;"
         />
         <div class="card-header border-0 ">
@@ -209,7 +209,7 @@
       <!--      bg-[#130F2C]-->
       <div class="card relative">
         <img class="absolute"
-             :src="require('@/assets/images/dashboard/tg-aircraft.png')"
+             :src="require('@/assets/images/mg/tg-aircraft.png')"
              style="right: 2em; height: 70%; top:15%;max-height: 100px;"
         />
         <div class="card-header border-0 ">
@@ -228,7 +228,7 @@
       <!--      bg-[#1a0a22]-->
       <div class="card relative">
         <img class="absolute"
-             :src="require('@/assets/images/dashboard/ig.png')"
+             :src="require('@/assets/images/mg/ig.png')"
              style="right: 2em; height: 60%;top:20%;max-height: 100px;"
         />
         <div class="card-header border-0 ">

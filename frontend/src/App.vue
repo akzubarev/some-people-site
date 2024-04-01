@@ -14,37 +14,8 @@
     </div>
   </teleport>
   <PullToRefresh scroll-root="true" @refresh="refresh">
-<!--     <ActionModal
-        v-if="changeHost"
-        type="alert" :title="$t('main.domainMoveTitle')"
-        :description="$t('main.domainMoveDescription')"
-        @submit="() => changeDomain()" :hide-x="true"
-        :buttonText="$t('common.actions.confirm')"/> -->
-    <Popup v-if="!changeHost && !$store.getters['auth/user'].access && [
-    'sign', 'lostpass', 'confirm', 'subscription'
-    ].filter(u => $route.path.includes(u)).length == 0 && showSpecialOffer"
-           @close="showSpecialOffer=false">
-      <div
-          class="flex justify-center flex-col gap-0 m-0 mb-2 items-center text-center p-6">
-        <p class="text-3xl text-white m-1">
-          {{ $t("subscription.specialOfferModalTitle") }}</p>
-        <p class="text-lg text-gray-600 m-1">
-          {{ 
-            $t('subscription.specialofferdesc_2', {
-              term: '3', date: '3.10', price: 60
-            }) 
-          }}</p>
-        <button class="btn btn-outline-accent"
-                @click="() => {showSpecialOffer=false;$router.push('/subscription/main')}">
-          {{ $t("common.actions.learnMore") }}
-        </button>
-      </div>
-    </Popup>
-
     <router-view/>
   </PullToRefresh>
-
-
   <!-- <Glares/> -->
 </template>
 <style>
@@ -53,16 +24,17 @@
 :root {
   /* IMPORTANT!: Добавление новых цветов необходимо обсуждать */
 
-  --accent-color-start: #4fabdd;
-  --accent-color-end: #002fa6;
+  --accent-color-start: #56405f;
+  --accent-color-end: #44405f;
+  --bg-card: #404B5F;
 
   /* dark colors */
   --dark-primary-color: #101214; /* Основной темный цвет сайта */
   --dark-secondary-color: #181B1F; /* Второстепенный темный цвет */
-  --dark-accent-color: #0f6099; /* Акцентный темный цвет */
+  --dark-accent-color: #310533; /* Акцентный темный цвет */
   --dark-text-color: #DADFE5; /* Основной цвет текста в темной теме */
   --dark-text-secondary-color: #8A9099; /* Второстепенный цвет текста в темной теме */
-  --dark-link-color: #0f4b99; /* Цвет ссылок в темной теме */
+  --dark-link-color: #5c159a; /* Цвет ссылок в темной теме */
 }
 </style>
 <style lang="scss">

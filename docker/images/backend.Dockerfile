@@ -20,6 +20,6 @@ RUN chmod +x /bin/entrypoint.sh
 
 RUN apk add yarn
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "/bin/entrypoint.sh"]
 
 WORKDIR /app

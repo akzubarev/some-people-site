@@ -6,11 +6,11 @@ import datetime
 import django
 
 sys.path[0] += '/../..'
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
 from apps.users.models import User
-from backend.utils import get_location_from_ip
+from config.utils import get_location_from_ip
 from django.core.cache import cache
 from rest_framework_tracking.models import APIRequestLog
 from django.utils import timezone

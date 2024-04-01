@@ -1,4 +1,2 @@
-from .chatdata import ChatData
-from .mailing import Mailing, MailingRecipient
+from .mailing import Mailing
 from .notification import Notification
-from .telegram import Telegram

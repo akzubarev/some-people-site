@@ -1,0 +1,70 @@
+[
+  {
+    "model": "games.Question",
+    "pk": 1,
+    "fields": {
+      "game": [
+        1,
+        2
+      ],
+      "title": "Готовы есть людей?",
+      "description": "Ну вот если очень захочется",
+      "type": "single_choice",
+      "choices": [
+        "Да",
+        "Нет",
+        "Не знаю"
+      ],
+      "order": 1
+    }
+  },
+  {
+    "model": "games.Question",
+    "pk": 2,
+    "fields": {
+      "game": [
+        1,
+        2
+      ],
+      "title": "Соц класс",
+      "description": "Ну там несколько есть",
+      "type": "multiple_choice",
+      "choices": [
+        "Инженеры",
+        "Рабочие",
+        "Дети"
+      ],
+      "order": 2
+    }
+  },
+  {
+    "model": "games.Question",
+    "pk": 3,
+    "fields": {
+      "game": [
+        1,
+        2
+      ],
+      "title": "Как вас зовут",
+      "description": null,
+      "type": "line",
+      "choices": null,
+      "order": 3
+    }
+  },
+  {
+    "model": "games.Question",
+    "pk": 4,
+    "fields": {
+      "game": [
+        1,
+        2
+      ],
+      "title": "Напишите абзац текста",
+      "description": null,
+      "type": "paragraph",
+      "choices": null,
+      "order": 4
+    }
+  }
+]

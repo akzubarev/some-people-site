@@ -14,7 +14,7 @@ FROM node:16-alpine AS builder
 WORKDIR /deps
 COPY --from=deps /deps/node_modules ./node_modules
 
-ENTRYPOINT ["/bin/sh", "-c"]
+ENTRYPOINT ["/bin/sh", "/bin/entrypoint.sh"]
 WORKDIR /app
 # COPY . .
 # RUN npm run lint

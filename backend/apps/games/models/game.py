@@ -26,6 +26,10 @@ class Game(models.Model):
         verbose_name="Взнос", blank=True, null=True
     )
 
+    player_count = models.IntegerField(
+        verbose_name="Количество игроков", blank=True, null=True
+    )
+
     location = models.CharField(
         verbose_name='Место',
         max_length=100,

@@ -10,7 +10,7 @@ from asgiref.sync import sync_to_async
 
 sys.path[0] += '/../../..'
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
 from apps.notifications.models import Telegram

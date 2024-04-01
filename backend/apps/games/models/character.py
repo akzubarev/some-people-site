@@ -43,6 +43,11 @@ class Character(models.Model):
         to="games.Tag", related_name="characters",
     )
 
+    kventa = models.FileField(
+        upload_to='kventas/pdf/',
+        blank=True, null=True
+    )
+
     class Meta:
         verbose_name = 'Персонаж'
         verbose_name_plural = 'Персонаж'

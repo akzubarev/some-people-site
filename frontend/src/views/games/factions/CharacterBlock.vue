@@ -3,12 +3,11 @@
     <div class="flex flex-row items-center gap-4">
       <img
           class="z-30 w-[200px] h-[200px] rounded-full"
-          :src="characters[game][character.id] || characters[game]['default']"
+          :src="character.image || characters[game][character.id] || characters[game]['default']"
       />
       <div
           class="flex flex-col w-fit gap-1 items-start">
-        <div
-            class="flex flex-row text-lg text-white whitespace-pre-wrap">
+        <div class="flex flex-row text-lg text-white whitespace-pre-wrap">
               <span class="text-xl text-white">{{
                   character.name
                 }} — </span> <span class="text-xl text-white cursor-pointer">{{

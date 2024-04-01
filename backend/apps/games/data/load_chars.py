@@ -6,20 +6,19 @@ import django
 import openpyxl as openpyxl
 
 sys.path[0] = '/app/'
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
 from apps.users.models import User
 from apps.games.models import Game, Character, Tag, Faction
 
-game_alias = "whales"
 
-
-def load_chars():
-    game = Game.objects.filter(alias=game_alias).first()
+def load_game(game_alias: str):
+    game = Game.objects.get(alias=game_alias)
     try:
         wb = openpyxl.load_workbook(
-            filename=f"apps/games/data/{game_alias}-chars.xlsx", data_only=True
+            filename=f"apps/games/data/{game_alias}-chars.xlsx",
+            data_only=True
         )
         sheet = wb[wb.sheetnames[0]]
         row_num, column_num = 2, 1
@@ -53,9 +52,13 @@ def load_chars():
 
             row_num += 1
             next_char = sheet.cell(row=row_num, column=column_num).value
-
     except Exception as e:
         traceback.print_exc()
+
+
+def load_chars():
+    for game_alias in ["frostpunk", "whales"]:
+        load_game(game_alias=game_alias)
 
 
 if __name__ == '__main__':

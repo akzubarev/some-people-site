@@ -11,7 +11,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             # 'user',
-            # 'game',
+            'game',
             'character',
             'price',
             'payed',

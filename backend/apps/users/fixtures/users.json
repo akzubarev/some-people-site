@@ -1,0 +1,62 @@
+[
+  {
+    "model": "users.User",
+    "pk": 2,
+    "fields": {
+      "email": "alexkzubarev@gmail.com",
+      "first_name": "Леша",
+      "last_name": "Зубарев",
+      "username": "Томат",
+      "is_staff": true,
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "users.User",
+    "pk": 3,
+    "fields": {
+      "email": "katya@admin.com",
+      "first_name": "Катя",
+      "last_name": "Иванова",
+      "username": "cath_johns",
+      "is_staff": true,
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "users.User",
+    "pk": 4,
+    "fields": {
+      "email": "liza@admin.com",
+      "first_name": "Лиза",
+      "last_name": "Кудлюк",
+      "username": "lizakudl",
+      "is_staff": true,
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "users.User",
+    "pk": 5,
+    "fields": {
+      "email": "anya@admin.com",
+      "first_name": "Аня",
+      "last_name": "Вахрушева",
+      "username": "vakhannka",
+      "is_staff": true,
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "users.User",
+    "pk": 6,
+    "fields": {
+      "email": "nastya@admin.com",
+      "first_name": "Настя",
+      "last_name": "Ваш",
+      "username": "vash_ded",
+      "is_staff": true,
+      "is_superuser": true
+    }
+  }
+]

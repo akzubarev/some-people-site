@@ -11,4 +11,8 @@ export default {
         return await request.get(`/api/users/players?game_alias=${game_alias}`)
     },
 
+    async mg() {
+        return await request.get(`/api/users/mg/`)
+    },
+
 }
