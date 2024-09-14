@@ -1,4 +1,4 @@
-"""Constants for telegram bot."""
+"""Telegram bot constants."""
 import os
 
 # Settings

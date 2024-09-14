@@ -9,7 +9,8 @@ class NotificationAdmin(admin.ModelAdmin):
         'id',
         'mailing',
         'user',
-        'viewed'
+        'sent',
+        'viewed',
     ]
     raw_id_fields = ['user']
 

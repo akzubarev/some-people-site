@@ -20,17 +20,19 @@ class Mailing(AutoCreatedUpdatedMixin):
     )
 
     ready = models.BooleanField(
-        verbose_name=_('private'),
-        default=False
+        verbose_name=_('ready'),
+        default=False,
+    )
+
+    time = models.DateTimeField(
+        verbose_name='time',
+        db_index=True,
     )
 
     def save(self, *args, **kwargs):
-        if self.ready is False:
+        super().save(*args, **kwargs)
+        if self.ready:
             base_qs = User.objects.all()
-            super().save(*args, **kwargs)
-            for user in base_qs:
-                Notification.objects.create(
-                    user=user, mailing=self,
-                )
-        else:
-            super().save(*args, **kwargs)
+            Notification.objects.bulk_create([
+                Notification(user=user, mailing=self) for user in base_qs
+            ])
