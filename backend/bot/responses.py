@@ -1,4 +1,4 @@
-"""Resposes fot bot messages."""
+"""Telegram Bot responses."""
 
 
 def handle_response(text: str):

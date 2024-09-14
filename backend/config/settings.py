@@ -43,7 +43,7 @@ ALLOWED_HOSTS = ('*',)
 CSRF_COOKIE_SECURE = False
 
 if os.getenv("CSRF_TRUSTED_ORIGINS"):
-    CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS").split(",")
+    CSRF_TRUSTED_ORIGINS = (os.getenv("CSRF_TRUSTED_ORIGINS") or '').split(",")
 
 ROOT_URLCONF = "config.urls"
 AUTH_USER_MODEL = "users.User"
@@ -80,14 +80,9 @@ DEFAULT_FROM_EMAIL = "Pin2Pay <no-reply@pintopay.club>"
 INSTALLED_APPS = [
     # Django Admin
 
-    'django_yarnpkg',
     'jazzmin',
-    # 'admin_tools'
-    # 'admin_tools.menu',
-    # 'bulk_admin',
-    # 'related_admin',
+    'related_admin',
     "django.contrib.admin",
-    # "ordered_model",
     # Django modules
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -95,26 +90,15 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.forms",
-    # "django.contrib.sites",
-    # 'whitenoise.runserver_nostatic',
     # REST Framework
     "rest_framework",
     "rest_framework.authtoken",
-    # "djoser",
-    # "djcelery_email",
     "phonenumber_field",
-    # "drf_recaptcha",
-    # 'recurrence',
     # Django addons
-    # 'anymail',
-    # "django_extensions",
-    "django_filters",
-    # "embed_video",
-    # 'channels',
+    # "django_filters",
     "ckeditor",
     "ckeditor_uploader",
     # APPS
-    # "apps.auth",
     "apps.users",
     "apps.games",
     "apps.notifications",
@@ -128,24 +112,14 @@ PHONENUMBER_DB_FORMAT = 'E164'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    # "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "django.middleware.locale.LocaleMiddleware",
-    # "config.middleware.TimezoneMiddleware"
-    # "apps.users.middleware.LocaleMiddleware",
 ]
 
-###############
-# DRF Recaptcha
-DRF_RECAPTCHA_SECRET_KEY = "6LcMP_UUAAAAABVbPpiivQvMzw0i4d1bT6t-FWeO"
-DRF_RECAPTCHA_DEFAULT_V3_SCORE = 0.2
-DRF_RECAPTCHA_ACTION_V3_SCORES = {"register": 0.05}
-DRF_RECAPTCHA_TESTING = DEBUG
 #########
 # ____________  ______  __   ___ ______________
 # /_  __/ __/  |/  / _ \/ /  / _ /_  __/ __/ __/
@@ -187,6 +161,7 @@ DEFAULT_RENDERER_CLASSES = (
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         # "rest_framework.permissions.IsAuthenticated",
@@ -201,11 +176,6 @@ REST_FRAMEWORK = {
         'user': '200/minute'
     }
 }
-if True:
-    REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"] += [
-        "rest_framework.authentication.SessionAuthentication"
-    ]
-
 
 # ___  ___
 # / _ \/ _ )
@@ -215,7 +185,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATABASES = {
     "default": {
         "CONN_MAX_AGE": 60,
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("POSTGRES_DB"),
         "USER": os.getenv("POSTGRES_USER"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
@@ -238,20 +208,12 @@ CACHES = {
 
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
+p_w = 'django.contrib.auth.password_validation'
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": (
-            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-        )
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-        'OPTIONS': {
-            'min_length': 5,
-        }
-    },
-    # {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    # {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": f"{p_w}.UserAttributeSimilarityValidator"},
+    {"NAME": f"{p_w}.MinimumLengthValidator", 'OPTIONS': {'min_length': 5}},
+    # {"NAME": f"{p_w}.CommonPasswordValidator",},
+    # {"NAME": f"{p_w}.NumericPasswordValidator",},
 ]
 
 # __   ____  ________   __   ____
@@ -259,14 +221,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # / /__/ /_/ / /__/ __ |/ /__/ _/
 # /____/\____/\___/_/ |_/____/___/
 
-# LANGUAGE_CODE = "en-us"  # 'en-us'
+# LANGUAGE_CODE = "en-us"
 # TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 # LANGUAGES = [
 #     ('ru', 'Russian'),
 #     ('en', 'English'),
-#     ]
+# ]
 
 
 # _____________ _______________
@@ -278,10 +240,6 @@ USE_L10N = True
 # In Production, it's recommended use an alternative approach such as:
 # http://whitenoise.evans.io/en/stable/django.html?highlight=django
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# MIDDLEWARE_CLASSES = (
-#     'whitenoise.middleware.WhiteNoiseMiddleware',
-# )
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -314,10 +272,9 @@ EMBED_VIDEO_TIMEOUT = 10
 
 
 LANGUAGE_CODE = 'ru'
-# SITE_ID = int(os.getenv("SITE_ID", "0"))
 MAIN_SITE_ID = int(os.getenv("MAIN_SITE_ID", "0"))
 COMPANY_ID = int(os.getenv("COMPANY_ID", "0"))
-# COMPANY_ID = 21
+
 # logging
 
 LOGGING = {
@@ -389,7 +346,6 @@ LOGGING = {
             "handlers": ["console_force", "file_error", "file"],
             "level": "ERROR",
         },
-        # todo separate logging
         "": {
             "handlers": ["console", "file_error", "file"],
             "level": "DEBUG",

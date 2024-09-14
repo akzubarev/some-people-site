@@ -21,6 +21,9 @@ class MailingAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'display_text',
+        'image',
+        'time',
+        'ready',
         'created_at'
     ]
 
