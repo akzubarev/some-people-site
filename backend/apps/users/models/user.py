@@ -1,8 +1,9 @@
+"""Users models."""
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
-from mixins import UUIDMixin, AutoCreatedUpdatedMixin
+from mixins import AutoCreatedUpdatedMixin, UUIDMixin
 
 
 class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
@@ -47,19 +48,18 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
     phone = PhoneNumberField(blank=True, default=None, null=True)
     is_staff = models.BooleanField(verbose_name='admin', default=False)
     email_active = models.BooleanField(default=False)
-    telegram_code = models.CharField(
-        verbose_name="telegram_code", max_length=100,
+
+    telegram_chat_id = models.CharField(
+        verbose_name="telegram_chat_id", max_length=250,
         blank=True, null=True, default=None
     )
-    telegram = models.CharField(
-        verbose_name="telegram", max_length=250,
-        blank=True, null=True,
-        default=None
+    telegram_username = models.CharField(
+        verbose_name="telegram_username", max_length=250,
+        blank=True, null=True, default=None
     )
     instagram = models.CharField(
         verbose_name="instagram", max_length=250,
-        blank=True, null=True,
-        default=None
+        blank=True, null=True, default=None
     )
 
     # Fields settings

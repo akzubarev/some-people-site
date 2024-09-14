@@ -13,18 +13,18 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id', 'email', 'username', 'email_active', 'first_name',
-            'last_name', 'uuid', 'mg', 'telegram_code',
+            'last_name', 'uuid', 'mg',
             'phone', 'created_at', 'avatar', 'telegram', 'applications',
             'country_iso', 'instagram', 'country',
         )
         read_only_fields = (
             'id', 'email', 'email_active', 'uuid', 'created_at', 'telegram',
-            'updated_at',  'applications',  'country',
+            'updated_at', 'applications', 'country',
         )
 
     def get_telegram(self, obj):
         try:
-            return obj.telegram.username
+            return obj.telegram_username
         except AttributeError:
             return ''
 

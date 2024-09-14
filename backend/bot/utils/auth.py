@@ -1,11 +1,7 @@
-from hashlib import md5
-
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+"""Telegram bot authorization."""
 from telegram import Update
 
 import bot.database as db
-from config import settings
 
 
 def is_manager(func, *args, **kwargs):
@@ -74,19 +70,3 @@ def banned(func, *args, **kwargs):
             )
 
     return wrapper
-
-
-def encode_uid(pk):
-    return force_str(urlsafe_base64_encode(force_bytes(pk)))
-
-
-def decode_uid(pk):
-    return force_str(urlsafe_base64_decode(pk))
-
-
-def generate_telegram_code(user_id):
-    encoded = md5(
-        str(user_id).encode() + settings.SECRET_KEY.encode()
-    ).hexdigest()
-    code = "{}{}".format(encoded, encode_uid(int(user_id)))
-    return code

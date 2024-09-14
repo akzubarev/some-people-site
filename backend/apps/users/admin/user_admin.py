@@ -17,48 +17,52 @@ class UserAdmin(BaseUserAdmin):
         'username',
         'first_name',
         'last_name',
+        'telegram_chat_id',
+        'telegram_username',
         'created_at',
         # 'country_iso',
     ]
 
-    # fieldsets = [
-    #     ['Авторизация', {
-    #         'fields': [
-    #             'email',
-    #             'username',
-    #             'password',
-    #             'uuid',
-    #         ]
-    #     }
-    #      ],
-    #     ['Персональная информация', {
-    #         'fields': [
-    #             'last_name',
-    #             'first_name',
-    #             'phone',
-    #             'avatar',
-    #             'country',
-    #             'country_iso',
-    #         ]
-    #     }
-    #      ],
-    #     ['Настройки', {
-    #         'fields': [
-    #             # 'groups',
-    #             # 'is_active',
-    #             # 'is_staff',
-    #             # 'is_superuser',
-    #         ]
-    #     }
-    #      ],
-    #     ['Даты', {
-    #         'fields': [
-    #             'last_login',
-    #             'created_at'
-    #         ]
-    #     }
-    #      ],
-    # ]
+    fieldsets = [
+        ['Авторизация', {
+            'fields': [
+                'email',
+                'username',
+                'password',
+                'uuid',
+            ]
+        }
+         ],
+        ['Персональная информация', {
+            'fields': [
+                'last_name',
+                'first_name',
+                'phone',
+                'avatar',
+                'country',
+                'country_iso',
+        'telegram_chat_id',
+        'telegram_username',
+            ]
+        }
+         ],
+        ['Настройки', {
+            'fields': [
+                # 'groups',
+                # 'is_active',
+                # 'is_staff',
+                # 'is_superuser',
+            ]
+        }
+         ],
+        ['Даты', {
+            'fields': [
+                'last_login',
+                'created_at'
+            ]
+        }
+         ],
+    ]
 
     # add_fieldsets = [
     #     [None, {
@@ -76,4 +80,4 @@ class UserAdmin(BaseUserAdmin):
     # ]
     # search_fields = ['first_name', 'last_name', 'email', 'id']
     # ordering = ["-id"]
-    # readonly_fields = ['id', 'uuid', 'last_login', 'created_at', 'updated_at']
+    readonly_fields = ['id', 'uuid', 'last_login', 'created_at', 'updated_at']

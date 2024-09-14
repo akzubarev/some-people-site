@@ -41,18 +41,18 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from "vue"
+  import {computed, onMounted, ref} from "vue"
   import { toClipboard } from "@soerenmartius/vue3-clipboard"
   import {useStore} from "vuex"
   import usersService from "@/services/usersService";
 
   const store = useStore()
-  const user = store.getters["auth/user"]
+  const user =  computed(() => store.getters["auth/user"])
   const copied = ref(false)
   const telegram_code = ref({})
 
   onMounted(async () => {
-    telegram_code.value = (await usersService.telegram(user.uuid))["data"]["telegram_code"]
+    telegram_code.value = (await usersService.telegram(user.uuid))["data"]
   })
 
   const copyLink = () => {

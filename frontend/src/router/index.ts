@@ -3,7 +3,7 @@ import store from "@/store"
 import {Mutations} from "@/store/enums/StoreEnums"
 import isAuth from "@/middleware/isAuth"
 import guest from "@/middleware/guest"
-import loadUser from "@/middleware/loadUser"
+import {forceLoadUser, loadUser} from "@/middleware/loadUser"
 import {setPageTitle} from "@/store"
 import Layout from "@/layout/Layout.vue"
 
@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "account-profile",
                 component: () => import("@/views/account/Profile.vue"),
                 meta: {
-                    middleware: [isAuth, loadUser]
+                    middleware: [isAuth, forceLoadUser]
                 }
             },
             {
@@ -48,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: "account-telegram",
                         component: () => import("@/views/account/Telegram.vue"),
                         meta: {
-                            middleware: [isAuth, loadUser]
+                            middleware: [isAuth, forceLoadUser]
                         }
                     },
                     {
@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: "account-settings",
                         component: () => import("@/views/account/Settings.vue"),
                         meta: {
-                            middleware: [isAuth, loadUser]
+                            middleware: [isAuth, forceLoadUser]
                         }
                     },
                     {
@@ -117,7 +117,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Application.vue"),
                         props: true,
                         meta: {
-                            middleware: [loadUser]
+                            middleware: [isAuth, loadUser]
                         }
                     },
                     {
@@ -135,7 +135,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Players.vue"),
                         props: true,
                         meta: {
-                            // middleware: [loadUser]
+                            // middleware: [isAuth,]
                         }
                     },
                 ]
@@ -186,7 +186,7 @@ const routes: Array<RouteRecordRaw> = [
                     component: () => import("@/views/auth/PasswordReset.vue"),
                     props: true,
                     meta: {
-                        middleware: []
+                        middleware: [isAuth]
                     }
                 }
             ]

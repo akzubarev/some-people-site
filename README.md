@@ -12,11 +12,11 @@ Website for LARP community to help register and follow the MG "Some-people"
 
 - Copy `backend/example.env` to `backend/.env`, change accordingly
 - `dcu`
-- `dce admin python manage.py migrate`
-- `dce admin python manage.py createcachetable`
-- `dce admin python manage.py createsuperuser`
-- `dce admin; python manage.py loaddata apps/*/fixtures/*.json`
-- `dce admin python apps/games/data/load_chars.py`
+- `dce api python manage.py migrate`
+- `dce api python manage.py createcachetable`
+- `dce api python manage.py createsuperuser`
+- `dce api; python manage.py loaddata apps/*/fixtures/*.json`
+- `dce api python apps/games/data/load_chars.py`
 
 # dev
 
