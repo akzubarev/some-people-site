@@ -20,13 +20,13 @@ export default {
         const params = `user_id=${user_id}` + (game_alias ? `&game_alias=${game_alias}` : "")
         return await request.get(`/api/applications/?${params}`)
     },
+    async apply(payload) {
+        return await request.post(`/api/applications/apply/`, payload)
+    },
     async questions(game_alias) {
         return await request.get(`/api/questions/?game_alias=${game_alias}`)
     },
     async tags(game_alias) {
         return await request.get(`/api/games/tags/?game_alias=${game_alias}`)
-    },
-    async apply(payload) {
-        return await request.post(`/api/applications/apply/`, payload)
     },
 }

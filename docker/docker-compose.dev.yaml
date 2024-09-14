@@ -78,6 +78,8 @@ services:
 
   admin:
     <<: [ *networks, *backend_base ]
+    depends_on:
+      - postgresql
     command:
       - |
         python manage.py runserver 0:8000

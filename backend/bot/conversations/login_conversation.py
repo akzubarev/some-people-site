@@ -5,8 +5,7 @@ from django.utils.translation import gettext as _
 from telegram import ReplyKeyboardRemove, Update
 from telegram.ext import filters
 from telegram.constants import ParseMode
-from telegram.ext import CommandHandler, MessageHandler, ConversationHandler, \
-    ContextTypes
+from telegram.ext import CommandHandler, MessageHandler, ConversationHandler, ContextTypes
 
 import bot.database as db
 from bot.utils.auth import not_group, decode_uid, generate_telegram_code
