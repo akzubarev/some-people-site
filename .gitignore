@@ -117,6 +117,9 @@ dist
 .vscode-test
 .vs
 
+# JetBrains #
+.idea/*
+
 #python
 # Byte-compiled / optimized / DLL files
 __pycache__/
