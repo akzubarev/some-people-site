@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 from dotenv import load_dotenv
 
@@ -39,18 +39,6 @@ DEBUG = bool(int(os.getenv("DEBUG", "0")))
 # ALLOWED_HOSTS = os.getenv("DOMAINS").split(",")
 DOMAIN = 'somepeoplelarp.ru'
 ALLOWED_HOSTS = ('*',)
-
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-TELEGRAM_GROUP_CHATS = [
-    {
-        "language": "en",
-        "id": "@pin2pay_en"
-    },
-    {
-        "language": "ru",
-        "id": "@pin2pay_ru"
-    },
-]
 
 CSRF_COOKIE_SECURE = False
 

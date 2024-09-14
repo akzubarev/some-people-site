@@ -1,21 +1,23 @@
+"""Telegram bot entrypoint."""
 import os
 import sys
 
 import django
-from telegram.ext import CommandHandler, MessageHandler, ApplicationBuilder
-from telegram.ext import filters
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 
-sys.path[0] += "/../../.."
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+sys.path[0] += '/..'
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
-from config import settings
 import bot.conversations as convo
 import bot.commands as commands
 import bot.other as other
+import bot.const as const
+
 
 def main():
-    app = ApplicationBuilder().token(settings.BOT_TOKEN).build()
+    """Bot entrypoint."""
+    app = ApplicationBuilder().token(const.TELEGRAM_BOT_TOKEN).build()
 
     app.add_handler(convo.login_conv_handler())
     app.add_handler(CommandHandler("stop", commands.stop))

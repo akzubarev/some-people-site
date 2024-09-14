@@ -1,12 +1,10 @@
+"""Constants for telegram bot."""
 import os
 
 # Settings
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-BOT_USERNAME = os.getenv('TELEGRAM_BOT_USERNAME')
-TELEGRAM_MAIN_GROUP = os.getenv('TELEGRAM_MAIN_GROUP')  # Настолошная
-TELEGRAM_ADMIN_GROUP = os.getenv('TELEGRAM_ADMIN_GROUP')  # Админка
+TELEGRAM_BOT_USERNAME = os.getenv('TELEGRAM_BOT_USERNAME')
 DEFAULT_PASSWORD = 'rI2UsV96txrOkaLqBlS6'
-UPCOMING_RANGE = 14
 CONVERSATION_TIMOUT = 60 * 60
 
 # User commands
