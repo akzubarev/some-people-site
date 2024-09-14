@@ -47,6 +47,10 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
     phone = PhoneNumberField(blank=True, default=None, null=True)
     is_staff = models.BooleanField(verbose_name='admin', default=False)
     email_active = models.BooleanField(default=False)
+    telegram_code = models.CharField(
+        verbose_name="telegram_code", max_length=100,
+        blank=True, null=True, default=None
+    )
     telegram = models.CharField(
         verbose_name="telegram", max_length=250,
         blank=True, null=True,

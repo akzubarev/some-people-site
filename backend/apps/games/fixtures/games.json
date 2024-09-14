@@ -11,8 +11,12 @@
       "year": "2023",
       "player_count": 80,
       "price": 14000,
-      "vk": null,
-      "tg": null
+      "vk": "https://vk.com/undersnow2023",
+      "tg": null,
+      "open_character_list": true,
+      "open_applications": false,
+      "start": "2023-05-02",
+      "end": "2023-05-05"
     }
   },
   {
@@ -28,7 +32,11 @@
       "player_count": 99,
       "price": null,
       "vk": null,
-      "tg": null
+      "tg": null,
+      "open_character_list": false,
+      "open_applications": false,
+      "start": "2025-10-01",
+      "end": "2025-10-05"
     }
   }
 ]

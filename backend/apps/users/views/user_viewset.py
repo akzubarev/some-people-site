@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.db import transaction
 from rest_framework import viewsets, mixins, status
 from rest_framework.authtoken.models import Token
@@ -80,5 +82,15 @@ class UserViewSet(viewsets.GenericViewSet,
         queryset = User.objects.filter(is_staff=True).exclude(username="admin")
         serializer = self.serializer_class(
             queryset, context={'request': request}, many=True
+        )
+        return Response(serializer.data)
+
+    @action(detail=False, methods=["get"])
+    def telegram_code(self, request, *args, **kwargs):
+        user = request.user
+        user.telegram_code = uuid4()
+        user.save()
+        serializer = self.serializer_class(
+            user, context={'request': request},
         )
         return Response(serializer.data)

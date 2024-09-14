@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id', 'email', 'username', 'email_active', 'first_name',
-            'last_name', 'uuid', 'mg',
+            'last_name', 'uuid', 'mg', 'telegram_code',
             'phone', 'created_at', 'avatar', 'telegram', 'applications',
             'country_iso', 'instagram', 'country',
         )

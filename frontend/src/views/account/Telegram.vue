@@ -42,27 +42,26 @@
 
 <script setup>
   import { onMounted, ref } from "vue"
-  import notificationService from "@/services/notificationService"
   import { toClipboard } from "@soerenmartius/vue3-clipboard"
   import {useStore} from "vuex"
+  import usersService from "@/services/usersService";
 
   const store = useStore()
   const user = store.getters["auth/user"]
   const copied = ref(false)
-  const telegram = ref({})
+  const telegram_code = ref({})
 
   onMounted(async () => {
-    telegram.value = (await notificationService.telegram())["data"]
+    telegram_code.value = (await usersService.telegram(user.uuid))["data"]["telegram_code"]
   })
 
-  const bot = "pin2pay_bot"
   const copyLink = () => {
     /* @ts-ignore */
-    toClipboard(telegram.value.code)
+    toClipboard(telegram_code.value)
     copied.value = true
     setTimeout(() => copied.value = false, 3000)
   }
   const openTelegram = () => {
-    window.open(`https://t.me/${bot}?start=${telegram.value.code}`, '_blank').focus()
+    window.open(`https://t.me/tomatoboto_bot?start=${telegram_code.value}`, '_blank').focus()
   }
 </script>
