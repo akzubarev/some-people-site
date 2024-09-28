@@ -12,6 +12,7 @@ django-extensions = "==3.2.3"
 django-jazzmin = "==3.0.0"
 django-phonenumber-field = { extras = ["phonenumbers"], version = "==7.1.0" }
 django-related-admin = "==1.0.1"
+django-yarnpkg = "==6.1.0"
 gspread = "==6.1.2"
 openpyxl = "==3.1.5"
 pillow = "==10.4.0"

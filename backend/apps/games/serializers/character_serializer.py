@@ -3,7 +3,6 @@ from rest_framework import serializers
 
 from apps.games.models import Application, Character
 from apps.users.models import User
-from apps.users.serializers import UserSerializer
 from .application_serializer import ApplicationSerializer
 from .tag_serializer import TagSerializer
 
@@ -37,6 +36,7 @@ class CharacterSerializer(serializers.ModelSerializer):
             applications__status=Application.Status.CONFIRMED
         ).first()
         if player is not None:
+            from apps.users.serializers import UserSerializer
             return UserSerializer(player).data
         else:
             return None

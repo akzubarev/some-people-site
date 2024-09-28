@@ -24,7 +24,7 @@ class AutoCreatedUpdatedMixin(models.Model):
         """Model meta."""
 
         abstract = True
-        indexes = (BrinIndex(fields=['created_at']))
+        indexes = [BrinIndex(fields=['created_at'])]
 
     def save(self, *args: Any, **kwargs: Any):
         """Saves model with updated_time and created_time."""
