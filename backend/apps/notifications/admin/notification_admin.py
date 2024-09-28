@@ -7,6 +7,8 @@ from apps.notifications.models import Notification
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
     """Notifications admin."""
+
+    ordering = ('-id',)
     list_display = [
         'id',
         'mailing',

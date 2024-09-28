@@ -67,7 +67,7 @@
 import { onMounted, ref } from "vue"
 import notificationService from "@/services/notificationService"
 import { useI18n } from 'vue-i18n'
-import Dropdown from '@/components/Dropdown'
+import Dropdown from '@/components/Dropdown.vue'
 
 
 const t = useI18n().t;

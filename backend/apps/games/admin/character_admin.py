@@ -8,6 +8,7 @@ from apps.games.models import Character
 class CharacterAdmin(admin.ModelAdmin):
     """Character admin."""
 
+    ordering = ('-id',)
     list_display = [
         "id",
         "name",

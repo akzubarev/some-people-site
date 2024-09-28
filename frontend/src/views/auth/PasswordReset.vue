@@ -51,7 +51,6 @@
 import { defineComponent, ref } from "vue"
 import { Field, Form } from "vee-validate"
 import { useRouter } from "vue-router"
-// import Swal from "sweetalert2/dist/sweetalert2.min.js";
 
 import authService from "@/services/authService"
 import formhelper from "@/core/helpers/form"

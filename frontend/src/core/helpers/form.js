@@ -1,5 +1,5 @@
 import { ref } from "vue"
-// import Swal from "sweetalert2/dist/sweetalert2.min.js"
+// import Swal from "sweetalert2"
 import { useStore } from "vuex"
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
   const store = useStore()
 
   const errorHandler = async () => {
-    popup.close()
+    // popup.close()
     let msg
     if (data.value["detail"]) {
       msg = data.value["detail"]
@@ -24,7 +24,7 @@ export default () => {
       msg = data.value["non_field_errors"][0]
     }
     if (msg) {
-      // Swal.fire({
+      // await Swal.fire({
       //   text: msg,
       //   icon: "error",
       //   buttonsStyling: false,

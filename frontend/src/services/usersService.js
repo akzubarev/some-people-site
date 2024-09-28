@@ -13,7 +13,4 @@ export default {
     async mg() {
         return await request.get(`/api/users/mg/`)
     },
-    async telegram(user_uuid) {
-        return await request.get(`/api/users/telegram_code/?uuid=${user_uuid}/`)
-    },
 }

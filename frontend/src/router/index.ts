@@ -38,36 +38,12 @@ const routes: Array<RouteRecordRaw> = [
                 }
             },
             {
-                path: "/account",
-                name: "account",
-                redirect: "/account/profile",
-                component: () => import("@/views/account/Account.vue"),
-                children: [
-                    {
-                        path: "telegram",
-                        name: "account-telegram",
-                        component: () => import("@/views/account/Telegram.vue"),
-                        meta: {
-                            middleware: [isAuth, forceLoadUser]
-                        }
-                    },
-                    {
-                        path: "settings",
-                        name: "account-settings",
-                        component: () => import("@/views/account/Settings.vue"),
-                        meta: {
-                            middleware: [isAuth, forceLoadUser]
-                        }
-                    },
-                    {
-                        path: "notifications",
-                        name: "account-notifications",
-                        component: () => import("@/views/account/Notifications.vue"),
-                        meta: {
-                            middleware: [isAuth, loadUser]
-                        }
-                    }
-                ]
+                path: "/account/settings",
+                name: "account-settings",
+                component: () => import("@/views/account/settings/Settings.vue"),
+                meta: {
+                    middleware: [isAuth, forceLoadUser]
+                }
             },
             {
                 path: "/games",

@@ -8,6 +8,7 @@ from apps.games.models import Application
 class ApplicationAdmin(admin.ModelAdmin):
     """Application admin."""
 
+    ordering = ('-id',)
     list_display = [
         "id",
         "user",
