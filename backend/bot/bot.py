@@ -5,7 +5,7 @@ import sys
 import django
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 
-sys.path[0] += '/..'
+sys.path[0] = '/app/'
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 

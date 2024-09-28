@@ -1,7 +1,10 @@
+"""Application model."""
 from django.db import models
 
 
 class Application(models.Model):
+    """Application model."""
+
     class Status:
         PENDING = "pending"
         DISCUSSING = "discussing"
@@ -46,11 +49,14 @@ class Application(models.Model):
     )
 
     def save(self, *args, **kwargs):
+        """Save with price calculation."""
         if not self.id:
             self.price = self.game.price
         super().save(*args, **kwargs)
 
     class Meta:
+        """Model meta."""
+
         verbose_name = "Заявка"
         verbose_name_plural = "Заявки"
 

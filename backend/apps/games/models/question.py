@@ -1,7 +1,10 @@
+"""Question models."""
 from django.db import models
 
 
 class Question(models.Model):
+    """Question model."""
+
     class Type:
         LINE = "line"
         PARAGRAPH = "paragraph"
@@ -49,6 +52,8 @@ class Question(models.Model):
     )
 
     class Meta:
+        """Model meta."""
+
         verbose_name = "Вопрос"
         verbose_name_plural = "Вопросы"
         ordering = ["order"]

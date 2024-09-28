@@ -1,7 +1,10 @@
+"""Faction models."""
 from django.db import models
 
 
 class Faction(models.Model):
+    """Faction model."""
+
     name = models.CharField(
         verbose_name='Название',
         max_length=100
@@ -43,6 +46,8 @@ class Faction(models.Model):
     )
 
     class Meta:
+        """Model meta."""
+
         verbose_name = 'Фракция'
         verbose_name_plural = 'Фракция'
         ordering = ["name"]

@@ -1,3 +1,4 @@
+"""Notification models module."""
 import dataclasses
 from datetime import datetime
 
@@ -6,6 +7,7 @@ from django.db import models
 
 
 class Notification(models.Model):
+    """Notification model."""
     # text = models.TextField()
     # image = models.ImageField()
 
@@ -34,6 +36,7 @@ class Notification(models.Model):
 
 @dataclasses.dataclass
 class NotificationData:
+    """Notification dataclass model for external usage."""
     id: int
     text: str
     chat_id: str

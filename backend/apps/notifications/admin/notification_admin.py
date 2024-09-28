@@ -1,3 +1,4 @@
+"""Notifications admin module."""
 from django.contrib import admin
 
 from apps.notifications.models import Notification
@@ -5,6 +6,7 @@ from apps.notifications.models import Notification
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
+    """Notifications admin."""
     list_display = [
         'id',
         'mailing',

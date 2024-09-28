@@ -1,13 +1,22 @@
+"""Game character models."""
 from django.db import models
 
 
 class Character(models.Model):
+    """Game character model."""
+
     name = models.CharField(
         verbose_name='Имя',
         max_length=100
     )
+
     alias = models.CharField(
         verbose_name='Никнейм',
+        max_length=100
+    )
+
+    char_id = models.CharField(
+        verbose_name='char_id',
         max_length=100
     )
 
@@ -49,6 +58,8 @@ class Character(models.Model):
     )
 
     class Meta:
+        """Model meta."""
+
         verbose_name = 'Персонаж'
         verbose_name_plural = 'Персонаж'
         ordering = ["name"]

@@ -1,7 +1,10 @@
+"""Answer models."""
 from django.db import models
 
 
 class Answer(models.Model):
+    """Answer model."""
+
     question = models.ForeignKey(
         verbose_name="Вопрос",
         to="games.Question", related_name="answers",
@@ -15,6 +18,8 @@ class Answer(models.Model):
     value = models.JSONField(null=True, blank=True)
 
     class Meta:
+        """Model meta."""
+
         verbose_name = "Ответ"
         verbose_name_plural = "Ответы"
 

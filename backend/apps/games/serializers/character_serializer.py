@@ -1,17 +1,22 @@
+"""Character serializers module."""
 from rest_framework import serializers
 
-from apps.games.models import Character, Application
-from .tag_serializer import TagSerializer
-from .application_serializer import ApplicationSerializer
+from apps.games.models import Application, Character
 from apps.users.models import User
+from apps.users.serializers import UserSerializer
+from .application_serializer import ApplicationSerializer
+from .tag_serializer import TagSerializer
 
 
 class CharacterSerializer(serializers.ModelSerializer):
+    """Character serializer."""
     applications = ApplicationSerializer(many=True)
     tags = TagSerializer(many=True)
     player = serializers.SerializerMethodField()
 
     class Meta:
+        """Serializer meta."""
+
         model = Character
         fields = [
             'id',
@@ -25,10 +30,10 @@ class CharacterSerializer(serializers.ModelSerializer):
             'tags',
         ]
 
-    def get_player(self, obj):
-        from apps.users.serializers import UserSerializer
+    def get_player(self, character: Character) -> dict | None:
+        """Gets characters player info."""
         player = User.objects.filter(
-            applications__character=obj,
+            applications__character=character,
             applications__status=Application.Status.CONFIRMED
         ).first()
         if player is not None:

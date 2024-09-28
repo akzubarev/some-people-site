@@ -1,5 +1,5 @@
 version: "3.3"
-name: pintopay-prod
+name: some-people-prod
 
 
 networks:
@@ -87,57 +87,12 @@ services:
   # DAEMONS #
   ###########
 
-  daemon.cache_updater:
-    <<: [ *backend_base ]
-    depends_on:
-      - daemon.echoip
-    command: python daemons/cache_updater/entrypoint.py
-
   bot:
     <<: [ *backend_base ]
     restart: always
     command:
       - |
-        python apps/notifications/bot/bot.py
-
-  daemon_events_mailing:
-    <<: [ *backend_base ]
-    restart: always
-    command:
-      - |
-        python apps/events/daemons/daemon_events_mailing.py
-
-  daemon_send_first:
-    <<: [ *backend_base ]
-    restart: always
-    command:
-      - |
-        python apps/notifications/daemons/daemon_send_first.py
-
-  transaction_complete:
-    <<: [ *backend_base ]
-    restart: always
-    command:
-      - |
-        python apps/wallet/daemons/transaction_complete.py
-
-  coinix_payouts:
-    <<: [ *backend_base ]
-    restart: always
-    command:
-      - |
-        python apps/wallet/daemons/coinix_payouts.py
-
-  daemon.echoip:
-    image: mpolden/echoip
-    restart: always
-    ports:
-      - "7778:8080"
-    volumes:
-      - ./geolite_db:/opt/geolite/
-    networks:
-      - default-tier
-    command: '-a /opt/geolite/GeoLite2-ASN.mmdb -c /opt/geolite/GeoLite2-City.mmdb -f /opt/geolite/GeoLite2-Country.mmdb'
+        python bot/bot.py
 
 
   ############

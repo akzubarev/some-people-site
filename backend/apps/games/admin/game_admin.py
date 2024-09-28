@@ -1,9 +1,13 @@
+"""Game admin module."""
 from django.contrib import admin
+
 from apps.games.models import Game
 
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
+    """Game admin."""
+
     list_display = [
         "id",
         "title",

@@ -1,3 +1,4 @@
+"""Game serializers module."""
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
@@ -7,6 +8,7 @@ from .faction_serializer import MainFactionSerializer
 
 
 class GameSerializer(serializers.ModelSerializer):
+    """Game serializer."""
     factions = SerializerMethodField()
     characters = SerializerMethodField()
     non_factioned = SerializerMethodField()
