@@ -1,3 +1,4 @@
+from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
 
 import bot.database as db
@@ -13,6 +14,7 @@ async def notify_users(context: ContextTypes.DEFAULT_TYPE) -> None:
         try:
             await context.bot.send_message(
                 chat_id=notification.chat_id, text=notification.text,
+                parse_mode=ParseMode.HTML,
             )
             await db.mark_notification_sent(notification_id=notification.id)
         except Exception as e:

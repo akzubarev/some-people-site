@@ -1,11 +1,9 @@
-from django.urls import path, include
-from rest_framework import routers
-
-# DEV
+"""Urls configuration."""
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.contrib import admin
+from django.urls import include, path
+from rest_framework import routers
 
 admin.site.enable_nav_sidebar = False
 admin.site.site_header = "Какие-то люди"

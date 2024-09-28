@@ -1,4 +1,5 @@
-from .user_serializer import UserSerializer
-from .my_user_serializer import MyUserSerializer
-from .user_create_serializer import UserCreateSerializer
-from .token_serializer import TokenSerializer,TokenCreateSerializer
+"""Users serializers module."""
+from .token_serializer import TokenCreateSerializer, TokenSerializer
+from .user import MyUserSerializer, UserCreateSerializer, UserSerializer
+
+__all__ = ('MyUserSerializer', 'TokenCreateSerializer', 'TokenSerializer', 'UserCreateSerializer', 'UserSerializer')

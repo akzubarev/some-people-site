@@ -1,3 +1,4 @@
+"""Mailing admin module."""
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
 from django.contrib import admin
@@ -7,6 +8,7 @@ from apps.notifications.models import Mailing
 
 
 class MailingAdminForm(forms.ModelForm):
+    """Mailing admin form."""
     # users = forms.CharField(widget=forms.Textarea)
     # kwargs['widget'] = ManyToManyRawIdWidget(db_field.remote_field, self.admin_site)
     text = forms.CharField(widget=CKEditorUploadingWidget())
@@ -18,6 +20,7 @@ class MailingAdminForm(forms.ModelForm):
 
 @admin.register(Mailing)
 class MailingAdmin(admin.ModelAdmin):
+    """Mailing admin."""
     list_display = [
         'id',
         'display_text',
@@ -28,6 +31,7 @@ class MailingAdmin(admin.ModelAdmin):
     ]
 
     def display_text(self, obj):
+        """Displays text without tags."""
         return strip_tags(obj.text)
 
     form = MailingAdminForm

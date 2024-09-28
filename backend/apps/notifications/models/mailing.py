@@ -1,3 +1,4 @@
+"""Mailing models module."""
 from django.db import models
 from django.utils.translation import gettext as _
 
@@ -7,6 +8,7 @@ from .notification import Notification
 
 
 class Mailing(AutoCreatedUpdatedMixin):
+    """Mailing model."""
     text = models.TextField(
         verbose_name=_('text'),
         null=True,
@@ -30,6 +32,7 @@ class Mailing(AutoCreatedUpdatedMixin):
     )
 
     def save(self, *args, **kwargs):
+        """Model save with notification creation."""
         super().save(*args, **kwargs)
         if self.ready:
             base_qs = User.objects.all()

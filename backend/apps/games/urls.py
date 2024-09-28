@@ -1,5 +1,7 @@
+"""Games urls."""
 from rest_framework.routers import DefaultRouter
-from .views import GameViewSet, QuestionsViewSet, ApplicationsViewSet
+
+from .views import ApplicationsViewSet, GameViewSet, QuestionsViewSet
 
 router = DefaultRouter()
 

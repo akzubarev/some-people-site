@@ -1,7 +1,10 @@
+"""Game models."""
 from django.db import models
 
 
 class Game(models.Model):
+    """Game model."""
+
     title = models.CharField(
         verbose_name='Название',
         max_length=100
@@ -54,6 +57,8 @@ class Game(models.Model):
     )
 
     class Meta:
+        """Model meta."""
+
         verbose_name = 'Игра'
         verbose_name_plural = 'Игры'
         ordering = ["-id"]

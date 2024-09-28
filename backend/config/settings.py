@@ -1,3 +1,4 @@
+"""Main Settings."""
 import os
 import sys
 

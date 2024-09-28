@@ -1,3 +1,4 @@
+"""User creation serializers module."""
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions as django_exceptions
 from rest_framework import serializers
@@ -6,14 +7,15 @@ from rest_framework.settings import api_settings
 from apps.users.models import User
 
 
-
 class UserCreateSerializer(serializers.ModelSerializer):
+    """User creation serializer."""
     password = serializers.CharField(
         style={"input_type": "password"},
         write_only=True
     )
 
     class Meta:
+        """Serializer meta."""
         model = User
         fields = [
             "email",
@@ -23,6 +25,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, attrs):
+        """Validates model fields."""
         user = User(**attrs)
         password = attrs.get("password")
 

@@ -7,6 +7,8 @@ from mixins import AutoCreatedUpdatedMixin, UUIDMixin
 
 
 class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
+    """User model."""
+
     email = models.EmailField(
         verbose_name='email',
         unique=True, max_length=255

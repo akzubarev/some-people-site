@@ -1,7 +1,10 @@
+"""User admin module."""
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.forms import UserChangeForm
+
 from apps.users.models import User
-from .forms import UserChangeForm, UserCreationForm
+from .forms import UserCreationForm
 
 
 @admin.register(User)
@@ -41,8 +44,8 @@ class UserAdmin(BaseUserAdmin):
                 'avatar',
                 'country',
                 'country_iso',
-        'telegram_chat_id',
-        'telegram_username',
+                'telegram_chat_id',
+                'telegram_username',
             ]
         }
          ],

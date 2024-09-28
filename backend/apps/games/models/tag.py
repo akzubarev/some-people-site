@@ -1,7 +1,10 @@
+"""Tag model."""
 from django.db import models
 
 
 class Tag(models.Model):
+    """Tag model."""
+
     name = models.CharField(
         verbose_name='Название',
         max_length=100
@@ -20,6 +23,8 @@ class Tag(models.Model):
     )
 
     class Meta:
+        """Model meta."""
+
         verbose_name = "Тэг"
         verbose_name_plural = "Тэги"
 
