@@ -14,7 +14,6 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     # Admin
-    path('admin_tools/', include('admin_tools.urls')),
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     # API
