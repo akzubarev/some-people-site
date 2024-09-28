@@ -11,12 +11,9 @@ from rest_framework.response import Response
 
 from apps.users.models import User
 from apps.users.serializers import MyUserSerializer, UserCreateSerializer, UserSerializer
-from utils.auth import encode_uuid
 
 
-class UserViewSet(viewsets.GenericViewSet,
-                  mixins.CreateModelMixin, mixins.UpdateModelMixin,
-                  mixins.RetrieveModelMixin):
+class UserViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin):
     """Users viewset."""
 
     serializer_class = UserSerializer
@@ -28,6 +25,7 @@ class UserViewSet(viewsets.GenericViewSet,
         if self.action == 'create':
             return UserCreateSerializer
         elif self.action == 'me':
+            print(self.action)
             return MyUserSerializer
         return self.serializer_class
 
@@ -39,37 +37,34 @@ class UserViewSet(viewsets.GenericViewSet,
             return self.retrieve(request, *args, **kwargs)
         elif request.method == 'PUT':
             return self.update(request, *args, **kwargs)
-        elif request.method == 'DELETE':
-            return self.destroy(request, *args, **kwargs)
+        # elif request.method == 'DELETE':
+        #     return self.destroy(request, *args, **kwargs)
 
     @transaction.atomic
     def create(self, request: Request) -> Response:
         """Create a new user."""
         if request.user.is_authenticated:
             PermissionDenied()
-        data = request.data
-        serializer = self.get_serializer(data=data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
 
+        self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         token, created = Token.objects.get_or_create(user=serializer.instance)
 
         user = User.objects.filter(id=serializer.instance.id).first()
         user.save()
-        data = dict(serializer.data)
-        data['auth_token'] = token.key
-        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+        response_data = dict(serializer.data) | {'auth_token': token.key}
+        return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
 
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Retrieves a user."""
-        serializer = self.serializer_class(self.get_object(), context={'request': request})
+        serializer = self.get_serializer(self.get_object(), context={'request': request})
         return Response(serializer.data)
 
     def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Retrieves the list of users."""
-        queryset = self.get_queryset()
-        serializer = self.serializer_class(queryset, context={'request': request}, many=True)
+        serializer = self.get_serializer(self.get_queryset(), context={'request': request}, many=True)
         return Response(serializer.data)
 
     @action(detail=False, methods=["get"])
@@ -77,17 +72,12 @@ class UserViewSet(viewsets.GenericViewSet,
         """Retrieves the list of players for a game by alias."""
         game_alias = request.GET.get("game_alias")
         queryset = User.objects.filter(applications__game__alias=game_alias)
-        serializer = self.serializer_class(queryset, context={'request': request}, many=True)
+        serializer = self.get_serializer(queryset, context={'request': request}, many=True)
         return Response(serializer.data)
 
     @action(detail=False, methods=["get"])
     def mg(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Retrieves the list of master group users."""
         queryset = User.objects.filter(is_staff=True).exclude(username="admin")
-        serializer = self.serializer_class(queryset, context={'request': request}, many=True)
+        serializer = self.get_serializer(queryset, context={'request': request}, many=True)
         return Response(serializer.data)
-
-    @action(detail=False, methods=["get"])
-    def telegram_code(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        """Retrieves the telegram code for current user."""
-        return Response(encode_uuid(uuid=request.user.uuid))

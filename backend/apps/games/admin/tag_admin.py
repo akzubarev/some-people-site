@@ -8,6 +8,7 @@ from apps.games.models import Tag
 class TagAdmin(admin.ModelAdmin):
     """Tag admin."""
 
+    ordering = ('-id',)
     list_display = [
         "id",
         "name",

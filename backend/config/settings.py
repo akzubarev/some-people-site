@@ -16,9 +16,7 @@ SETTINGS_DIR = os.path.dirname((os.path.abspath(__file__)))
 sys.path.append(SETTINGS_DIR)
 
 USE_TZ = True
-TIME_ZONE = os.getenv("TIME_ZONE", "Europe/Moscow")
-if not TIME_ZONE:
-    TIME_ZONE = "Europe/Moscow"
+TIME_ZONE = os.getenv("TIME_ZONE") or "Europe/Moscow"
 BACKEND_DIR = os.path.dirname(SETTINGS_DIR)
 BASE_DIR = BACKEND_DIR
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -80,7 +78,6 @@ DEFAULT_FROM_EMAIL = "Pin2Pay <no-reply@pintopay.club>"
 
 INSTALLED_APPS = [
     # Django Admin
-
     'jazzmin',
     'related_admin',
     "django.contrib.admin",
@@ -96,7 +93,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "phonenumber_field",
     # Django addons
-    # "django_filters",
+    "django_filters",
     "ckeditor",
     "ckeditor_uploader",
     # APPS
@@ -143,7 +140,7 @@ TEMPLATES = [
                 "django.template.loaders.filesystem.Loader",
                 'django.template.loaders.app_directories.Loader',
             ],
-            "builtins": ["apps.users.templatetags.customtags"],
+            "builtins": ["config.templatetags.custom_tags"],
         },
     }
 ]

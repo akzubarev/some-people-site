@@ -13,7 +13,7 @@ class UserAdmin(BaseUserAdmin):
     add_form = UserCreationForm
 
     # list_filter = BaseUserAdmin.list_filter + ('country_iso',)
-
+    ordering = ('-id',)
     list_display = [
         'id',
         'email',

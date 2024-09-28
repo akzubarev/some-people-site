@@ -8,6 +8,7 @@ from apps.games.models import Faction
 class FactionAdmin(admin.ModelAdmin):
     """Faction admin."""
 
+    ordering = ('-id',)
     list_display = [
         "id",
         "name",

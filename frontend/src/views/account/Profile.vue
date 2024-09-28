@@ -1,8 +1,6 @@
 <template>
-  <div
-      class="flex flex-col p-6 gap-6 rounded-xl bg-gray-700 bg-opacity-60 mt-48 mx-3">
-    <div
-        class="flex max-md:flex-col max-md:justify-center items-center gap-6 relative">
+  <div class="flex flex-col p-6 gap-6 rounded-xl bg-gray-700 bg-opacity-60 mt-48 mx-3">
+    <div class="flex max-md:flex-col max-md:justify-center items-center gap-6 relative">
       <Avatar
           class="min-w-[128px]" size="128" :src="user.avatar"
           :username="user.first_name + ' ' + user.last_name"

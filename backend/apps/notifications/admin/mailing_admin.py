@@ -21,6 +21,8 @@ class MailingAdminForm(forms.ModelForm):
 @admin.register(Mailing)
 class MailingAdmin(admin.ModelAdmin):
     """Mailing admin."""
+
+    ordering = ('-id',)
     list_display = [
         'id',
         'display_text',

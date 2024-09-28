@@ -34,7 +34,6 @@ import Popup from '@/components/Popup.vue'
 import SmallSubscription from '../../views/subscription/SmallSubscription.vue'
 import {ref} from 'vue'
 import services from './services'
-// import Swal from "sweetalert2";
 
 
 import store from '@/store'

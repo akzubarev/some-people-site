@@ -7,6 +7,7 @@ from apps.games.models import Question
 class QuestionAdmin(admin.ModelAdmin):
     """Question admin."""
 
+    ordering = ('-id',)
     list_display = [
         "id",
         "title",

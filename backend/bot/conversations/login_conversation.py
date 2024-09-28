@@ -28,21 +28,19 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 async def code(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Checks the equality of specified code to the user code."""
     auth_code = context.args[0] if context.args else update.message.text.strip()
-    try:
-        logger.warning(auth_code)
-        user_uuid = decode_uuid(encoded=auth_code)
-        logger.warning(user_uuid)
-        change = await db.user_tg(
-            user_uuid=user_uuid, chat_id=update.message.chat_id,
-            username=update.message.from_user.username,
-        )
-        reply_text = 'Телеграм успешно изменен.' if change else 'Телеграм успешно добавлен.'
-        await update.message.reply_text(
-            text=reply_text, reply_markup=ReplyKeyboardRemove()
-        )
-    except Exception as e:
-        await update.message.reply_text(text='Неверный код, попробуйте еще раз.')
-        return CODE
+    # try:
+    logger.warning(auth_code)
+    user_uuid = decode_uuid(encoded=auth_code)
+    logger.warning(user_uuid)
+    change = await db.user_tg(
+        user_uuid=user_uuid, chat_id=update.message.chat_id,
+        username=update.message.from_user.username,
+    )
+    reply_text = 'Телеграм успешно изменен.' if change else 'Телеграм успешно добавлен.'
+    await update.message.reply_text(text=reply_text, reply_markup=ReplyKeyboardRemove())
+    # except Exception as e:
+    #     await update.message.reply_text(text='Неверный код, попробуйте еще раз.')
+    #     return CODE
 
     return ConversationHandler.END
 
