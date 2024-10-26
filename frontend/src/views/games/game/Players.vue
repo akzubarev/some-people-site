@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-3">
     <div class="card p-6">
       <div class="flex flex-row justify-between">
-        <div class="text text-xl text-center text-white w-[30%]"> Игрок</div>
-        <div class="text text-xl text-center  text-white w-[30%]"> Персонаж
+        <div class="text text-xl text-center text-content-primary w-[30%]"> Игрок</div>
+        <div class="text text-xl text-center  text-content-primary w-[30%]"> Персонаж
         </div>
-        <div class="text text-xl text-center  text-white w-[30%]"> Заявка</div>
+        <div class="text text-xl text-center  text-content-primary w-[30%]"> Заявка</div>
       </div>
       <hr>
       <div class="flex flex-col gap-6 py-3">

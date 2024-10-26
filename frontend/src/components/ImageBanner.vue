@@ -3,10 +3,10 @@
        :style="`background-image: url('${image}')`">
     <div class="flex flex-col gap-5 p-5 bg-black bg-opacity-70"
          :class="full? 'w-[50%]' : 'w-[40%]'">
-      <div class="text-[--dark-text-color] text-4xl font-bold">
+      <div class="text-content-primary text-4xl font-bold">
         {{ title }}
       </div>
-      <div class="text-[--dark-text-color] whitespace-pre-wrap">
+      <div class="text-content-primary whitespace-pre-wrap">
         {{ description }}
       </div>
       <div class="flex gap-2" :class="full ? 'flex-row' : 'flex-col'">
@@ -17,8 +17,8 @@
       </div>
       <div class="flex flex-col gap-5 flex-wrap">
         <a v-for="button in buttons" :key="button" :href="button.href"
-           class="btn btn-outline w-full md:w-fit text-[--dark-text-color]
-          hover:text-[--dark-text-color] hover:bg-[#0f6099] !border-[--dark-text-color]">
+           class="btn btn-outline w-full md:w-fit text-content-primary
+          hover:text-content-primary hover:bg-[#0f6099] !border-[--text-color]">
           {{ button.text }}
         </a>
         <div class="flex flex-row gap-3 flex-wrap"

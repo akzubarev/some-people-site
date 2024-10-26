@@ -10,19 +10,19 @@
   >
     <div class="flex flex-col h-full gap-3 justify-center">
       <div class="flex flex-col bg-gray-800 bg-opacity-60 px-28">
-        <div class="text-[--dark-text-color] text-8xl font-bold -mt-10">
+        <div class="text-content-primary text-8xl font-bold -mt-10">
           {{ game.title }}
         </div>
         <div
             class="flex flex-row gap-28 pb-6 justify-between">
           <div class="flex flex-col gap-3 p-3 w-[40%] justify-center">
             <div
-                class="text-[--dark-text-color] whitespace-pre-wrap max-w-[400px]">
+                class="text-content-primary whitespace-pre-wrap max-w-[400px]">
               {{ game.short_description }}
             </div>
             <div class="flex flex-row gap-2">
               <div v-for="data in gameData" :key="data"
-                   class="px-2 border w-fit h-fit border-1 rounded-xl text-md text-gray-500 border-gray-500">
+                   class="text-content-disabled text-md px-2 border w-fit h-fit rounded-xl border-1 border-gray-500">
                 {{ data }}
               </div>
             </div>
@@ -31,10 +31,10 @@
             <div v-for="link in links" :key="link"
                  @click="link.locked ? lockedSection(link.lockedText) : link.link()"
                  class="text-4xl flex flex-row gap-1 items-center cursor-pointer"
-                 :class="link.locked ? 'text-gray-500' : 'hover:text-gray-300'">
+                 :class="link.locked ? 'text-content-disabled' : 'text-content-primary hover:text-content-primary-accent'">
               {{ link.title }}
               <inline-svg
-                  v-if="link.locked" class="h-[25px] w-[25px] text-gray-500"
+                  v-if="link.locked" class="h-[25px] w-[25px] text-content-disabled"
                   :src="require('@/assets/images/icons/common/lock.svg')"/>
             </div>
           </div>

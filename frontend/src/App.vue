@@ -12,30 +12,51 @@
     <router-view/>
   </PullToRefresh>
 </template>
-<style>
 
+<style>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --accent-color-start: #56405f;
-  --accent-color-end: #44405f;
-  --bg-card: #404B5F;
+  --text-default: 218 223 229;
+  --text-disabled: 138 144 153;
+  --text-accent: 92 21 154;
 
-  /* dark colors */
-  --dark-primary-color: #101214; /* Основной темный цвет сайта */
-  --dark-secondary-color: #181B1F; /* Второстепенный темный цвет */
-  --dark-accent-color: #310533; /* Акцентный темный цвет */
-  --dark-text-color: #DADFE5; /* Основной цвет текста в темной теме */
-  --dark-text-secondary-color: #8A9099; /* Второстепенный цвет текста в темной теме */
-  --dark-link-color: #5c159a; /* Цвет ссылок в темной теме */
+  --bg-default: 64 75 95;
+  --bg-shadowed: 29 33 38;
+
+  --gradient-start: 88 64 95;
+  --gradient-end: 68 64 95;
 }
-</style>
-<style lang="scss">
 
-@import "assets/sass/style";
+.btn {
+  background: linear-gradient(85deg, rgb(var(--gradient-start)), rgb(var(--gradient-end)));
+  background-clip: text;
+  color: transparent;
 
-@media (max-width: 479px) {
-  #crisp-chatbox > div > a {
-    display: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 0;
+  text-decoration: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: inherit;
+    background-origin: border-box;
+    background-clip: border-box;
+    //-webkit-mask: linear-gradient(#fff 0 0) padding-box,
+    //linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    -webkit-mask-repeat: no-repeat;
   }
 }
 
@@ -116,22 +137,11 @@ body,
   }
 }
 
-.text-accent {
-  background: linear-gradient(45deg, theme('colors.accent.green') 0%, theme('colors.accent.emerald') 50%, theme('colors.accent.blue') 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .Layout-Body {
   margin: auto
 }
 </style>
-<style>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-</style>
+
 <script setup lang="ts">
 // import ActionModal from "@/components/ActionModal.vue";
 import {pageTitle, metaData} from "./store"

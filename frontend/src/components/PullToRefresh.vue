@@ -30,7 +30,7 @@ const progress = computed(() => {
 	overflow-y: auto;
 	max-height: 100%;
 	&-Progress {
-		background: linear-gradient(85deg, var(--accent-color-start), var(--accent-color-end));
+		background: linear-gradient(85deg, var(--gradient-start), var(--gradient-end));
 		height: 2px;
 		position: absolute;
 	}

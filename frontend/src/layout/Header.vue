@@ -15,7 +15,7 @@
         <div v-for="link in links" :key="link"
              @click="link.locked ? lockedSection(link.lockedText) : $router.push(link.link)"
              class="text-3xl font-bold flex flex-row gap-1 items-center cursor-pointer"
-             :class="link.locked ? 'text-gray-500' : 'hover:text-gray-300'">
+             :class="link.locked ? 'text-content-disabled' : 'text-content-primary hover:text-content-accent'">
           {{ link.title }}
           <inline-svg
               v-if="link.locked" class="h-[25px] w-[25px] text-gray-500"

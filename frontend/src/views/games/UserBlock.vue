@@ -7,7 +7,7 @@
                 :size="full ? 50 : 25" :showFlag="false" :src="user.avatar"
         />
         <div class="flex justify-start items-start flex-col cursor-pointer">
-          <div class="text-white" :class="!full && 'text-sm'"> {{
+          <div class="text-content-primary" :class="!full && 'text-sm'"> {{
               `${user.first_name} ${user.last_name}`
             }}
           </div>

@@ -5,7 +5,7 @@
         :alias="alias"
     />
     <div class="card p-3">
-      <div class="text text-xl text-white p-3">
+      <div class="text text-xl text-content-primary p-3">
         Персонажи
       </div>
       <div class="flex flex-col p-3 gap-6">

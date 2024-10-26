@@ -1,7 +1,6 @@
 <template>
   <Form class="form" novalidate="novalidate" @submit="saveProfile">
     <div class="card-body flex flex-col w-full gap-3">
-
       <div class="setting-container">
         <label class="title"> {{ $t("settings.avatar") }} </label>
         <div class="inputs">

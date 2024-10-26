@@ -20,7 +20,7 @@
         <div class="card-body">
           <div class="flex flex-col gap-3" v-if="item && item.type">
             <div class="flex justify-between gap-6">
-              <div class="text-bold text-white" v-html="item.type.title"/>
+              <div class="text-bold text-content-primary" v-html="item.type.title"/>
               <div class="text-gray-600 whitespace-nowrap">
                 {{ timeAgo.format(new Date(item.created_at)) }}
               </div>

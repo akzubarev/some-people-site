@@ -6,24 +6,16 @@
       </slot>
 
       <slot name="body">
-        <span
-            v-if="title"
-            class="text-3xl text-center">
+        <span v-if="title" class="text-content-primary text-3xl text-center">
           {{ title }}
         </span>
-        <span
-            v-if="description"
-            class="text-xl text-center text-gray-400">
+        <span v-if="description" class="text-content-primary text-xl text-center text-gray-400">
           {{ description }}
         </span>
       </slot>
       <slot name="button">
         <button
-            class="btn h-fit w-full md:w-fit"
-            :class="{
-            outline: 'btn-outline-accent',
-            solid: 'btn-accent',
-          }[buttonStyle || 'outline']"
+            class="btn text-content-primary btn h-fit w-full md:w-fit"
             v-if="!(hideButton !== undefined && hideButton == true)"
             @click="$emit('submit')">
           {{ buttonText || typeConf[type || defaultConf].buttonText }}
@@ -66,6 +58,10 @@ const typeConf = {
   },
   lock: {
     icon: require('@/assets/images/icons/common/lock-gradient.svg'),
+    buttonText: 'Ok',
+  },
+  developing: {
+    icon: require('@/assets/images/icons/action-modal/developing.svg'),
     buttonText: 'Ok',
   },
 }
