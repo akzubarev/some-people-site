@@ -1,10 +1,10 @@
 .filter_subtitle {
-  @apply text-[var(--dark-text-color)] text-base font-normal mb-0;
+  @apply text-[var(--text-color)] text-base font-normal mb-0;
 }
 
 .arrow {
   @apply text-xs transition-transform ease-linear rotate-0;
-  color: var(--dark-text-color);
+  color: var(--text-color);
   width: 20px;
   height: 20px;
 
@@ -35,6 +35,6 @@ $button-radius: 8px;
   font-size: 16px;
   font-weight: 400;
   font-style: normal;
-  color: var(--dark-accent-color) !important;
-  background: var(--dark-primary-color) !important;
+  color: var(--accent-color) !important;
+  background: var(--primary-color) !important;
 }
