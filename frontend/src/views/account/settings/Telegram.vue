@@ -8,7 +8,7 @@
       </button>
       <button v-if="!user.telegram" @click="copyLink"
               class="btn py-0 flex-shrink-0 flex justify-center items-center gap-2">
-        <inline-svg class="fs-3" :src="require(`@/assets/images/icons/common/${copied ? 'check' : 'Copy'}.svg`)"/>
+        <inline-svg class="fs-3" :src="require(`@/assets/images/icons/common/${copied ? 'check' : 'copy'}.svg`)"/>
         {{ copied ? $t(`common.linkCopied`) : $t(`common.actions.copy`) }}
       </button>
     </div>

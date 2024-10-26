@@ -35,7 +35,7 @@
               {{ link.title }}
               <inline-svg
                   v-if="link.locked" class="h-[25px] w-[25px] text-gray-500"
-                  :src="require('@/assets/images/icons/matrix/Lock.svg')"/>
+                  :src="require('@/assets/images/icons/common/lock.svg')"/>
             </div>
           </div>
         </div>
@@ -48,10 +48,10 @@
 <script setup>
 import {computed, ref} from "vue"
 import gamesService from "@/services/gamesService";
-import ActionModal from "@/components/action-modal/ActionModal.vue";
+import ActionModal from "@/components/ActionModal.vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
-import {games} from "@/views/games/gameImages";
+import {games} from "@/constants/gameImages";
 
 const store = useStore()
 const router = useRouter()

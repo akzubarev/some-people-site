@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-2 w-full">
     <div class="flex flex-row items-center gap-4">
-      <img class="z-30 w-[200px] h-[200px] rounded-full" :src="master.image"/>
+      <img class="z-30 w-[100px] h-[100px] rounded-full" :src="master.image"/>
       <div
           class="flex flex-col w-fit gap-1 items-start">
         <div

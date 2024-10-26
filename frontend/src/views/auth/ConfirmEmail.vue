@@ -2,7 +2,7 @@
   <div
     class="flex flex-col gap-8 items-center text-white mx-auto w-full md:max-w-[600px] p-4 mt-6 text-center">
     <inline-svg
-      :src="require('@/assets/images/icons/matrix/Info.svg')"
+      :src="require('@/assets/images/icons/common/info.svg')"
       style="color: var(--kt-primary);"
       height="3em"
       width="3em"

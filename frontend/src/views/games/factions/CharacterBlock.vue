@@ -30,7 +30,7 @@
 <script setup>
 
 import {ref} from "vue";
-import {characters} from "@/views/games/characterImages";
+import {characters} from "@/constants/characterImages";
 
 const props = defineProps({
   character: {

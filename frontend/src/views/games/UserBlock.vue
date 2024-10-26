@@ -52,8 +52,8 @@
 
 
 <script setup>
-import Avatar from "@/components/avatar/Avatar.vue";
-import CharacterBlock from "@/views/games/factions/CharacterBlock.vue";
+import Avatar from "@/components/Avatar.vue";
+// import CharacterBlock from "@/views/games/factions/CharacterBlock.vue";
 
 const props = defineProps({
   game: {

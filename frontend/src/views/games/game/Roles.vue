@@ -25,7 +25,7 @@ import gamesService from "@/services/gamesService";
 import FactionBlock from "@/views/games/factions/FactionBlock.vue";
 import router from "@/router";
 import {useStore} from "vuex";
-import {games} from "@/views/games/gameImages";
+import {games} from "@/constants/gameImages";
 
 const store = useStore()
 const props = defineProps(["alias"])

@@ -10,7 +10,7 @@
       <div class="flex items-center gap-2">
       	<inline-svg
       	  class="text-2xl text-gray-400"
-      	  :src="require('@/assets/images/icons/dashboard/eye.svg')"/>
+      	  :src="require('@/assets/images/icons/auth/eye.svg')"/>
         <div class="form-check form-switch m-0 p-0">
           <input
             type="checkbox"
@@ -20,7 +20,7 @@
         </div>
       	<inline-svg
       	  class="text-2xl text-gray-400"
-      	  :src="require('@/assets/images/icons/dashboard/person.svg')"/>
+      	  :src="require('@/assets/images/icons/auth/person.svg')"/>
       </div>
     </div>
     <div class="flex justify-between mb-4 items-center">
@@ -52,7 +52,7 @@
           }}</span>
       	  <inline-svg
       	    class="text-inherit"
-      	    :src="require('@/assets/images/icons/matrix/Down.svg')"/>
+      	    :src="require('@/assets/images/icons/common/down.svg')"/>
         </div>
         <ul
           class="dropdown-menu w-full mt-3 p-4 flex-col tabs-dropdown filter-switcher"

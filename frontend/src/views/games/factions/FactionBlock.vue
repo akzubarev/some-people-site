@@ -41,8 +41,8 @@
 import SubFactionBlock from "@/views/games/factions/SubFactionBlock.vue";
 import CharacterBlock from "@/views/games/factions/CharacterBlock.vue";
 import {ref} from "vue";
-import s from "@/components/filters/styles.module.scss";
-import {factions} from "@/views/games/factionImages";
+import s from "@/components/styles.module.scss";
+import {factions} from "@/constants/factionImages";
 
 const expanded = ref(false)
 const props = defineProps({
