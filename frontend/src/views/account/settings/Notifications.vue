@@ -27,7 +27,7 @@
                   {{ teamDepthEnum[teamDepth].title }}
                   <inline-svg
                     width="9px"
-                    :src="require('@/assets/images/icons/matrix/Down.svg')"
+                    :src="require('@/assets/images/icons/common/down.svg')"
                   />
                 </div>
               </template>

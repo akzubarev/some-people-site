@@ -32,7 +32,7 @@
         <div class="flex items-center gap-2">
           <inline-svg
               class="text-2xl text-gray-400"
-              :src="require('@/assets/images/icons/dashboard/eye.svg')"/>
+              :src="require('@/assets/images/icons/auth/eye.svg')"/>
           <div class="form-check form-switch m-0 p-0">
             <input
                 type="checkbox"
@@ -42,7 +42,7 @@
           </div>
           <inline-svg
               class="text-2xl text-gray-400"
-              :src="require('@/assets/images/icons/dashboard/person.svg')"/>
+              :src="require('@/assets/images/icons/auth/person.svg')"/>
         </div>
       </div>
 
@@ -119,7 +119,7 @@
           <div class="flex items-center gap-2">
             <inline-svg
                 class="text-2xl text-gray-400"
-                :src="require('@/assets/images/icons/dashboard/person.svg')"/>
+                :src="require('@/assets/images/icons/auth/person.svg')"/>
             <div class="form-check form-switch m-0 p-0">
               <input
                   type="checkbox"
@@ -129,7 +129,7 @@
             </div>
             <inline-svg
                 class="text-2xl text-gray-400"
-                :src="require('@/assets/images/icons/dashboard/percent.svg')"/>
+                :src="require('@/assets/images/icons/auth/percent.svg')"/>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@
         <router-link
             to="/dashboard"
         >
-          <inline-svg :src="require('@/assets/images/logos/frostpunk.jpg')"/>
+          <inline-svg :src="require('@/assets/images/logo/frostpunk.jpg')"/>
         </router-link>
       </div>
       <Menu @route="$emit('close')" class="mt-[50px]"/>

@@ -58,7 +58,7 @@
             role="button">
           <inline-svg
               class="text-3xl text-gray-400"
-              :src="require(`@/assets/images/icons/dashboard/eye${passVisible ? '-off' : ''}.svg`)"/>
+              :src="require(`@/assets/images/icons/auth/eye${passVisible ? '-off' : ''}.svg`)"/>
         </div>
         <!--end::Input-->
         <div class="fv-plugins-message-container">

@@ -14,7 +14,7 @@
 
 
 <script setup>
-import ImageBanner from "@/views/dashboard/ImageBanner.vue";
+import ImageBanner from "@/components/ImageBanner.vue";
 
 const props = defineProps({
   game: {

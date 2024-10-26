@@ -45,7 +45,7 @@
               <div class="px-2 rounded-xl flex items-center
               border-[1px] border-[grey] text-[grey] gap-1">
                 <inline-svg
-                    :src="require('@/assets/images/icons/dashboard/eye.svg')"
+                    :src="require('@/assets/images/icons/auth/eye.svg')"
                 />
                 <span
                     style="font-size: .9rem; font-weight: 600; line-height: .9rem">

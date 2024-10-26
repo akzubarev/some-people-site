@@ -41,7 +41,7 @@
                page.locked && 'disabled'
             ]">
             <inline-svg v-if="page.locked"
-                        :src="require('@/assets/images/icons/matrix/Lock.svg')"/>
+                        :src="require('@/assets/images/icons/common/lock.svg')"/>
             {{ page.title }}
           </router-link>
         </li>
@@ -53,7 +53,7 @@
 
 <script setup>
 import {useI18n} from "vue-i18n"
-import ActionModal from "@/components/action-modal/ActionModal.vue";
+import ActionModal from "@/components/ActionModal.vue";
 import {ref} from "vue";
 
 

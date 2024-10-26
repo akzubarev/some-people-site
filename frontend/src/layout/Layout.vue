@@ -3,21 +3,23 @@
     <Loader v-if="showLoader"/>
   </teleport>
   <div class="grid">
-    <Aside :class="[$style.aside, aside&&'!block']"
-           class="hidden fixed left-0 h-full top-0 px-3" @close="aside=false"/>
+    <!--    <Aside :class="[$style.aside, aside&&'!block']"-->
+    <!--           class="hidden fixed left-0 h-full top-0 px-3" @close="aside=false"/>-->
     <div :class="$style.wrapper"
          class="w-full m-auto min-h-screen h-full relative bg-[#404B5F]">
-        <img class="absolute ml-2 mt-2 h-22 w-22 z-10 opacity-75"
-             :src="require('@/assets/images/logos/moth.svg')"/>
+      <img class="absolute ml-2 mt-2 h-22 w-22 z-10 opacity-75"
+           :src="require('@/assets/images/logo/moth.svg')"/>
       <Header @asideToggle="openAside"/>
       <router-view/>
     </div>
   </div>
+  <Footer/>
 </template>
 <script setup>
 import {onMounted, ref} from "vue"
-import Aside from "@/layout/aside/Aside.vue"
-import Header from "@/layout/header/Header.vue"
+// import Aside from "@/layout/aside/Aside.vue"
+import Header from "@/layout/Header.vue"
+import Footer from "@/layout/Footer.vue"
 import Loader from "@/components/Loader.vue"
 
 
@@ -29,9 +31,9 @@ onMounted(() => {
     showLoader.value = false
   }, 50)
 })
-const openAside = () => {
-  aside.value = true
-}
+// const openAside = () => {
+//   aside.value = true
+// }
 </script>
 <style lang="scss" module>
 $lg-layout-offset: 50px;

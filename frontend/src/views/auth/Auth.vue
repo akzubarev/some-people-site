@@ -4,7 +4,7 @@
       flex flex-center flex-col flex-col-fluid items-center justify-center">
     <img
         class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[100%] opacity-40 z-0"
-        :src="require('@/assets/images/logos/moth.svg')"/>
+        :src="require('@/assets/images/logo/moth.svg')"/>
     <div
         class="lg:w-1/2 w-full p-6 mx-auto rounded-2xl bg-gray-700 bg-opacity-60 absolute z-10 gap-3">
       <div class="text-2xl text-center">Авторизация</div>

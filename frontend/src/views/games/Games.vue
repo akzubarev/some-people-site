@@ -11,7 +11,7 @@
 import {ref} from "vue"
 import GameBlock from "@/views/games/GameBlock.vue";
 import gamesService from "@/services/gamesService";
-import ImageBanner from "@/views/dashboard/ImageBanner.vue";
+import ImageBanner from "@/components/ImageBanner.vue";
 
 const games = ref([])
 gamesService.games({}).then(({data}) => {

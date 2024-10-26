@@ -15,7 +15,7 @@
           @click="$router.push('/account/settings')"
           class="btn bg-gray-800 text-white max-md:w-full flex gap-2 justify-center md:absolute top-6 right-6">
         <inline-svg
-            :src="require('@/assets/images/icons/common/Settings.svg')"/>
+            :src="require('@/assets/images/icons/account/settings.svg')"/>
         {{ $t("menu.settings") }}
       </button>
     </div>
@@ -56,7 +56,7 @@
           <inline-svg
               class="w-full text-center cursor-pointer h-8"
               @click="$router.push(`/game/${application.game.alias}/apply`)"
-              :src="require('@/assets/images/icons/common/enter.svg')"/>
+              :src="require('@/assets/images/icons/account/apply.svg')"/>
         </div>
         <hr class="h-0.5 w-full bg-gray-200 border-0 rounded">
       </div>
@@ -68,10 +68,9 @@
 import {computed, onMounted, ref} from "vue"
 import {useStore} from "vuex"
 import {useI18n} from "vue-i18n"
-import Avatar from "@/components/avatar";
+import Avatar from "@/components/Avatar.vue";
 import {Tooltip} from "bootstrap";
 import gamesService from "@/services/gamesService";
-import s from "@/components/filters/styles.module.scss";
 
 
 const {t} = useI18n()

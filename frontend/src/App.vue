@@ -1,12 +1,7 @@
 <template>
   <teleport to="head title">{{ pageTitle }}</teleport>
   <teleport to="head">
-    <meta
-        :name="name"
-        :content="content"
-        v-for="(content, name) in metaData"
-        :key="name"
-    />
+    <meta v-for="(content, name) in metaData" :name="name" :content="content" :key="name"/>
   </teleport>
   <teleport to="body">
     <div v-if="$store.getters['body/actionLoader']" class="ActionLoader">
@@ -16,14 +11,11 @@
   <PullToRefresh scroll-root="true" @refresh="refresh">
     <router-view/>
   </PullToRefresh>
-  <!-- <Glares/> -->
 </template>
 <style>
 
 
 :root {
-  /* IMPORTANT!: Добавление новых цветов необходимо обсуждать */
-
   --accent-color-start: #56405f;
   --accent-color-end: #44405f;
   --bg-card: #404B5F;
@@ -38,26 +30,8 @@
 }
 </style>
 <style lang="scss">
-// @import "~bootstrap-icons/font/bootstrap-icons.css";
-// @import "~apexcharts/dist/apexcharts.css";
-// @import "~quill/dist/quill.snow.css";
-// @import "~animate.css";
-// @import "~nouislider/distribute/nouislider.css";
-// @import "~@fortawesome/fontawesome-free/css/all.min.css";
-// @import "~socicon/css/socicon.css";
-// @import "~line-awesome/dist/line-awesome/css/line-awesome.css";
-// @import "~@yaireo/tagify/src/tagify.scss";
-// @import "~dropzone/dist/dropzone.css";
-// @import "~@vueform/multiselect/themes/default.css";
-// @import "~prism-themes/themes/prism-shades-of-purple.css";
-// @import "~element-plus/lib/theme-chalk/index.css";
 
-// Main demo style scss
-// @import "assets/sass_14/plugins";
 @import "assets/sass/style";
-// @import "assets/sass/plugins.dark";
-// @import "assets/sass/style.dark";
-
 
 @media (max-width: 479px) {
   #crisp-chatbox > div > a {
@@ -118,11 +92,6 @@ input:-webkit-autofill {
   padding: 0
 }
 
-// @media (min-width: 620px) {
-//   body {
-//     font-family: "Suisse Regular";
-//   }
-//  }
 html,
 body,
 #app {
@@ -142,9 +111,6 @@ body,
     padding: theme('spacing.6');
   }
 
-  // .card-header:has(+ .card-body) {
-  //   padding-bottom: theme('spacing.3')
-  // }
   .card-header + .card-body {
     padding-top: 0
   }
@@ -167,21 +133,14 @@ body,
 @tailwind utilities;
 </style>
 <script setup lang="ts">
-import {defineComponent, onMounted, ref} from "vue"
-import ActionModal from "@/components/action-modal/ActionModal.vue";
-// import { Mutations } from "@/store/enums/StoreEnums"
+// import ActionModal from "@/components/ActionModal.vue";
 import {pageTitle, metaData} from "./store"
 import SpinLoder from "@/components/SpinLoader.vue"
 import PullToRefresh from "@/components/PullToRefresh.vue"
-import Popup from "@/components/Popup"
+// import Popup from "@/components/Popup"
 
 const refresh = () => {
   window.location.reload()
 }
 
-const showSpecialOffer = ref(false)
-const changeDomain = () => {
-  window.location = "http://residual.community";
-}
-// const changeHost = !['residual.community', 'localhost', '127.0.0.1'].includes(window.location.hostname)
 </script>

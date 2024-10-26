@@ -24,7 +24,7 @@
       </div>
       <div class="flex flex-row items-center justify-between gap-3">
         <div class="whitespace-no-wrap w-[20%]">
-          Заполнено {{ progress.length * 100 / questions.length}}%
+          Заполнено {{ progress.length * 100 / questions.length }}%
         </div>
         <ProgressBar
             :class="progress.length ? 'h-[8px]' : '!h-0'"
@@ -66,7 +66,7 @@
 <script setup>
 import {ref} from "vue"
 import {Form} from "vee-validate"
-import ProgressBar from "@/components/progressbar"
+import ProgressBar from "@/components/progressbar/ProgressBar.vue"
 import {useStore} from "vuex"
 import {useRouter} from "vue-router"
 import formhelper from "@/core/helpers/form"
