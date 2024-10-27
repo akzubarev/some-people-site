@@ -7,17 +7,17 @@
       />
       <div
           class="flex flex-col w-fit gap-1 items-start">
-        <div class="flex flex-row text-lg text-white whitespace-pre-wrap">
-              <span class="text-xl text-white">{{
+        <div class="flex flex-row text-lg text-content-primary whitespace-pre-wrap">
+              <span class="text-xl text-content-primary">{{
                   character.name
-                }} — </span> <span class="text-xl text-white cursor-pointer">{{
+                }} — </span> <span class="text-xl text-content-primary cursor-pointer">{{
             character.player ? character.player.name : "Свободная роль"
           }}  </span>
         </div>
         <div
-            class="-ml-14 z-20 flex flex-row items-center gap-4 p-3 bg-gray-800 bg-opacity-60 rounded-lg"
+            class="flex flex-row items-center gap-4 p-3 bg-gray-800 bg-opacity-60 rounded-lg -ml-14 z-20"
             v-if="full">
-          <div class="ml-14 text-sm whitespace-pre-wrap">
+          <div class=" text-sm text-content-primary whitespace-pre-wrap ml-14">
             {{ character.description }}
           </div>
         </div>

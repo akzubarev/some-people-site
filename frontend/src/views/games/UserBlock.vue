@@ -7,7 +7,7 @@
                 :size="full ? 50 : 25" :showFlag="false" :src="user.avatar"
         />
         <div class="flex justify-start items-start flex-col cursor-pointer">
-          <div class="text-white" :class="!full && 'text-sm'"> {{
+          <div class="text-content-primary" :class="!full && 'text-sm'"> {{
               `${user.first_name} ${user.last_name}`
             }}
           </div>
@@ -37,12 +37,9 @@
           }}%
         </div>
         <button
-            v-if="full"
-            @click="$router.push(`/game/${game}/application/${user.id}`)"
-            class="btn btn flex items-center bg-white hover:bg-gray-500 !p-2">
-              <span class="text-center text-sm text-black">
-                  Заявка
-               </span>
+            v-if="full" @click="$router.push(`/game/${game}/application/${user.id}`)"
+            class="btn-fill !bg-content-primary hover:bg-gray-500 !p-2">
+          <span class="text-center text-sm text-black"> Заявка </span>
         </button>
       </div>
     </div>

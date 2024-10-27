@@ -12,31 +12,67 @@
     <router-view/>
   </PullToRefresh>
 </template>
+
 <style>
-
-
+@tailwind base;
 :root {
-  --accent-color-start: #56405f;
-  --accent-color-end: #44405f;
-  --bg-card: #404B5F;
+  --text-default: 220 220 220;
+  --text-disabled: 140 140 140;
+  --text-muted: 60 60 60;
+  --text-accent: 207 207 207;
 
-  /* dark colors */
-  --dark-primary-color: #101214; /* Основной темный цвет сайта */
-  --dark-secondary-color: #181B1F; /* Второстепенный темный цвет */
-  --dark-accent-color: #310533; /* Акцентный темный цвет */
-  --dark-text-color: #DADFE5; /* Основной цвет текста в темной теме */
-  --dark-text-secondary-color: #8A9099; /* Второстепенный цвет текста в темной теме */
-  --dark-link-color: #5c159a; /* Цвет ссылок в темной теме */
+  --bg-default: 64 75 95;
+  --bg-shadowed: 29 33 38;
+
+  --gradient-start: 88 64 95;
+  --gradient-end: 68 64 95;
 }
-</style>
-<style lang="scss">
 
-@import "assets/sass/style";
+@tailwind components;
 
-@media (max-width: 479px) {
-  #crisp-chatbox > div > a {
-    display: none !important;
+.btn {
+  @apply flex text-content-primary justify-center items-center p-3 rounded-xl;
+}
+
+.btn-gradient {
+  @apply btn bg-gradient-to-r from-gradient-start to-gradient-end;
+}
+
+.btn-gray {
+  @apply btn bg-gray-800;
+}
+
+.btn-white {
+  @apply btn bg-white hover:bg-gray-500;
+}
+
+.btn-outline {
+  @apply btn bg-transparent border border-[1px] border-content-primary;
+}
+
+.form-input {
+  @apply flex flex-row items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl text-content-primary;
+}
+
+.card {
+  border-radius: theme('borderRadius.2xl');
+  background: theme('colors.gray.700');
+
+  .card-title {
+    font-size: theme('fontSize.2xl');
   }
+
+  .card-header, .card-body {
+    padding: theme('spacing.6');
+  }
+
+  .card-header + .card-body {
+    padding-top: 0
+  }
+}
+
+.Layout-Body {
+  margin: auto
 }
 
 .ActionLoader {
@@ -52,9 +88,22 @@
   z-index: 9999;
 }
 
-input:-webkit-autofill {
-  background: var(--kt-input-solid-bg) !important;
+.filter_subtitle {
+  @apply text-content-primary text-base font-normal mb-0;
 }
+
+.arrow {
+  @apply text-xs transition-transform ease-linear rotate-0;
+  color: var(--text-default);
+  width: 20px;
+  height: 20px;
+
+}
+
+.arrow_expanded {
+  @apply rotate-180;
+}
+
 
 .swal2-popup {
   background: #13161A !important;
@@ -92,6 +141,8 @@ input:-webkit-autofill {
   padding: 0
 }
 
+@tailwind utilities;
+
 html,
 body,
 #app {
@@ -99,39 +150,8 @@ body,
   height: 100%;
 }
 
-.card {
-  border-radius: theme('borderRadius.2xl');
-  background: theme('colors.gray.700');
-
-  .card-title {
-    font-size: theme('fontSize.2xl');
-  }
-
-  .card-header, .card-body {
-    padding: theme('spacing.6');
-  }
-
-  .card-header + .card-body {
-    padding-top: 0
-  }
-}
-
-.text-accent {
-  background: linear-gradient(45deg, theme('colors.accent.green') 0%, theme('colors.accent.emerald') 50%, theme('colors.accent.blue') 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.Layout-Body {
-  margin: auto
-}
 </style>
-<style>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-</style>
+
 <script setup lang="ts">
 // import ActionModal from "@/components/ActionModal.vue";
 import {pageTitle, metaData} from "./store"

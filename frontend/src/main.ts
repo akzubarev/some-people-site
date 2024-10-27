@@ -1,15 +1,11 @@
-import { createApp } from "vue"
+import {createApp} from "vue"
 import App from "./App.vue"
-import Cookies from "js-cookie"
-/*
-TIP: To get started with clean router change path to @/router/clean.ts.
- */
+// import Cookies from "js-cookie"
 import router from "./router"
 import store from "./store"
-// import ElementPlus from "element-plus";
 import i18n from "@/i18n"
 
-import { initInlineSvg } from "@/core/plugins/inline-svg"
+import {initInlineSvg} from "@/core/plugins/inline-svg"
 
 import "bootstrap"
 
@@ -19,18 +15,13 @@ import VueAwesomePaginate from "vue-awesome-paginate"
 
 // import the necessary css file
 import "vue-awesome-paginate/dist/style.css"
+
 app.use(VueAwesomePaginate)
 
 app.use(store)
 app.use(router)
-// app.use(ElementPlus);
-// app.use(Particles)
-
-// MockAdapter.init(app);
-// initApexCharts(app);
-initInlineSvg(app)
-// initVeeValidate();
-
 app.use(i18n)
+
+initInlineSvg(app)
 
 app.mount("#app")

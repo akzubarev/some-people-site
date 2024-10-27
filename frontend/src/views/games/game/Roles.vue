@@ -3,7 +3,7 @@
   <div class="flex flex-col gap-3 p-3">
     <div
         class="flex flex-col bg-gray-800 bg-opacity-60 gap-3 p-6 h-full min-h-screen">
-      <div class="text-4xl text-white"> Сетка ролей</div>
+      <div class="text-4xl text-content-primary"> Сетка ролей</div>
       <div class="flex flex-col gap-3" v-if="game.factions">
         <FactionBlock
             v-for="faction in game.factions" :key="faction"
