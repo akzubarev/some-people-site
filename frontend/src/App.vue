@@ -15,13 +15,11 @@
 
 <style>
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --text-default: 218 223 229;
-  --text-disabled: 138 144 153;
-  --text-accent: 92 21 154;
+  --text-default: 220 220 220;
+  --text-disabled: 140 140 140;
+  --text-muted: 60 60 60;
+  --text-accent: 207 207 207;
 
   --bg-default: 64 75 95;
   --bg-shadowed: 29 33 38;
@@ -30,34 +28,51 @@
   --gradient-end: 68 64 95;
 }
 
+@tailwind components;
+
 .btn {
-  background: linear-gradient(85deg, rgb(var(--gradient-start)), rgb(var(--gradient-end)));
-  background-clip: text;
-  color: transparent;
+  @apply flex text-content-primary justify-center items-center p-3 rounded-xl;
+}
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 0;
-  text-decoration: none;
+.btn-gradient {
+  @apply btn bg-gradient-to-r from-gradient-start to-gradient-end;
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    background: inherit;
-    background-origin: border-box;
-    background-clip: border-box;
-    //-webkit-mask: linear-gradient(#fff 0 0) padding-box,
-    //linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    -webkit-mask-repeat: no-repeat;
+.btn-gray {
+  @apply btn bg-gray-800;
+}
+
+.btn-white {
+  @apply btn bg-white hover:bg-gray-500;
+}
+
+.btn-outline {
+  @apply btn bg-transparent border border-[1px] border-content-primary;
+}
+
+.form-input {
+  @apply flex flex-row items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl text-content-primary;
+}
+
+.card {
+  border-radius: theme('borderRadius.2xl');
+  background: theme('colors.gray.700');
+
+  .card-title {
+    font-size: theme('fontSize.2xl');
   }
+
+  .card-header, .card-body {
+    padding: theme('spacing.6');
+  }
+
+  .card-header + .card-body {
+    padding-top: 0
+  }
+}
+
+.Layout-Body {
+  margin: auto
 }
 
 .ActionLoader {
@@ -73,9 +88,22 @@
   z-index: 9999;
 }
 
-input:-webkit-autofill {
-  background: var(--kt-input-solid-bg) !important;
+.filter_subtitle {
+  @apply text-content-primary text-base font-normal mb-0;
 }
+
+.arrow {
+  @apply text-xs transition-transform ease-linear rotate-0;
+  color: var(--text-default);
+  width: 20px;
+  height: 20px;
+
+}
+
+.arrow_expanded {
+  @apply rotate-180;
+}
+
 
 .swal2-popup {
   background: #13161A !important;
@@ -113,6 +141,8 @@ input:-webkit-autofill {
   padding: 0
 }
 
+@tailwind utilities;
+
 html,
 body,
 #app {
@@ -120,26 +150,6 @@ body,
   height: 100%;
 }
 
-.card {
-  border-radius: theme('borderRadius.2xl');
-  background: theme('colors.gray.700');
-
-  .card-title {
-    font-size: theme('fontSize.2xl');
-  }
-
-  .card-header, .card-body {
-    padding: theme('spacing.6');
-  }
-
-  .card-header + .card-body {
-    padding-top: 0
-  }
-}
-
-.Layout-Body {
-  margin: auto
-}
 </style>
 
 <script setup lang="ts">

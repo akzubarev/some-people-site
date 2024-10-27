@@ -7,7 +7,7 @@
                :name="'checkbox' + question.id"
                :checked="res[i]" :id="`checkbox${question.id}${i}`">
         <label
-            class="form-check-label text-primary cursor-pointer"
+            class="text-content-primary cursor-pointer"
             :for="`checkbox${question.id}${i}`">
           {{ option }}
         </label>

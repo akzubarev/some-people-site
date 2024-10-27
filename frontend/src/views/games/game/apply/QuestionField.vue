@@ -1,38 +1,33 @@
 <template>
   <div class="flex flex-wrap gap-1"
        :class="horizontal ? 'flex-row':'flex-col'">
-    <label class="flex items-center text-white"
+    <label class="flex items-center text-content-primary"
            :class="horizontal && 'basis-full lg:basis-1/3'">
       {{ question.title }}
     </label>
-    <div class="flex items-center text-gray-500"
+    <div class="flex items-center text-content-disabled"
          :class="horizontal && 'basis-full lg:basis-1/3'">
       {{ question.description }}
     </div>
-    <div class="flex flex-col gap-1"
-         :class="horizontal && 'basis-full lg:basis-2/3'">
+    <div class="flex flex-col gap-1" :class="horizontal && 'basis-full lg:basis-2/3'">
       <Field v-if="question.type==='line'" v-model="answer"
-             class="form-control form-control-lg form-control-solid"
-             type="text" :name="field_name" placeholder=""
+             class="form-input" type="text" :name="field_name" placeholder=""
              @change="$emit('change', field_name, answer)"
              :readonly="readonly"
       />
       <Field v-if="question.type==='paragraph'" v-model="answer"
-             class="form-control form-control-lg form-control-solid h-[150px]"
-             type="text" :name="field_name" placeholder=""
+             class="form-input h-[150px]" type="text" :name="field_name" placeholder=""
              @change="$emit('change', field_name, answer)"
              :readonly="readonly" as="textarea"
       />
       <RadioQuestion
           v-if="question.type==='single_choice'" :question="question"
-          :default-value="defaultValue ? defaultValue[question.id] : null"
-          :readonly="readonly"
+          :default-value="defaultValue ? defaultValue[question.id] : null" :readonly="readonly"
           @change="(value) => { answer=value; $emit('change', field_name, answer) }"
       />
       <CheckboxQuestion
           v-if="question.type==='multiple_choice'" :question="question"
-          :default-value="defaultValue ? defaultValue[question.id] : null"
-          :readonly="readonly"
+          :default-value="defaultValue ? defaultValue[question.id] : null"  :readonly="readonly"
           @change="(value) => { answer=value; $emit('change', field_name, answer) }"
       />
       <div class="fv-plugins-message-container">

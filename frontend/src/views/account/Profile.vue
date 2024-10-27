@@ -13,92 +13,24 @@
       </div>
       <button
           @click="$router.push('/account/settings')"
-          class="btn bg-gray-800 text-content-primary max-md:w-full flex gap-2 justify-center md:absolute top-6 right-6">
-        <inline-svg
-            :src="require('@/assets/images/icons/account/settings.svg')"/>
+          class="btn-gray gap-2 max-md:w-full md:absolute top-6 right-6">
+        <inline-svg :src="require('@/assets/images/icons/account/settings.svg')"/>
         {{ $t("menu.settings") }}
       </button>
     </div>
-    <div class="flex flex-col gap-3 p-6 bg-bg-transparent rounded-xl">
-      <div class="flex flex-row gap-3 items-center justify-between">
-        <div class="w-full text-content-primary text-center">Игра</div>
-        <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-        <div class="w-full text-content-primary text-center">Персонаж</div>
-        <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-        <div class="w-full text-content-primary text-center">Статус</div>
-        <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-        <div class="w-full text-content-primary text-center">Перейти</div>
-      </div>
-      <hr class="h-0.5 w-full bg-gray-200 border-0 rounded">
-      <div v-for="application in applications" :key="application"
-           class="flex flex-col gap-1">
-        <div class="flex flex-row gap-3 items-center justify-between">
-          <div class="w-full text-content-primary text-center">{{ application.game?.title }}</div>
-          <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-          <div class="w-full text-content-primary text-center">
-            {{
-              application.character?.name || "Не указан"
-            }}
-          </div>
-          <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-          <div class="w-full text-content-primary text-center">
-            {{
-              {
-                "pending": "Подана",
-                "discussing": "Обсуждается",
-                "confirmed": "Принята",
-                "declined": "Отклонена",
-                "deleted": "Удалена"
-              }[application.status] || "Не подана"
-            }}
-          </div>
-          <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-          <inline-svg
-              class="w-full text-content-primary text-center cursor-pointer h-8"
-              @click="$router.push(`/game/${application.game.alias}/apply`)"
-              :src="require('@/assets/images/icons/account/apply.svg')"/>
-        </div>
-        <hr class="h-0.5 w-full bg-gray-200 border-0 rounded">
-      </div>
-    </div>
+    <ApplicationTable/>
   </div>
 </template>
 
 <script setup>
-import {computed, onMounted, ref} from "vue"
+import {computed} from "vue"
 import {useStore} from "vuex"
 import {useI18n} from "vue-i18n"
 import Avatar from "@/components/Avatar.vue";
-import {Tooltip} from "bootstrap";
-import gamesService from "@/services/gamesService";
+import ApplicationTable from "@/views/account/ApplicationTable.vue";
 
 
 const {t} = useI18n()
 const store = useStore()
 const user = computed(() => store.getters["auth/user"])
-
-onMounted(() => {
-  const tooltipTriggerList = [].slice.call(
-      document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  )
-  tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new Tooltip(tooltipTriggerEl)
-  })
-})
-
-const games = ref([])
-const applications = ref([])
-
-gamesService.games({}).then(({data}) => {
-  games.value = data
-  gamesService.applications(user.value.id).then(({data}) => {
-    applications.value = data.map(application => {
-      return {
-        ...application,
-        "game": games.value.find(g => g.id == application.game)
-      }
-    })
-    console.log(applications.value)
-  })
-})
 </script>

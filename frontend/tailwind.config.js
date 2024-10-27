@@ -10,6 +10,7 @@ module.exports = {
             colors: {
                 'content-primary': "rgb(var(--text-default))",
                 'content-disabled': "rgb(var(--text-disabled))",
+                'content-muted': "rgb(var(--text-muted))",
                 'content-accent': "rgb(var(--text-accent))",
                 'bg-primary': "rgb(var(--bg-default))",
                 'bg-transparent': "rgb(var(--bg-shadowed) / 0.8)",

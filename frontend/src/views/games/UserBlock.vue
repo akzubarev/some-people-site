@@ -37,12 +37,9 @@
           }}%
         </div>
         <button
-            v-if="full"
-            @click="$router.push(`/game/${game}/application/${user.id}`)"
-            class="btn btn flex items-center bg-white hover:bg-gray-500 !p-2">
-              <span class="text-center text-sm text-black">
-                  Заявка
-               </span>
+            v-if="full" @click="$router.push(`/game/${game}/application/${user.id}`)"
+            class="btn-fill !bg-content-primary hover:bg-gray-500 !p-2">
+          <span class="text-center text-sm text-black"> Заявка </span>
         </button>
       </div>
     </div>

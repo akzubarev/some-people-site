@@ -6,9 +6,8 @@
     <!--    <Aside :class="width: 150px; box-sizing: content-box;[$style.aside, aside&&'!block']"-->
     <!--           class="hidden fixed left-0 h-full top-0 px-3" @close="aside=false"/>-->
     <!--    <div :class="max-width: theme('screens.2xl')"-->
-    <div class="w-full m-auto min-h-screen h-full relative bg-[#404B5F]">
-      <img class="absolute ml-2 mt-2 h-22 w-22 z-10 opacity-75"
-           :src="require('@/assets/images/logo/moth.svg')"/>
+    <div class="w-full m-auto min-h-screen h-full relative bg-bg-primary">
+      <img class="absolute ml-2 mt-2 h-22 w-22 z-10 opacity-75" :src="require('@/assets/images/logo/moth.svg')"/>
       <Header @asideToggle="openAside"/>
       <router-view/>
     </div>
