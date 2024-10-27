@@ -2,8 +2,8 @@
   <div class="flex flex-col gap-3">
     <div class="flex flex-row gap-6 w-full justify-between"
          @click="expanded=!expanded">
-      <div class="text-lg text-white whitespace-pre-wrap">
-          <span class="text-4xl text-white font-bold w-[95%]">{{
+      <div class="text-lg text-content-primary whitespace-pre-wrap">
+          <span class="text-4xl text-content-primary font-bold w-[95%]">{{
               faction.name
             }}{{ (expanded && faction.description) ? " — " : "" }}
           </span> {{ expanded ? faction.description : "" }}

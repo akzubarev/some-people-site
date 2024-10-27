@@ -1,40 +1,30 @@
 <template>
   <div class="flex flex-col gap-3 mt-48">
     <div class="card flex flex-col gap-1 p-6">
-      <div class="flex flex-row items-center justify-between gap-3">
-        <div class="whitespace-pre-wrap" v-if="application.price">
-          Взнос {{ application.payed }} / {{ application.price }}
+      <div class="flex flex-row w-full items-center justify-between gap-3">
+        <div class="text-content-primary whitespace-pre-wrap">
+          Взнос {{ application.price ? `${application.payed} / ${application.price}` : 'не объявлен' }}
         </div>
-        <div class="flex flex-row items-center gap-3">
-          <div class="whitespace-pre-wrap"> Статус: {{
-              {
-                "pending": "Подана",
-                "discussing": "Обсуждается",
-                "confirmed": "Принята",
-                "declined": "Отклонена",
-                "deleted": "Удалена"
-              }[application.status] || "Не подана"
-            }}
-          </div>
-          <button class="btn btn flex items-center bg-white hover:bg-gray-500
-              text-center text-black !p-2">
-            Удалить
-          </button>
+        <div class="text-content-primary whitespace-pre-wrap"> Статус: {{
+            {
+              "pending": "Подана",
+              "discussing": "Обсуждается",
+              "confirmed": "Принята",
+              "declined": "Отклонена",
+              "deleted": "Удалена"
+            }[application.status] || "Не подана"
+          }}
         </div>
+        <button class="btn-gradient text-center">Удалить</button>
       </div>
       <div class="flex flex-row items-center justify-between gap-3">
-        <div class="whitespace-no-wrap w-[20%]">
+        <div class="text-content-primary whitespace-no-wrap w-[20%]">
           Заполнено {{ progress.length * 100 / questions.length }}%
         </div>
-        <ProgressBar
-            :class="progress.length ? 'h-[8px]' : '!h-0'"
-            color="linear-gradient(to right, #56405f, #44405f)"
-            :progress="progress.length * 100 / questions.length"
-        />
+        <ProgressBar class="h-[8px]" :progress="progress.length * 100 / questions.length"/>
       </div>
     </div>
-    <Form class="card form w-full p-6" novalidate="novalidate"
-          @submit="onSubmit">
+    <Form class="card form w-full h-full p-6" novalidate="novalidate" @submit="onSubmit">
       <div class="flex flex-col gap-6">
         <div class="grid grid-cols-1 gap-3 !h-[390px] overflow-auto">
           <QuestionField
@@ -47,15 +37,8 @@
         </div>
 
         <div class="text-center">
-          <button id="kt_sign_up_submit" ref="submitButton" type="submit"
-                  class="btn btn-lg btn-accent w-full">
-            <span class="indicator-label">
-              {{ !!application ? 'Сохранить' : 'Отправить' }} заявку
-            </span>
-            <span class="indicator-progress">
-              <span
-                  class="spinner-border spinner-border-sm align-middle ms-2"/>
-            </span>
+          <button id="kt_sign_up_submit" ref="submitButton" type="submit" class="btn-gradient w-full">
+            {{ !!application ? 'Сохранить' : 'Отправить' }} заявку
           </button>
         </div>
       </div>
@@ -64,7 +47,7 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
+import {computed, ref} from "vue"
 import {Form} from "vee-validate"
 import ProgressBar from "@/components/progressbar/ProgressBar.vue"
 import {useStore} from "vuex"
@@ -88,8 +71,8 @@ const application = ref({
   id: 1, status: "approved", answers: [], price: 0
 })
 const game_alias = props.alias
-const user_id = props.userId || store.getters['auth/user'].id
-gamesService.application(user_id, game_alias).then(({data}) => {
+const user_id = computed(() => props.userId || store.getters['auth/user'].id)
+gamesService.application(user_id.value, game_alias).then(({data}) => {
   application.value = data
   gamesService.questions(game_alias).then(({data}) => {
     questions.value = data
@@ -115,7 +98,7 @@ const onSubmit = (values) => {
     const data = (await gamesService.apply({
       game_alias: game_alias, ...answers.value
     }))["data"]
-    gamesService.application(user_id, game_alias).then(({data}) => {
+    gamesService.application(user_id.value, game_alias).then(({data}) => {
       application.value = data
     })
   })

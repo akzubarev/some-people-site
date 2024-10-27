@@ -34,10 +34,10 @@ const props = defineProps({user: {}})
 }
 
 .link {
-  // @apply text-[var(--dark-link-color)];
+  // @apply text-[var(--link-color)];
   @apply text-blue-500;
   a {
-    // @apply text-[var(--dark-link-color)];
+    // @apply text-[var(--link-color)];
     @apply text-blue-500;
     &:hover {
       opacity: 0.85;

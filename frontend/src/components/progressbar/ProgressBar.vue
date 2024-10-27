@@ -1,30 +1,14 @@
 <template>
-  <div class="w-[100%] h-32 bg-gray-700 rounded-2xl overflow-hidden">
-    <div
-        :class="$style.Inner" class="h-[100%] rounded-xl"
-        :style="{ width: progress + '%', background: color }"
-    ></div>
+  <div class="w-full h-32 bg-bg-primary rounded-2xl overflow-hidden">
+    <div class="h-full rounded-xl bg-gradient-to-r from-gradient-start to-gradient-end"
+         :style="{ width: progress + '%'}"/>
   </div>
 </template>
 <script setup>
-import tailwindConfig from '@/utils/tailwindConfig'
-
 defineProps({
   progress: {
-    type: Number,
-    required: true,
+    type: Number, required: true,
     validator: value => value >= 0 && value <= 100
   },
-  color: {
-    type: String,
-    default: tailwindConfig.theme.colors.accent.green
-  }
 })
 </script>
-
-<style module lang="scss">
-
-.Inner {
-  transition: width 0.3s ease;
-}
-</style>

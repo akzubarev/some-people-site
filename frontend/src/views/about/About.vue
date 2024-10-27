@@ -52,7 +52,7 @@
         <!-- <Globe :target="globeShowRegistrations ? 'registrations' : 'visits'"/> -->
         <button
             @click="() => (showLocationRatingModal = true)"
-            class="btn btn-outline btn-outline-primary w-full mt-3"
+            class="btn btn-outline w-full mt-3"
         >
           {{ $t("common.actions.showList") }}
         </button>

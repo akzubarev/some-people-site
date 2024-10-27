@@ -51,7 +51,6 @@ const props = defineProps(['hideX'])
   // }
   &-Content {
     background: theme('colors.gray.1000');
-    // color: var(--dark-text-color);
     width: 100%;
     position: relative;
     overflow-y: auto;

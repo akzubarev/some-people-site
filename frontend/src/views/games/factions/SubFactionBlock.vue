@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col gap-3">
     <div class="flex flex-row gap-6 w-full justify-between pl-10">
-      <div class="text-lg text-white whitespace-pre-wrap">
-          <span class="text-2xl text-white font-bold">{{
+      <div class="text-lg text-content-primary whitespace-pre-wrap">
+          <span class="text-2xl text-content-primary font-bold">{{
               subfaction.name
             }}{{ (subfaction.description) ? " — " : "" }}
           </span> {{ subfaction.description }}
