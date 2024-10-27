@@ -19,14 +19,14 @@
       </div>
       <div class="flex flex-row items-center justify-between gap-3">
         <div class="text-content-primary whitespace-no-wrap w-[20%]">
-          Заполнено {{ progress.length * 100 / questions.length }}%
+          Заполнено {{ Math.ceil(100 * progress.length / questions.length) }}%
         </div>
-        <ProgressBar class="h-[8px]" :progress="progress.length * 100 / questions.length"/>
+        <ProgressBar class="h-[8px]" :progress="100 * progress.length / questions.length"/>
       </div>
     </div>
-    <Form class="card form w-full h-full p-6" novalidate="novalidate" @submit="onSubmit">
-      <div class="flex flex-col gap-6">
-        <div class="grid grid-cols-1 gap-3 !h-[390px] overflow-auto">
+    <Form class="card form w-full h-full p-6 no-scrollbar" novalidate="novalidate" @submit="onSubmit">
+      <div class="flex flex-col gap-6 no-scrollbar">
+        <div class="grid grid-cols-1 gap-3 !h-[390px] overflow-auto no-scrollbar">
           <QuestionField
               v-for="question in questions" :key="question"
               :question="question" :horizontal="false" :value="answers"

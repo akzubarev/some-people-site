@@ -9,8 +9,7 @@
           </span> {{ expanded ? faction.description : "" }}
       </div>
       <inline-svg
-          class="!w-[20px]"
-          :class="[s.arrow, { [s.arrow_expanded]: expanded }]"
+          class="!w-[20px] text-content-primary" :class="[s.arrow, { [s.arrow_expanded]: expanded }]"
           :src="require('@/assets/images/icons/common/chevrone.svg')"
       />
     </div>
