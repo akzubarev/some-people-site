@@ -27,7 +27,17 @@
       />
       <CheckboxQuestion
           v-if="question.type==='multiple_choice'" :question="question"
-          :default-value="defaultValue ? defaultValue[question.id] : null"  :readonly="readonly"
+          :default-value="defaultValue ? defaultValue[question.id] : null" :readonly="readonly"
+          @change="(value) => { answer=value; $emit('change', field_name, answer) }"
+      />
+      <ScaleQuestion
+          v-if="question.type==='scale'" :question="question"
+          :default-value="defaultValue ? defaultValue[question.id] : null" :readonly="readonly"
+          @change="(value) => { answer=value; $emit('change', field_name, answer) }"
+      />
+      <MatrixQuestion
+          v-if="question.type==='matrix'" :question="question"
+          :default-value="defaultValue ? defaultValue[question.id] : null" :readonly="readonly"
           @change="(value) => { answer=value; $emit('change', field_name, answer) }"
       />
       <div class="fv-plugins-message-container">
@@ -44,8 +54,10 @@
 <script setup>
 import {ref} from "vue";
 import {Field} from "vee-validate"
-import RadioQuestion from "@/views/games/game/apply/RadioQuestion.vue";
-import CheckboxQuestion from "@/views/games/game/apply/CheckboxQuestion.vue";
+import RadioQuestion from "@/views/games/game/apply/questions/RadioQuestion.vue";
+import CheckboxQuestion from "@/views/games/game/apply/questions/CheckboxQuestion.vue";
+import ScaleQuestion from "@/views/games/game/apply/questions/ScaleQuestion.vue";
+import MatrixQuestion from "@/views/games/game/apply/questions/MatrixQuestion.vue";
 
 const emit = defineEmits(['change'])
 const props = defineProps([
