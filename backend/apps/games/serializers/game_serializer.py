@@ -4,14 +4,14 @@ from rest_framework.fields import SerializerMethodField
 
 from apps.games.models import Game, Character
 from .character_serializer import CharacterSerializer
-from .faction_serializer import MainFactionSerializer
+from .group_serializer import MainGroupSerializer
 
 
 class GameSerializer(serializers.ModelSerializer):
     """Game serializer."""
-    factions = SerializerMethodField()
+    groups = SerializerMethodField()
     characters = SerializerMethodField()
-    non_factioned = SerializerMethodField()
+    non_grouped = SerializerMethodField()
 
     class Meta:
         model = Game
@@ -27,27 +27,27 @@ class GameSerializer(serializers.ModelSerializer):
             'short_description',
             'vk',
             'tg',
-            'factions',
+            'groups',
             'characters',
-            'non_factioned',
-            "open_applications",
-            "open_character_list",
+            'non_grouped',
+            'open_applications',
+            'open_character_list',
         ]
 
-    def get_factions(self, obj: Game):
-        return MainFactionSerializer(
-            obj.factions.filter(parent__isnull=True, hidden=False), many=True
+    def get_groups(self, obj: Game):
+        return MainGroupSerializer(
+            obj.groups.filter(parent__isnull=True, hidden=False), many=True
         ).data
 
     def get_characters(self, obj: Game):
         return CharacterSerializer(
-            Character.objects.filter(faction__game=obj),
+            Character.objects.filter(group__game=obj),
             many=True
         ).data
 
-    def get_non_factioned(self, obj: Game):
+    def get_non_grouped(self, obj: Game):
         return CharacterSerializer(
             Character.objects.filter(
-                faction__game=obj, faction__hidden=True
+                group__game=obj, group__hidden=True
             ), many=True
         ).data

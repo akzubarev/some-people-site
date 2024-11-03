@@ -1,12 +1,12 @@
-"""Faction admin module."""
+"""Group admin module."""
 from django.contrib import admin
 
-from apps.games.models import Faction
+from apps.games.models import Group
 
 
-@admin.register(Faction)
-class FactionAdmin(admin.ModelAdmin):
-    """Faction admin."""
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    """Group admin."""
 
     ordering = ('-id',)
     list_display = [

@@ -49,7 +49,7 @@ class GameViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def tags(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Gets game tags."""
         game_alias = request.GET.get("game_alias", None)
-        characters = Character.objects.filter(faction__game__alias=game_alias)
+        characters = Character.objects.filter(group__game__alias=game_alias)
         tags = Tag.objects.filter(characters__in=characters).distinct()
         serializer = TagSerializer(tags, many=True)
         return Response(serializer.data)
@@ -57,7 +57,7 @@ class GameViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
 def character_filter(game_alias: str, tag: str, search: str) -> QuerySet[Character]:
     """Filters characters by game, tag and search."""
-    characters = Character.objects.filter(faction__game__alias=game_alias)
+    characters = Character.objects.filter(group__game__alias=game_alias)
     if tag is not None:
         characters = characters.filter(tags__name=tag)
     if search is not None:

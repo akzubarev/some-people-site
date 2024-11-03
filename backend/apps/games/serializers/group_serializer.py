@@ -1,20 +1,20 @@
-"""Faction serializers module."""
+"""Group serializers module."""
 from django.db.models import Count, Case, When, BooleanField
 from rest_framework import serializers
 
-from apps.games.models import Faction
+from apps.games.models import Group
 from .character_serializer import CharacterSerializer
 
 
-class FactionSerializer(serializers.ModelSerializer):
-    """Faction serializer."""
+class GroupSerializer(serializers.ModelSerializer):
+    """Group serializer."""
 
     characters = serializers.SerializerMethodField()
 
     class Meta:
         """Serializer meta."""
 
-        model = Faction
+        model = Group
         fields = [
             'id',
             'name',
@@ -38,15 +38,15 @@ class FactionSerializer(serializers.ModelSerializer):
         ).data
 
 
-class MainFactionSerializer(FactionSerializer):
-    """Main faction serializer."""
+class MainGroupSerializer(GroupSerializer):
+    """Main group serializer."""
 
-    subfactions = FactionSerializer(many=True)
+    subgroups = GroupSerializer(many=True)
 
     class Meta:
         """Serializer meta."""
 
-        model = Faction
+        model = Group
         fields = [
             'id',
             'name',
@@ -57,5 +57,5 @@ class MainFactionSerializer(FactionSerializer):
             'parent',
             'characters',
             'image',
-            'subfactions'
+            'subgroups'
         ]

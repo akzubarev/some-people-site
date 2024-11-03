@@ -50,7 +50,7 @@
 
 <script setup>
 import Avatar from "@/components/Avatar.vue";
-// import CharacterBlock from "@/views/games/factions/CharacterBlock.vue";
+// import CharacterBlock from "@/views/games/groups/CharacterBlock.vue";
 
 const props = defineProps({
   game: {

@@ -24,7 +24,7 @@ const props = defineProps({
       title: "lorem ipsum",
       _description: "lorem ipsum",
       short_description: "lorem ipsum",
-      factions: []
+      groups: []
     }
   },
   full: {

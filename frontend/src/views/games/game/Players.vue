@@ -30,7 +30,7 @@ import {ref} from "vue"
 import UserBlock from "@/views/games/UserBlock.vue";
 import usersService from "@/services/usersService";
 import gamesService from "@/services/gamesService";
-import CharacterBlock from "@/views/games/factions/CharacterBlock.vue";
+import CharacterBlock from "@/views/games/groups/CharacterBlock.vue";
 import router from "@/router";
 import {useStore} from "vuex";
 

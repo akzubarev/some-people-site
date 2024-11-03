@@ -2,9 +2,9 @@
 from .answer import Answer
 from .application import Application
 from .character import Character
-from .faction import Faction
+from .group import Group
 from .game import Game
 from .question import Question
 from .tag import Tag
 
-___all__ = ('Answer', 'Application', 'Character', 'Faction', 'Game', 'Question', 'Tag')
+___all__ = ('Answer', 'Application', 'Character', 'Group', 'Game', 'Question', 'Tag')

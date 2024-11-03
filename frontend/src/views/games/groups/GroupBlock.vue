@@ -1,12 +1,11 @@
 <template>
   <div class="flex flex-col gap-3">
-    <div class="flex flex-row gap-6 w-full justify-between"
-         @click="expanded=!expanded">
+    <div class="flex flex-row gap-6 w-full justify-between" @click="expanded=!expanded">
       <div class="text-lg text-content-primary whitespace-pre-wrap">
           <span class="text-4xl text-content-primary font-bold w-[95%]">{{
-              faction.name
-            }}{{ (expanded && faction.description) ? " — " : "" }}
-          </span> {{ expanded ? faction.description : "" }}
+              group.name
+            }}{{ (expanded && group.description) ? " — " : "" }}
+          </span> {{ expanded ? group.description : "" }}
       </div>
       <inline-svg
           class="!w-[20px] text-content-primary" :class="[s.arrow, { [s.arrow_expanded]: expanded }]"
@@ -19,17 +18,14 @@
       <hr class="h-1 w-1 bg-gray-200 border-0 rounded">
     </div>
     <div class="flex bg-repeat-y h-full z-10" v-if="expanded"
-         :style="`background-image: url(${factions[game][faction.alias]})`">
+         :style="`background-image: url(${groups[game][group.alias]})`">
       <div class="flex flex-col gap-3" v-if="expanded">
-        <SubFactionBlock
-            v-for="subfaction in faction.subfactions" :key="subfaction"
-            :subfaction="subfaction" :game="game"
-        />
+        <SubGroupBlock v-for="subgroup in group.subgroups" :key="subgroup"
+                         :subgroup="subgroup" :game="game"/>
       </div>
       <div class="flex flex-col pl-20 pr-6 gap-3">
-        <CharacterBlock
-            v-for="character in faction.characters" :key="character"
-            :character="character" :game="game"/>
+        <CharacterBlock v-for="character in group.characters" :key="character"
+                        :character="character" :game="game"/>
       </div>
     </div>
   </div>
@@ -37,15 +33,15 @@
 
 
 <script setup>
-import SubFactionBlock from "@/views/games/factions/SubFactionBlock.vue";
-import CharacterBlock from "@/views/games/factions/CharacterBlock.vue";
+import SubGroupBlock from "@/views/games/groups/SubGroupBlock.vue";
+import CharacterBlock from "@/views/games/groups/CharacterBlock.vue";
 import {ref} from "vue";
 import s from "@/components/styles.module.scss";
-import {factions} from "@/constants/factionImages";
+import {groups} from "@/constants/groupImages";
 
 const expanded = ref(false)
 const props = defineProps({
-  faction: {
+  group: {
     type: Object,
     default: {
       id: 1,
@@ -54,12 +50,10 @@ const props = defineProps({
       game: 1,
       parent: null,
       image: null,
-      subfactions: [],
+      subgroups: [],
       characters: []
     }
   },
-  game: {
-    type: String,
-  }
+  game: {type: String},
 })
 </script>
