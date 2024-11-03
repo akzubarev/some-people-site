@@ -16,7 +16,7 @@ const game = ref({
   id: 1,
   title: "lorem ipsum",
   alias: "loremipsum",
-  factions: [],
+  groups: [],
   open_applications: false,
   open_character_list: false
 })

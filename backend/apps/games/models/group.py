@@ -1,9 +1,9 @@
-"""Faction models."""
+"""Group models."""
 from django.db import models
 
 
-class Faction(models.Model):
-    """Faction model."""
+class Group(models.Model):
+    """Group model."""
 
     name = models.CharField(
         verbose_name='Название',
@@ -11,8 +11,8 @@ class Faction(models.Model):
     )
 
     alias = models.CharField(
-        verbose_name='Алиас',
-        max_length=100
+        verbose_name='Алиас', max_length=100,
+        blank=True, null=True,
     )
 
     hidden = models.BooleanField(
@@ -27,29 +27,29 @@ class Faction(models.Model):
     game = models.ForeignKey(
         to="games.Game",
         verbose_name='Игра',
-        related_name="factions",
+        related_name="groups",
         on_delete=models.SET_NULL,
         null=True, blank=True
     )
 
     parent = models.ForeignKey(
-        to="games.Faction",
+        to="games.Group",
         verbose_name='Родительская фракция',
-        related_name="subfactions", on_delete=models.SET_NULL,
+        related_name="subgroups", on_delete=models.SET_NULL,
         null=True, blank=True
     )
 
     image = models.ImageField(
         verbose_name='image',
-        upload_to='factions/images/',
+        upload_to='groups/images/',
         blank=True, null=True
     )
 
     class Meta:
         """Model meta."""
 
-        verbose_name = 'Фракция'
-        verbose_name_plural = 'Фракция'
+        verbose_name = 'Группа'
+        verbose_name_plural = 'Группы'
         ordering = ["name"]
 
     def __str__(self):

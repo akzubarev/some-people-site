@@ -43,7 +43,7 @@ Website for LARP community to help register and follow the MG "Some-people"
   - `/games` - games list
     - `games/<alias>` - game info
     - `/characters/` - game characters
-    - `tags` - tags for the characters and factions
+    - `tags` - tags for the characters and groups
     - `/questions/` - questions for the application
     - `/applications` - game applications
       - `/get/` - get one application

@@ -52,7 +52,7 @@ module.exports = {
         "timezone": "Timezone",
         "personal": "Personal",
         "team": "Team",
-        "group": "Faction",
+        "group": "Group",
         "requestOtp": "Send Email Code",
         "new": "New",
         "soon": "Soon",

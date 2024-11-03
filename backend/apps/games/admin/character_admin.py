@@ -14,7 +14,7 @@ class CharacterAdmin(admin.ModelAdmin):
         "name",
         "alias",
         "description",
-        "faction",
+        "group",
         "master",
         "image",
     ]

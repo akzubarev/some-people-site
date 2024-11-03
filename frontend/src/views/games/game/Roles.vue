@@ -4,14 +4,14 @@
     <div
         class="flex flex-col bg-gray-800 bg-opacity-60 gap-3 p-6 h-full min-h-screen">
       <div class="text-4xl text-content-primary"> Сетка ролей</div>
-      <div class="flex flex-col gap-3" v-if="game.factions">
-        <FactionBlock
-            v-for="faction in game.factions" :key="faction"
-            :game="alias" :faction="faction"
+      <div class="flex flex-col gap-3" v-if="game.groups">
+        <GroupBlock
+            v-for="group in game.groups" :key="group"
+            :game="alias" :group="group"
         />
-        <FactionBlock
-            v-if="game.non_factioned.length>0" :game="alias"
-            :faction="others_faction"
+        <GroupBlock
+            v-if="game.non_grouped.length>0" :game="alias"
+            :group="others_group"
         />
       </div>
     </div>
@@ -22,7 +22,7 @@
 <script setup>
 import {ref} from "vue"
 import gamesService from "@/services/gamesService";
-import FactionBlock from "@/views/games/factions/FactionBlock.vue";
+import GroupBlock from "@/views/games/groups/GroupBlock.vue";
 import router from "@/router";
 import {useStore} from "vuex";
 import {games} from "@/constants/gameImages";
@@ -34,8 +34,8 @@ const game = ref({
   id: 1,
   title: "lorem ipsum",
   image: null,
-  factions: [],
-  non_factioned: []
+  groups: [],
+  non_grouped: []
 })
 
 gamesService.game(props.alias).then(({data}) => {
@@ -55,10 +55,10 @@ const others = {
     description: ""
   }
 }[props.alias]
-const others_faction = {
+const others_group = {
   image: null,
   name: others.name,
   description: others.description,
-  characters: game.value.non_factioned, subfactions: []
+  characters: game.value.non_grouped, subgroups: []
 }
 </script>

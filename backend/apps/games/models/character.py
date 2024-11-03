@@ -15,18 +15,13 @@ class Character(models.Model):
         max_length=100
     )
 
-    char_id = models.CharField(
-        verbose_name='char_id',
-        max_length=100
-    )
-
     description = models.TextField(
         verbose_name="Описание",
         null=True, blank=True
     )
 
-    faction = models.ForeignKey(
-        to="games.Faction",
+    group = models.ForeignKey(
+        to="games.Group",
         verbose_name='Фракция',
         related_name="characters",
         on_delete=models.SET_NULL,
