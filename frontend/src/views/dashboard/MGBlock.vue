@@ -5,16 +5,16 @@
       <div
           class="flex flex-col w-fit gap-1 items-start">
         <div
-            class="flex flex-row text-lg text-content-primary whitespace-pre-wrap">
-              <span class="text-xl text-content-primary">{{
+            class="flex flex-row text-lg whitespace-pre-wrap">
+              <span class="text-xl">{{
                   master.name
-                }} — </span> <span class="text-xl text-content-primary cursor-pointer">{{
+                }} — </span> <span class="text-xl cursor-pointer">{{
             master.status
           }}  </span>
         </div>
         <div
             class="-ml-14 z-20 flex flex-row items-center gap-4 p-3 bg-gray-800 bg-opacity-60 rounded-lg">
-          <div class="ml-14 text-content-primary text-sm whitespace-pre-wrap">
+          <div class="ml-14 text-sm whitespace-pre-wrap">
             {{ master.description }}
           </div>
         </div>

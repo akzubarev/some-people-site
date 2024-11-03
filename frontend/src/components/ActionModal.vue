@@ -6,16 +6,16 @@
       </slot>
 
       <slot name="body">
-        <span v-if="title" class="text-content-primary text-3xl text-center">
+        <span v-if="title" class="text-3xl text-center">
           {{ title }}
         </span>
-        <span v-if="description" class="text-content-primary text-xl text-center text-gray-400">
+        <span v-if="description" class="text-xl text-center text-gray-400">
           {{ description }}
         </span>
       </slot>
       <slot name="button">
         <button
-            class="btn text-content-primary btn h-fit w-full md:w-fit"
+            class="btn h-fit w-full md:w-fit"
             v-if="!(hideButton !== undefined && hideButton == true)"
             @click="$emit('submit')">
           {{ buttonText || typeConf[type || defaultConf].buttonText }}

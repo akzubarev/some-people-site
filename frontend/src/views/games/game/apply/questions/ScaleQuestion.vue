@@ -10,7 +10,7 @@
                 class="form-check-input !w-[1.5rem] !h-[1.5rem]"
                 :value="option" :name="'radio' + question.id"
                 :id="`radio${question.id}${i}`">
-            <label class="text-content-primary cursor-pointer" :for="`radio${question.id}${i}`">
+            <label class="cursor-pointer" :for="`radio${question.id}${i}`">
               {{ option }}
             </label>
           </div>

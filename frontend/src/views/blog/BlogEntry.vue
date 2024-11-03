@@ -19,7 +19,7 @@
       <div
           v-if="!post.viewed_by_me" :class="!dashboard && 'xl:top-[35px]'"
           class="absolute w-fit px-2 py-3 h-[20px] top-[10px] right-[10px]
-                rounded-full flex items-center text-content-primary gap-1
+                rounded-full flex items-center gap-1
                 bg-gradient-to-r from-[#27a90f] to-[#b9d318]">
           <span style="font-size: .9rem; font-weight: 600; line-height: .9rem">
             NEW
@@ -65,7 +65,7 @@
               flex items-center bg-gradient-to-r
               from-[--gradient-start] to-[--gradient-end]"
             />
-            <div class="wrapped-text mb-1 text-2xl text-content-primary">{{
+            <div class="wrapped-text mb-1 text-2xl">{{
                 post.title
               }}
             </div>

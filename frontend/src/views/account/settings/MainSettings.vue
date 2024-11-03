@@ -61,7 +61,7 @@
   @apply flex flex-wrap;
 
   & .title {
-    @apply flex text-content-primary items-center basis-full lg:basis-1/3
+    @apply flex items-center basis-full lg:basis-1/3
   }
 
 }

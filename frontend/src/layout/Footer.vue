@@ -7,9 +7,9 @@
       <div class="text-dark order-2 order-md-1">
         <span class="text-content-muted fw-bold me-1">&#127813; Сайт написан</span>
         <a href="https://github.com/akzubarev/some-people-site"
-           target="_blank" class="text-content-primary text-hover-accen">@akzubarev</a>
+           target="_blank" class="text-hover-accent">@akzubarev</a>
         <span class="text-content-muted fw-bold me-1">, можете написать</span>
-        <a href="https://t.me/Package_Man" target="_blank" class="text-content-primary text-hover-accent">мне</a>
+        <a href="https://t.me/Package_Man" target="_blank" class="text-hover-accent">мне</a>
         <span class="text-content-muted fw-bold me-1"> за исходниками</span>
       </div>
       <!--    <div class="text-dark order-2 order-md-1">-->

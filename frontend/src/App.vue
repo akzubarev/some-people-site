@@ -16,10 +16,10 @@
 <style>
 @tailwind base;
 :root {
-  --text-default: 220 220 220;
-  --text-disabled: 140 140 140;
-  --text-muted: 60 60 60;
-  --text-accent: 207 207 207;
+  --content-primary: 220 220 220;
+  --content-disabled: 140 140 140;
+  --content-muted: 60 60 60;
+  --content-accent: 207 207 207;
 
   --bg-default: 64 75 95;
   --bg-shadowed: 29 33 38;
@@ -28,10 +28,24 @@
   --gradient-end: 68 64 95;
 }
 
+@layer base {
+  @font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.googleapis.com/) format('woff2');
+  }
+}
+
+div {
+  @apply font-primary text-content-primary;
+}
+
 @tailwind components;
 
 .btn {
-  @apply flex text-content-primary justify-center items-center p-3 rounded-xl;
+  @apply flex justify-center items-center p-3 rounded-xl;
 }
 
 .btn-gradient {
@@ -51,7 +65,7 @@
 }
 
 .form-input {
-  @apply flex flex-row items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl text-content-primary;
+  @apply flex flex-row items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl;
 }
 
 .card {
@@ -89,12 +103,12 @@
 }
 
 .filter_subtitle {
-  @apply text-content-primary text-base font-normal mb-0;
+  @apply text-base font-normal mb-0;
 }
 
 .arrow {
   @apply text-xs transition-transform ease-linear rotate-0;
-  color: var(--text-default);
+  color: var(--content-primary);
   width: 20px;
   height: 20px;
 
@@ -153,8 +167,6 @@
   scrollbar-width: none; /* Firefox */
 }
 
-html,
-body,
 #app {
   overflow: hidden;
   height: 100%;
@@ -163,11 +175,9 @@ body,
 </style>
 
 <script setup lang="ts">
-// import ActionModal from "@/components/ActionModal.vue";
 import {pageTitle, metaData} from "./store"
 import SpinLoder from "@/components/SpinLoader.vue"
 import PullToRefresh from "@/components/PullToRefresh.vue"
-// import Popup from "@/components/Popup"
 
 const refresh = () => {
   window.location.reload()

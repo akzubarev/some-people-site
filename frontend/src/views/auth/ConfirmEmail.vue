@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col gap-8 items-center text-content-primary mx-auto w-full md:max-w-[600px] p-4 mt-6 text-center">
+    class="flex flex-col gap-8 items-center mx-auto w-full md:max-w-[600px] p-4 mt-6 text-center">
     <inline-svg
       :src="require('@/assets/images/icons/common/info.svg')"
       style="color: var(--kt-primary);"

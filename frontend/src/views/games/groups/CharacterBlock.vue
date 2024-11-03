@@ -6,15 +6,15 @@
           :src="character.image || characters[game][character.id] || characters[game]['default']"
       />
       <div class="flex flex-col w-fit gap-1 items-start">
-        <div class="flex flex-row text-lg text-content-primary whitespace-pre-wrap">
-              <span class="text-xl text-content-primary">{{
+        <div class="flex flex-row text-lg whitespace-pre-wrap">
+              <span class="text-xl">{{
                   character.name
-                }} — </span> <span class="text-xl text-content-primary cursor-pointer">{{
+                }} — </span> <span class="text-xl cursor-pointer">{{
             character.player ? character.player.name : "Свободная роль"
           }}  </span>
         </div>
         <div class="flex flex-row items-center gap-4 p-3 bg-gray-800 bg-opacity-60 rounded-lg -ml-14 z-20" v-if="full">
-          <div class=" text-sm text-content-primary whitespace-pre-wrap ml-14">
+          <div class=" text-sm whitespace-pre-wrap ml-14">
             {{ character.description }}
           </div>
         </div>

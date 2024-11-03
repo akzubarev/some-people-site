@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-5 mt-48">
     <div class="flex flex-row justify-center">
-      <div class="text-content-primary text-4xl"> МГ «Какие-то Люди»</div>
+      <div class="text-4xl"> МГ «Какие-то Люди»</div>
     </div>
     <!--    <div class="grid gap-4 grid-cols-2 lg:grid-cols-4 mt-6">-->
     <!--      <DashboardCard text="Игры" route="/games">-->
@@ -10,7 +10,7 @@
     <!--      </DashboardCard>-->
     <!--    </div>-->
     <div class="flex flex-col px-3" v-for="{title, masters} in mg" :key="title">
-      <div class="text-content-primary text-2xl"> {{ title }}</div>
+      <div class="text-2xl"> {{ title }}</div>
       <div class="flex flex-col p-3 gap-6">
         <MGBlock v-for="master in masters" :key="master" :master="master"/>
       </div>

@@ -3,12 +3,12 @@
     <div class="flex flex-row items-center gap-3">
       <div class="w-full items-center"/>
       <div v-for="option in question.choices[0]" :key="option"
-           class="w-full items-center text-center text-content-primary">
+           class="w-full items-center text-center">
         {{ option }}
       </div>
     </div>
     <div class="flex flex-row items-center gap-3" v-for="(option, i) in question.choices[1]" :key="option">
-      <div class="w-full text-content-primary">
+      <div class="w-full">
         {{ option }}
       </div>
       <input v-for="(_, j) in question.choices[0]" :key="j" :id="`checkbox${question.id}${i}`" type="checkbox"

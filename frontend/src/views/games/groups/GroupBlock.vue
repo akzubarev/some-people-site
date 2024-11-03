@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-col gap-3">
     <div class="flex flex-row gap-6 w-full justify-between" @click="expanded=!expanded">
-      <div class="text-lg text-content-primary whitespace-pre-wrap">
-          <span class="text-4xl text-content-primary font-bold w-[95%]">{{
+      <div class="text-lg whitespace-pre-wrap">
+          <span class="text-4xl font-bold w-[95%]">{{
               group.name
             }}{{ (expanded && group.description) ? " — " : "" }}
           </span> {{ expanded ? group.description : "" }}
       </div>
       <inline-svg
-          class="!w-[20px] text-content-primary" :class="[s.arrow, { [s.arrow_expanded]: expanded }]"
+          class="!w-[20px]" :class="[s.arrow, { [s.arrow_expanded]: expanded }]"
           :src="require('@/assets/images/icons/common/chevrone.svg')"
       />
     </div>

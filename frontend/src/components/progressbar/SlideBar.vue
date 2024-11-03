@@ -6,17 +6,17 @@
     <div class="ml-2 mt-3 flex">
       <button
           @click="progress = Math.max(progress-interval,min); $emit('change', progress)"
-          class="px-4 border text-xl border-teal-600 border-r-0 text-teal-600 hover:bg-teal-600 hover:text-content-primary rounded-l focus:outline-none focus:shadow-outline"
+          class="px-4 border text-xl border-teal-600 border-r-0 text-teal-600 hover:bg-teal-600 hover:rounded-l focus:outline-none focus:shadow-outline"
       >-
       </button>
       <span
-          class="px-4 border text-xl border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-content-primary focus:outline-none focus:shadow-outline"
+          class="px-4 border text-xl border-teal-600 text-teal-600 hover:bg-teal-600 hover:focus:outline-none focus:shadow-outline"
       >
             <slot></slot>
           </span>
       <button
           @click="progress = Math.min(progress+interval,max); $emit('change', progress)"
-          class="px-4 border text-xl border-teal-600 border-l-0 text-teal-600 hover:bg-teal-600 hover:text-content-primary rounded-r focus:outline-none focus:shadow-outline"
+          class="px-4 border text-xl border-teal-600 border-l-0 text-teal-600 hover:bg-teal-600 hover:rounded-r focus:outline-none focus:shadow-outline"
       >+
       </button>
     </div>
