@@ -1,20 +1,16 @@
 <template>
   <ImageBanner
-      :full="full" :image="{
-        frostpunk:require('@/assets/images/games/frostpunk/background.png'),
-        whales:require('@/assets/images/games/whales/background.jpg')
-      }[game.alias]"
-      :title="game.title"
+      :title="game.title" :image="game_images[game.alias]['background']"
       :description="full ? game.description : game.short_description"
-      :tags="gameData"
       :buttons="[{text: 'Подробнее', href:`/game/${game.alias}/about`}]"
-      :social="social"
+      :tags="gameData" :social="social" :full="full"
   />
 </template>
 
 
 <script setup>
 import ImageBanner from "@/components/ImageBanner.vue";
+import {game_images} from "@/constants/gameImages";
 
 const props = defineProps({
   game: {

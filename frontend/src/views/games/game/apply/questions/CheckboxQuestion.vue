@@ -5,7 +5,7 @@
       <div class="form-check flex gap-3">
         <input type="checkbox" class="form-check-input m-0" :name="'checkbox' + question.id"
                :checked="res[i]" :id="`checkbox${question.id}${i}`">
-        <label class="text-content-primary" :for="`checkbox${question.id}${i}`">
+        <label :for="`checkbox${question.id}${i}`">
           {{ option }}
         </label>
       </div>

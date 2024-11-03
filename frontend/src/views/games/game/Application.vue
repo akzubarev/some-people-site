@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-3 mt-48">
     <div class="card flex flex-col gap-1 p-6">
       <div class="flex flex-row w-full items-center justify-between gap-3">
-        <div class="text-content-primary whitespace-pre-wrap">
+        <div class="whitespace-pre-wrap">
           Взнос {{ application.price ? `${application.payed} / ${application.price}` : 'не объявлен' }}
         </div>
-        <div class="text-content-primary whitespace-pre-wrap"> Статус: {{
+        <div class="whitespace-pre-wrap"> Статус: {{
             {
               "pending": "Подана",
               "discussing": "Обсуждается",
@@ -18,7 +18,7 @@
         <button class="btn-gradient text-center">Удалить</button>
       </div>
       <div class="flex flex-row items-center justify-between gap-3">
-        <div class="text-content-primary whitespace-no-wrap w-[20%]">
+        <div class="whitespace-no-wrap w-[20%]">
           Заполнено {{ Math.ceil(100 * progress.length / questions.length) }}%
         </div>
         <ProgressBar class="h-[8px]" :progress="100 * progress.length / questions.length"/>

@@ -1,27 +1,27 @@
 <template>
   <div class="flex flex-col gap-3 p-6 bg-bg-transparent rounded-xl">
     <div class="flex flex-row gap-3 items-center justify-between">
-      <div class="w-full text-content-primary text-center">Игра</div>
+      <div class="w-full text-center">Игра</div>
       <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-      <div class="w-full text-content-primary text-center">Персонаж</div>
+      <div class="w-full text-center">Персонаж</div>
       <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-      <div class="w-full text-content-primary text-center">Статус</div>
+      <div class="w-full text-center">Статус</div>
       <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-      <div class="w-full text-content-primary text-center">Перейти</div>
+      <div class="w-full text-center">Перейти</div>
     </div>
     <hr class="h-0.5 w-full bg-gray-200 border-0 rounded">
     <div v-for="application in applications" :key="application"
          class="flex flex-col gap-1">
       <div class="flex flex-row gap-3 items-center justify-between">
-        <div class="w-full text-content-primary text-center">{{ application.game?.title }}</div>
+        <div class="w-full text-center">{{ application.game?.title }}</div>
         <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-        <div class="w-full text-content-primary text-center">
+        <div class="w-full text-center">
           {{
             application.character?.name || "Не указан"
           }}
         </div>
         <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
-        <div class="w-full text-content-primary text-center">
+        <div class="w-full text-center">
           {{
             {
               "pending": "Подана",
@@ -34,7 +34,7 @@
         </div>
         <hr class="h-3 w-2 bg-gray-200 border-0 rounded">
         <inline-svg
-            class="w-full text-content-primary text-center cursor-pointer h-8"
+            class="w-full text-center cursor-pointer h-8"
             @click="$router.push(`/game/${application.game.alias}/apply`)"
             :src="require('@/assets/images/icons/account/apply.svg')"/>
       </div>

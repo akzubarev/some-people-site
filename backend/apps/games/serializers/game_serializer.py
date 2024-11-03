@@ -12,6 +12,7 @@ class GameSerializer(serializers.ModelSerializer):
     groups = SerializerMethodField()
     characters = SerializerMethodField()
     non_grouped = SerializerMethodField()
+    player_count = SerializerMethodField()
 
     class Meta:
         model = Game
@@ -32,6 +33,7 @@ class GameSerializer(serializers.ModelSerializer):
             'non_grouped',
             'open_applications',
             'open_character_list',
+            'player_count',
         ]
 
     def get_groups(self, obj: Game):
@@ -44,6 +46,9 @@ class GameSerializer(serializers.ModelSerializer):
             Character.objects.filter(group__game=obj),
             many=True
         ).data
+
+    def get_player_count(self, obj: Game):
+        return Character.objects.filter(group__game=obj).count()
 
     def get_non_grouped(self, obj: Game):
         return CharacterSerializer(

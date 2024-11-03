@@ -3,17 +3,18 @@ module.exports = {
     content: ["./src/**/*.vue"],
     theme: {
         extend: {
-            fontSize: {
-                '3xl': '1.75rem',
-                '8xl': '3.5rem'
+            fontFamily: {
+                primary: ["Montserrat"],
             },
             colors: {
-                'content-primary': "rgb(var(--text-default))",
-                'content-disabled': "rgb(var(--text-disabled))",
-                'content-muted': "rgb(var(--text-muted))",
-                'content-accent': "rgb(var(--text-accent))",
+                'content-primary': "rgb(var(--content-primary))",
+                'content-disabled': "rgb(var(--content-disabled))",
+                'content-disabled-transparent': "rgb(var(--content-disabled) / 0.3)",
+                'content-muted': "rgb(var(--content-muted))",
+                'content-accent': "rgb(var(--content-accent))",
                 'bg-primary': "rgb(var(--bg-default))",
-                'bg-transparent': "rgb(var(--bg-shadowed) / 0.8)",
+                'bg-transparent': "rgb(0 0 0 / 0.75)",
+                'bg-transparent-2': "rgb(0 0 0 / 0.4)",
                 'gradient-start': "rgb(var(--gradient-start))",
                 'gradient-middle': "rgb(var(--gradient-end))",
                 'gradient-end': "rgb(var(--gradient-end))",

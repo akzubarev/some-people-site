@@ -1,6 +1,6 @@
 <template>
   <Form class="form flex flex-col gap-3" novalidate="novalidate" @submit="savePassword">
-    <label class="flex items-center text-content-primary"> {{ $t("settings.changePassword") }} </label>
+    <label class="flex items-center"> {{ $t("settings.changePassword") }} </label>
     <div class="flex max-sm:flex-col gap-3">
       <div class="relative basis-full lg:basis-1/3">
         <Field type="text" name="current_password" class="form-input"

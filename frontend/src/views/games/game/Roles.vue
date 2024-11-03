@@ -1,9 +1,9 @@
 <template>
-  <img class="flex flex h-[200px] w-full bg-cover" :src="games[alias].header"/>
+  <img class="flex flex h-[200px] w-full bg-cover" :src="game_images[alias].header"/>
   <div class="flex flex-col gap-3 p-3">
     <div
         class="flex flex-col bg-gray-800 bg-opacity-60 gap-3 p-6 h-full min-h-screen">
-      <div class="text-4xl text-content-primary"> Сетка ролей</div>
+      <div class="text-4xl"> Сетка ролей</div>
       <div class="flex flex-col gap-3" v-if="game.groups">
         <GroupBlock
             v-for="group in game.groups" :key="group"
@@ -25,7 +25,7 @@ import gamesService from "@/services/gamesService";
 import GroupBlock from "@/views/games/groups/GroupBlock.vue";
 import router from "@/router";
 import {useStore} from "vuex";
-import {games} from "@/constants/gameImages";
+import {game_images} from "@/constants/gameImages";
 
 const store = useStore()
 const props = defineProps(["alias"])

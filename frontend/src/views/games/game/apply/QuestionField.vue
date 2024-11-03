@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-wrap gap-1"
        :class="horizontal ? 'flex-row':'flex-col'">
-    <label class="flex items-center text-content-primary"
+    <label class="flex items-center"
            :class="horizontal && 'basis-full lg:basis-1/3'">
       {{ question.title }}
     </label>

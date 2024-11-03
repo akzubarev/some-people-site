@@ -5,6 +5,7 @@ from django.db.models import Q, QuerySet
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -16,6 +17,8 @@ class GameViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     """Game viewset"""
     queryset = Game.objects
     serializer_class = GameSerializer
+    authentication_classes: list = []
+    permission_classes = (AllowAny,)
 
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Gets a game."""

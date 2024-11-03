@@ -6,7 +6,7 @@
           :username="user.first_name + ' ' + user.last_name"
       ></Avatar>
       <div class="flex flex-col gap-1 max-md:items-center justify-center">
-        <span class="text-content-primary text-2xl">
+        <span class="text-2xl">
           {{ user.first_name }} {{ user.last_name }} | {{ user.username }}
         </span>
         <span class="text-content-disabled text-gray-400">{{ user.email }}</span>

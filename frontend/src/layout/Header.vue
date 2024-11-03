@@ -5,29 +5,29 @@
       @submit="() => {showLocked = false}"
       :title="lockedText" :buttonText="$t('common.actions.ok')">
   </ActionModal>
-  <div class="w-full bg-gray-800 bg-opacity-70 absolute p-3 mt-10 z-20">
+  <img class="absolute ml-2 mt-2 h-22 w-22 z-10 opacity-75" :src="require('@/assets/images/logo/moth.svg')"/>
+  <Avatar
+      class="absolute right-3 top-8 h-24 w-24 z-30 cursor-pointer"
+      :src="user.avatar" @click="$router.push('/account/profile')"
+      :username="user ? `${user.first_name} ${user.last_name}` : 'Анонимный пользователь'"
+  />
+  <div class="absolute w-full bg-bg-transparent p-3 mt-10 pl-20 pr-60 z-20">
     <div class="flex flex-row w-full gap-3 justify-between h-14 py-3">
-      <inline-svg @click="$emit('asideToggle')"
-                  class="lg:hidden cursor-pointer"
-                  :src="require('@/assets/images/icons/common/menu.svg')"/>
-      <div
-          class="flex flex-row gap-5 justify-between pl-20 w-3/4">
+      <div class="text-3xl font-semibold cursor-pointer hover:text-content-accent" @click=" $router.push('/')">
+        <inline-svg @click="$emit('asideToggle')" class="lg:hidden cursor-pointer"
+                    :src="require('@/assets/images/icons/common/menu.svg')"/>
+        {{ 'Какие-то люди'.toUpperCase() }}
+      </div>
+      <div class="flex flex-row gap-32">
         <div v-for="link in links" :key="link"
              @click="link.locked ? lockedSection(link.lockedText) : $router.push(link.link)"
-             class="text-3xl font-bold flex flex-row gap-1 items-center cursor-pointer"
-             :class="link.locked ? 'text-content-disabled' : 'text-content-primary hover:text-content-accent'">
-          {{ link.title }}
+             class="text-3xl flex flex-row gap-1 items-center cursor-pointer"
+             :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
+          {{ link.title.toUpperCase() }}
           <inline-svg
-              v-if="link.locked" class="h-[25px] w-[25px] text-gray-500"
+              v-if="link.locked" class="h-6 w-6 text-content-disabled"
               :src="require('@/assets/images/icons/common/lock.svg')"/>
         </div>
-      </div>
-      <div class="flex items-center cursor-pointer w-1/4 justify-end">
-        <Avatar
-            :src="user.avatar" :rounded="true"
-            size="50" @click="$router.push('/account/profile')"
-            :username="user ? `${user.first_name} ${user.last_name}` : 'Анонимный пользователь'"
-        />
       </div>
     </div>
   </div>
@@ -54,10 +54,6 @@ const lockedSection = (text) => {
 }
 
 const links = [
-  {
-    title: "Какие-то люди",
-    link: "/",
-  },
   {
     title: "Игры",
     link: "/games",

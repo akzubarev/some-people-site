@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-wrap">
-    <label class="flex items-center basis-full lg:basis-1/3 text-content-primary"> Telegram </label>
+    <label class="flex items-center basis-full lg:basis-1/3"> Telegram </label>
     <div class="flex flex-row items-center justify-between px-3 gap-3 basis-full lg:basis-2/3 mt-2 lg:mt-0">
       <span class="text-xl text-content-disabled">{{ user.telegram ? '@' + user.telegram : "Не подключен" }}</span>
       <div class="flex flex-row items-center gap-3
