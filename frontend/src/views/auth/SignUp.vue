@@ -77,7 +77,7 @@
       </div>
       <div class="text-center">
         <button id="kt_sign_up_submit" ref="submitButton" type="submit"
-                class="btn btn-lg btn-accent w-full">
+                class="btn btn-lg btn-gradient w-full">
             <span class="indicator-label">
               {{ $t("auth.signUp") }}
             </span>

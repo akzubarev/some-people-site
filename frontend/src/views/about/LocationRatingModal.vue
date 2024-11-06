@@ -114,7 +114,7 @@
     </div>
     <button
       type="button"
-      class="btn btn-accent w-full mt-1 sticky bottom-3"
+      class="btn btn-gradient w-full mt-1 sticky bottom-3"
       @click="$emit('close')"
     >
       {{ $t("common.actions.close") }}

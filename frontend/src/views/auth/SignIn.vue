@@ -74,7 +74,7 @@
     <div class="text-center">
       <!--begin::Submit button-->
       <button type="submit" ref="submitButton"
-              class="btn btn-lg btn-accent w-full">
+              class="btn btn-lg btn-gradient w-full">
         {{ $t("auth.signIn") }}
       </button>
       <!--end::Submit button-->

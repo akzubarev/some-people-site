@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-6 mt-48">
     <GameBlock
-        class="h-[500px]" :class="i % 2 === 1 ? 'justify-end': 'justify-start'"
+        class="rounded-xl h-[500px]" :class="i % 2 === 1 ? 'justify-end': 'justify-start'"
         v-for="(game, i) in games" :key="game" :game="game"
         :full="false"/>
   </div>

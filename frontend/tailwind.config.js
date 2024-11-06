@@ -8,6 +8,8 @@ module.exports = {
             },
             colors: {
                 'content-primary': "rgb(var(--content-primary))",
+                'content-secondary': "rgb(var(--content-secondary))",
+                'content-secondary-shadowed': "rgb(var(--content-secondary-shadowed))",
                 'content-disabled': "rgb(var(--content-disabled))",
                 'content-disabled-transparent': "rgb(var(--content-disabled) / 0.3)",
                 'content-muted': "rgb(var(--content-muted))",
@@ -15,6 +17,8 @@ module.exports = {
                 'bg-primary': "rgb(var(--bg-default))",
                 'bg-transparent': "rgb(0 0 0 / 0.75)",
                 'bg-transparent-2': "rgb(0 0 0 / 0.4)",
+                'bg-transparent-white': "rgb(255 255 255 / 0.2)",
+                'whales-bg': "rgb(224 229 228)",
                 'gradient-start': "rgb(var(--gradient-start))",
                 'gradient-middle': "rgb(var(--gradient-end))",
                 'gradient-end': "rgb(var(--gradient-end))",

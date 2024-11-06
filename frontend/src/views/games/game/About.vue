@@ -6,8 +6,8 @@
       :title="lockedText" :buttonText="$t('common.actions.ok')">
   </ActionModal>
   <div class="flex flex flex-col gap-6 justify-end bg-cover h-full w-full min-h-full"
-       :style="`background-image: url('${game_images[alias].background}')`">
-    <div class="text-8xl font-semibold px-12"> {{ game.title.toUpperCase() }}</div>
+       :style="`background-image: url('${game_images[game_alias].background}')`">
+    <div class="text-8xl font-semibold uppercase px-12"> {{ game.title }}</div>
     <div class="flex flex-col mb-12 bg-bg-transparent-2 pl-12 pr-6">
       <div class="flex flex-row gap-6 py-6 justify-between">
         <div class="flex flex-row gap-24 w-3/5">
@@ -22,9 +22,9 @@
           </div>
           <div class="flex flex-col gap-3 w-1/2 justify-center">
             <div v-for="link in links" :key="link" @click="link.locked ? lockedSection(link.lockedText) : link.link()"
-                 class="flex flex-row gap-1 text-4xl font-semibold items-center cursor-pointer"
+                 class="flex flex-row gap-1 text-4xl uppercase font-semibold items-center cursor-pointer"
                  :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
-              {{ link.title.toUpperCase() }}
+              {{ link.title }}
               <inline-svg v-if="link.locked" class="h-6 w-6 text-content-disabled"
                           :src="require('@/assets/images/icons/common/lock.svg')"/>
             </div>
@@ -51,7 +51,7 @@ import {formatDateRange} from "@/utils/dates";
 
 const store = useStore()
 const router = useRouter()
-const props = defineProps(['alias'])
+const props = defineProps(['game_alias'])
 const user = store.getters['auth/user']
 const showLocked = ref(false)
 const lockedText = ref('Раздел в разработке')
@@ -62,11 +62,12 @@ const lockedSection = (text) => {
 }
 const game = ref({
   id: 1,
+  alias: 'lorem ipsum',
   title: "lorem ipsum",
   image: null,
   vk: "",
 })
-gamesService.game(props.alias).then(({data}) => {
+gamesService.game(props.game_alias).then(({data}) => {
   game.value = data
 })
 
@@ -97,7 +98,7 @@ const links = computed(() => {
 })
 
 const otherGames = () => window.open(
-    `/game/${{'whales': 'frostpunk', 'frostpunk': 'whales'}[props.alias]}/about`,
+    `/game/${{'whales': 'frostpunk', 'frostpunk': 'whales'}[props.game_alias]}/about`,
     '_blank'
 ).focus();
 </script>

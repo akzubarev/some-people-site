@@ -17,6 +17,8 @@
 @tailwind base;
 :root {
   --content-primary: 220 220 220;
+  --content-secondary: 55 60 60;
+  --content-secondary-shadowed: 98 106 106;
   --content-disabled: 140 140 140;
   --content-muted: 60 60 60;
   --content-accent: 207 207 207;
@@ -68,23 +70,6 @@ div {
   @apply flex flex-row items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl;
 }
 
-.card {
-  border-radius: theme('borderRadius.2xl');
-  background: theme('colors.gray.700');
-
-  .card-title {
-    font-size: theme('fontSize.2xl');
-  }
-
-  .card-header, .card-body {
-    padding: theme('spacing.6');
-  }
-
-  .card-header + .card-body {
-    padding-top: 0
-  }
-}
-
 .Layout-Body {
   margin: auto
 }
@@ -100,10 +85,6 @@ div {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-}
-
-.filter_subtitle {
-  @apply text-base font-normal mb-0;
 }
 
 .arrow {

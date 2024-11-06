@@ -11,11 +11,11 @@
       <div class="flex flex-col gap-6 py-3">
         <UserBlock
             v-for="user in users" :key="user" :user="user"
-            :game="alias" :questions="questions"
+            :game="game_alias" :questions="questions"
         >
           <CharacterBlock
-              v-if="user.applications[alias].character"
-              :character="characters.find(c => c.id===user.applications[alias].character)"
+              v-if="user.applications[game_alias].character"
+              :character="characters.find(c => c.id===user.applications[game_alias].character)"
               :full="false"
           />
         </UserBlock>
@@ -38,19 +38,19 @@ const store = useStore()
 const characters = ref([])
 const users = ref([])
 const questions = ref(10)
-const props = defineProps(["alias"])
+const props = defineProps(["game_alias"])
 const user = store.getters['auth/user']
 
-gamesService.game(props.alias).then(({data}) => {
+gamesService.game(props.game_alias).then(({data}) => {
   if (!user.mg && !data.open_character_list)
-      router.push(`/game/${props.alias}/about`)
+      router.push(`/game/${props.game_alias}/about`)
 })
-gamesService.questions(props.alias).then(({data}) => {
+gamesService.questions(props.game_alias).then(({data}) => {
   questions.value = data.length
 })
-gamesService.characters(props.alias).then(({data}) => {
+gamesService.characters(props.game_alias).then(({data}) => {
   characters.value = data
-  usersService.players(props.alias).then(({data}) => {
+  usersService.players(props.game_alias).then(({data}) => {
     users.value = data
   })
 })

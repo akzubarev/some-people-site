@@ -1,33 +1,29 @@
 <template>
-  <div class="flex flex-col gap-2 w-full">
-    <div class="flex flex-row items-center gap-4">
-      <img
-          class="z-30 w-[200px] h-[200px] rounded-full"
-          :src="character.image || characters[game][character.id] || characters[game]['default']"
-      />
-      <div class="flex flex-col w-fit gap-1 items-start">
-        <div class="flex flex-row text-lg whitespace-pre-wrap">
-              <span class="text-xl">{{
-                  character.name
-                }} — </span> <span class="text-xl cursor-pointer">{{
-            character.player ? character.player.name : "Свободная роль"
-          }}  </span>
-        </div>
-        <div class="flex flex-row items-center gap-4 p-3 bg-gray-800 bg-opacity-60 rounded-lg -ml-14 z-20" v-if="full">
-          <div class=" text-sm whitespace-pre-wrap ml-14">
-            {{ character.description }}
-          </div>
-        </div>
+  <div class="flex flex-row justify-between gap-6">
+    <div class="flex flex-row gap-[3%]">
+      <div class="flex w-[15%] p-4">
+        <CharacterPicture :game_alias="game_alias" :src="character.image" :name="character.name"/>
+      </div>
+      <div class="flex flex-col w-2/3 gap-3 py-6 px-3 items-start">
+        <div class="text-2xl text-content-secondary">{{ character.name }}, {{ character.alias }}</div>
+        <div class="text-lg text-content-secondary-shadowed whitespace-pre-wrap"> {{ character.description }}</div>
+      </div>
+    </div>
+    <div class="flex flex-col w-[20%] px-3 py-6 gap-1">
+      <div class="text-xl text-content-secondary cursor-pointer text-center">
+        {{ character.player ? character.player.name : "Свободная роль" }}
+      </div>
+      <div class="flex flex-row gap-3 items-center" v-if="!!character.player">
+        <div class="text-xl text-content-secondary-shadowed cursor-pointer">VK</div>
+        <div class="text-xl text-content-secondary-shadowed cursor-pointer">TG</div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script setup>
-
 import {ref} from "vue";
-import {characters} from "@/constants/characterImages";
+import CharacterPicture from "@/views/games/groups/CharacterPicture.vue";
 
 const props = defineProps({
   character: {
@@ -41,7 +37,7 @@ const props = defineProps({
     player: {}
   },
   full: {type: Boolean, default: true},
-  game: {type: String,}
+  game_alias: {type: String,}
 })
 const character = ref({
   ...props.character,

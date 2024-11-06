@@ -54,14 +54,14 @@ const routes: Array<RouteRecordRaw> = [
                 }
             },
             {
-                path: "/game/:alias",
+                path: "/game/:game_alias",
                 name: "game",
-                redirect: "/game/:alias/about",
+                redirect: "/game/:game_alias/about",
                 component: () => import("@/views/games/game/GameRoot.vue"),
                 props: true,
                 children: [
                     {
-                        path: "/game/:alias/about",
+                        path: "/game/:game_alias/about",
                         name: "game-about",
                         component: () => import("@/views/games/game/About.vue"),
                         props: true,
@@ -70,7 +70,7 @@ const routes: Array<RouteRecordRaw> = [
                         }
                     },
                     {
-                        path: "/game/:alias/roles",
+                        path: "/game/:game_alias/roles",
                         name: "game-roles",
                         component: () => import("@/views/games/game/Roles.vue"),
                         props: true,
@@ -79,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
                         }
                     },
                     {
-                        path: "/game/:alias/characters",
+                        path: "/game/:game_alias/characters",
                         name: "game-characters",
                         component: () => import("@/views/games/game/CharacterList.vue"),
                         props: true,
@@ -88,7 +88,7 @@ const routes: Array<RouteRecordRaw> = [
                         }
                     },
                     {
-                        path: "/game/:alias/apply",
+                        path: "/game/:game_alias/apply",
                         name: "game-apply",
                         component: () => import("@/views/games/game/Application.vue"),
                         props: true,
@@ -97,7 +97,7 @@ const routes: Array<RouteRecordRaw> = [
                         }
                     },
                     {
-                        path: "/game/:alias/application/:userId",
+                        path: "/game/:game_alias/application/:userId",
                         name: "game-application",
                         component: () => import("@/views/games/game/Application.vue"),
                         props: true,
@@ -106,7 +106,7 @@ const routes: Array<RouteRecordRaw> = [
                         }
                     },
                     // {
-                    //     path: "/game/:alias/players",
+                    //     path: "/game/:game_alias/players",
                     //     name: "game-players",
                     //     component: () => import("@/views/games/game/Players.vue"),
                     //     props: true,
@@ -184,7 +184,18 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        }
+        if (to.hash) {
+            return {
+                el: to.hash,
+                behavior: 'smooth',
+            }
+        }
+    }
 })
 
 function middlewarePipeline(context, middleware, index, next) {

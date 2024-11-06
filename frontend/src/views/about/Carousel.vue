@@ -15,7 +15,7 @@
       <div class="grid h-full w-full mx-2 lg:mx-0 mx-lg-0">
         <div class="card">
           <div class="card-header border-0 ">
-            <div class="card-title text-uppercase">
+            <div class="card-title uppercase">
               {{ item.title }}
             </div>
           </div>

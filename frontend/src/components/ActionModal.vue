@@ -15,7 +15,7 @@
       </slot>
       <slot name="button">
         <button
-            class="btn h-fit w-full md:w-fit"
+            class="btn-gradient min-w-[20%] h-fit w-full md:w-fit"
             v-if="!(hideButton !== undefined && hideButton == true)"
             @click="$emit('submit')">
           {{ buttonText || typeConf[type || defaultConf].buttonText }}

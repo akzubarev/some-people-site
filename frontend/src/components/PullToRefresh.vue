@@ -1,6 +1,6 @@
 <template>
-	<div class="PullToRefresh" ref="element">
-		<div class="PullToRefresh-Progress" :style="{width: `${progress}%`}"></div>
+	<div class="h-full overflow-hidden no-scrollbar" ref="element">
+		<div class="absolute h-2 rounded-xl bg-gradient-to-r from-gradient-start to-gradient-end" :style="{width: `${progress}%`}"></div>
 		<slot/>
 	</div>
 </template>
@@ -25,14 +25,3 @@ const progress = computed(() => {
 	return 0
 })
 </script>
-<style lang="scss">
-.PullToRefresh {
-	overflow-y: auto;
-	max-height: 100%;
-	&-Progress {
-		background: linear-gradient(85deg, var(--gradient-start), var(--gradient-end));
-		height: 2px;
-		position: absolute;
-	}
-}
-</style>
