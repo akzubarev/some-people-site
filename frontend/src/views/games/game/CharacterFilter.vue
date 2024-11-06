@@ -23,11 +23,11 @@ import {ref} from "vue";
 import gamesService from "@/services/gamesService";
 import Tag from "@/views/games/Tag.vue";
 
-const props = defineProps(["alias"])
+const props = defineProps(["game_alias"])
 const emit = defineEmits(["change"])
 
 const tags = ref([])
-gamesService.tags(props.alias).then(({data}) => {
+gamesService.tags(props.game_alias).then(({data}) => {
   tags.value = data
 })
 

@@ -11,7 +11,7 @@
       <router-view/>
     </div>
   </div>
-  <Footer/>
+<!--  <Footer/>-->
 </template>
 <script setup>
 import {onMounted, ref} from "vue"

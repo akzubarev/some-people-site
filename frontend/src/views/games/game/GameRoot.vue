@@ -1,17 +1,15 @@
 <template>
-<!--  <Menu :alias="game.alias" :config="menuConfig" :title="game.title"/>-->
   <router-view></router-view>
 </template>
 
 <script setup lang="ts">
-import Menu from "@/views/games/game/Menu.vue";
 import gamesService from "@/services/gamesService";
 import {ref, computed} from "vue";
 import {useStore} from "vuex";
 
 const store = useStore()
 const user = store.getters['auth/user']
-const props = defineProps(["alias"])
+const props = defineProps(["game_alias"])
 const game = ref({
   id: 1,
   title: "lorem ipsum",
@@ -20,7 +18,7 @@ const game = ref({
   open_applications: false,
   open_character_list: false
 })
-gamesService.game(props.alias).then(({data}) => {
+gamesService.game(props.game_alias).then(({data}) => {
   game.value = data
 })
 

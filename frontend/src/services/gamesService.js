@@ -4,6 +4,9 @@ export default {
     async game(alias) {
         return await request.get(`/api/games/${alias}/`)
     },
+    async groups(game_alias, grouping) {
+        return await request.get(`/api/games/groups/?game_alias=${game_alias}&grouping=${grouping}`)
+    },
     async games(payload) {
         return await request.get(`/api/games/`, payload)
     },

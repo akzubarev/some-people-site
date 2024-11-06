@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-3 p-6 bg-bg-transparent rounded-xl">
+  <div class="flex flex-col gap-3 p-6 bg-bg-primary rounded-xl">
     <div class="flex flex-row gap-3 items-center justify-between">
       <div class="w-full text-center">Игра</div>
       <hr class="h-3 w-2 bg-gray-200 border-0 rounded">

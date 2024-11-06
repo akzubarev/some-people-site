@@ -13,17 +13,17 @@
   />
   <div class="absolute w-full bg-bg-transparent p-3 mt-10 pl-20 pr-60 z-20">
     <div class="flex flex-row w-full gap-3 justify-between h-14 py-3">
-      <div class="text-3xl font-semibold cursor-pointer hover:text-content-accent" @click=" $router.push('/')">
+      <div class="text-3xl font-semibold text-uppercase cursor-pointer hover:text-content-accent" @click=" $router.push('/')">
         <inline-svg @click="$emit('asideToggle')" class="lg:hidden cursor-pointer"
                     :src="require('@/assets/images/icons/common/menu.svg')"/>
-        {{ 'Какие-то люди'.toUpperCase() }}
+        {{ 'Какие-то люди'  }}
       </div>
       <div class="flex flex-row gap-32">
         <div v-for="link in links" :key="link"
              @click="link.locked ? lockedSection(link.lockedText) : $router.push(link.link)"
-             class="text-3xl flex flex-row gap-1 items-center cursor-pointer"
+             class="text-3xl text-uppercase flex flex-row gap-1 items-center cursor-pointer"
              :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
-          {{ link.title.toUpperCase() }}
+          {{ link.title }}
           <inline-svg
               v-if="link.locked" class="h-6 w-6 text-content-disabled"
               :src="require('@/assets/images/icons/common/lock.svg')"/>

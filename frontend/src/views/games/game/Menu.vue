@@ -18,7 +18,7 @@
     <!--          <button-->
     <!--              @click="$router.push(page.link)"-->
     <!--              class="btn flex w-full justify-center text-xl text-active-primary"-->
-    <!--              :class="$route.path.includes(page.link) ? 'btn-accent':'btn-outline !border-0'">-->
+    <!--              :class="$route.path.includes(page.link) ? 'btn-gradient':'btn-outline !border-0'">-->
     <!--            {{ page.title }}-->
     <!--          </button>-->
     <!--        </li>-->
@@ -57,7 +57,7 @@ import ActionModal from "@/components/ActionModal.vue";
 import {ref} from "vue";
 
 
-const props = defineProps(["alias", "config", "title"])
+const props = defineProps(["game_alias", "config", "title"])
 const {t} = useI18n()
 const lockedText = ref("Раздел в разработке")
 const showLocked = ref(false)

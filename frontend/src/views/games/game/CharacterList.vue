@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-3">
     <CharacterFilter
         @change="(search, tag) => searchCharacters(search,tag)"
-        :alias="alias"
+        :game_alias="game_alias"
     />
     <div class="card p-3">
       <div class="text-xl p-3">
@@ -14,7 +14,7 @@
             :character="character">
           <UserBlock
               v-if="character.player" :user="character.player"
-              :game="alias" :full="false"
+              :game="game_alias" :full="false"
           />
           <div v-else
                class="px-2 border border-1 rounded-xl text-md text-gray-500 border-gray-500">
@@ -37,20 +37,20 @@ import router from "@/router";
 import {useStore} from "vuex";
 
 const store = useStore()
-const props = defineProps(["alias"])
+const props = defineProps(["game_alias"])
 const user = store.getters['auth/user']
 const characters = ref([])
 
-gamesService.game(props.alias).then(({data}) => {
+gamesService.game(props.game_alias).then(({data}) => {
   if (!user.mg && !data.open_character_list)
-    router.push(`/game/${props.alias}/about`)
+    router.push(`/game/${props.game_alias}/about`)
 })
-gamesService.characters(props.alias).then(({data}) => {
+gamesService.characters(props.game_alias).then(({data}) => {
   characters.value = data
 })
 
 const searchCharacters = (search, tag) => {
-  gamesService.characters(props.alias, search, tag).then(({data}) => {
+  gamesService.characters(props.game_alias, search, tag).then(({data}) => {
     characters.value = data
   })
 }

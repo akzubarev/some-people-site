@@ -63,14 +63,14 @@ const form = formhelper()
 const {errors} = form
 
 
-const props = defineProps(["alias", "userId"])
+const props = defineProps(["game_alias", "userId"])
 const questions = ref([])
 const showErrors = ref(false)
 const answers = ref({})
 const application = ref({
   id: 1, status: "approved", answers: [], price: 0
 })
-const game_alias = props.alias
+const game_alias = props.game_alias
 const user_id = computed(() => props.userId || store.getters['auth/user'].id)
 gamesService.application(user_id.value, game_alias).then(({data}) => {
   application.value = data
