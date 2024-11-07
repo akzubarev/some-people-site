@@ -17,7 +17,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import {ref} from "vue"
 import gamesService from "@/services/gamesService";
 import GroupBlock from "@/views/games/groups/GroupBlock.vue";

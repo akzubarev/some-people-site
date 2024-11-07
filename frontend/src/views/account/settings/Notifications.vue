@@ -63,7 +63,7 @@
   <!--end::Row-->
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from "vue"
 import notificationService from "@/services/notificationService"
 import { useI18n } from 'vue-i18n'

@@ -93,7 +93,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Application.vue"),
                         props: true,
                         meta: {
-                            middleware: [isAuth, loadUser]
+                            middleware: [isAuth, forceLoadUser]
                         }
                     },
                     {

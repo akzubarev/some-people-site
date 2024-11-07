@@ -1,93 +1,41 @@
 <template>
-  <Form class="form w-full"
-        novalidate="novalidate" @submit="onSubmitRegister">
-    <div class="flex flex-col gap-3">
-      <div class="grid gap-3 lg:grid-cols-2 flex-wrap">
-        <div>
-          <label class="form-label text-2xl">
-            {{ $t("user.firstName") }}
-          </label>
-          <Field
-              class="form-control form-control-lg form-control-solid"
-              type="text" placeholder="" name="first_name"
-              autocomplete="off"/>
-          <div>
-            <span>{{ errors.first_name || "" }}</span>
-          </div>
-        </div>
-        <div>
-          <label class="form-label   text-2xl">{{
-              $t("user.lastName")
-            }}</label>
-          <Field class="form-control form-control-lg form-control-solid"
-                 type="text" placeholder="" name="last_name"
-                 autocomplete="off"/>
-          <div class="fv-plugins-message-container">
-            <div class="fv-help-block">
-              <span>{{ errors.last_name || "" }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="fv-row">
-        <Field class="form-control form-control-lg form-control-solid"
-               type="text" placeholder="" name="username"
-               autocomplete="off"/>
-        <div class="fv-plugins-message-container">
-          <div class="fv-help-block">
-            <span>{{ errors.username || "" }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="fv-row">
-        <Field class="form-control form-control-lg form-control-solid"
-               type="email" placeholder="" name="email"
-               autocomplete="off"/>
-        <div class="fv-plugins-message-container">
-          <div class="fv-help-block">
-            <span>{{ errors.email || "" }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="fv-row gap-1" data-kt-password-meter="true">
-        <label class="form-label text-2xl">
-          {{ $t("common.password") }}
-        </label>
-        <Field class="form-control form-control-lg form-control-solid"
-               type="password" placeholder=""
-               name="password" autocomplete="off"/>
-        <div class="fv-plugins-message-container">
-          <div class="fv-help-block">
-            <span>{{ errors.password || "" }}</span>
-          </div>
-        </div>
-        <div class="fv-row gap-1">
-          <label class="form-label text-2xl">{{
-              $t("settings.repeatPassword")
-            }}</label>
-          <Field class="form-control form-control-lg form-control-solid"
-                 type="password" placeholder=""
-                 name="re_password" autocomplete="off"/>
-          <div class="fv-plugins-message-container">
-            <div class="fv-help-block">
-              <span>{{ errors.re_password || "" }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center">
-        <button id="kt_sign_up_submit" ref="submitButton" type="submit"
-                class="btn btn-lg btn-gradient w-full">
-            <span class="indicator-label">
-              {{ $t("auth.signUp") }}
-            </span>
-          <span class="indicator-progress">
-              <span
-                  class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
-        </button>
-      </div>
+  <Form class="form w-full flex flex-col gap-6 p-3" novalidate="novalidate" @submit="onSubmitRegister">
+    <div class="flex flex-row gap-3">
+      <InputField
+          :title="$t('user.firstName')" :errors="errors.first_name"
+          name="first_name" placeholder="Имя" :horizontal="false"
+      />
+      <InputField
+          :title="$t('user.lastName')" :errors="errors.first_name"
+          name="last_name" placeholder="Фамилия" :horizontal="false"
+      />
     </div>
+    <div class="flex flex-row gap-3">
+      <InputField
+          :title="$t('user.username')" :errors="errors.username"
+          name="username" :horizontal="false" :autocomplete="false"
+      />
+      <InputField
+          :title="$t('user.email')" :errors="errors.email"
+          name="email" type="email" placeholder="email" :horizontal="false"
+      />
+    </div>
+    <div class="flex flex-row gap-3">
+      <InputField
+          :title="$t('common.password')" :errors="errors.password"
+          name="password" type="password" placeholder="Пароль" :horizontal="false"
+      />
+      <InputField
+          :title="$t('settings.repeatPassword')" :errors="errors.re_password"
+          name="re_password" type="password" placeholder="Повторите пароль" :horizontal="false"
+      />
+    </div>
+    <button id="kt_sign_up_submit" ref="submitButton" type="submit" class="btn-gradient w-full mt-3">
+      <div class="indicator-label"> {{ $t("auth.signUp") }}</div>
+      <div class="indicator-progress">
+        <div class="spinner-border spinner-border-sm align-middle ms-2"></div>
+      </div>
+    </button>
   </Form>
 </template>
 
@@ -98,10 +46,12 @@ import {useStore} from "vuex"
 import {useRouter} from "vue-router"
 import authService from "@/services/authService"
 import formhelper from "@/core/helpers/form"
+import InputField from "@/components/InputField.vue";
 
 export default defineComponent({
   name: "sign-up",
   components: {
+    InputField,
     Field,
     Form,
   },
@@ -117,7 +67,7 @@ export default defineComponent({
 
     const onSubmitRegister = values => {
       form.send(async () => {
-        values.email = (values.email || "").trim().toLowerCase()
+        values.email = (values.email || "").trim()
         const data = (await authService.register(values))["data"]
         store.dispatch("auth/setToken", data.auth_token)
         router.push("/")

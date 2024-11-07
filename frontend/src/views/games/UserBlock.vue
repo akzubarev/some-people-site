@@ -48,7 +48,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import Avatar from "@/components/Avatar.vue";
 // import CharacterBlock from "@/views/games/groups/CharacterBlock.vue";
 

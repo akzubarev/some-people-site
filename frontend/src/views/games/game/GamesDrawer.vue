@@ -23,7 +23,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import {ref} from "vue"
 import {useStore} from "vuex";
 import GroupNamesBlock from "@/views/games/groups/GroupNamesBlock.vue";

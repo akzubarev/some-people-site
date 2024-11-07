@@ -9,14 +9,14 @@
   <Avatar
       class="absolute right-3 top-8 h-24 w-24 z-30 cursor-pointer"
       :src="user.avatar" @click="$router.push('/account/profile')"
-      :username="user ? `${user.first_name} ${user.last_name}` : 'Анонимный пользователь'"
   />
   <div class="absolute w-full bg-bg-transparent p-3 mt-10 pl-20 pr-60 z-20">
     <div class="flex flex-row w-full gap-3 justify-between h-14 py-3">
-      <div class="text-3xl font-semibold text-uppercase cursor-pointer hover:text-content-accent" @click=" $router.push('/')">
+      <div class="text-3xl font-semibold text-uppercase cursor-pointer hover:text-content-accent"
+           @click=" $router.push('/')">
         <inline-svg @click="$emit('asideToggle')" class="lg:hidden cursor-pointer"
                     :src="require('@/assets/images/icons/common/menu.svg')"/>
-        {{ 'Какие-то люди'  }}
+        {{ 'Какие-то люди' }}
       </div>
       <div class="flex flex-row gap-32">
         <div v-for="link in links" :key="link"
@@ -60,13 +60,15 @@ const links = [
   },
   {
     title: "Новичкам",
-    link: "/",
+    link: "/novices",
     locked: true,
-    lockedText: "Раздел находится в разработке",
+    lockedText: "Раздел в разработке",
   },
   {
     title: "МГ",
     link: "/mg",
+    locked: true,
+    lockedText: "Раздел в разработке",
   },
 ]
 </script>

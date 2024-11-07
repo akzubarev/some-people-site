@@ -4,13 +4,14 @@ from typing import Any, Type
 from django.db import transaction
 from rest_framework import mixins, status, viewsets
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import action
+from rest_framework.decorators import action, authentication_classes, permission_classes
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 from apps.users.models import User
-from apps.users.serializers import MyUserSerializer, UserCreateSerializer, UserSerializer
+from apps.users.serializers import UserPrivateSerializer, UserCreateSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin):
@@ -18,6 +19,7 @@ class UserViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Updat
 
     serializer_class = UserSerializer
     queryset = User.objects
+    permission_classes = [AllowAny]
     lookup_field = "uuid"
 
     def get_serializer_class(self) -> Type[UserCreateSerializer | UserSerializer]:
@@ -25,8 +27,7 @@ class UserViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Updat
         if self.action == 'create':
             return UserCreateSerializer
         elif self.action == 'me':
-            print(self.action)
-            return MyUserSerializer
+            return UserPrivateSerializer
         return self.serializer_class
 
     @action(["get", "put", "patch", "delete"], detail=False)
@@ -40,21 +41,22 @@ class UserViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Updat
         # elif request.method == 'DELETE':
         #     return self.destroy(request, *args, **kwargs)
 
+    @authentication_classes([])
     @transaction.atomic
     def create(self, request: Request) -> Response:
         """Create a new user."""
         if request.user.is_authenticated:
             PermissionDenied()
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        user_serializer = self.get_serializer(data=request.data)
+        user_serializer.is_valid(raise_exception=True)
 
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        token, created = Token.objects.get_or_create(user=serializer.instance)
+        self.perform_create(user_serializer)
+        headers = self.get_success_headers(user_serializer.data)
+        token, created = Token.objects.get_or_create(user=user_serializer.instance)
 
-        user = User.objects.filter(id=serializer.instance.id).first()
+        user = User.objects.filter(id=user_serializer.instance.id).first()
         user.save()
-        response_data = dict(serializer.data) | {'auth_token': token.key}
+        response_data = dict(user_serializer.data) | {'auth_token': token.key}
         return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
 
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:

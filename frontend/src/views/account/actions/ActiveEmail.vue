@@ -43,7 +43,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
   import {ref} from "vue"
   import {Field, Form} from "vee-validate"
   import {useI18n} from "vue-i18n"

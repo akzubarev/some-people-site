@@ -23,7 +23,7 @@
   </div> -->
 </template>
 
-<script setup>
+<script setup lang="ts">
   const deleteProfile = values => {
     Swal.fire({
       title: t("settings.deleteAccountApproveMessage"),

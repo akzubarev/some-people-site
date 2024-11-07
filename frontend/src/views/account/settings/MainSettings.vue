@@ -1,81 +1,69 @@
 <template>
   <Form class="form" novalidate="novalidate" @submit="saveProfile">
     <div class="card-body flex flex-col w-full gap-3">
-      <div class="setting-container">
-        <label class="title"> {{ $t("settings.avatar") }} </label>
+      <div class="flex flex-row w-full items-center gap-6">
+        <label class="text-xl"> {{ $t("settings.avatar") }} </label>
         <TinyImageUploader
-            class="bg-bg-primary !w-[100px] !h-[100px] rounded-full" icon
+            icon class="bg-bg-primary !w-[100px] !h-[100px] rounded-full"
             :image="avatar || user.avatar" @upload="avatar = $event"
         />
       </div>
-
-      <div class="setting-container">
-        <label class="title"> {{ $t("settings.firstNameAndLastName") }} </label>
-        <div class="flex flex-row gap-3 basis-2/3">
-          <div class="w-full">
-            <Field class="form-input" v-model="user.first_name"
-                   type="text" name="first_name" :placeholder="$t('user.firstName')"/>
-            <span v-if="errors.first_name" class="input-error-message">{{ errors.first_name }}</span>
-          </div>
-          <div class="w-full">
-            <Field class="form-input" v-model="user.last_name"
-                   type="text" name="last_name" :placeholder="$t('user.lastName')"/>
-            <span v-if="errors.last_name" class="input-error-message">{{ errors.last_name }}</span>
-          </div>
+      <div class="flex flex-col items-center gap-3">
+        <div class="flex flex-row w-full items-center gap-3">
+          <InputField
+              :title="$t('user.firstName')" :errors="errors.first_name"
+              name="first_name" :horizontal="false" :v_model="user.first_name"
+              placeholder="Имя"
+          />
+          <InputField
+              :title="$t('user.lastName')" :errors="errors.last_name"
+              name="last_name" :horizontal="false" :v_model="user.last_name"
+              placeholder="Фамилия"
+          />
         </div>
+        <div class="flex flex-row w-full items-center gap-3">
+          <InputField
+              :title="$t('user.username')" :errors="errors.username"
+              name="username" :horizontal="false" :v_model="user.username"
+              :placeholder="$t('settings.usernamePlaceholder')"
+          />
+          <InputField
+              :title="$t('user.email')" :errors="errors.email"
+              name="email" :horizontal="false" :v_model="user.email"
+              :placeholder="$t('user.email')"
+          />
+        </div>
+        <div class="flex flex-row w-full items-center gap-3">
+          <InputField
+              :title="$t('user.phone')" :errors="errors.phone"
+              name="phone" :horizontal="false" :v_model="user.phone"
+              placeholder="+79000000000"
+          />
+          <InputField
+              title="Instagram" :errors="errors.instagram"
+              name="instagram" :horizontal="false" :v_model="user.instagram"
+              placeholder="@instagram"
+          />
+        </div>
+        <Telegram/>
+        <button type="submit" id="kt_account_profile_details_submit" class="btn-gray ml-auto w-fit max-sm:w-full">
+          <span class="indicator-label"> {{ $t("common.actions.save") }} </span>
+        </button>
       </div>
-
-      <div class="setting-container">
-        <label class="title"> {{ $t("user.phone") }} </label>
-        <Field class="form-input" v-model="user.phone"
-               type="text" name="phone" placeholder="+79000000000"/>
-        <span v-if="errors.phone" class="input-error-message">{{ errors.phone }}</span>
-      </div>
-
-      <div class="setting-container">
-        <label class="title"> {{ $t("user.username") }} </label>
-        <Field class="form-input" v-model="user.username"
-               type="text" name="username" :placeholder="$t('settings.usernamePlaceholder')"/>
-        <span v-if="errors.username" class="input-error-message">{{ errors.username }}</span>
-      </div>
-
-      <div class="setting-container">
-        <label class="title"> Instagram </label>
-        <Field class="form-input" v-model="user.instagram"
-               type="text" name="instagram" placeholder="@instagram"/>
-        <span v-if="errors.instagram" class="input-error-message"> {{ errors.instagram }} </span>
-      </div>
-
-      <Telegram/>
-      <button
-          type="submit" id="kt_account_profile_details_submit"
-          class="btn-gray ml-auto w-fit max-sm:w-full">
-        <span class="indicator-label"> {{ $t("common.actions.save") }} </span>
-      </button>
     </div>
   </Form>
 </template>
 
-<style>
-.setting-container {
-  @apply flex flex-wrap;
-
-  & .title {
-    @apply flex items-center basis-full lg:basis-1/3
-  }
-
-}
-</style>
-
-<script setup>
+<script setup lang="ts">
 import formhelper from "@/core/helpers/form"
 import {useStore} from "vuex"
 import {ref} from "vue"
-import {Field, Form} from "vee-validate"
+import {Form} from "vee-validate"
 import authService from "@/services/authService"
 import {useI18n} from "vue-i18n"
 import TinyImageUploader from "@/components/image-uploader/TinyImageUploader.vue"
 import Telegram from "@/views/account/settings/Telegram.vue";
+import InputField from "@/components/InputField.vue";
 
 
 const store = useStore()

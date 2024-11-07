@@ -46,7 +46,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {computed, ref} from "vue"
 import {Form} from "vee-validate"
 import ProgressBar from "@/components/progressbar/ProgressBar.vue"
@@ -61,7 +61,6 @@ const router = useRouter()
 const progress = ref([])
 const form = formhelper()
 const {errors} = form
-
 
 const props = defineProps(["game_alias", "userId"])
 const questions = ref([])

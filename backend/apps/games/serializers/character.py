@@ -3,8 +3,8 @@ from rest_framework import serializers
 
 from apps.games.models import Application, Character
 from apps.users.models import User
-from .application_serializer import ApplicationSerializer
-from .tag_serializer import TagSerializer
+from .application import ApplicationSerializer
+from .tag import TagSerializer
 
 
 class CharacterSerializer(serializers.ModelSerializer):

@@ -20,12 +20,16 @@
         </div>
       </div>
     </div>
+    <Footer/>
   </div>
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 
+
+import About from "@/views/games/game/About.vue";
+import Footer from "@/layout/Footer.vue";
 
 const props = defineProps({
   master: {

@@ -1,4 +1,4 @@
 """Notification views package."""
-from .notification_viewset import NotificationViewSet
+from .notification import NotificationViewSet
 
 __all__ = ('NotificationViewSet',)

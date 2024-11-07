@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {ref} from "vue"
 import GameBlock from "@/views/games/GameBlock.vue";
 import gamesService from "@/services/gamesService";

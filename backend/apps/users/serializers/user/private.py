@@ -6,10 +6,10 @@ from rest_framework import serializers
 
 from apps.users.models import User
 from utils.auth import encode_uuid
-from .user_serializer import UserSerializer
+from .public import UserSerializer
 
 
-class MyUserSerializer(UserSerializer):
+class UserPrivateSerializer(UserSerializer):
     """Serializes for /me route."""
     telegram_code = serializers.SerializerMethodField()
 
@@ -23,7 +23,6 @@ class MyUserSerializer(UserSerializer):
     def __init__(self, instance=None, *args, **kwargs) -> None:
         """Initializes the serializer."""
         avatar = kwargs.get('data', {}).get('avatar')
-
         if avatar and isinstance(avatar, str) and ';base64,' in avatar:
             avatar_format, image_str = avatar.split(';base64,')
             ext = avatar_format.split('/')[-1]

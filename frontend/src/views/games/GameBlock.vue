@@ -8,7 +8,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import ImageBanner from "@/components/ImageBanner.vue";
 import {game_images} from "@/constants/gameImages";
 

@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // import DashboardCard from "@/views/dashboard/DashboardCard.vue";
 import usersService from "@/services/usersService";
 import {ref} from "vue";
