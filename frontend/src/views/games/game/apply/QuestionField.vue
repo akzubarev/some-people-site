@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {ref} from "vue";
 import {Field} from "vee-validate"
 import RadioQuestion from "@/views/games/game/apply/questions/RadioQuestion.vue";

@@ -40,7 +40,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import {computed, ref} from "vue"
 import gamesService from "@/services/gamesService";
 import ActionModal from "@/components/ActionModal.vue";

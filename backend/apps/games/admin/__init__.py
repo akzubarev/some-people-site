@@ -1,10 +1,10 @@
 """Games admin package."""
-from .answer_admin import AnswerAdmin
-from .application_admin import ApplicationAdmin
-from .character_admin import CharacterAdmin
-from .group_admin import GroupAdmin
-from .game_admin import GameAdmin
-from .question_admin import QuestionAdmin
-from .tag_admin import TagAdmin
+from .answer import AnswerAdmin
+from .application import ApplicationAdmin
+from .character import CharacterAdmin
+from .group import GroupAdmin
+from .game import GameAdmin
+from .question import QuestionAdmin
+from .tag import TagAdmin
 
 __all__ = ('AnswerAdmin', 'ApplicationAdmin', 'CharacterAdmin', 'GroupAdmin', 'GameAdmin', 'QuestionAdmin', 'TagAdmin')

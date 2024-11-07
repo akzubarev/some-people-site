@@ -1,4 +1,4 @@
 """Users admin package."""
-from .user_admin import UserAdmin
+from .user import UserAdmin
 
 __all__ = ('UserAdmin',)

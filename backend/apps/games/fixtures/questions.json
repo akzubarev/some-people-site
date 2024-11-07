@@ -66,5 +66,50 @@
       "choices": null,
       "order": 4
     }
+  },
+  {
+    "model": "games.Question",
+    "pk": 5,
+    "fields": {
+      "game": [
+        1,
+        2
+      ],
+      "title": "Вопрос-Шкала?",
+      "description": "Описание-5",
+      "type": "scale",
+      "choices": [
+        "Ответ-1",
+        "Ответ-2",
+        "Ответ-3"
+      ],
+      "order": 5
+    }
+  },
+  {
+    "model": "games.Question",
+    "pk": 6,
+    "fields": {
+      "game": [
+        1,
+        2
+      ],
+      "title": "Вопрос-Сетка?",
+      "description": "Описание-6",
+      "type": "matrix",
+      "choices": [
+        [
+          "Строка-1",
+          "Строка-2",
+          "Строка-3"
+        ],
+        [
+          "Колонка-1",
+          "Колонка-2",
+          "Колонка-3"
+        ]
+      ],
+      "order": 6
+    }
   }
 ]

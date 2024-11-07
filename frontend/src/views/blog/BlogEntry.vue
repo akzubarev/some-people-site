@@ -99,7 +99,7 @@
   overflow: hidden;
 }
 </style>
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   post: {},
   dashboard: {

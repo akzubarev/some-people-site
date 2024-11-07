@@ -3,8 +3,8 @@ from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
 from apps.games.models import Game, Character
-from .character_serializer import CharacterSerializer
-from .group_serializer import MainGroupSerializer
+from .character import CharacterSerializer
+from .group import MainGroupSerializer
 
 
 class GameSerializer(serializers.ModelSerializer):

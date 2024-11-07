@@ -1,14 +1,9 @@
 <template>
   <div class="flex flex-col p-6 gap-6 rounded-xl bg-gray-700 bg-opacity-60 mt-48 mx-3">
     <div class="flex max-md:flex-col max-md:justify-center items-center gap-6 relative">
-      <Avatar
-          class="min-w-[128px]" size="128" :src="user.avatar"
-          :username="user.first_name + ' ' + user.last_name"
-      ></Avatar>
+      <Avatar class="w-32 h-32" :src="user.avatar"/>
       <div class="flex flex-col gap-1 max-md:items-center justify-center">
-        <span class="text-2xl">
-          {{ user.first_name }} {{ user.last_name }} | {{ user.username }}
-        </span>
+        <div class="text-2xl"> {{ user.first_name }} {{ user.last_name }} | {{ user.username }}</div>
         <span class="text-content-disabled text-gray-400">{{ user.email }}</span>
       </div>
       <button
@@ -22,7 +17,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {computed} from "vue"
 import {useStore} from "vuex"
 import {useI18n} from "vue-i18n"

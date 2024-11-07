@@ -1,6 +1,6 @@
 """User serializers package."""
-from .my_user_serializer import MyUserSerializer
-from .user_create_serializer import UserCreateSerializer
-from .user_serializer import UserSerializer
+from .create import UserCreateSerializer
+from .private import UserPrivateSerializer
+from .public import UserSerializer
 
-__all__ = ('MyUserSerializer', 'UserCreateSerializer', 'UserSerializer')
+__all__ = ('UserPrivateSerializer', 'UserCreateSerializer', 'UserSerializer')

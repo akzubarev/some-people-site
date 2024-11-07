@@ -3,7 +3,7 @@ from django.db.models import Count, Case, When, BooleanField
 from rest_framework import serializers
 
 from apps.games.models import Group
-from .character_serializer import CharacterSerializer
+from .character import CharacterSerializer
 
 
 class GroupSerializer(serializers.ModelSerializer):

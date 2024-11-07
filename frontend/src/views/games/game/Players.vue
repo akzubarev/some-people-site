@@ -25,7 +25,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import {ref} from "vue"
 import UserBlock from "@/views/games/UserBlock.vue";
 import usersService from "@/services/usersService";

@@ -20,7 +20,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import MainSettings from "@/views/account/settings/MainSettings.vue"
 // import ActiveEmail from "@/views/account/actions/ActiveEmail.vue"
 // import ChangeEmail from "@/views/account/actions/ChangeEmail.vue"

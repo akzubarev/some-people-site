@@ -32,7 +32,7 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
 
     avatar = models.ImageField(
         verbose_name='picture',
-        upload_to='tgavatars/pictures/',
+        upload_to='users/avatars/',
         blank=True, null=True
     )
 
