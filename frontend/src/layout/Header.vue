@@ -57,6 +57,8 @@ const links = [
   {
     title: "Игры",
     link: "/games",
+    locked: true,
+    lockedText: "Раздел в разработке",
   },
   {
     title: "Новичкам",

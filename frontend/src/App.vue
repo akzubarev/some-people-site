@@ -67,7 +67,7 @@ div {
 }
 
 .form-input {
-  @apply flex flex-row items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl;
+  @apply flex flex-row text-lg items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl;
 }
 
 .Layout-Body {
@@ -128,13 +128,14 @@ div {
   box-shadow: unset !important;
 }
 
-.form-check-input {
-  margin-left: 0 !important
+.form-check {
+  @apply flex flex-row gap-3 items-center;
 }
 
-.form-check {
-  padding: 0
+.form-check-input {
+  @apply w-6 h-6 m-0 p-0 items-center;
 }
+
 
 @tailwind utilities;
 /* Hide scrollbar for Chrome, Safari and Opera */

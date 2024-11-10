@@ -22,7 +22,7 @@ class GameViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     permission_classes = (AllowAny,)
 
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        """Gets a game."""
+        """Gets a games."""
         alias = request.get_full_path().split("/")[-2]
         instance = Game.objects.filter(alias=alias).first() or self.get_object()
         serializer = self.serializer_class(instance, context={'request': request})
@@ -37,7 +37,7 @@ class GameViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     @action(detail=False, methods=['get'])
     # @roles_open
     def characters(self, request: Request, *args: Any, **kwargs: Any) -> Response | PermissionDenied:
-        """Gets game characters."""
+        """Gets games characters."""
         char_filter = character_filter(
             game_alias=request.GET.get('game_alias', None),
             tag=request.GET.get('tag', None), search=request.GET.get('search', None),
@@ -48,14 +48,14 @@ class GameViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     @action(detail=False, methods=['get'])
     # @roles_open
     def groups(self, request: Request, *args: Any, **kwargs: Any) -> Response | PermissionDenied:
-        """Gets game groups."""
+        """Gets games groups."""
         game_alias = request.GET.get('game_alias', None)
         groups = game_grouper(game_alias=game_alias, grouping=request.GET.get('grouping', None))
         return Response(GroupSerializer(groups, many=True).data)
 
     @action(detail=False, methods=['get'])
     def tags(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        """Gets game tags."""
+        """Gets games tags."""
         game_alias = request.GET.get("game_alias", None)
         characters = Character.objects.filter(group__game__alias=game_alias)
         tags = Tag.objects.filter(characters__in=characters).distinct()
@@ -63,7 +63,7 @@ class GameViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
 
 def character_filter(game_alias: str, tag: str, search: str) -> QuerySet[Character]:
-    """Filters characters by game, tag and search."""
+    """Filters characters by games, tag and search."""
     characters = Character.objects.filter(group__game__alias=game_alias)
     if tag is not None:
         characters = characters.filter(tags__name=tag)
