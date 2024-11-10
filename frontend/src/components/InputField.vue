@@ -1,18 +1,20 @@
 <template>
   <div class="flex relative w-full gap-1" :class="horizontal ? 'flex-row' : 'flex-col'">
     <label class="flex items-center basis-full lg:basis-1/3 text-xl"> {{ title }} </label>
-    <slot/>
-     <inline-svg
+    <div class="flex flex-col w-full relative items-end gap-1">
+      <slot/>
+      <Field
+          class="form-input" :autocomplete="autocomplete ? 'on' : 'off'"
+          :type="passVisible ? 'text' : type" :name="name" v-model="props.v_model"
+          :placeholder="placeholder"
+      />
+      <inline-svg
           v-if="type=='password'" @click="passVisible = !passVisible"
-          class="absolute right-1 bottom-1 text-3xl text-gray-400"
+          class="absolute right-2 bottom-2 text-3xl text-gray-400"
           :src="require(`@/assets/images/icons/auth/eye${passVisible ? '-off' : ''}.svg`)"
       />
-    <Field
-        class="form-input" :autocomplete="autocomplete ? 'on' : 'off'"
-        :type="passVisible ? 'text' : type" :name="name" v-model="props.v_model"
-        :placeholder="placeholder"
-    />
-    <div v-if="errors" class="input-error-message">{{ errors }}</div>
+      <div v-if="errors" class="input-error-message">{{ errors }}</div>
+    </div>
   </div>
 </template>
 

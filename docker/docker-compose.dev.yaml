@@ -3,7 +3,6 @@ name: some-people
 
 x-inject-external-traefik: &traefik
   name: traefik_default
-#  external: true
 
 x-networks: &networks
   networks:
@@ -106,7 +105,6 @@ services:
     expose: [ 8080 ]
     environment:
       - API_URL=http://api:8000/
-      # - API_URL=https://somepeoplelarp.ru/
     labels:
       traefik.enable: true
       traefik.docker.network: traefik_default

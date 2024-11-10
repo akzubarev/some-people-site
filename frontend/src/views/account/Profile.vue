@@ -8,7 +8,7 @@
       </div>
       <button
           @click="$router.push('/account/settings')"
-          class="btn-gray gap-2 max-md:w-full md:absolute top-6 right-6">
+          class="btn-gray gap-2 text-xl max-md:w-full md:absolute top-6 right-6">
         <inline-svg :src="require('@/assets/images/icons/account/settings.svg')"/>
         {{ $t("menu.settings") }}
       </button>

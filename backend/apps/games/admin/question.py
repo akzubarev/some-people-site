@@ -11,6 +11,7 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "title",
+        # "games",
         "description",
         "type",
         "choices",

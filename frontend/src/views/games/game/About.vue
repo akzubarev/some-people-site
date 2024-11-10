@@ -30,7 +30,8 @@
             </div>
           </div>
         </div>
-        <div @click="otherGames" class="flex flex-row gap-1 text-xl text-right items-center cursor-pointer">
+        <div class="flex flex-row text-content-disabled gap-1 text-xl text-right items-center cursor-pointer"
+             @click="lockedSection('Раздел в разработке.')">
           Какие-то<br> игры
           <inline-svg class="h-12 w-12" :src="require('@/assets/images/icons/common/arrow.svg')"/>
         </div>

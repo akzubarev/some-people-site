@@ -3,7 +3,6 @@ from rest_framework import serializers
 
 from apps.games.serializers import ApplicationSerializer
 from apps.users.models import User
-from config.settings import DEBUG
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -11,7 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
     telegram = serializers.SerializerMethodField()
     applications = serializers.SerializerMethodField()
     mg = serializers.SerializerMethodField()
-    avatar = serializers.SerializerMethodField()
 
     class Meta:
         """Serializer meta."""
@@ -43,11 +41,3 @@ class UserSerializer(serializers.ModelSerializer):
     def get_mg(self, user: User) -> bool:
         """Gets user mg status."""
         return user.is_superuser or user.is_staff
-
-    def get_avatar(self, user: User) -> str | None:
-        """Gets user avatar."""
-        if not user.avatar:
-            return None
-        if DEBUG:
-            return user.avatar.path.replace('/app', 'http://v1.admin.some-people.localhost:1337')
-        return user.avatar.path

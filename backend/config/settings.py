@@ -451,7 +451,7 @@ JAZZMIN_SETTINGS = {
     'site_title': 'Какие-то люди',
     'site_header': 'Какие-то люди',
     'site_brand': 'Какие-то люди',
-    'site_logo': 'img/hashray_light.png',
+    'site_logo': 'img/some_people_logo.png',
     'welcome_sign': 'Какие-то люди: Админ панель',
     'hide_apps': ['graphql_auth', 'refresh_token'],
     'hide_models': ['auth.group', ],

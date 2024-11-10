@@ -4,10 +4,10 @@
     <div class="flex flex-row justify-between p-3">
       <div v-for="(option, i) in question.choices" :key="option">
         <div class="flex flex-col cursor-pointer gap-1">
-          <div class="form-check flex gap-3">
+          <div class="form-check">
             <input
-                @change="change(option, i)" v-model="res" type="radio"
-                class="form-check-input !w-[1.5rem] !h-[1.5rem]"
+                @change="change(option, i)" v-model="res"
+                class="form-check-input" type="radio"
                 :value="option" :name="'radio' + question.id"
                 :id="`radio${question.id}${i}`">
             <label class="cursor-pointer" :for="`radio${question.id}${i}`">

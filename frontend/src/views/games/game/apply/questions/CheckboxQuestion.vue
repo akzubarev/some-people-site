@@ -1,11 +1,11 @@
 <template>
   <div v-for="(option, i) in question.choices" :key="option">
-    <div class="flex flex-col cursor-pointer gap-1"
+    <div class="flex flex-col cursor-pointer gap-3"
          @click="() => { if (!readonly) {res[i] = !res[i]; $emit('change',answer)}}">
-      <div class="form-check flex gap-3">
+      <div class="form-check">
         <input type="checkbox" class="form-check-input m-0" :name="'checkbox' + question.id"
                :checked="res[i]" :id="`checkbox${question.id}${i}`">
-        <label :for="`checkbox${question.id}${i}`">
+        <label :for="`checkbox${question.id}${i}`" class="text-2xl">
           {{ option }}
         </label>
       </div>

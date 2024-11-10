@@ -1,5 +1,6 @@
 """Me serializer."""
 from base64 import b64decode
+from uuid import uuid4
 
 from django.core.files.base import ContentFile
 from rest_framework import serializers
@@ -18,7 +19,7 @@ class UserPrivateSerializer(UserSerializer):
 
         model = User
         fields = UserSerializer.Meta.fields + ('telegram_code',)
-        read_only_fields = UserSerializer.Meta.read_only_fields
+        read_only_fields = UserSerializer.Meta.read_only_fields + ('telegram_code',)
 
     def __init__(self, instance=None, *args, **kwargs) -> None:
         """Initializes the serializer."""
@@ -26,8 +27,14 @@ class UserPrivateSerializer(UserSerializer):
         if avatar and isinstance(avatar, str) and ';base64,' in avatar:
             avatar_format, image_str = avatar.split(';base64,')
             ext = avatar_format.split('/')[-1]
-            kwargs['data']['avatar'] = ContentFile(b64decode(image_str), f'avatar.{ext}')
+            kwargs['data']['avatar'] = ContentFile(b64decode(image_str), f'{uuid4()}.{ext}')
+        print(kwargs.get('data', {}).items())
         super().__init__(instance, *args, **kwargs)
+
+    def save(self, **kwargs):
+        print(self.validated_data)
+        a = super().save()
+        print(a)
 
     def get_telegram_code(self, user: User) -> str:
         """Returns users telegram code."""

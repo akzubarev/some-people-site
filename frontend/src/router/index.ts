@@ -1,9 +1,8 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router"
 import store from "@/store"
 import {Mutations} from "@/store/enums/StoreEnums"
-import isAuth from "@/middleware/isAuth"
-import guest from "@/middleware/guest"
-import {forceLoadUser, loadUser} from "@/middleware/loadUser"
+import {isAuth, isMg, guest} from "@/middleware/auth"
+import {loadUser} from "@/middleware/load"
 import {setPageTitle} from "@/store"
 import Layout from "@/layout/Layout.vue"
 
@@ -18,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "dashboard",
                 component: () => import("@/views/dashboard/Dashboard.vue"),
                 meta: {
-                    // middleware: [guest]
+                    middleware: [loadUser, guest]
                 }
             },
             {
@@ -26,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "mg",
                 component: () => import("@/views/dashboard/MG.vue"),
                 meta: {
-                    // middleware: [guest]
+                    middleware: [loadUser, guest]
                 }
             },
             {
@@ -34,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "account-profile",
                 component: () => import("@/views/account/Profile.vue"),
                 meta: {
-                    middleware: [isAuth, forceLoadUser]
+                    middleware: [loadUser, isAuth]
                 }
             },
             {
@@ -42,7 +41,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "account-settings",
                 component: () => import("@/views/account/settings/Settings.vue"),
                 meta: {
-                    middleware: [isAuth, forceLoadUser]
+                    middleware: [loadUser, isAuth]
                 }
             },
             {
@@ -50,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "games",
                 component: () => import("@/views/games/Games.vue"),
                 meta: {
-                    // middleware: [guest]
+                    middleware: [loadUser, guest]
                 }
             },
             {
@@ -66,7 +65,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/About.vue"),
                         props: true,
                         meta: {
-                            // middleware: [guest]
+                            middleware: [loadUser, guest]
                         }
                     },
                     {
@@ -75,7 +74,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Roles.vue"),
                         props: true,
                         meta: {
-                            // middleware: [guest]
+                            middleware: [loadUser, guest]
                         }
                     },
                     {
@@ -84,7 +83,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/CharacterList.vue"),
                         props: true,
                         meta: {
-                            // middleware: [guest]
+                            middleware: [loadUser, guest]
                         }
                     },
                     {
@@ -93,7 +92,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Application.vue"),
                         props: true,
                         meta: {
-                            middleware: [isAuth, forceLoadUser]
+                            middleware: [loadUser, isAuth]
                         }
                     },
                     {
@@ -102,7 +101,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/game/Application.vue"),
                         props: true,
                         meta: {
-                            middleware: [loadUser]
+                            middleware: [loadUser, isMg]
                         }
                     },
                     // {
@@ -111,7 +110,7 @@ const routes: Array<RouteRecordRaw> = [
                     //     component: () => import("@/views/games/game/Players.vue"),
                     //     props: true,
                     //     meta: {
-                    //         middleware: [isAuth,]
+                    //         middleware: [loadUser, isMg]
                     //     }
                     // },
                 ]
@@ -145,7 +144,7 @@ const routes: Array<RouteRecordRaw> = [
                     name: "lost-pass",
                     component: () => import("@/views/auth/LostPass.vue"),
                     meta: {
-                        middleware: [guest]
+                        middleware: [loadUser, isAuth]
                     }
                 },
                 {
@@ -153,7 +152,7 @@ const routes: Array<RouteRecordRaw> = [
                     name: "sign-out",
                     component: () => import("@/views/auth/SignOut.vue"),
                     meta: {
-                        middleware: [isAuth]
+                        middleware: [loadUser, isAuth]
                     }
                 },
                 {
@@ -162,7 +161,7 @@ const routes: Array<RouteRecordRaw> = [
                     component: () => import("@/views/auth/PasswordReset.vue"),
                     props: true,
                     meta: {
-                        middleware: [isAuth]
+                        middleware: [loadUser, isAuth]
                     }
                 }
             ]
@@ -170,15 +169,12 @@ const routes: Array<RouteRecordRaw> = [
     {
         // the 404 route, when none of the above matches
         path: "/404",
-        name:
-            "404",
-        component:
-            () => import("@/views/error/Error404.vue")
+        name: "404",
+        component: () => import("@/views/error/Error404.vue")
     },
     {
         path: "/:pathMatch(.*)*",
-        redirect:
-            "/404"
+        redirect: "/404"
     }
 ]
 

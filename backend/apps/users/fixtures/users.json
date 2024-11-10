@@ -51,10 +51,34 @@
     "model": "users.User",
     "pk": 6,
     "fields": {
-      "email": "nastya@admin.com",
-      "first_name": "Настя",
-      "last_name": "Ваш",
-      "username": "vash_ded",
+      "email": "olya@admin.com",
+      "first_name": "Оля",
+      "last_name": "Пьяных",
+      "username": "olya",
+      "is_staff": true,
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "users.User",
+    "pk": 7,
+    "fields": {
+      "email": "polina@admin.com",
+      "first_name": "Полина",
+      "last_name": "Воробьева",
+      "username": "polina",
+      "is_staff": true,
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "users.User",
+    "pk": 8,
+    "fields": {
+      "email": "sasha@admin.com",
+      "first_name": "Саша",
+      "last_name": "Саша",
+      "username": "sasha",
       "is_staff": true,
       "is_superuser": true
     }

@@ -5,11 +5,11 @@
         <label class="text-xl"> {{ $t("settings.avatar") }} </label>
         <TinyImageUploader
             icon class="bg-bg-primary !w-[100px] !h-[100px] rounded-full"
-            :image="avatar || user.avatar" @upload="avatar = $event"
+            :image="avatar" @upload="user.avatar = $event"
         />
       </div>
       <div class="flex flex-col items-center gap-3">
-        <div class="flex flex-row w-full items-center gap-3">
+        <div class="settings-row">
           <InputField
               :title="$t('user.firstName')" :errors="errors.first_name"
               name="first_name" :horizontal="false" :v_model="user.first_name"
@@ -21,7 +21,7 @@
               placeholder="Фамилия"
           />
         </div>
-        <div class="flex flex-row w-full items-center gap-3">
+        <div class="settings-row">
           <InputField
               :title="$t('user.username')" :errors="errors.username"
               name="username" :horizontal="false" :v_model="user.username"
@@ -33,7 +33,7 @@
               :placeholder="$t('user.email')"
           />
         </div>
-        <div class="flex flex-row w-full items-center gap-3">
+        <div class="settings-row">
           <InputField
               :title="$t('user.phone')" :errors="errors.phone"
               name="phone" :horizontal="false" :v_model="user.phone"
@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import formhelper from "@/core/helpers/form"
 import {useStore} from "vuex"
-import {ref} from "vue"
+import {computed, ref} from "vue"
 import {Form} from "vee-validate"
 import authService from "@/services/authService"
 import {useI18n} from "vue-i18n"
@@ -73,18 +73,22 @@ const {errors} = form
 const {t} = useI18n()
 const emit = defineEmits(['saved'])
 
-const avatar = ref("")
+const avatar = computed(() => user.avatar)
 
 const saveProfile = values => {
-  if (avatar.value) {
-    values["avatar"] = avatar.value
-  }
-  values["country_iso"] = user.country_iso
-  values["country"] = user.country
+  values["avatar"] = avatar.value
   form.send(async () => {
-    await authService.me(values)
+    await authService.update_me(values).then(data => {
+      store.dispatch('auth/setUser', data)
+    })
     emit('saved')
   })
 }
 
 </script>
+
+<style>
+.settings-row {
+  @apply flex flex-row w-full items-center gap-3;
+}
+</style>

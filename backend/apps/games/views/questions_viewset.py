@@ -24,6 +24,6 @@ class QuestionsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         game_alias = request.GET.get("game_alias", None)
         queryset = self.get_queryset()
         if game_alias is not None:
-            queryset = queryset.filter(game__alias=game_alias)
+            queryset = queryset.filter(games__alias=game_alias)
         serializer = self.serializer_class(queryset, context={'request': request}, many=True)
         return Response(serializer.data)

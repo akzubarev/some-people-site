@@ -12,6 +12,7 @@ class Question(models.Model):
         MULTIPLE_CHOICE = "multiple_choice"
         SCALE = "scale"
         MATRIX = "matrix"
+        MATRIX_CHECKBOX = "matrix_checkbox"
 
         CHOICES = [
             (LINE, "Строка"),
@@ -20,9 +21,10 @@ class Question(models.Model):
             (MULTIPLE_CHOICE, "Множественный выбор"),
             (SCALE, "Шкала"),
             (MATRIX, "Сетка"),
+            (MATRIX_CHECKBOX, "Сетка флажков"),
         ]
 
-    game = models.ManyToManyField(
+    games = models.ManyToManyField(
         verbose_name="Игра",
         to="games.Game", related_name="questions",
     )
