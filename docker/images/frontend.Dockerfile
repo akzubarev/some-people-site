@@ -16,15 +16,3 @@ COPY --from=deps /deps/node_modules ./node_modules
 
 ENTRYPOINT ["/bin/sh", "/bin/entrypoint.sh"]
 WORKDIR /app
-# COPY . .
-# RUN npm run lint
-# RUN npm run build
-
-# FROM node:16-alpine AS runner
-# WORKDIR /app
-# ENV NODE_ENV production
-# COPY --from=builder /app/public ./public
-# COPY --from=builder /app/package.json ./package.json
-# EXPOSE 3000
-# ENV PORT 3000
-# CMD ["node", "server.js"]

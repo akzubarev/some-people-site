@@ -11,10 +11,10 @@ x-backend-base: &backend_base
   restart: always
   build:
     context: ..
-    dockerfile: ./docker/images/config.Dockerfile
-  env_file: ../config/.env
+    dockerfile: ./docker/images/backend.Dockerfile
+  env_file: ../backend/.env
   volumes:
-    - ../config:/app
+    - ../backend:/app
   networks:
     - default-tier
 
@@ -23,14 +23,14 @@ x-frontend-base: &frontend_base
   restart: always
   build:
     context: ..
-    dockerfile: ./docker/images/frontend.dev.Dockerfile
+    dockerfile: ./docker/images/frontend.Dockerfile
   volumes:
     - ../frontend:/app/
   networks:
     - default-tier
 
 x-container-user: &container_user
-  user: "1018:1018"
+  user: "1001:1001"
   group_add:
     - root
 
@@ -52,29 +52,15 @@ services:
       - default-tier
     volumes:
       - ./postgres/data:/bitnami/postgresql/
-      - ./postgres/initdb:/docker-entrypoint-initdb.d/
-
-  # redis:
-  #   restart: always
-  #   image: "bitnami/redis:latest"
-  #   command: redis-server
-  #       --loglevel debug
-  #       --bind 0.0.0.0
-  #       --port 6379
-  #       --rename-command CONFIG hashrconfig
-  #       --maxmemory 2gb
-  #       --maxmemory-policy allkeys-lru
-  #       --save ""
-  #   networks:
-  #     - rezidual-tier
-
 
   ##############
   # INTERFACES #
   ##############
 
-  interface.api:
+  api:
     <<: [ *backend_base, *container_user ]
+    depends_on:
+      - postgresql
     command:
       - |
         python manage.py runserver 0:8000
@@ -89,6 +75,8 @@ services:
   bot:
     <<: [ *backend_base ]
     restart: always
+    depends_on:
+      - postgresql
     command:
       - |
         python bot/bot.py

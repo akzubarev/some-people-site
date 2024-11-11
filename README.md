@@ -11,6 +11,7 @@ Website for LARP community to help register and follow the MG "Some-people"
 # startup
 
 - Copy `backend/example.env` to `backend/.env`, change accordingly
+- `sh pre-startup.sh`
 - `docker compose up -d`
 - `docker compose exec -it api sh startup.sh`
 
