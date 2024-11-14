@@ -9,7 +9,7 @@ class CharacterAdmin(admin.ModelAdmin):
     """Character admin."""
 
     ordering = ('-id',)
-    list_filter = ['group__name', 'group__game__name', 'master__username']
+    list_filter = ['group__name', 'group__game__title', 'master__username']
     list_display = [
         'id',
         'name',
