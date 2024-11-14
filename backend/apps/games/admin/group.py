@@ -9,7 +9,7 @@ class GroupAdmin(admin.ModelAdmin):
     """Group admin."""
 
     ordering = ('-id',)
-    list_filter = ['game__alias']
+    list_filter = ['game__name']
     list_display = [
         'id',
         'name',

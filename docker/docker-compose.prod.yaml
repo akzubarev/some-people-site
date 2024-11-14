@@ -73,13 +73,10 @@ services:
 
 
   builder.frontend:
-    <<: [ *frontend_base, *container_user ]
+    <<: [ *frontend_base ] #, *container_user ]
     restart: "no"
     profiles:
       - build
-    environment:
-      - YARN_CACHE_FOLDER=/app/.yarn-cache
-      - YARN_GLOBAL_FOLDER=/app/.yarn-global
     command:
       - |
         # yarn
