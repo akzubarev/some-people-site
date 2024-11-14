@@ -8,12 +8,13 @@ class QuestionAdmin(admin.ModelAdmin):
     """Question admin."""
 
     ordering = ('-id',)
+    list_filter = ['games__alias']
     list_display = [
-        "id",
-        "title",
-        # "games",
-        "description",
-        "type",
-        "choices",
-        "order",
+        'id',
+        'title',
+        # 'games',
+        'description',
+        'type',
+        'choices',
+        'order',
     ]

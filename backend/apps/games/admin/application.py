@@ -9,12 +9,13 @@ class ApplicationAdmin(admin.ModelAdmin):
     """Application admin."""
 
     ordering = ('-id',)
+    list_filter = ['game', 'user__username']
     list_display = [
-        "id",
-        "user",
-        "price",
-        "payed",
-        "game",
-        "character",
-        "status",
+        'id',
+        'user',
+        'price',
+        'payed',
+        'game',
+        'character',
+        'status',
     ]
