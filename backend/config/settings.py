@@ -36,7 +36,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'changeme')
 DEBUG = bool(int(os.getenv('DEBUG', '0')))
 
 DOMAIN = 'somepeoplelarp.ru'
-ALLOWED_HOSTS = ('*',)  # A os.getenv('DOMAINS').split(',')
+ALLOWED_HOSTS = os.getenv('DOMAINS', '').split(',')
 
 CSRF_COOKIE_SECURE = False
 
