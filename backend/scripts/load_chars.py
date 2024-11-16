@@ -5,10 +5,13 @@ from logging import getLogger
 
 import django
 import gspread
+import requests
+from django.core.files.base import ContentFile
 
-sys.path[0] = '/app/'
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
-django.setup()
+if __name__ == '__main__':
+    sys.path[0] = '/app/'
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+    django.setup()
 
 from apps.games.models import Game, Character, Question, Tag, Group
 from utils.text_utils import readable_exception
@@ -25,6 +28,25 @@ games_data = {
         'questions_worksheet_id': '1440140115',
     },
 }
+
+_images_cache: dict = {}
+
+def get_image(name: str, path: str) -> ContentFile | None:
+    if not path:
+        return None
+    if path in _images_cache.keys():
+        return _images_cache[path]
+    download_media_headers: dict = {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.160 '
+                      'YaBrowser/22.5.3.673 Yowser/2.5 Safari/537.36',
+    }
+    try:
+        response = requests.get(path, timeout=5, headers=download_media_headers)
+    except requests.exceptions.SSLError:
+        response = requests.get(path, timeout=5, headers=download_media_headers, verify=False)
+    file = ContentFile(response.content, f'{name}.png')
+    _images_cache[path] = file
+    return file
 
 
 def _get_worksheet(spreadsheet_id: str, worksheet_id: str) -> gspread.Worksheet:
@@ -53,16 +75,18 @@ def load_game(game_alias: str):
 def get_groups(game: Game, worksheet: gspread.Worksheet) -> None:
     """Parses the groups from google sheet."""
     num_rows = len([item for item in worksheet.col_values(1) if item])
-    rows: list[list] = worksheet.get_values(f'A2:F{num_rows}')
+    rows: list[list] = worksheet.get_values(f'A2:G{num_rows}')
     for i, row in enumerate(rows):
         # try:
-        name, description, parent_group_name, *_ = row
-        hidden = row[3] == 'TRUE'
-        image = row[4] if len(row) > 4 else None
+        order, name, description, parent_group_name, *_ = row
+        hidden = row[4] == 'TRUE'
+        family = row[5] == 'TRUE'
+        image = get_image(path=row[6], name=name) if len(row) > 6 else None
         parent_group = Group.objects.get(name=parent_group_name) if parent_group_name else None
         group, _ = Group.objects.update_or_create(
-            name=name, game_id=game.id,
-            defaults={'hidden': hidden, 'image': image, 'description': description, 'parent': parent_group},
+            name=name, game_id=game.id, family=family,
+            defaults={'hidden': hidden, 'image': image, 'description': description,
+                      'parent': parent_group, 'order': order},
         )
         group.save()
     # except Exception as e:
@@ -72,19 +96,22 @@ def get_groups(game: Game, worksheet: gspread.Worksheet) -> None:
 def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
     """Parses the characters from google sheet."""
     num_rows = len([item for item in worksheet.col_values(1) if item])
-    rows: list[list] = worksheet.get_values(f'A2:F{num_rows}')
+    rows: list[list] = worksheet.get_values(f'A2:H{num_rows}')
     for i, row in enumerate(rows):
         # try:
-        name_with_alias = row[0].split(', ')
+        name_with_alias = row[1].split(', ')
         character_name = name_with_alias[0]
         alias = name_with_alias[1] if len(name_with_alias) > 1 else '-'
-        _, master, tags, group_name, description, *_ = row
-        image = row[5] if len(row) > 5 else None
-        group = Group.objects.get(name=group_name, game_id=game.id)
+        order, _, master, tags, group_name, family_name, description, *_ = row
+        image = get_image(path=row[7], name=character_name) if len(row) > 7 else None
+
+        group = Group.objects.get(name=group_name, game_id=game.id) if group_name and group_name != '-' else None
+        family = Group.objects.get(name=family_name, game_id=game.id) if family_name and family_name != '-' else None
         char, _ = Character.objects.update_or_create(
             name=character_name,
             defaults={
-                'alias': alias, 'image': image, 'description': description, 'group': group,
+                'alias': alias, 'image': image, 'description': description,
+                'group': group, 'family': family, 'order': order,
                 'master_id': {
                     'Леша': 2, 'Катя': 3, 'Лиза': 4, 'Аня': 5, 'Оля': 6, 'Полина': 7, 'Саша': 8,
                 }.get(master, None)

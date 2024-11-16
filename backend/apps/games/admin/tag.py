@@ -10,7 +10,7 @@ class TagAdmin(admin.ModelAdmin):
 
     ordering = ('-id',)
     list_display = [
-        "id",
-        "name",
-        "color",
+        'id',
+        'name',
+        'color',
     ]

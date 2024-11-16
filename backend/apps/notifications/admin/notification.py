@@ -9,6 +9,7 @@ class NotificationAdmin(admin.ModelAdmin):
     """Notifications admin."""
 
     ordering = ('-id',)
+    list_filter = ['mailing', 'sent', 'viewed', 'user__username']
     list_display = [
         'id',
         'mailing',

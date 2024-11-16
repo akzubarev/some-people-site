@@ -90,7 +90,7 @@ export default {
   // },
 }
 </script>
-<style>
+<style scoped>
 .vue-image-crop-upload .vicp-wrap .vicp-operate a {
   color: var(--kt-gray-100);
 }

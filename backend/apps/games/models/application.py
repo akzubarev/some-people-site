@@ -30,9 +30,9 @@ class Application(models.Model):
         to="games.Game", related_name="applications",
         on_delete=models.CASCADE
     )
-    character = models.ForeignKey(
+    character = models.OneToOneField(
         verbose_name="Персонаж",
-        to="games.Character", related_name="applications",
+        to="games.Character", related_name="application",
         on_delete=models.SET_NULL,
         blank=True, null=True
     )

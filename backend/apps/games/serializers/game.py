@@ -4,7 +4,7 @@ from rest_framework.fields import SerializerMethodField
 
 from apps.games.models import Game, Character
 from .character import CharacterSerializer
-from .group import MainGroupSerializer
+from .group import GroupSerializer
 
 
 class GameSerializer(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class GameSerializer(serializers.ModelSerializer):
         ]
 
     def get_groups(self, obj: Game):
-        return MainGroupSerializer(
+        return GroupSerializer(
             obj.groups.filter(parent__isnull=True, hidden=False), many=True
         ).data
 
