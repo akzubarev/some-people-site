@@ -23,7 +23,6 @@ class UserAdmin(BaseUserAdmin):
         'telegram_chat_id',
         'telegram_username',
         'created_at',
-        # 'country_iso',
     ]
 
     fieldsets = [
@@ -46,15 +45,17 @@ class UserAdmin(BaseUserAdmin):
                 'country_iso',
                 'telegram_chat_id',
                 'telegram_username',
+                'instagram',
+                'vk',
             ]
         }
          ],
         ['Настройки', {
             'fields': [
-                # 'groups',
-                # 'is_active',
-                # 'is_staff',
-                # 'is_superuser',
+                'groups',
+                'is_active',
+                'is_staff',
+                'is_superuser',
             ]
         }
          ],

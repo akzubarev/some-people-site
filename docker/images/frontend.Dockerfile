@@ -1,7 +1,8 @@
 FROM node:16-alpine AS deps
 RUN apk add --no-cache libc6-compat git
 WORKDIR /deps
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+
+COPY frontend/package.json frontend/yarn.lock* frontend/package-lock.json* frontend/pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -13,18 +14,9 @@ RUN \
 FROM node:16-alpine AS builder
 WORKDIR /deps
 COPY --from=deps /deps/node_modules ./node_modules
+RUN mkdir ./.yarn-global && mkdir ./.yarn-cache
+ENV YARN_GLOBAL_FOLDER=./.yarn-global
+ENV YARN_CACHE_FOLDER=./.yarn-cache
 
-ENTRYPOINT ["/bin/sh", "/bin/entrypoint.sh"]
 WORKDIR /app
-# COPY . .
-# RUN npm run lint
-# RUN npm run build
-
-# FROM node:16-alpine AS runner
-# WORKDIR /app
-# ENV NODE_ENV production
-# COPY --from=builder /app/public ./public
-# COPY --from=builder /app/package.json ./package.json
-# EXPOSE 3000
-# ENV PORT 3000
-# CMD ["node", "server.js"]
+ENTRYPOINT ["/bin/sh", "-c"]

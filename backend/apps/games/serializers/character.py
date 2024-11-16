@@ -9,7 +9,7 @@ from .tag import TagSerializer
 
 class CharacterSerializer(serializers.ModelSerializer):
     """Character serializer."""
-    applications = ApplicationSerializer(many=True)
+    application = ApplicationSerializer()
     tags = TagSerializer(many=True)
     player = serializers.SerializerMethodField()
 
@@ -24,7 +24,7 @@ class CharacterSerializer(serializers.ModelSerializer):
             'description',
             'master',
             'image',
-            'applications',
+            'application',
             'player',
             'tags',
         ]

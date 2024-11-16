@@ -87,7 +87,7 @@ const saveProfile = values => {
 
 </script>
 
-<style>
+<style scoped>
 .settings-row {
   @apply flex flex-row w-full items-center gap-3;
 }

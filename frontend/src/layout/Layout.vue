@@ -11,13 +11,11 @@
       <router-view/>
     </div>
   </div>
-<!--  <Footer/>-->
 </template>
 <script setup>
 import {onMounted, ref} from "vue"
 // import Aside from "@/layout/aside/Aside.vue"
 import Header from "@/layout/Header.vue"
-import Footer from "@/layout/Footer.vue"
 import Loader from "@/components/Loader.vue"
 
 

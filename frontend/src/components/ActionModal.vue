@@ -10,7 +10,7 @@
           {{ title }}
         </span>
         <span v-if="description" class="text-xl text-center text-gray-400">
-          {{ description }}
+          {{ description || typeConf[type || defaultConf].defaultText}}
         </span>
       </slot>
       <slot name="button">
@@ -58,6 +58,7 @@ const typeConf = {
   },
   lock: {
     icon: require('@/assets/images/icons/common/lock-gradient.svg'),
+    defaultText: 'Раздел в разработке',
     buttonText: 'Ok',
   },
   developing: {
