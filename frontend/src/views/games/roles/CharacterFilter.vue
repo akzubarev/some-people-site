@@ -21,7 +21,7 @@
 import {Field} from "vee-validate";
 import {ref} from "vue";
 import gamesService from "@/services/gamesService";
-import Tag from "@/views/games/Tag.vue";
+import Tag from "@/views/games/games/Tag.vue";
 
 const props = defineProps(["game_alias"])
 const emit = defineEmits(["change"])

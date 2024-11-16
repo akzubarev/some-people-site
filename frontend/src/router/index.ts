@@ -46,7 +46,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/games",
                 name: "games",
-                component: () => import("@/views/games/Games.vue"),
+                component: () => import("@/views/games/games/Games.vue"),
                 meta: {
                     middleware: [loadUser, guest]
                 }
@@ -55,13 +55,13 @@ const routes: Array<RouteRecordRaw> = [
                 path: "/game/:game_alias",
                 name: "game",
                 redirect: "/game/:game_alias/about",
-                component: () => import("@/views/games/game/GameRoot.vue"),
+                component: () => import("@/views/games/GameRoot.vue"),
                 props: true,
                 children: [
                     {
                         path: "/game/:game_alias/about",
                         name: "game-about",
-                        component: () => import("@/views/games/game/About.vue"),
+                        component: () => import("@/views/games/About.vue"),
                         props: true,
                         meta: {
                             middleware: [loadUser, guest]
@@ -70,7 +70,7 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: "/game/:game_alias/roles",
                         name: "game-roles",
-                        component: () => import("@/views/games/game/Roles.vue"),
+                        component: () => import("@/views/games/roles/Roles.vue"),
                         props: true,
                         meta: {
                             middleware: [loadUser, guest]
@@ -79,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: "/game/:game_alias/characters",
                         name: "game-characters",
-                        component: () => import("@/views/games/game/CharacterList.vue"),
+                        component: () => import("@/views/games/roles/CharacterList.vue"),
                         props: true,
                         meta: {
                             middleware: [loadUser, guest]
@@ -88,7 +88,7 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: "/game/:game_alias/apply",
                         name: "game-apply",
-                        component: () => import("@/views/games/game/Application.vue"),
+                        component: () => import("@/views/games/apply/Application.vue"),
                         props: true,
                         meta: {
                             middleware: [loadUser, isAuth]
@@ -97,7 +97,7 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: "/game/:game_alias/application/:userId",
                         name: "game-application",
-                        component: () => import("@/views/games/game/Application.vue"),
+                        component: () => import("@/views/games/apply/Application.vue"),
                         props: true,
                         meta: {
                             middleware: [loadUser, isMg]

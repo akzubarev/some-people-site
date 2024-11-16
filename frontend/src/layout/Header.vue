@@ -5,13 +5,15 @@
       @submit="() => {showLocked = false}"
       :title="lockedText" :buttonText="$t('common.actions.ok')">
   </ActionModal>
-  <div class="absolute w-full bg-bg-transparent p-1 mt-6 z-20">
+  <div class="absolute w-full bg-bg-transparent p-1 mt-6 z-50">
     <div class="flex flex-row w-full gap-small justify-between items-center h-12 pl-10 pr-3">
       <div id="title" @click=" $router.push('/')"
            class="flex flex-row w-full text-content-accent hover:text-content-primary items-center text-header font-semibold text-uppercase cursor-pointer"
       >
-        <inline-svg @click="$emit('asideToggle')" class="lg:hidden cursor-pointer"
-                    :src="require('@/assets/images/icons/common/menu.svg')"/>
+        <inline-svg
+            class="h-16 w-16 md:hidden cursor-pointer" @click="$emit('asideToggle')"
+            :src="require('@/assets/images/icons/common/menu.svg')"
+        />
         Какие-то
         <inline-svg class="h-24 w-16 ml-2 py-1 -mt-2 -mb-3"
                     :src="require('@/assets/images/logo/mg.svg')"/>

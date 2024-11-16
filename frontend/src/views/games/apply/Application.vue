@@ -55,7 +55,7 @@ import ProgressBar from "@/components/progressbar/ProgressBar.vue"
 import {useStore} from "vuex"
 import {useRouter} from "vue-router"
 import formhelper from "@/core/helpers/form"
-import QuestionField from "@/views/games//game/apply/QuestionField.vue";
+import QuestionField from "@/views/games/apply/QuestionField.vue";
 import gamesService from "@/services/gamesService";
 import ActionModal from "@/components/ActionModal.vue";
 

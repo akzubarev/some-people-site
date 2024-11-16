@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import {ref} from "vue"
-import GameBlock from "@/views/games/GameBlock.vue";
+import GameBlock from "@/views/games/games/GameBlock.vue";
 import gamesService from "@/services/gamesService";
 import ImageBanner from "@/components/ImageBanner.vue";
 

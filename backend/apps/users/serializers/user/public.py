@@ -17,11 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'email', 'username', 'email_active', 'first_name',
             'last_name', 'uuid', 'mg', 'phone', 'created_at', 'avatar',
-            'telegram', 'applications', 'country_iso', 'instagram', 'country',
+            'telegram', 'applications', 'country_iso', 'instagram', 'country', 'vk',
         )
         read_only_fields = (
             'id', 'email', 'email_active', 'uuid', 'created_at', 'telegram',
-            'updated_at', 'applications', 'country',
+            'updated_at', 'applications', 'country', 'vk',
         )
 
     def get_telegram(self, user: User) -> str:

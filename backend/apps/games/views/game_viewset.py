@@ -50,15 +50,14 @@ class GameViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def groups(self, request: Request, *args: Any, **kwargs: Any) -> Response | PermissionDenied:
         """Gets games groups."""
         game_alias = request.GET.get('game_alias', None)
-        groups = game_grouper(game_alias=game_alias, grouping=request.GET.get('grouping', None))
+        groups = Group.objects.filter(game__alias=game_alias, parent__isnull=True)
         return Response(GroupSerializer(groups, many=True).data)
 
     @action(detail=False, methods=['get'])
     def tags(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Gets games tags."""
         game_alias = request.GET.get("game_alias", None)
-        characters = Character.objects.filter(group__game__alias=game_alias)
-        tags = Tag.objects.filter(characters__in=characters).distinct()
+        tags = Tag.objects.filter(characters__group__game__alias=game_alias).distinct()
         return Response(TagSerializer(tags, many=True).data)
 
 
@@ -70,12 +69,3 @@ def character_filter(game_alias: str, tag: str, search: str) -> QuerySet[Charact
     if search is not None:
         characters = characters.filter(Q(name__contains=search) | Q(alias__contains=search))
     return characters
-
-
-def game_grouper(game_alias: str, grouping: str) -> QuerySet[Character]:
-    """Groups characters by grouping."""
-    match grouping:
-        case 'family':
-            characters = Character.objects.filter(group__game__alias=game_alias)
-        case 'group':
-            return Group.objects.filter(game__alias=game_alias)

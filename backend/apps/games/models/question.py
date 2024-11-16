@@ -24,34 +24,12 @@ class Question(models.Model):
             (MATRIX_CHECKBOX, "Сетка флажков"),
         ]
 
-    games = models.ManyToManyField(
-        verbose_name="Игра",
-        to="games.Game", related_name="questions",
-    )
-
-    title = models.CharField(
-        verbose_name="Вопрос", max_length=500,
-    )
-
-    description = models.TextField(
-        verbose_name="Описание",
-        null=True, blank=True
-    )
-
-    type = models.CharField(
-        verbose_name="Тип", choices=Type.CHOICES,
-        default=Type.LINE
-    )
-
-    choices = models.JSONField(
-        verbose_name="Варианты",
-        null=True, blank=True
-    )
-
-    order = models.IntegerField(
-        verbose_name="Порядковый номер",
-        default=1
-    )
+    games = models.ManyToManyField(verbose_name="Игра", to="games.Game", related_name="questions")
+    title = models.CharField(verbose_name="Вопрос", max_length=500)
+    description = models.TextField(verbose_name="Описание", null=True, blank=True)
+    type = models.CharField(verbose_name="Тип", choices=Type.CHOICES, default=Type.LINE)
+    choices = models.JSONField(verbose_name="Варианты", null=True, blank=True)
+    order = models.IntegerField(verbose_name="Порядковый номер", default=1)
 
     class Meta:
         """Model meta."""

@@ -68,15 +68,15 @@ div {
 }
 
 .text-small {
-  @apply sm:text-sm md:text-sm lg:text-base xl:text-base;
+  @apply sm:text-sm lg:text-base;
 }
 
 .text-medium {
-  @apply sm:text-base md:text-base lg:text-lg xl:text-lg;
+  @apply sm:text-base lg:text-lg;
 }
 
 .text-large {
-  @apply sm:text-lg md:text-lg lg:text-2xl xl:text-3xl;
+  @apply sm:text-lg lg:text-2xl xl:text-3xl;
 }
 
 .text-header {
@@ -96,7 +96,7 @@ div {
 }
 
 .gap-medium {
-  @apply sm:gap-6 md:gap-6 lg:gap-12;
+  @apply sm:gap-6 md:gap-6 lg:gap-9;
 }
 
 .gap-large {

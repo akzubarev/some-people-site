@@ -19,7 +19,7 @@
 
 
 <script setup lang="ts">
-import CharacterBlock from "@/views/games/groups/CharacterBlock.vue";
+import CharacterBlock from "@/views/games/roles/groups/CharacterBlock.vue";
 
 const props = defineProps({
   subgroup: {

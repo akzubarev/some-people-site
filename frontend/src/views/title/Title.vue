@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import About from "@/views/games/game/About.vue";
+import About from "@/views/games/About.vue";
 </script>

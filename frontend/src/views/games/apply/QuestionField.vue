@@ -56,10 +56,10 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {Field} from "vee-validate"
-import RadioQuestion from "@/views/games/game/apply/questions/RadioQuestion.vue";
-import CheckboxQuestion from "@/views/games/game/apply/questions/CheckboxQuestion.vue";
-import ScaleQuestion from "@/views/games/game/apply/questions/ScaleQuestion.vue";
-import MatrixQuestion from "@/views/games/game/apply/questions/MatrixQuestion.vue";
+import RadioQuestion from "@/views/games/apply/questions/RadioQuestion.vue";
+import CheckboxQuestion from "@/views/games/apply/questions/CheckboxQuestion.vue";
+import ScaleQuestion from "@/views/games/apply/questions/ScaleQuestion.vue";
+import MatrixQuestion from "@/views/games/apply/questions/MatrixQuestion.vue";
 
 const emit = defineEmits(['change'])
 const props = defineProps([

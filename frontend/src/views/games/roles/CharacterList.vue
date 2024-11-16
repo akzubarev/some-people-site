@@ -30,9 +30,9 @@
 <script setup lang="ts">
 import {ref} from "vue"
 import gamesService from "@/services/gamesService";
-import CharacterBlock from "@/views/games/groups/CharacterBlock.vue";
-import UserBlock from "@/views/games/UserBlock.vue";
-import CharacterFilter from "@/views/games/game/CharacterFilter.vue";
+import CharacterBlock from "@/views/games/roles/groups/CharacterBlock.vue";
+import UserBlock from "@/views/games/roles/UserBlock.vue";
+import CharacterFilter from "@/views/games/roles/CharacterFilter.vue";
 import router from "@/router";
 import {useStore} from "vuex";
 

@@ -27,10 +27,10 @@
 
 <script setup lang="ts">
 import {ref} from "vue"
-import UserBlock from "@/views/games/UserBlock.vue";
+import UserBlock from "@/views/games/roles/UserBlock.vue";
 import usersService from "@/services/usersService";
 import gamesService from "@/services/gamesService";
-import CharacterBlock from "@/views/games/groups/CharacterBlock.vue";
+import CharacterBlock from "@/views/games/roles/groups/CharacterBlock.vue";
 import router from "@/router";
 import {useStore} from "vuex";
 

@@ -12,9 +12,11 @@ class GroupAdmin(admin.ModelAdmin):
     list_filter = ['game__title']
     list_display = [
         'id',
+        'order',
         'name',
         'alias',
         'hidden',
+        'family',
         'description',
         'game',
         'parent',

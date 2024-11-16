@@ -25,7 +25,7 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
     )
 
     username = models.CharField(
-        verbose_name="Никнейм",
+        verbose_name='Никнейм',
         max_length=30, unique=True,
         null=True, blank=True
     )
@@ -52,15 +52,19 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
     email_active = models.BooleanField(default=False)
 
     telegram_chat_id = models.CharField(
-        verbose_name="telegram_chat_id", max_length=250,
+        verbose_name='telegram_chat_id', max_length=250,
         blank=True, null=True, default=None
     )
     telegram_username = models.CharField(
-        verbose_name="telegram_username", max_length=250,
+        verbose_name='telegram_username', max_length=250,
         blank=True, null=True, default=None
     )
     instagram = models.CharField(
-        verbose_name="instagram", max_length=250,
+        verbose_name='instagram', max_length=250,
+        blank=True, null=True, default=None
+    )
+    vk = models.CharField(
+        verbose_name='vk', max_length=250,
         blank=True, null=True, default=None
     )
 
