@@ -2,39 +2,37 @@
   <ActionModal
       v-if="showLocked" type="lock"
       @close="() => {showLocked = false}"
-      @submit="() => {showLocked = false}"
-      :title="lockedText" :buttonText="$t('common.actions.ok')">
+      @submit="() => {showLocked = false}">
   </ActionModal>
-  <div class="flex flex flex-col gap-6 justify-end bg-cover h-full w-full min-h-full"
+  <div class="flex flex flex-col gap-medium justify-end bg-cover h-full w-full min-h-full bg-left-bottom"
        :style="`background-image: url('${game_images[game_alias].background}')`">
-    <div class="text-8xl font-semibold uppercase px-12"> {{ game.title }}</div>
-    <div class="flex flex-col mb-12 bg-bg-transparent-2 pl-12 pr-6">
-      <div class="flex flex-row gap-6 py-6 justify-between">
-        <div class="flex flex-row gap-24 w-3/5">
-          <div class="flex flex-col gap-3 w-1/2">
-            <div class="text-xl whitespace-pre-wrap"> {{ game.short_description }}</div>
-            <div class="flex flex-row gap-2">
-              <div v-for="data in gameData" :key="data"
-                   class="bg-content-disabled-transparent text-md text-center w-full p-3 rounded-sm">
-                {{ data }}
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-col gap-3 w-1/2 justify-center">
-            <div v-for="link in links" :key="link" @click="link.locked ? lockedSection(link.lockedText) : link.link()"
-                 class="flex flex-row gap-1 text-4xl uppercase font-semibold items-center cursor-pointer"
-                 :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
-              {{ link.title }}
-              <inline-svg v-if="link.locked" class="h-6 w-6 text-content-disabled"
-                          :src="require('@/assets/images/icons/common/lock.svg')"/>
+    <div class="text-largest font-semibold uppercase px-12"> {{ game.title }}</div>
+    <div class="flex flex-row gap-medium py-6 mb-12 bg-bg-transparent-2 pl-12 pr-3 justify-between">
+      <div class="flex flex-row gap-large">
+        <div id="description" class="flex flex-col gap-small w-1/3">
+          <div class="text-medium whitespace-pre-wrap"> {{ game.short_description }}</div>
+          <div id="ags" class="flex flex-row gap-2">
+            <div v-for="data in gameData" :key="data"
+                 class="text-small bg-content-disabled-transparent text-center w-full p-3 rounded-sm">
+              {{ data }}
             </div>
           </div>
         </div>
-        <div class="flex flex-row text-content-disabled gap-1 text-xl text-right items-center cursor-pointer"
-             @click="lockedSection('Раздел в разработке.')">
-          Какие-то<br> игры
-          <inline-svg class="h-12 w-12" :src="require('@/assets/images/icons/common/arrow.svg')"/>
+        <div id="links" class="flex flex-col gap-small justify-center">
+          <div v-for="link in links" :key="link" @click="link.locked ? lockedSection(link.lockedText) : link.link()"
+               class="flex flex-row gap-xs text-large uppercase font-semibold items-center cursor-pointer"
+               :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
+            {{ link.title }}
+            <inline-svg v-if="link.locked" class="h-6 w-6 text-content-disabled"
+                        :src="require('@/assets/images/icons/common/lock.svg')"/>
+          </div>
         </div>
+        <inline-svg class="h-full" :src="game_images[game_alias].logo"/>
+      </div>
+      <div class="flex flex-row gap-xs text-medium text-right items-center w-[15%] justify-end cursor-pointer"
+           @click="otherGames()">
+        Какие-то<br>игры
+        <inline-svg class="h-12 w-12" :src="require('@/assets/images/icons/common/arrow.svg')"/>
       </div>
     </div>
   </div>
@@ -55,16 +53,13 @@ const router = useRouter()
 const props = defineProps(['game_alias'])
 const user = store.getters['auth/user']
 const showLocked = ref(false)
-const lockedText = ref('Раздел в разработке')
 
-const lockedSection = (text) => {
-  lockedText.value = text
-  showLocked.value = true
-}
+
 const game = ref({
   id: 1,
   alias: 'lorem ipsum',
   title: "lorem ipsum",
+  short_description: "lorem ipsum",
   image: null,
   vk: "",
 })
@@ -98,8 +93,5 @@ const links = computed(() => {
   ]
 })
 
-const otherGames = () => window.open(
-    `/game/${{'whales': 'frostpunk', 'frostpunk': 'whales'}[props.game_alias]}/about`,
-    '_blank'
-).focus();
+const otherGames = () => router.push(`/game/${{'whales': 'frostpunk', 'frostpunk': 'whales'}[props.game_alias]}/about`)
 </script>

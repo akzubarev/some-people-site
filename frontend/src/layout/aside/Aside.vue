@@ -1,10 +1,8 @@
 <template>
   <div :class="$style.aside">
     <div class="sticky top-0">
-      <div @click="$router.push('/dashboard')" class="px-3 pt-3">
-        <router-link
-            to="/dashboard"
-        >
+      <div @click="$router.push('/')" class="px-3 pt-3">
+        <router-link to="/">
           <inline-svg :src="require('@/assets/images/logo/frostpunk.jpg')"/>
         </router-link>
       </div>

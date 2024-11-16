@@ -9,13 +9,12 @@ import Layout from "@/layout/Layout.vue"
 const routes: Array<RouteRecordRaw> = [
     {
         path: "/",
-        redirect: "/dashboard",
         component: Layout,
         children: [
             {
-                path: "/dashboard",
-                name: "dashboard",
-                component: () => import("@/views/dashboard/Dashboard.vue"),
+                path: "/",
+                name: "main",
+                component: () => import("@/views/title/Title.vue"),
                 meta: {
                     middleware: [loadUser, guest]
                 }
@@ -23,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: "/mg",
                 name: "mg",
-                component: () => import("@/views/dashboard/MG.vue"),
+                component: () => import("@/views/title/MG.vue"),
                 meta: {
                     middleware: [loadUser, guest]
                 }

@@ -29,7 +29,7 @@ Website for LARP community to help register and follow the MG "Some-people"
 
 ## app: http://{domain}/
 
-- `/dashboard` - main page
+- `/` - main page
 - `/mg` - list of the master group
 - `/games` - games list with short info
     - `/<alias>`

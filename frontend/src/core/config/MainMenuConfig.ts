@@ -8,7 +8,7 @@ const DocMenuConfig = () => {
                 [
                     {
                         heading: t("menu.dashboard"),
-                        route: "/dashboard",
+                        route: "/",
                         svgIcon: require("@/assets/images/menu/home.svg")
                     },
                     {

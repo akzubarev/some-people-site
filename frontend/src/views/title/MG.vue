@@ -23,7 +23,7 @@
 import usersService from "@/services/usersService";
 import {ref} from "vue";
 import {mgData} from "@/constants/mgData";
-import MGBlock from "@/views/dashboard/MGBlock.vue";
+import MGBlock from "@/views/title/MGBlock.vue";
 
 const mg = ref({})
 usersService.mg().then(({data}) => {
@@ -38,7 +38,7 @@ usersService.mg().then(({data}) => {
 </script>
 
 
-<style lang="scss">
+<style scoped>
 .product-buttons {
   @apply relative flex items-end min-h-[7rem] p-4 overflow-hidden cursor-pointer;
   &.disabled {

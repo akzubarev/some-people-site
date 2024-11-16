@@ -21,7 +21,7 @@
   --content-secondary-shadowed: 98 106 106;
   --content-disabled: 140 140 140;
   --content-muted: 60 60 60;
-  --content-accent: 207 207 207;
+  --content-accent: 255 244 221;
 
   --bg-default: 64 75 95;
   --bg-shadowed: 29 33 38;
@@ -29,6 +29,7 @@
   --gradient-start: 88 64 95;
   --gradient-end: 68 64 95;
 }
+
 
 @layer base {
   @font-face {
@@ -64,6 +65,42 @@ div {
 
 .btn-outline {
   @apply btn bg-transparent border border-[1px] border-content-primary;
+}
+
+.text-small {
+  @apply sm:text-sm md:text-sm lg:text-base xl:text-base;
+}
+
+.text-medium {
+  @apply sm:text-base md:text-base lg:text-lg xl:text-lg;
+}
+
+.text-large {
+  @apply sm:text-lg md:text-lg lg:text-2xl xl:text-3xl;
+}
+
+.text-header {
+  @apply sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl;
+}
+
+.text-largest {
+  @apply sm:text-2xl md:text-4xl lg:text-4xl xl:text-8xl;
+}
+
+.gap-xs {
+  @apply sm:gap-1 md:gap-1 lg:gap-3;
+}
+
+.gap-small {
+  @apply sm:gap-3 md:gap-3 lg:gap-6;
+}
+
+.gap-medium {
+  @apply sm:gap-6 md:gap-6 lg:gap-12;
+}
+
+.gap-large {
+  @apply sm:gap-12 md:gap-24 lg:gap-28;
 }
 
 .form-input {

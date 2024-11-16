@@ -5,23 +5,22 @@
       @submit="() => {showLocked = false}"
       :title="lockedText" :buttonText="$t('common.actions.ok')">
   </ActionModal>
-  <img class="absolute ml-2 mt-2 h-22 w-22 z-10 opacity-75" :src="require('@/assets/images/logo/moth.svg')"/>
-  <Avatar
-      class="absolute right-3 top-8 h-24 w-24 z-30 cursor-pointer"
-      :src="user.avatar" @click="$router.push('/account/profile')"
-  />
-  <div class="absolute w-full bg-bg-transparent p-3 mt-10 pl-20 pr-60 z-20">
-    <div class="flex flex-row w-full gap-3 justify-between h-14 py-3">
-      <div class="text-3xl font-semibold text-uppercase cursor-pointer hover:text-content-accent"
-           @click=" $router.push('/')">
+  <div class="absolute w-full bg-bg-transparent p-1 mt-6 z-20">
+    <div class="flex flex-row w-full gap-small justify-between items-center h-12 pl-10 pr-3">
+      <div id="title" @click=" $router.push('/')"
+           class="flex flex-row w-full text-content-accent hover:text-content-primary items-center text-header font-semibold text-uppercase cursor-pointer"
+      >
         <inline-svg @click="$emit('asideToggle')" class="lg:hidden cursor-pointer"
                     :src="require('@/assets/images/icons/common/menu.svg')"/>
-        {{ 'Какие-то люди' }}
+        Какие-то
+        <inline-svg class="h-24 w-16 ml-2 py-1 -mt-2 -mb-3"
+                    :src="require('@/assets/images/logo/mg.svg')"/>
+        юди
       </div>
-      <div class="flex flex-row gap-32">
+      <div id="menu" class="sm:hidden md:flex flex-row gap-16 lg:gap-24">
         <div v-for="link in links" :key="link"
              @click="link.locked ? lockedSection(link.lockedText) : $router.push(link.link)"
-             class="text-3xl text-uppercase flex flex-row gap-1 items-center cursor-pointer"
+             class="text-large text-uppercase flex flex-row gap-xs items-center cursor-pointer"
              :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
           {{ link.title }}
           <inline-svg
@@ -29,6 +28,10 @@
               :src="require('@/assets/images/icons/common/lock.svg')"/>
         </div>
       </div>
+      <Avatar
+          class="h-20 w-20 ml-12 cursor-pointer"
+          :src="user.avatar" @click="$router.push('/account/profile')"
+      />
     </div>
   </div>
 </template>

@@ -69,7 +69,7 @@ const lockedSection = (text) => {
 </script>
 
 
-<style lang="scss">
+<style scoped>
 .nav-item {
   margin-bottom: 0px !important;
 }
@@ -84,7 +84,7 @@ const lockedSection = (text) => {
 }
 </style>
 
-<style lang="scss">
+<style scoped>
 .MatrixHeader {
   &-Top {
     @apply px-6;
