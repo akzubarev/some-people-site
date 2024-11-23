@@ -1,7 +1,7 @@
 """User serializers module."""
 from rest_framework import serializers
 
-from apps.games.serializers import ApplicationSerializer
+from apps.games.serializers import ApplicationPublicSerializer
 from apps.users.models import User
 
 
@@ -34,7 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
     def get_applications(self, user: User) -> dict[str, dict]:
         """Gets users applications."""
         return {
-            application.game.alias: ApplicationSerializer(application).data
+            application.game.alias: ApplicationPublicSerializer(application).data
             for application in user.applications.all()
         }
 

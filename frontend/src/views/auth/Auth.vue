@@ -6,7 +6,7 @@
       <div class="text-2xl text-center">Авторизация</div>
       <router-view/>
       <router-link
-          class="text-lg text-active-primary underline me-6"
+          class="text-lg text-active-primary underline"
           :to=" $route.path.includes('sign-up') ? '/sign-in': '/sign-up'"
       >
         {{ $route.path.includes('sign-up') ? $t("auth.signIn") : $t("auth.signUp") }}

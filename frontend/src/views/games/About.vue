@@ -8,8 +8,8 @@
        :style="`background-image: url('${game_images[game_alias].background}')`">
     <div class="text-largest font-semibold uppercase px-12"> {{ game.title }}</div>
     <div class="flex flex-row gap-medium py-6 mb-12 bg-bg-transparent-2 pl-12 pr-3 justify-between">
-      <div class="flex flex-row gap-large">
-        <div id="description" class="flex flex-col gap-small w-1/3">
+      <div class="flex flex-row gap-[5%]">
+        <div id="description" class="flex flex-col gap-small w-[40%]">
           <div class="text-medium whitespace-pre-wrap"> {{ game.short_description }}</div>
           <div id="ags" class="flex flex-row gap-2">
             <div v-for="data in gameData" :key="data"

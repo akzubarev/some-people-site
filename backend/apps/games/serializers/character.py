@@ -3,13 +3,13 @@ from rest_framework import serializers
 
 from apps.games.models import Application, Character
 from apps.users.models import User
-from .application import ApplicationSerializer
+# from .application import ApplicationPublicSerializer
 from .tag import TagSerializer
 
 
 class CharacterSerializer(serializers.ModelSerializer):
     """Character serializer."""
-    application = ApplicationSerializer()
+    # application = ApplicationPublicSerializer()
     tags = TagSerializer(many=True)
     player = serializers.SerializerMethodField()
 

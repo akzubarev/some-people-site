@@ -32,7 +32,7 @@
       </div>
       <Avatar
           class="h-20 w-20 ml-12 cursor-pointer"
-          :src="user.avatar" @click="$router.push('/account/profile')"
+          :src="user.avatar" @click="$router.push('/account/whales/application')"
       />
     </div>
   </div>

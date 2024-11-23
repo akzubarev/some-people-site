@@ -1,6 +1,6 @@
 <template>
-	<div class="h-full overflow-hidden no-scrollbar" ref="element">
-		<div class="absolute h-2 rounded-xl bg-gradient-to-r from-gradient-start to-gradient-end" :style="{width: `${progress}%`}"></div>
+	<div class="h-screen w-screen overflow-hidden no-scrollbar items-center justify-center" ref="element">
+		<div class="rounded-xl bg-gradient-to-r from-gradient-start to-gradient-end" :style="{width: `${progress}%`}"></div>
 		<slot/>
 	</div>
 </template>
