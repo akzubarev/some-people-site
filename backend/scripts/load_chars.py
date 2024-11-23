@@ -22,6 +22,7 @@ games_data = {
     'spreadsheet_id': '1y1k7p41v9C7sSDES4Ojs1AOERYsXrnosQeKNoDgnxNI',
     'frostpunk': {
         'groups_worksheet_id': '1746120384', 'characters_worksheet_id': '2055553822',
+        # 'questions_worksheet_id': '1440140115',
     },
     'whales': {
         'groups_worksheet_id': '1687216792', 'characters_worksheet_id': '26168715',
@@ -31,7 +32,8 @@ games_data = {
 
 _images_cache: dict = {}
 
-def get_image(name: str, path: str) -> ContentFile | None:
+
+def get_image(path: str, order: int, target: str) -> ContentFile | None:
     if not path:
         return None
     if path in _images_cache.keys():
@@ -44,7 +46,7 @@ def get_image(name: str, path: str) -> ContentFile | None:
         response = requests.get(path, timeout=5, headers=download_media_headers)
     except requests.exceptions.SSLError:
         response = requests.get(path, timeout=5, headers=download_media_headers, verify=False)
-    file = ContentFile(response.content, f'{name}.png')
+    file = ContentFile(response.content, f'{target}_{order}.png')
     _images_cache[path] = file
     return file
 
@@ -81,7 +83,7 @@ def get_groups(game: Game, worksheet: gspread.Worksheet) -> None:
         order, name, description, parent_group_name, *_ = row
         hidden = row[4] == 'TRUE'
         family = row[5] == 'TRUE'
-        image = get_image(path=row[6], name=name) if len(row) > 6 else None
+        image = get_image(path=row[6], order=order, target='caracter') if len(row) > 6 else None
         parent_group = Group.objects.get(name=parent_group_name) if parent_group_name else None
         group, _ = Group.objects.update_or_create(
             name=name, game_id=game.id, family=family,
@@ -103,7 +105,7 @@ def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
         character_name = name_with_alias[0]
         alias = name_with_alias[1] if len(name_with_alias) > 1 else '-'
         order, _, master, tags, group_name, family_name, description, *_ = row
-        image = get_image(path=row[7], name=character_name) if len(row) > 7 else None
+        image = get_image(path=row[7], target='character', order=order) if len(row) > 7 else None
 
         group = Group.objects.get(name=group_name, game_id=game.id) if group_name and group_name != '-' else None
         family = Group.objects.get(name=family_name, game_id=game.id) if family_name and family_name != '-' else None

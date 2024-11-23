@@ -8,14 +8,14 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from apps.games.models import Answer, Application, Game, Question
-from apps.games.serializers import ApplicationSerializer
+from apps.games.serializers import ApplicationPrivateSerializer
 
 
 class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     """Application viewset."""
 
     queryset = Application.objects
-    serializer_class = ApplicationSerializer
+    serializer_class = ApplicationPrivateSerializer
 
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Gets an application."""

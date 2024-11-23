@@ -19,6 +19,7 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = [
             'id',
+            'order',
             'name',
             'alias',
             'hidden',

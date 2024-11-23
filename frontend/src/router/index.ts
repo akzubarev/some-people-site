@@ -15,47 +15,26 @@ const routes: Array<RouteRecordRaw> = [
                 path: "/",
                 name: "main",
                 component: () => import("@/views/title/Title.vue"),
-                meta: {
-                    middleware: [loadUser, guest]
-                }
+                meta: {middleware: [loadUser, guest]}
             },
             {
                 path: "/mg",
                 name: "mg",
                 component: () => import("@/views/title/MG.vue"),
-                meta: {
-                    middleware: [loadUser, guest]
-                }
-            },
-            {
-                path: "/account/profile",
-                name: "account-profile",
-                component: () => import("@/views/account/Profile.vue"),
-                meta: {
-                    middleware: [loadUser, isAuth]
-                }
-            },
-            {
-                path: "/account/settings",
-                name: "account-settings",
-                component: () => import("@/views/account/settings/Settings.vue"),
-                meta: {
-                    middleware: [loadUser, isAuth]
-                }
+                meta: {middleware: [loadUser, guest]}
             },
             {
                 path: "/games",
                 name: "games",
                 component: () => import("@/views/games/games/Games.vue"),
-                meta: {
-                    middleware: [loadUser, guest]
-                }
+                meta: {middleware: [loadUser, guest]}
             },
             {
                 path: "/game/:game_alias",
                 name: "game",
                 redirect: "/game/:game_alias/about",
                 component: () => import("@/views/games/GameRoot.vue"),
+                meta: {middleware: [loadUser, guest]},
                 props: true,
                 children: [
                     {
@@ -63,46 +42,26 @@ const routes: Array<RouteRecordRaw> = [
                         name: "game-about",
                         component: () => import("@/views/games/About.vue"),
                         props: true,
-                        meta: {
-                            middleware: [loadUser, guest]
-                        }
                     },
                     {
                         path: "/game/:game_alias/roles",
                         name: "game-roles",
                         component: () => import("@/views/games/roles/Roles.vue"),
                         props: true,
-                        meta: {
-                            middleware: [loadUser, guest]
-                        }
                     },
                     {
                         path: "/game/:game_alias/characters",
                         name: "game-characters",
-                        component: () => import("@/views/games/roles/CharacterList.vue"),
+                        component: () => import("@/views/games/roles/users/CharacterList.vue"),
                         props: true,
-                        meta: {
-                            middleware: [loadUser, guest]
-                        }
                     },
-                    {
-                        path: "/game/:game_alias/apply",
-                        name: "game-apply",
-                        component: () => import("@/views/games/apply/Application.vue"),
-                        props: true,
-                        meta: {
-                            middleware: [loadUser, isAuth]
-                        }
-                    },
-                    {
-                        path: "/game/:game_alias/application/:userId",
-                        name: "game-application",
-                        component: () => import("@/views/games/apply/Application.vue"),
-                        props: true,
-                        meta: {
-                            middleware: [loadUser, isMg]
-                        }
-                    },
+                    // {
+                    //     path: "/game/:game_alias/application/:userId",
+                    //     name: "game-application",
+                    //     component: () => import("@/views/games/apply/Application.vue"),
+                    //     props: true,
+                    //     meta: {middleware: [isMg]}
+                    // },
                     // {
                     //     path: "/game/:game_alias/players",
                     //     name: "game-players",
@@ -112,6 +71,35 @@ const routes: Array<RouteRecordRaw> = [
                     //         middleware: [loadUser, isMg]
                     //     }
                     // },
+                ]
+            },
+            {
+                path: "/account/",
+                name: "account",
+                redirect: "/account/whales/application",
+                component: () => import("@/views/account/LK.vue"),
+                meta: {middleware: [loadUser, isAuth]},
+                props: true,
+                children: [
+                    {
+                        path: "/account/:game_alias/application",
+                        name: "account-application",
+                        component: () => import("@/views/account/Application.vue"),
+                        props: true,
+                    },
+                    {
+                        path: "/account/:game_alias/questionnaire",
+                        name: "account-questionnaire",
+                        component: () => import("@/views/account/questionnaire/Questionnaire.vue"),
+                        props: true,
+                    },
+                    {
+                        path: "/account/settings",
+                        name: "account-settings",
+                        component: () => import("@/views/account/settings/Settings.vue"),
+                        props: true,
+                    },
+
                 ]
             },
         ],
@@ -126,42 +114,32 @@ const routes: Array<RouteRecordRaw> = [
                     path: "/sign-in",
                     name: "sign-in",
                     component: () => import("@/views/auth/SignIn.vue"),
-                    meta: {
-                        middleware: [guest]
-                    }
+                    meta: {middleware: [guest]}
                 },
                 {
                     path: "/sign-up",
                     name: "sign-up",
                     component: () => import("@/views/auth/SignUp.vue"),
-                    meta: {
-                        middleware: [guest]
-                    }
+                    meta: {middleware: [guest]}
                 },
                 {
                     path: "/lost-pass",
                     name: "lost-pass",
                     component: () => import("@/views/auth/LostPass.vue"),
-                    meta: {
-                        middleware: [loadUser, isAuth]
-                    }
+                    meta: {middleware: [loadUser, isAuth]}
                 },
                 {
                     path: "/sign-out",
                     name: "sign-out",
                     component: () => import("@/views/auth/SignOut.vue"),
-                    meta: {
-                        middleware: [loadUser, isAuth]
-                    }
+                    meta: {middleware: [loadUser, isAuth]}
                 },
                 {
                     path: "/reset-pass/:uid/:token",
                     name: "reset-pass",
                     component: () => import("@/views/auth/PasswordReset.vue"),
                     props: true,
-                    meta: {
-                        middleware: [loadUser, isAuth]
-                    }
+                    meta: {middleware: [loadUser, isAuth]}
                 }
             ]
     },
@@ -181,15 +159,10 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
-        if (savedPosition) {
+        if (to.hash)
+            return {el: to.hash, behavior: 'smooth'}
+        if (savedPosition)
             return savedPosition
-        }
-        if (to.hash) {
-            return {
-                el: to.hash,
-                behavior: 'smooth',
-            }
-        }
     }
 })
 

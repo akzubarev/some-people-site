@@ -10,7 +10,7 @@
       />
       <inline-svg
           v-if="type=='password'" @click="passVisible = !passVisible"
-          class="absolute right-2 bottom-2 text-3xl text-gray-400"
+          class="absolute right-2 bottom-3 text-3xl text-gray-400"
           :src="require(`@/assets/images/icons/auth/eye${passVisible ? '-off' : ''}.svg`)"
       />
       <div v-if="errors" class="input-error-message">{{ errors }}</div>

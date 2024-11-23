@@ -6,7 +6,7 @@
             @change="change(option)" v-model="res" type="radio"
             class="form-check-input" :id="`radio${question.id}${i}`"
             :value="option" :name="'radio' + question.id">
-        <label :for="`radio${question.id}${i}`" class="text-2xl">
+        <label :for="`radio${question.id}${i}`" class="text-medium text-content-secondary">
           {{ option }}
         </label>
       </div>

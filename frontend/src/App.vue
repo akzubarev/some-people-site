@@ -76,31 +76,35 @@ div {
 }
 
 .text-large {
-  @apply sm:text-lg lg:text-2xl xl:text-3xl;
+  @apply sm:text-2xl md:text-3xl;
 }
 
 .text-header {
-  @apply sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl;
+  @apply sm:text-xl md:text-3xl lg:text-4xl xl:text-4xl;
 }
 
 .text-largest {
-  @apply sm:text-2xl md:text-4xl lg:text-4xl xl:text-8xl;
+  @apply sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-6xl;
 }
 
 .gap-xs {
-  @apply sm:gap-1 md:gap-1 lg:gap-3;
+  @apply sm:gap-1 lg:gap-3 2xl:gap-6;
 }
 
 .gap-small {
-  @apply sm:gap-3 md:gap-3 lg:gap-6;
+  @apply sm:gap-3 lg:gap-6 2xl:gap-9;
 }
 
 .gap-medium {
-  @apply sm:gap-6 md:gap-6 lg:gap-9;
+  @apply sm:gap-6 lg:gap-9 2xl:gap-12;
 }
 
 .gap-large {
-  @apply sm:gap-12 md:gap-24 lg:gap-28;
+  @apply sm:gap-9 lg:gap-12 2xl:gap-16;
+}
+
+.p-header {
+  @apply pt-20;
 }
 
 .form-input {
@@ -170,7 +174,7 @@ div {
 }
 
 .form-check-input {
-  @apply w-6 h-6 m-0 p-0 items-center;
+  @apply w-6 h-6 m-0 p-0 items-center bg-transparent accent-content-secondary;
 }
 
 

@@ -1,12 +1,15 @@
 <template class="relative">
   <img class="absolute h-[300px] w-full bg-cover" :src="game_images[game_alias].header"/>
-  <div class="flex flex-row bg-whales-bg pt-20 gap-[2.5%] h-screen">
-    <div class="absolute z-0 top-20 left-[2.5%] w-[20%] h-full bg-bg-transparent-white"/>
-    <div class="absolute z-0 top-20 left-[25%] w-[57.5%] h-full bg-bg-transparent-white"/>
-    <div class="absolute z-0 top-20 right-[2.5%] w-[12.5%] h-full bg-bg-transparent-white"/>
-    <GroupNamesDrawer class="ml-[2.5%] pt-6 pl-6 z-10 w-[26.5%]" :game_alias="game_alias"
+  <div class="absolute z-0 top-20 left-[2.5%] w-[20%] h-full bg-bg-transparent-white"/>
+  <div class="absolute z-0 top-20 left-[25%] w-[57.5%] h-full bg-bg-transparent-white"/>
+  <div class="absolute z-0 top-20 right-[2.5%] w-[12.5%] h-full bg-bg-transparent-white"/>
+  <div class="flex flex-row bg-whales-bg p-header gap-[2.5%] h-screen px-[2.5%]">
+    <GroupNamesDrawer class="pt-6 pl-12 z-10 w-[26.5%]" :game_alias="game_alias"
                       :family_groups="family_groups" :group_groups="group_groups"/>
-    <div class="flex flex-col py-12 px-6 gap-large w-full overflow-y-scroll no-scrollbar z-10" v-if="group_groups">
+    <div
+        id="groups_scrollview"
+        class="flex flex-col py-12 px-6 gap-large w-full overflow-y-scroll scroll-auto no-scrollbar z-10"
+        v-if="group_groups">
       <GroupBlock
           :key="group" :game_alias="game_alias" :group="group"
           v-for="group in family_groups.filter(g=>!groupIsEmpty(g))"
@@ -60,4 +63,29 @@ gamesService.groups(props.game_alias, 'family').then(({data}) => {
 })
 
 const groupIsEmpty = (group) => group.characters.length + group.members.length + group.subgroups.length == 0
+//
+// function scrollToHashElement() {
+//   if (!window.location.href.includes('#'))
+//     return
+//   const hash = window.location.href.split("#")[1]
+//   // scrollElement.scrollIntoView({behavior: "smooth"})
+//   console.log(hash)
+//   const scrollDiv = document.querySelector("#groups_scrollview");
+//   console.log(scrollDiv)
+//   if (!!scrollDiv && !!hash) {
+//     const scrollElement = scrollDiv.querySelector("#" + hash)
+//     console.log(scrollElement)
+//     if (scrollElement) {
+//       let scrollDivRect = scrollDiv.getBoundingClientRect()
+//       let idRect = scrollElement.getBoundingClientRect()
+//       scrollDiv.scrollBy({top: idRect.y - scrollDivRect.y, behavior: "smooth"})
+//     }
+//   }
+// }
+//
+// onMounted(() => {
+//   scrollToHashElement();
+// })
+// onhashchange = (event) => scrollToHashElement();
+
 </script>

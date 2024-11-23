@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
-    <div class="flex flex-col gap-medium" :id="group.name">
-      <div v-if="group.characters" class="flex flex-row w-[75%] gap-3">
+    <div class="flex flex-col gap-small" :id="`group_${group.order}`">
+      <div v-if="group.characters" class="flex flex-row w-[80%] gap-3">
         <img class="w-12 h-12" :src="group.image"/>
         <div class="flex flex-col">
           <div class="text-medium text-content-secondary font-bold uppercase"> {{ group.name }}</div>

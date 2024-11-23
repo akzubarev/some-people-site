@@ -7,7 +7,7 @@
         ▶
       </div>
       <div class="text-medium font-semibold text-content-secondary"
-           :class="group.subgroups.length > 0 ? '' : 'ml-3'" @click="$router.push(`#${group.name}`)">
+           :class="group.subgroups.length > 0 ? '' : 'ml-3'" @click="$router.push(`#group_${group.order}`)">
         {{ group.name }}
       </div>
     </div>
@@ -40,6 +40,4 @@ const props = defineProps({
   },
   game_alias: {type: String},
 })
-
-const groupIsEmpty = (group) => group.characters.length + group.members.length + group.subgroups.length == 0
 </script>
