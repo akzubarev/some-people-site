@@ -49,9 +49,9 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         application, _ = Application.objects.get_or_create(user=user, game=game)
         for question_name, answer_value in data.items():
             question_id = question_name.split("_")[-1]
-            question = Question.objects.filter(id=question_id).first()
-            answer, _ = Answer.objects.get_or_create(question=question, application=application)
-            answer.value = answer_value
-            answer.save()
+            answer, _ = Answer.objects.update_or_create(
+                question_id=question_id, application=application,
+                defaults={'value': answer_value}
+            )
         serializer = self.serializer_class(application, context={'request': request})
         return Response(serializer.data)

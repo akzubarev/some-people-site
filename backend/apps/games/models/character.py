@@ -40,7 +40,7 @@ class Character(models.Model):
         """Model meta."""
 
         verbose_name = 'Персонаж'
-        verbose_name_plural = 'Персонаж'
+        verbose_name_plural = 'Персонажи'
         ordering = ['order']
 
     def __str__(self):

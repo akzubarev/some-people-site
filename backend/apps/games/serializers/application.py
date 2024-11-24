@@ -24,7 +24,7 @@ class ApplicationPublicSerializer(serializers.ModelSerializer):
 class ApplicationPrivateSerializer(ApplicationPublicSerializer):
     """Application serializer."""
     answers = serializers.SerializerMethodField()
-    character = CharacterSerializer()
+    character = CharacterSerializer(required=False)
 
     class Meta:
         """Serializer meta."""
@@ -33,6 +33,7 @@ class ApplicationPrivateSerializer(ApplicationPublicSerializer):
         fields = [
             'id',
             # 'user',
+            # 'comment',
             'game',
             'character',
             'price',
