@@ -79,20 +79,20 @@ def get_groups(game: Game, worksheet: gspread.Worksheet) -> None:
     num_rows = len([item for item in worksheet.col_values(1) if item])
     rows: list[list] = worksheet.get_values(f'A2:G{num_rows}')
     for i, row in enumerate(rows):
-        # try:
-        order, name, description, parent_group_name, *_ = row
-        hidden = row[4] == 'TRUE'
-        family = row[5] == 'TRUE'
-        image = get_image(path=row[6], order=order, target='caracter') if len(row) > 6 else None
-        parent_group = Group.objects.get(name=parent_group_name) if parent_group_name else None
-        group, _ = Group.objects.update_or_create(
-            name=name, game_id=game.id, family=family,
-            defaults={'hidden': hidden, 'image': image, 'description': description,
-                      'parent': parent_group, 'order': order},
-        )
-        group.save()
-    # except Exception as e:
-    #     logger.warning(readable_exception(e))
+        try:
+            order, name, description, parent_group_name, *_ = row
+            hidden = row[4] == 'TRUE'
+            family = row[5] == 'TRUE'
+            image = get_image(path=row[6], order=order, target='caracter') if len(row) > 6 else None
+            parent_group = Group.objects.get(name=parent_group_name) if parent_group_name else None
+            group, _ = Group.objects.update_or_create(
+                name=name, game_id=game.id, family=family,
+                defaults={'hidden': hidden, 'image': image, 'description': description,
+                          'parent': parent_group, 'order': order},
+            )
+            group.save()
+        except Exception as e:
+            logger.warning(readable_exception(e))
 
 
 def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
@@ -100,31 +100,31 @@ def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
     num_rows = len([item for item in worksheet.col_values(1) if item])
     rows: list[list] = worksheet.get_values(f'A2:H{num_rows}')
     for i, row in enumerate(rows):
-        # try:
-        name_with_alias = row[1].split(', ')
-        character_name = name_with_alias[0]
-        alias = name_with_alias[1] if len(name_with_alias) > 1 else '-'
-        order, _, master, tags, group_name, family_name, description, *_ = row
-        image = get_image(path=row[7], target='character', order=order) if len(row) > 7 else None
+        try:
+            name_with_alias = row[1].split(', ')
+            character_name = name_with_alias[0]
+            alias = name_with_alias[1] if len(name_with_alias) > 1 else '-'
+            order, _, master, tags, group_name, family_name, description, *_ = row
+            image = get_image(path=row[7], target='character', order=order) if len(row) > 7 else None
 
-        group = Group.objects.get(name=group_name, game_id=game.id) if group_name and group_name != '-' else None
-        family = Group.objects.get(name=family_name, game_id=game.id) if family_name and family_name != '-' else None
-        char, _ = Character.objects.update_or_create(
-            name=character_name,
-            defaults={
-                'alias': alias, 'image': image, 'description': description,
-                'group': group, 'family': family, 'order': order,
-                'master_id': {
-                    'Леша': 2, 'Катя': 3, 'Лиза': 4, 'Аня': 5, 'Оля': 6, 'Полина': 7, 'Саша': 8,
-                }.get(master, None)
-            },
-        )
-        for tag in tags.split(', '):
-            tag, _ = Tag.objects.get_or_create(name=tag)
-            char.tags.add(tag)
-        char.save()
-    # except Exception as e:
-    #     logger.warning(readable_exception(e))
+            group = Group.objects.get(name=group_name, game_id=game.id) if group_name and group_name != '-' else None
+            family = Group.objects.get(name=family_name, game_id=game.id) if family_name and family_name != '-' else None
+            char, _ = Character.objects.update_or_create(
+                name=character_name,
+                defaults={
+                    'alias': alias, 'image': image, 'description': description,
+                    'group': group, 'family': family, 'order': order,
+                    'master_id': {
+                        'Леша': 2, 'Катя': 3, 'Лиза': 4, 'Аня': 5, 'Оля': 6, 'Полина': 7, 'Саша': 8,
+                    }.get(master, None)
+                },
+            )
+            for tag in tags.split(', '):
+                tag, _ = Tag.objects.get_or_create(name=tag)
+                char.tags.add(tag)
+            char.save()
+        except Exception as e:
+            logger.warning(readable_exception(e))
 
 
 def get_questions(game: Game, worksheet: gspread.Worksheet) -> None:

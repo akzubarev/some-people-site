@@ -30,6 +30,7 @@ class Application(models.Model):
         to="games.Game", related_name="applications",
         on_delete=models.CASCADE
     )
+    # comment = models.TextField(blank=True, null=True)
     character = models.OneToOneField(
         verbose_name="Персонаж",
         to="games.Character", related_name="application",

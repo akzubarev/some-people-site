@@ -1,14 +1,12 @@
 <template class="relative">
-  <div class="flex flex-col gap-medium bg-bg-transparent-white overflow-y-auto no-scrollbar p-6">
+  <div v-if="!!application.status"
+       class="flex flex-col gap-medium bg-bg-transparent-white overflow-y-auto no-scrollbar p-6">
     <div class="text-large text-content-secondary"> Заявка {{
-        (application.status ? $t(`application.${application.status}`) : "Не подана").toLowerCase()
+        $t(`application.${application.status}`).toLowerCase()
       }}
     </div>
-    <CharacterBlock
-        v-if="application.character" :character="application.character"
-        :key="application.character.id" :game_alias="game_alias"
-        :personal="true"
-    />
+    <CharacterBlock v-if="!!application.character" :character="application.character" :game_alias="game_alias"
+                    :personal="true"/>
     <div class="flex flex-row items-center gap-2 text-medium text-content-secondary">
       <inline-svg v-if="questionnaire_questions === questionnaire_answers"
                   class="w-6 h-6" :src="require('@/assets/images/icons/common/check.svg')"/>
@@ -39,6 +37,13 @@
       />
     </Form>
   </div>
+  <Form v-else class="flex flex-col gap-medium bg-bg-transparent-white overflow-y-auto no-scrollbar p-6"
+        novalidate="novalidate" @submit="onSubmit">
+    <div class="text-large text-content-secondary"> Заявка не подана</div>
+    <button ref="submitButton" type="submit" class="btn-gradient w-full text-center text-xl">
+      Подать заявку
+    </button>
+  </Form>
 </template>
 
 <script setup lang="ts">
@@ -67,26 +72,31 @@ const questionnaire_answers = ref(0)
 const form = formhelper()
 const {errors} = form
 const application = ref({
-  id: 1, status: "approved", answers: [], price: 0, payed: 0, character: {},
-})
-gamesService.application(user_id, game_alias).then(({data}) => {
-  application.value = data
-  if (!!data.answers) {
-    gamesService.questions(game_alias).then(({data}) => {
-      if (!!data) {
-        questions.value = data.filter(q => q.order < 0)
-        questionnaire_questions.value = data.filter(q => q.order > 0).length
-        answers.value = Object.fromEntries(
-            Object.entries(application.value.answers).filter((q_id, a) => questions.value.find(q => q.id == q_id)?.order < 0)
-        )
-        questionnaire_answers.value = Object.entries(application.value.answers).filter(
-            (q_id, a) => !!a && questions.value.find(q => q.id == q_id)?.order > 0
-        ).length
-      }
-    })
-  }
+  id: 1, status: null, answers: [], price: 0, payed: 0, character: {},
 })
 
+
+const loadData = () => {
+  gamesService.application(user_id, game_alias).then(({data}) => {
+    application.value = data
+    if (!!data.answers) {
+      gamesService.questions(game_alias).then(({data}) => {
+        if (!!data) {
+          questions.value = data.filter(q => q.order < 0)
+          questionnaire_questions.value = data.filter(q => q.order > 0).length
+          answers.value = Object.fromEntries(
+              Object.entries(application.value.answers).filter((q_id, a) => questions.value.find(q => q.id == q_id)?.order < 0)
+          )
+          questionnaire_answers.value = Object.entries(application.value.answers).filter(
+              (q_id, a) => !!a && questions.value.find(q => q.id == q_id)?.order > 0
+          ).length
+        }
+      })
+    }
+  })
+}
+
+loadData()
 
 const answerUpdate = (question, answer) => {
   answers.value[question] = answer
@@ -96,9 +106,7 @@ const onSubmit = (values) => {
   answers.value = {...values, ...answers.value, game_alias: game_alias}
   form.send(async () => {
     await gamesService.apply({game_alias: game_alias, ...answers.value})
-    gamesService.application(user_id.value, game_alias).then(({data}) => {
-      application.value = data
-    })
+    loadData()
   })
 }
 </script>
