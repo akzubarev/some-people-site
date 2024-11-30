@@ -40,11 +40,11 @@ const users = ref([])
 const questions = ref(10)
 const props = defineProps(["game_alias"])
 const user = store.getters['auth/user']
+const game = store.getters['games/game']
 
-gamesService.game(props.game_alias).then(({data}) => {
-  if (!user.mg && !data.open_character_list)
-      router.push(`/game/${props.game_alias}/about`)
-})
+if (!user.mg && !game.open_character_list)
+    router.push(`/game/${props.game_alias}/about`)
+
 gamesService.questions(props.game_alias).then(({data}) => {
   questions.value = data.length
 })

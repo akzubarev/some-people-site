@@ -11,6 +11,7 @@
       >
         {{ $route.path.includes('sign-up') ? $t("auth.signIn") : $t("auth.signUp") }}
       </router-link>
+      <a href="/" class="text-lg text-content-primary text-center"> Обратно на главную</a>
     </div>
   </div>
 </template>

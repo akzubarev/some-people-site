@@ -1,4 +1,5 @@
 """Users viewset."""
+from http import HTTPStatus
 from typing import Any, Type
 
 from django.db import transaction
@@ -10,6 +11,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from apps.games.models import Character
 from apps.users.models import User
 from apps.users.serializers import UserPrivateSerializer, UserCreateSerializer, UserSerializer
 
@@ -41,6 +43,8 @@ class UserViewSet(viewsets.GenericViewSet, mixins.UpdateModelMixin, mixins.Retri
     @action(['get'], detail=False)
     def me(self, request: Request, *args: Any, **kwargs: Any):
         """Makes an action for current user based on query action."""
+        # if request.user.is_anonymous:
+        #     return Response(data={}, status=HTTPStatus.NO_CONTENT)
         return self.retrieve(request, *args, **kwargs)
 
     @action(['put'], detail=False)
@@ -56,7 +60,9 @@ class UserViewSet(viewsets.GenericViewSet, mixins.UpdateModelMixin, mixins.Retri
             PermissionDenied()
         user_serializer = self.get_serializer(data=request.data)
         user_serializer.is_valid(raise_exception=True)
-        user_serializer.save()
+        user = user_serializer.save()
+        user.set_password(request.data['password'])
+        user.save()
 
         token, created = Token.objects.get_or_create(user=user_serializer.instance)
         response_data = dict(user_serializer.data) | {'auth_token': token.key}
@@ -86,3 +92,15 @@ class UserViewSet(viewsets.GenericViewSet, mixins.UpdateModelMixin, mixins.Retri
         queryset = User.objects.filter(is_staff=True).exclude(username="admin")
         serializer = self.get_serializer(queryset, context={'request': request}, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['post'])
+    def like_character(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        """Likes or dislikes a character."""
+        data = request.data
+        game_alias, character_id, like = data.get('game_alias'), data.get('character_id'), data.get('like')
+        character = Character.objects.get(id=character_id, group__game__alias=game_alias)
+        if like:
+            character.liked_by.add(request.user)
+        else:
+            character.liked_by.remove(request.user)
+        return Response(data={'status': 'ok'}, status=HTTPStatus.OK)

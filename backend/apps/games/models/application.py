@@ -6,47 +6,47 @@ class Application(models.Model):
     """Application model."""
 
     class Status:
-        PENDING = "pending"
-        DISCUSSING = "discussing"
-        CONFIRMED = "confirmed"
-        DECLINED = "declined"
-        DELETED = "deleted"
+        PENDING = 'pending'
+        DISCUSSING = 'discussing'
+        CONFIRMED = 'confirmed'
+        DECLINED = 'declined'
+        DELETED = 'deleted'
 
         CHOICES = [
-            (PENDING, "Подана"),
-            (DISCUSSING, "Обсуждается"),
-            (CONFIRMED, "Принята"),
-            (DECLINED, "Отклонена"),
-            (DELETED, "Удалена"),
+            (PENDING, 'Подана'),
+            (DISCUSSING, 'Обсуждается'),
+            (CONFIRMED, 'Принята'),
+            (DECLINED, 'Отклонена'),
+            (DELETED, 'Удалена'),
         ]
 
     user = models.ForeignKey(
-        verbose_name="Игрок",
-        to="users.User", related_name="applications",
+        verbose_name='Игрок',
+        to='users.User', related_name='applications',
         on_delete=models.CASCADE
     )
     game = models.ForeignKey(
-        verbose_name="Игра",
-        to="games.Game", related_name="applications",
+        verbose_name='Игра',
+        to='games.Game', related_name='applications',
         on_delete=models.CASCADE
     )
     # comment = models.TextField(blank=True, null=True)
     character = models.OneToOneField(
-        verbose_name="Персонаж",
-        to="games.Character", related_name="application",
+        verbose_name='Персонаж',
+        to='games.Character', related_name='application',
         on_delete=models.SET_NULL,
         blank=True, null=True
     )
     status = models.CharField(
-        verbose_name="Статус", choices=Status.CHOICES,
+        verbose_name='Статус', choices=Status.CHOICES,
         default=Status.PENDING
     )
     price = models.IntegerField(
-        verbose_name="Взнос", blank=True, null=True
+        verbose_name='Взнос', blank=True, null=True
     )
 
     payed = models.IntegerField(
-        verbose_name="Оплачено", default=0
+        verbose_name='Оплачено', default=0
     )
 
     def save(self, *args, **kwargs):
@@ -58,8 +58,8 @@ class Application(models.Model):
     class Meta:
         """Model meta."""
 
-        verbose_name = "Заявка"
-        verbose_name_plural = "Заявки"
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
 
     def __str__(self):
-        return f"{self.user} {self.game} {self.character or ''}"
+        return f'{self.user} {self.game} {self.character or ""}'

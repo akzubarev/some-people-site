@@ -1,12 +1,6 @@
 <template>
   <Form class="form flex flex-col h-full gap-6 p-6 bg-bg-transparent-white overflow-y-auto no-scrollbar"
         novalidate="novalidate" @submit="onSubmit">
-    <ActionModal
-        v-if="showModal" type="lock"
-        @close="() => {showModal = false}"
-        @submit="() => {showModal = false}"
-        title="Ответьте на все вопросы, чтобы отправить анкету." :buttonText="$t('common.actions.ok')">
-    </ActionModal>
     <div class="flex flex-col gap-6">
       <div class="text-large font-bold text-content-secondary uppercase"> {{
           $t('application.questionnaire_title')
@@ -19,16 +13,17 @@
     </div>
     <div class="flex flex-col gap-medium">
       <QuestionField
-          v-for="question in questions" :key="question"
-          :question="question" :horizontal="false" :value="answers"
-          @change="answerUpdate" :errors="errors"
-          :default-value="application.answers"
-          :readonly="!!userId" :show-errors="showErrors"
+          v-for="question in questions" @change="answerUpdate"
+          :key="`${question.id} ${default_answers[question.id]}`"
+          :question="question" :horizontal="false"
+          :readonly="!!userId" :show-errors="showErrors" :errors="errors"
+          :unfilled="application.answers?.unfilled?.includes(question.id)"
+          :default-value="default_answers[question.id]"
       />
     </div>
-    <button ref="submitButton" type="submit" class="btn-gradient w-full text-center text-xl">
-      {{ !!application ? 'Сохранить' : 'Отправить' }} заявку
-    </button>
+<!--    <button ref="submitButton" type="submit" class="btn-gradient w-full text-center text-xl">-->
+    <!--      {{ 'Сохранить' }}-->
+    <!--    </button>-->
   </Form>
 </template>
 
@@ -40,52 +35,55 @@ import {useRouter} from "vue-router"
 import formhelper from "@/core/helpers/form"
 import QuestionField from "@/views/account/questionnaire/QuestionField.vue";
 import gamesService from "@/services/gamesService";
-import ActionModal from "@/components/ActionModal.vue";
 
 const store = useStore()
 const router = useRouter()
-const progress = ref([])
 const form = formhelper()
 const {errors} = form
 
 const props = defineProps(["game_alias", "userId"])
-const questions = ref([])
 const showErrors = ref(false)
-const showModal = ref(false)
-const answers = ref({})
-const application = ref({
-  id: 1, status: "approved", answers: [], price: 0, payed: 0,
-})
 const game_alias = props.game_alias
-const user_id = computed(() => props.userId || store.getters['auth/user'].id)
-gamesService.application(user_id.value, game_alias).then(({data}) => {
-  application.value = data
-  gamesService.questions(game_alias).then(({data}) => {
-    questions.value = data.filter(question => question.order > 0)
-  })
-})
 
-const answerUpdate = (question, answer) => {
-  answers.value[question] = answer
-  if (!!answer && !progress.value.includes(question)) {
-    progress.value.push(question)
-  } else if (!answer && progress.value.includes(question)) {
-    progress.value.splice(progress.value.indexOf(question), 1)
-  }
+const user_id = computed(() => props.userId || store.getters['auth/user'].id)
+const application = computed(() => store.getters["games/application"])
+const questions = computed(() => store.getters["games/questions"].filter(question => question.order > 0))
+
+const getQAnswers = (answers) => {
+  return Object.fromEntries(Object.entries(answers).filter((q_id, v) => q_id > 0 && !!v))
+}
+
+const answers = ref(getQAnswers(application.value.answers?.values || {}))
+const default_answers = computed(() => application.value.answers?.values || {})
+
+const answerUpdate = (field_name, answer) => {
+  answers.value[field_name] = answer
+}
+
+const loadData = () => {
+  gamesService.application(user_id.value, game_alias).then(({data}) => {
+    store.dispatch("games/setApplication", data)
+    answers.value = getQAnswers(data.answers.values)
+  })
+  gamesService.questions(props.game_alias).then(({data}) => {
+    store.dispatch("games/setQuestions", data)
+  })
 }
 
 const onSubmit = (values) => {
-  answers.value = {...values, ...answers.value, game_alias: game_alias}
+  const answersToSend = {...answers.value, game_alias: game_alias}
   showErrors.value = true
   form.send(async () => {
-    if (Object.values(answers.value).includes(null) || Object.values(answers.value).includes("")) {
-      showModal.value = true
-      return
-    }
-    await gamesService.apply({game_alias: game_alias, ...answers.value})
-    gamesService.application(user_id.value, game_alias).then(({data}) => {
-      application.value = data
-    })
+    await gamesService.apply(answersToSend)
+    loadData()
   })
 }
+const onLeave = () => {
+  const answersToSend = {...answers.value, game_alias: game_alias}
+  form.send(async () => {
+    await gamesService.apply(answersToSend)
+  })
+}
+
+window.addEventListener('beforeunload', onLeave)
 </script>

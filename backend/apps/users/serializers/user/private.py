@@ -13,13 +13,14 @@ from .public import UserSerializer
 class UserPrivateSerializer(UserSerializer):
     """Serializes for /me route."""
     telegram_code = serializers.SerializerMethodField()
+    likes = serializers.SerializerMethodField()
 
     class Meta:
         """Model meta."""
 
         model = User
-        fields = UserSerializer.Meta.fields + ('telegram_code',)
-        read_only_fields = UserSerializer.Meta.read_only_fields + ('telegram_code',)
+        fields = UserSerializer.Meta.fields + ('telegram_code', 'likes',)
+        read_only_fields = UserSerializer.Meta.read_only_fields + ('telegram_code', 'likes',)
 
     def __init__(self, instance=None, *args, **kwargs) -> None:
         """Initializes the serializer."""
@@ -28,14 +29,14 @@ class UserPrivateSerializer(UserSerializer):
             avatar_format, image_str = avatar.split(';base64,')
             ext = avatar_format.split('/')[-1]
             kwargs['data']['avatar'] = ContentFile(b64decode(image_str), f'{uuid4()}.{ext}')
-        print(kwargs.get('data', {}).items())
         super().__init__(instance, *args, **kwargs)
 
     def save(self, **kwargs):
-        print(self.validated_data)
         a = super().save()
-        print(a)
 
     def get_telegram_code(self, user: User) -> str:
         """Returns users telegram code."""
         return encode_uuid(uuid=user.uuid)
+
+    def get_likes(self, user: User) -> str:
+        return user.likes.all().values_list('id', flat=True)

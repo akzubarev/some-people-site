@@ -68,39 +68,43 @@ div {
 }
 
 .text-small {
-  @apply sm:text-sm lg:text-base;
+  @apply text-sm lg:text-base;
 }
 
 .text-medium {
-  @apply sm:text-base lg:text-lg;
+  @apply text-base lg:text-lg;
 }
 
 .text-large {
-  @apply sm:text-2xl md:text-3xl;
+  @apply text-2xl md:text-3xl;
 }
 
 .text-header {
-  @apply sm:text-xl md:text-3xl lg:text-4xl xl:text-4xl;
+  @apply text-xl;
+}
+
+.text-title {
+  @apply text-xl text-2xl;
 }
 
 .text-largest {
-  @apply sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-6xl;
+  @apply text-4xl md:text-6xl lg:text-6xl xl:text-8xl 2xl:text-8xl;
 }
 
 .gap-xs {
-  @apply sm:gap-1 lg:gap-3 2xl:gap-6;
+  @apply gap-1 lg:gap-3 2xl:gap-6;
 }
 
 .gap-small {
-  @apply sm:gap-3 lg:gap-6 2xl:gap-9;
+  @apply gap-3 lg:gap-6 2xl:gap-9;
 }
 
 .gap-medium {
-  @apply sm:gap-6 lg:gap-9 2xl:gap-12;
+  @apply gap-6 lg:gap-9 2xl:gap-12;
 }
 
 .gap-large {
-  @apply sm:gap-9 lg:gap-12 2xl:gap-16;
+  @apply gap-9 lg:gap-12 2xl:gap-16;
 }
 
 .p-header {
@@ -109,6 +113,10 @@ div {
 
 .form-input {
   @apply flex flex-row text-lg items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl;
+}
+
+.form-input-error {
+  @apply absolute text-sm font-semibold -bottom-6 left-1;
 }
 
 .Layout-Body {

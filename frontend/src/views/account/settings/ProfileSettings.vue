@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import formhelper from "@/core/helpers/form"
 import {useStore} from "vuex"
-import {computed, ref} from "vue"
+import {computed} from "vue"
 import {Form} from "vee-validate"
 import authService from "@/services/authService"
 import {useI18n} from "vue-i18n"
@@ -67,12 +67,13 @@ import InputField from "@/components/InputField.vue";
 
 
 const store = useStore()
-const user = store.getters["auth/user"]
 const form = formhelper()
 const {errors} = form
 const {t} = useI18n()
 const emit = defineEmits(['saved'])
 
+const user = computed(() => store.getters["auth/user"])
+console.log(user)
 const avatar = computed(() => user.avatar)
 
 const saveProfile = values => {

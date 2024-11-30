@@ -1,11 +1,10 @@
 <template>
-  <div v-for="(option, i) in question.choices" :key="option">
-    <div class="flex flex-col cursor-pointer gap-3"
-         @click="() => { if (!readonly) {res[i] = !res[i]; $emit('change',answer)}}">
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input m-0" :name="'checkbox' + question.id"
+  <div class="flex flex-col cursor-pointer gap-3">
+    <div v-for="(option, i) in question.choices" :key="option">
+      <div class="form-check" @click="() => { if (!readonly) {res[i] = !res[i]; $emit('change',answer)}}">
+        <input type="checkbox" class="form-check-input m-0 w-[20px]" :name="'checkbox' + question.id"
                :checked="res[i]" :id="`checkbox${question.id}${i}`">
-        <label :for="`checkbox${question.id}${i}`" class="text-medium text-content-secondary">
+        <label :for="`checkbox${question.id}${i}`" class="text-medium text-content-secondary w-[95%]">
           {{ option }}
         </label>
       </div>
@@ -18,7 +17,7 @@ import {computed, ref} from "vue";
 const emit = defineEmits(['change'])
 const props = defineProps({
       defaultValue: {type: Array, default: []},
-      question: {type: Object, default: {id: 1, choices: []}},
+      question: {default: {id: 1, choices: []}},
       readonly: {type: Boolean, default: false},
     }
 )

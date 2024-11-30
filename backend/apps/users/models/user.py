@@ -16,18 +16,15 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
     first_name = models.CharField(
         verbose_name='name',
         max_length=100, default=None,
-        null=True, blank=True
     )
     last_name = models.CharField(
         verbose_name='surname',
         max_length=100, default=None,
-        null=True, blank=True
     )
 
     username = models.CharField(
         verbose_name='Никнейм',
         max_length=30, unique=True,
-        null=True, blank=True
     )
 
     avatar = models.ImageField(
@@ -36,20 +33,8 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
         blank=True, null=True
     )
 
-    country = models.CharField(
-        verbose_name='Country',
-        max_length=100, default=None,
-        null=True, blank=True
-    )
-    country_iso = models.CharField(
-        verbose_name='Country ISO code',
-        max_length=5, default=None,
-        null=True, blank=True
-    )
-
     phone = PhoneNumberField(blank=True, default=None, null=True)
     is_staff = models.BooleanField(verbose_name='admin', default=False)
-    email_active = models.BooleanField(default=False)
 
     telegram_chat_id = models.CharField(
         verbose_name='telegram_chat_id', max_length=250,

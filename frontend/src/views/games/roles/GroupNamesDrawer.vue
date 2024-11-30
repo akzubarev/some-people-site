@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-3 p-3">
-    <a class="flex flex-row items-center gap-3 text-large text-content-secondary mb-6"
+    <a class="flex flex-row items-center gap-3 text-header text-content-secondary mb-6"
        :href="`/game/${game_alias}/about`">
       <inline-svg class="w-6 h-6 rotate-180" :src="require('@/assets/images/icons/common/arrow.svg')"/>
       Назад
@@ -28,9 +28,10 @@
 
 
 <script setup lang="ts">
-import {ref} from "vue"
+import {computed} from "vue"
 import {useStore} from "vuex";
 import GroupNamesBlock from "@/views/games/roles/groups/GroupNamesBlock.vue";
+import {defaultGame} from "@/constants/common"
 
 const store = useStore()
 const user = store.getters['auth/user']
@@ -39,13 +40,6 @@ const props = defineProps({
   'group_groups': {type: Array},
   'family_groups': {type: Array},
 })
-const game = ref({
-  id: 1,
-  title: "lorem ipsum",
-  image: null,
-  groups: [],
-  non_grouped: [],
-})
-
+const game = computed(() => store.getters['games/games'][props.game_alias])
 const groupIsEmpty = (group) => group.characters.length + group.members.length + group.subgroups.length == 0
 </script>

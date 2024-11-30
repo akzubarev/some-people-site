@@ -6,10 +6,10 @@
     <!--      @saved="successPopup($t('settings.emailChanged'))"-->
     <!--      @sent="successPopup($t('settings.emailWasSent'))"-->
     <!--      @error="errorPopup($t('settings.emailError'))"/>-->
-    <ChangePassword
-        @saved="successPopup($t('settings.passwordWasChanged'))"
-        @error="errorPopup($t('settings.passwordDoesnotMatch'))"/>
-
+    <!--    <ChangePassword-->
+    <!--        @saved="successPopup($t('settings.passwordWasChanged'))"-->
+    <!--        @error="errorPopup($t('settings.passwordDoesnotMatch'))"-->
+    <!--    />-->
     <div class="form flex flex-col gap-3">
       <button @click="$router.push('/sign-out')"
               class="btn-gray ml-auto w-fit max-sm:w-full">
@@ -21,7 +21,7 @@
 
 
 <script setup lang="ts">
-import ChangePassword from "@/views/account/actions/ChangePassword.vue"
+// import ChangePassword from "@/views/account/actions/ChangePassword.vue"
 import ProfileSettings from "@/views/account/settings/ProfileSettings.vue";
 
 

@@ -12,7 +12,6 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    # list_filter = BaseUserAdmin.list_filter + ('country_iso',)
     ordering = ('-id',)
     list_display = [
         'id',
@@ -41,8 +40,6 @@ class UserAdmin(BaseUserAdmin):
                 'first_name',
                 'phone',
                 'avatar',
-                'country',
-                'country_iso',
                 'telegram_chat_id',
                 'telegram_username',
                 'instagram',

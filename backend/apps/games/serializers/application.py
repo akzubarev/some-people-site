@@ -42,6 +42,13 @@ class ApplicationPrivateSerializer(ApplicationPublicSerializer):
             'status',
         ]
 
-    def get_answers(self, application: Application) -> dict[int, dict]:
+    def get_answers(self, application: Application) -> dict[str, dict[int, dict] | list[int]]:
         """Gets application answers."""
-        return {answer.question.id: answer.value for answer in application.answers.all()}
+        return {
+            'values': {answer.question.id: answer.value for answer in application.answers.all()},
+            'unfilled': [
+                question.id for question in application.game.questions.all()
+                if not (answer := question.answers.filter(application=application).first()) or
+                   (answer and not answer.filled)
+            ],
+        }
