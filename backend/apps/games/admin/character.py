@@ -25,6 +25,7 @@ class CharacterAdmin(admin.ModelAdmin):
         'application__user',
         'master',
         'image',
+        # 'liked_by',
     ]
 
     def get_urls(self):

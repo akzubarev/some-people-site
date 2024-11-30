@@ -13,7 +13,7 @@
           class="absolute right-2 bottom-3 text-3xl text-gray-400"
           :src="require(`@/assets/images/icons/auth/eye${passVisible ? '-off' : ''}.svg`)"
       />
-      <div v-if="errors" class="input-error-message">{{ errors }}</div>
+      <div v-if="errors" class="form-input-error">{{ errors }}</div>
     </div>
   </div>
 </template>

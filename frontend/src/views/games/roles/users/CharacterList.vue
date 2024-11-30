@@ -39,12 +39,11 @@ import {useStore} from "vuex";
 const store = useStore()
 const props = defineProps(["game_alias"])
 const user = store.getters['auth/user']
+const game = store.getters['games/game']
 const characters = ref([])
 
-gamesService.game(props.game_alias).then(({data}) => {
-  if (!user.mg && !data.open_character_list)
+if (!user.mg && !game.open_character_list)
     router.push(`/game/${props.game_alias}/about`)
-})
 gamesService.characters(props.game_alias).then(({data}) => {
   characters.value = data
 })

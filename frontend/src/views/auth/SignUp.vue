@@ -69,8 +69,10 @@ export default defineComponent({
       form.send(async () => {
         values.email = (values.email || "").trim()
         const data = (await authService.register(values))["data"]
-        store.dispatch("auth/setToken", data.auth_token)
-        router.push("/")
+        if (!form.errors) {
+          store.dispatch("auth/setToken", data.auth_token)
+          router.push("/account/settings")
+        }
       })
     }
 

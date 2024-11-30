@@ -30,7 +30,6 @@ const props = defineProps({
   readonly: {type: Boolean, default: false},
   checkbox: {type: Boolean, default: false},
 })
-console.log(props.defaultValue)
 const res = ref(props.defaultValue?.length > 0 ?
     props.question.choices[1].map(
         (question, i) => props.question.choices[0].map((choice) => props.defaultValue[i].includes(choice))
@@ -41,5 +40,4 @@ const answer = computed(() => {
       (question, i) => props.question.choices[0].filter((choice, j) => res.value[i][j])
   )
 })
-
 </script>

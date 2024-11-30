@@ -1,6 +1,8 @@
 """Answer models."""
 from django.db import models
 
+from .question import Question
+
 
 class Answer(models.Model):
     """Answer model."""
@@ -17,11 +19,19 @@ class Answer(models.Model):
     )
     value = models.JSONField(null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.application} {self.question} {self.value}"
+
     class Meta:
         """Model meta."""
 
         verbose_name = "Ответ"
         verbose_name_plural = "Ответы"
 
-    def __str__(self):
-        return f"{self.application} {self.question} {self.value}"
+    @property
+    def filled(self) -> bool:
+        """If question is fully answered."""
+        if self.question.type in [Question.Type.MATRIX, Question.Type.MATRIX_CHECKBOX]:
+            return all(self.value)
+        else:
+            return bool(self.value)

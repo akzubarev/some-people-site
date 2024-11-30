@@ -3,24 +3,14 @@
 </template>
 
 <script setup lang="ts">
-import gamesService from "@/services/gamesService";
-import {ref, computed} from "vue";
+import {computed} from "vue";
 import {useStore} from "vuex";
+import {defaultGame} from "@/constants/common"
 
 const store = useStore()
 const user = store.getters['auth/user']
 const props = defineProps(["game_alias"])
-const game = ref({
-  id: 1,
-  title: "lorem ipsum",
-  alias: "loremipsum",
-  groups: [],
-  open_applications: false,
-  open_character_list: false
-})
-gamesService.game(props.game_alias).then(({data}) => {
-  game.value = data
-})
+const game = computed(()=>store.getters['games/games'][props.game_alias])
 
 const menuConfig = computed(() => {
   return [

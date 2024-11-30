@@ -8,21 +8,22 @@
   <div class="absolute w-full bg-bg-transparent p-1 mt-6 z-50">
     <div class="flex flex-row w-full gap-small justify-between items-center h-12 pl-10 pr-3">
       <div id="title" @click=" $router.push('/')"
-           class="flex flex-row w-full text-content-accent hover:text-content-primary items-center text-header font-semibold text-uppercase cursor-pointer"
+           class="flex flex-row w-full text-content-accent hover:text-content-primary
+           items-center text-title font-semibold uppercase no-wrap cursor-pointer"
       >
         <inline-svg
             class="h-16 w-16 md:hidden cursor-pointer" @click="$emit('asideToggle')"
             :src="require('@/assets/images/icons/common/menu.svg')"
         />
         Какие-то
-        <inline-svg class="h-24 w-16 ml-2 py-1 -mt-2 -mb-3"
+        <inline-svg class="h-24 w-16 ml-2 py-1 -mt-1 -mb-1"
                     :src="require('@/assets/images/logo/mg.svg')"/>
         юди
       </div>
-      <div id="menu" class="sm:hidden md:flex flex-row gap-16 lg:gap-24">
+      <div id="menu" class="w-full hidden md:flex flex-row gap-[5%] lg:gap-[15%]">
         <div v-for="link in links" :key="link"
              @click="link.locked ? lockedSection(link.lockedText) : $router.push(link.link)"
-             class="text-large text-uppercase flex flex-row gap-xs items-center cursor-pointer"
+             class="text-header uppercase flex flex-row gap-xs items-center cursor-pointer"
              :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
           {{ link.title }}
           <inline-svg
@@ -31,7 +32,7 @@
         </div>
       </div>
       <Avatar
-          class="h-20 w-20 ml-12 cursor-pointer"
+          class="h-20 w-20 ml-[5%] cursor-pointer"
           :src="user.avatar" @click="$router.push('/account/whales/application')"
       />
     </div>

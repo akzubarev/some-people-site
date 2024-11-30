@@ -1,7 +1,9 @@
 """Answers serializers module."""
+import json
+
 from rest_framework import serializers
 
-from apps.games.models import Answer
+from apps.games.models import Answer, Question
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -16,4 +18,5 @@ class AnswerSerializer(serializers.ModelSerializer):
             'question',
             'application',
             'value',
+            'filled',
         ]

@@ -9,44 +9,34 @@
       <a class="flex flex-row items-center gap-2 text-medium text-content-secondary"
          :href="`/account/${game_alias}/application`">
         Заявка
-        <Undone :number="application_questions-application_answers"/>
+        <Undone :number="application_unfilled"/>
       </a>
       <a class="flex flex-row items-center gap-2 text-medium text-content-secondary"
          :href="`/account/${game_alias}/questionnaire`">
         Опросник
-        <Undone :number="questionnaire_questions-questionnaire_answers"/>
+        <Undone :number="questionnaire_unfilled"/>
       </a>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import Undone from "@/views/account/drawer/Undone.vue";
-import {ref} from "vue";
-import gamesService from "@/services/gamesService";
+import {computed, ref} from "vue";
 import {useStore} from "vuex";
 
 const store = useStore()
 const props = defineProps(["game_title", "game_alias"])
-const user_id = store.getters['auth/user'].id
 
-const application_questions = ref(0)
-const application_answers = ref(0)
-const questionnaire_questions = ref(0)
-const questionnaire_answers = ref(0)
+const answers = computed(() => store.getters['games/application'].answers)
+const questions = computed(() => store.getters['games/questions'])
+
+const questionnaire_unfilled = computed(() =>
+    questions.value.filter(q => q.order > 0 && answers.value?.unfilled.includes(q.id)).length
+)
+const application_unfilled = computed(() =>
+    questions.value.filter(q => q.order < 0 && answers.value?.unfilled.includes(q.id)).length
+)
+
 const expanded = ref(props.game_alias == 'whales')
-
-gamesService.application(user_id, props.game_alias).then(({data}) => {
-  const answers =  data.answers
-  if (!!answers)
-    gamesService.questions(props.game_alias).then(({data}) => {
-      const questions = data
-      if (!!questions) {
-        console.log(Object.entries(answers))
-        application_questions.value = questions.filter(q => q.order < 0).length
-        questionnaire_questions.value = questions.filter(q => q.order > 0).length
-        questionnaire_answers.value = Object.entries(answers).filter((q_id, a) => !!a && questions.find(q => q.id == q_id)?.order > 0).length
-        application_answers.value = Object.entries(answers).filter((q_id, a) => !!a && questions.find(q => q.id == q_id)?.order < 0).length
-      }
-    })
-})
 </script>

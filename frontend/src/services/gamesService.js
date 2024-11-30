@@ -26,10 +26,24 @@ export default {
     async apply(payload) {
         return await request.post(`/api/applications/apply/`, payload)
     },
+    async delete_application(game_alias) {
+        return await request.post(`/api/applications/delete/`, {game_alias: game_alias})
+    },
+    async restore_application(game_alias) {
+        return await request.post(`/api/applications/restore/`, {game_alias: game_alias})
+    },
     async questions(game_alias) {
         return await request.get(`/api/questions/?game_alias=${game_alias}`)
     },
     async tags(game_alias) {
         return await request.get(`/api/games/tags/?game_alias=${game_alias}`)
+    },
+    async likes(game_alias, character_id, like) {
+        const payload = {game_alias: game_alias, character_id: character_id, like: like}
+        return await request.get(`/api/users/likes/?game_alias=${game_alias}`, payload)
+    },
+    async like_character(game_alias, character_id, like) {
+        const payload = {game_alias: game_alias, character_id: character_id, like: like}
+        return await request.post(`/api/users/like_character/`, payload)
     },
 }

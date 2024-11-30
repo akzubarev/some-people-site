@@ -10,10 +10,8 @@
 <script setup lang="ts">
 import {ref} from "vue"
 import GameBlock from "@/views/games/games/GameBlock.vue";
-import gamesService from "@/services/gamesService";
+import {useStore} from "vuex";
 
-const games = ref([])
-gamesService.games({}).then(({data}) => {
-  games.value = data
-})
+const store = useStore()
+const games = ref(store['games/games'])
 </script>

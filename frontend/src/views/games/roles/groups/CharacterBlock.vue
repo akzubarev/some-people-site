@@ -20,24 +20,33 @@
       <div class="text-medium text-content-secondary sm:cursor-pointer md:cursor-default text-start">
         {{ character.player ? character.player.username : "Свободно" }}
       </div>
-      <div v-if="!!character.player" class="flex flex-row gap-3 items-center pr-[2.5%] w-[10%]">
-        <a class="text-medium text-content-secondary-shadowed cursor-pointer"
-           :href="character.player.vk">
+      <div class="flex flex-row gap-3 items-center pr-[2.5%]">
+        <div v-if="character.player?.vk" @click="openVK(character.player.vk)"
+             class="text-medium text-content-secondary-shadowed cursor-pointer">
           VK
-        </a>
-        <a class="text-medium text-content-secondary-shadowed cursor-pointer"
-           :href="`t.me/${character.player.telegram}`">
+        </div>
+        <div v-if="character.player?.telegram" @click="openTG(character.player.telegram)"
+             class="text-medium text-content-secondary-shadowed cursor-pointer">
           TG
-        </a>
+        </div>
+        <inline-svg
+            class="w-6 h-6" @click="like()" v-if="!character.player"
+            :src="require(`@/assets/images/icons/roles/heart-${liked ? 'filled': 'unfilled'}.svg`)"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {computed} from "vue";
+import gamesService from "@/services/gamesService";
 import CharacterPicture from "@/views/games/roles/groups/CharacterPicture.vue";
+import {useStore} from "vuex";
+import {useRouter} from "vue-router";
 
+const store = useStore()
+const router = useRouter()
 const props = defineProps({
   character: {
     id: 1,
@@ -46,8 +55,8 @@ const props = defineProps({
     name: "lorem ipsum",
     description: "lorem ipsum",
     image: null,
-    status: "active",
     applications: [],
+    liked: false,
     player: {
       username: "lorem",
       telegram: "ipsum",
@@ -55,10 +64,32 @@ const props = defineProps({
     }
   },
   personal: {type: Boolean, default: false},
-  game_alias: {type: String,}
+  game_alias: {type: String,},
 })
-const character = ref({
-  ...props.character,
-  status: "no",
-})
+const user = computed(() => store.getters['auth/user'])
+const liked = computed(() => user.value.likes?.includes(props.character.id))
+
+const openTG = (username) => {
+  window.open(`https://t.me/${username}`, '_blank').focus()
+}
+const openVK = (username) => {
+  window.open(`https://vk.com/${username}`, '_blank').focus()
+}
+
+const like = () => {
+  if (!user.value) {
+    router.push('/sign-in')
+    return
+  }
+  const userToSet = user.value
+  const new_value = !liked.value
+  if (new_value)
+    userToSet.likes.push(props.character.id)
+  else
+    userToSet.likes = userToSet.likes.filter(ch_id => ch_id != props.character.id)
+  console.log(new_value)
+  gamesService.like_character(props.game_alias, props.character.id, new_value).then(({data}) => {
+    store.dispatch('auth/setUser', userToSet)
+  })
+}
 </script>
