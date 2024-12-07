@@ -27,7 +27,7 @@
       </div>
       <div class="flex flex-col md:flex-row w-full items-center gap-large justify-between md:gap-[5%]">
         <div class="flex flex-row w-full justify-between md:justify-normal md:gap-[5%]">
-          <div id="links" class="flex flex-col gap-[7.5%] justify-center">
+          <div id="links" class="flex flex-col gap-6 justify-center">
             <div v-for="link in links" :key="link" @click="link.locked ? lockedSection(link.lockedText) : link.link()"
                  class="flex flex-row p-3 pl-6 pr-12 md:!p-0 gap-xs text-large uppercase font-semibold items-center
                cursor-pointer bg-bg-transparent-2 md:bg-transparent rounded-sm"
