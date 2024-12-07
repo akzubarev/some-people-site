@@ -1,12 +1,25 @@
 <template>
-  <div class="flex flex-row justify-between gap-[4%]">
-    <div class="flex flex-row gap-medium w-full pr-6">
-      <div class="flex w-[20%] items-center">
-        <CharacterPicture :game_alias="game_alias" :src="character.image" :name="character.name"/>
+  <div class="flex flex-col py-2 px-[5%] md:py-0 md:px-0 md:flex-row justify-between md:gap-[4%]
+   bg-bg-transparent-white md:bg-transparent">
+    <div v-if="phoneScreen" class="flex flex-col w-full mb-1">
+      <div class="text-xs text-content-secondary"> {{ character.alias }}</div>
+      <div class="flex flex-row justify-between w-full">
+        <div class="text-sm font-semibold text-content-secondary">{{ character.name }}</div>
+        <div class="text-medium text-content-secondary sm:cursor-pointer md:cursor-default text-start"
+             :class="character.player ? 'underline cursor-pointer': ''">
+          {{ character.player ? character.player.username : "Свободно" }}
+        </div>
       </div>
-      <div class="flex flex-col w-full gap-1 items-start">
-        <div class="text-medium text-content-secondary font-semibold">{{ character.name }}, {{ character.alias }}</div>
-        <div class="text-sm font-semibold text-content-secondary-shadowed whitespace-pre-wrap"> {{
+    </div>
+    <div class="flex flex-row gap-medium w-full md:pr-6">
+      <div class="flex w-[30%] md:w-[20%] items-center">
+        <CharacterPicture :game_alias="game_alias" :src="character.image" :name="character.name_eng"/>
+      </div>
+      <div class="flex flex-col w-full gap-1 items-end">
+        <div v-if="!phoneScreen" class="text-medium text-content-secondary font-semibold">
+          {{ character.name }}, {{ character.alias }}
+        </div>
+        <div class="text-xs md:text-sm text-content-secondary-shadowed whitespace-pre-wrap"> {{
             character.description
           }}
         </div>
@@ -14,9 +27,13 @@
            :href="`/game/${game_alias}/roles`">
           -> Перейти в сетку
         </a>
+        <inline-svg
+            v-if="phoneScreen && !character.player" class="w-6 h-6" @click="like()"
+            :src="require(`@/assets/images/icons/roles/heart-${liked ? 'filled': 'unfilled'}.svg`)"
+        />
       </div>
     </div>
-    <div v-if="!personal" class="flex flex-col w-[17.5%] ml-[2,5%] pl-6 gap-1">
+    <div v-if="!phoneScreen && !personal" class="flex flex-col w-[17.5%] ml-[2,5%] pl-6 gap-1">
       <div class="text-medium text-content-secondary sm:cursor-pointer md:cursor-default text-start">
         {{ character.player ? character.player.username : "Свободно" }}
       </div>
@@ -87,9 +104,9 @@ const like = () => {
     userToSet.likes.push(props.character.id)
   else
     userToSet.likes = userToSet.likes.filter(ch_id => ch_id != props.character.id)
-  console.log(new_value)
   gamesService.like_character(props.game_alias, props.character.id, new_value).then(({data}) => {
     store.dispatch('auth/setUser', userToSet)
   })
 }
+const phoneScreen = computed(() => window.screen.width < 768)
 </script>

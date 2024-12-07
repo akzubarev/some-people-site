@@ -13,7 +13,7 @@
     <div class="flex flex-row gap-3">
       <InputField
           :title="$t('user.username')" :errors="errors.username"
-          name="username" :horizontal="false" :autocomplete="false"
+          name="username" :horizontal="false"
       />
       <InputField
           :title="$t('user.email')" :errors="errors.email"
@@ -39,50 +39,32 @@
   </Form>
 </template>
 
-<script>
-import {defineComponent, ref, onMounted} from "vue"
-import {Field, Form} from "vee-validate"
+<script setup lang="ts">
+import {ref} from "vue"
+import {Form} from "vee-validate"
 import {useStore} from "vuex"
 import {useRouter} from "vue-router"
 import authService from "@/services/authService"
 import formhelper from "@/core/helpers/form"
 import InputField from "@/components/InputField.vue";
 
-export default defineComponent({
-  name: "sign-up",
-  components: {
-    InputField,
-    Field,
-    Form,
-  },
-  setup() {
-    const store = useStore()
-    const router = useRouter()
+const store = useStore()
+const router = useRouter()
 
-    const country_iso = ref("AUTO")
-    const country = ref("Auto")
-    const submitButton = ref < HTMLElement | null > (null)
-    const form = formhelper()
-    const {errors} = form
+const submitButton = ref<HTMLElement | null>(null)
+const form = formhelper()
+const {errors} = form
 
-    const onSubmitRegister = values => {
-      form.send(async () => {
-        values.email = (values.email || "").trim()
-        const data = (await authService.register(values))["data"]
-        if (!form.errors) {
-          store.dispatch("auth/setToken", data.auth_token)
-          router.push("/account/settings")
-        }
-      })
+const onSubmitRegister = values => {
+  form.send(async () => {
+    values.email = (values.email || "").trim()
+    const data = (await authService.register(values))["data"]
+    console.log(errors.value)
+    if (!Object.keys(errors.value).length) {
+      await store.dispatch("auth/setToken", data.auth_token)
+      await router.push("/account/settings")
     }
+  })
+}
 
-    return {
-      errors,
-      country_iso,
-      country,
-      onSubmitRegister,
-      submitButton,
-    }
-  }
-})
 </script>

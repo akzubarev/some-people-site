@@ -5,6 +5,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 primary: ["Montserrat"],
+                'nanum-brush': ['"Nanum Brush Script"', 'cursive'],
             },
             colors: {
                 'content-primary': "rgb(var(--content-primary))",

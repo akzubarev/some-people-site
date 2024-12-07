@@ -15,11 +15,11 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
     )
     first_name = models.CharField(
         verbose_name='name',
-        max_length=100, default=None,
+        max_length=100,
     )
     last_name = models.CharField(
         verbose_name='surname',
-        max_length=100, default=None,
+        max_length=100,
     )
 
     username = models.CharField(

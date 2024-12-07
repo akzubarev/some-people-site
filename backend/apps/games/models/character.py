@@ -7,6 +7,7 @@ class Character(models.Model):
 
     order = models.IntegerField(verbose_name="Порядковый номер", default=1)
     name = models.CharField(verbose_name='Имя', max_length=100)
+    name_eng = models.CharField(verbose_name='Имя (Англ)', max_length=100, blank=True, null=True)
     alias = models.CharField(verbose_name='Никнейм', max_length=100)
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
 
