@@ -66,6 +66,7 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         application.save()
         serializer = self.serializer_class(application, context={'request': request})
         return Response(serializer.data)
+
     @transaction.atomic
     @action(detail=False, methods=["post"])
     def restore(self, request: Request, *args: Any, **kwargs: Any) -> Response:

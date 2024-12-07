@@ -14,6 +14,7 @@ Website for LARP community to help register and follow the MG "Some-people"
 - `sh pre-startup.sh`
 - `docker compose up -d`
 - `docker compose exec -it api sh startup.sh`
+- `docker compose run builder.frontend`
 
 ## stop
 

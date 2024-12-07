@@ -19,7 +19,6 @@
         <GroupNamesBlock
             v-for="group in group_groups.filter(g => !groupIsEmpty(g))"
             :key="group" :game_alias="game_alias" :group="group"
-            @click="$router.push(`/game/${game_alias}/roles#${group.name}`)"
         />
       </div>
     </div>
@@ -31,7 +30,6 @@
 import {computed} from "vue"
 import {useStore} from "vuex";
 import GroupNamesBlock from "@/views/games/roles/groups/GroupNamesBlock.vue";
-import {defaultGame} from "@/constants/common"
 
 const store = useStore()
 const user = store.getters['auth/user']

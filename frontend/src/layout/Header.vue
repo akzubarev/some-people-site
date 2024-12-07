@@ -6,17 +6,17 @@
       :title="lockedText" :buttonText="$t('common.actions.ok')">
   </ActionModal>
   <div class="absolute w-full bg-bg-transparent p-1 mt-6 z-50">
-    <div class="flex flex-row w-full gap-small justify-between items-center h-12 pl-10 pr-3">
-      <div id="title" @click=" $router.push('/')"
+    <div class="flex flex-row w-full gap-small justify-between items-center h-8 md:h-12 pl-6 md:pl-10 pr-3">
+      <inline-svg
+          class="h-8 w-8 mr-3 md:hidden cursor-pointer" @click="$emit('asideToggle')"
+          :src="require('@/assets/images/icons/common/menu.svg')"
+      />
+      <div id="title" @click="$router.push('/')"
            class="flex flex-row w-full text-content-accent hover:text-content-primary
            items-center text-title font-semibold uppercase no-wrap cursor-pointer"
       >
-        <inline-svg
-            class="h-16 w-16 md:hidden cursor-pointer" @click="$emit('asideToggle')"
-            :src="require('@/assets/images/icons/common/menu.svg')"
-        />
         Какие-то
-        <inline-svg class="h-24 w-16 ml-2 py-1 -mt-1 -mb-1"
+        <inline-svg class="h-16 w-12 md:h-24 md:w-16 ml-2 py-1 -mt-1 -mb-2 md:-mb-1"
                     :src="require('@/assets/images/logo/mg.svg')"/>
         юди
       </div>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <Avatar
-          class="h-20 w-20 ml-[5%] cursor-pointer"
+          class="h-16 w-16 md:h-20 md:w-20 ml-[5%] cursor-pointer"
           :src="user.avatar" @click="$router.push('/account/whales/application')"
       />
     </div>

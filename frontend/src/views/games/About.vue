@@ -4,36 +4,49 @@
       @close="() => {showLocked = false}"
       @submit="() => {showLocked = false}">
   </ActionModal>
-  <div class="flex flex flex-col gap-medium justify-end bg-cover h-full w-full min-h-full bg-left-bottom"
-       :style="`background-image: url('${game_images[game_alias].background}')`">
-    <div class="text-largest font-semibold uppercase px-12"> {{ game.title }}</div>
-    <div class="flex flex-row gap-medium py-6 mb-12 bg-bg-transparent-2 pl-12 pr-3 justify-between">
-      <div class="flex flex-row gap-[5%]">
-        <div id="description" class="flex flex-col gap-small w-[45%]">
-          <div class="sm:text-base lg:text-xl whitespace-pre-wrap"> {{ game.short_description }}</div>
-          <div id="ags" class="flex flex-row gap-2">
-            <div v-for="data in gameData" :key="data"
-                 class="sm:text-sm md:text-lg lg:text-xl p-1 lg:p-2 bg-content-disabled-transparent text-center w-full rounded-sm">
-              {{ data }}
+  <div
+      class="flex flex flex-col gap-1 md:gap-3 pt-[25%] md:justify-end bg-cover h-full w-full min-h-full bg-bottom md:bg-left-bottom"
+      :style="`background-image: url('${game_images[game_alias].background}')`">
+    <div class="text-largest font-bold md:font-semibold text-content-secondary md:text-content-primary uppercase px-6 md:px-12"> {{
+        game.title
+      }}
+    </div>
+    <div class="flex flex-col items-center md:flex-row h-full md:h-fit gap-medium md:py-6 md:mb-12
+    md:bg-bg-transparent-2 md:pl-12 md:pr-3 justify-between md:justify-normal">
+      <div id="description" class="flex flex-col gap-small w-full px-6 md:px-0 md:w-[45%]">
+        <div class="sm:text-base lg:text-xl text-content-secondary md:text-content-primary whitespace-pre-wrap">
+          {{ game.short_description }}
+        </div>
+        <div id="tags" class="flex flex-row gap-2">
+          <div v-for="data in gameData" :key="data"
+               class="flex sm:text-sm md:text-lg lg:text-xl text-content-secondary md:text-content-primary p-1 lg:p-2
+               min-h-[40px] md:min-h-none justify-center items-center bg-content-disabled-transparent text-center w-full rounded-sm">
+            {{ data }}
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row w-full items-center gap-large justify-between md:gap-[5%]">
+        <div class="flex flex-row w-full justify-between md:justify-normal md:gap-[5%]">
+          <div id="links" class="flex flex-col gap-[7.5%] justify-center">
+            <div v-for="link in links" :key="link" @click="link.locked ? lockedSection(link.lockedText) : link.link()"
+                 class="flex flex-row p-3 pl-6 pr-12 md:!p-0 gap-xs text-large uppercase font-semibold items-center
+               cursor-pointer bg-bg-transparent-2 md:bg-transparent rounded-sm"
+                 :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
+              {{ link.title }}
+              <inline-svg v-if="link.locked" class="h-6 w-6 text-content-disabled"
+                          :src="require('@/assets/images/icons/common/lock.svg')"/>
             </div>
           </div>
+          <inline-svg v-if="!phoneScreen && game_images[game_alias].logo"
+                      :src="game_images[game_alias].logo" class="h-full"/>
+          <img v-if="phoneScreen && game_images[game_alias].logo"
+               :src="game_images[game_alias].logo_half" class="h-full"/>
         </div>
-        <div id="links" class="flex flex-col gap-[7.5%] justify-center">
-          <div v-for="link in links" :key="link" @click="link.locked ? lockedSection(link.lockedText) : link.link()"
-               class="flex flex-row gap-xs text-large uppercase font-semibold items-center cursor-pointer"
-               :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
-            {{ link.title }}
-            <inline-svg v-if="link.locked" class="h-6 w-6 text-content-disabled"
-                        :src="require('@/assets/images/icons/common/lock.svg')"/>
-          </div>
+        <div id="other_games" @click="otherGames()"
+             class="flex flex-row gap-xs items-center md:w-[15%] md:min-w-[150px] md:justify-end cursor-pointer">
+          <div class="hidden md:flex text-medium text-right"> Какие-то<br>игры</div>
+          <inline-svg class="h-12 w-12 rotate-90 md:rotate-0" :src="require('@/assets/images/icons/common/arrow.svg')"/>
         </div>
-        <inline-svg v-if="game_images[game_alias].logo" class="h-full" :src="game_images[game_alias].logo"/>
-      </div>
-      <div @click="otherGames()"
-           class="flex flex-row gap-xs text-medium text-right items-center
-           w-[15%] min-w-[150px] justify-end cursor-pointer">
-        Какие-то<br>игры
-        <inline-svg class="h-12 w-12" :src="require('@/assets/images/icons/common/arrow.svg')"/>
       </div>
     </div>
   </div>
@@ -86,4 +99,7 @@ const lockedSection = (lockedSectionText) => {
 }
 
 const otherGames = () => router.push(`/game/${{'whales': 'frostpunk', 'frostpunk': 'whales'}[props.game_alias]}/about`)
+
+
+const phoneScreen = computed(() => window.screen.width < 768)
 </script>

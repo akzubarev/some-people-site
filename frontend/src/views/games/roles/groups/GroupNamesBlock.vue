@@ -7,7 +7,7 @@
         ▶
       </div>
       <div class="text-medium font-semibold text-content-secondary"
-           :class="group.subgroups.length > 0 ? '' : 'ml-3'" @click="$router.push(`#group_${group.order}`)">
+           :class="group.subgroups.length > 0 ? '' : 'ml-3'" @click="$router.push(`#${group.name}`)">
         {{ group.name }}
       </div>
     </div>

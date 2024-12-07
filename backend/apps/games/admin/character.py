@@ -18,6 +18,7 @@ class CharacterAdmin(admin.ModelAdmin):
         'id',
         'order',
         'name',
+        'name_eng',
         'alias',
         'description',
         'group',

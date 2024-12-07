@@ -19,7 +19,7 @@ from utils.text_utils import readable_exception
 logger = getLogger(__name__)
 google_creds = gspread.api_key(os.getenv('GOOGLE_API_KEY'))
 games_data = {
-    'spreadsheet_id': '1y1k7p41v9C7sSDES4Ojs1AOERYsXrnosQeKNoDgnxNI',
+    'spreadsheet_id': '1ucdOv6Hid9toTFUSuTSNRh7z7wpeY2dgCkIOuZtgrz4',
     'frostpunk': {
         'groups_worksheet_id': '1746120384', 'characters_worksheet_id': '2055553822',
         # 'questions_worksheet_id': '1440140115',
@@ -98,13 +98,13 @@ def get_groups(game: Game, worksheet: gspread.Worksheet) -> None:
 def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
     """Parses the characters from google sheet."""
     num_rows = len([item for item in worksheet.col_values(1) if item])
-    rows: list[list] = worksheet.get_values(f'A2:H{num_rows}')
+    rows: list[list] = worksheet.get_values(f'A2:I{num_rows}')
     for i, row in enumerate(rows):
         try:
             name_with_alias = row[1].split(', ')
             character_name = name_with_alias[0]
             alias = name_with_alias[1] if len(name_with_alias) > 1 else '-'
-            order, _, master, tags, group_name, family_name, description, *_ = row
+            order, _, name_eng, master, tags, group_name, family_name, description, *_ = row
             image = get_image(path=row[7], target='character', order=order) if len(row) > 7 else None
 
             group = Group.objects.get(name=group_name, game_id=game.id) if group_name and group_name != '-' else None
@@ -113,7 +113,7 @@ def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
                 name=character_name,
                 defaults={
                     'alias': alias, 'image': image, 'description': description,
-                    'group': group, 'family': family, 'order': order,
+                    'group': group, 'family': family, 'order': order, 'name_eng':name_eng,
                     'master_id': {
                         'Леша': 2, 'Катя': 3, 'Лиза': 4, 'Аня': 5, 'Оля': 6, 'Полина': 7, 'Саша': 8,
                     }.get(master, None)

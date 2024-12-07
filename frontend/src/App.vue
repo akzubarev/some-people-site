@@ -84,11 +84,11 @@ div {
 }
 
 .text-title {
-  @apply text-xl text-2xl;
+  @apply text-xl md:text-2xl;
 }
 
 .text-largest {
-  @apply text-4xl md:text-6xl lg:text-6xl xl:text-8xl 2xl:text-8xl;
+  @apply text-6xl xl:text-8xl;
 }
 
 .gap-xs {
