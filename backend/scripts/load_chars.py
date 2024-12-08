@@ -106,7 +106,7 @@ def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
             character_name = name_with_alias[0]
             alias = name_with_alias[1] if len(name_with_alias) > 1 else '-'
             order, _, name_eng, master, tags, group_name, family_name, description, *_ = row
-            image = get_image(path=row[7], target='character', order=order) if len(row) > 7 else None
+            image = get_image(path=row[8], target='character', order=order) if len(row) > 8 else None
 
             group = Group.objects.get(name=group_name, game_id=game.id) if group_name and group_name != '-' else None
             family = Group.objects.get(name=family_name, game_id=game.id) if family_name and family_name != '-' else None

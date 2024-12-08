@@ -4,11 +4,14 @@
   <div class="hidden md:flex absolute z-0 top-20 left-[25%] w-[57.5%] h-full bg-bg-transparent-white"/>
   <div class="hidden md:flex absolute z-0 top-20 right-[2.5%] w-[12.5%] h-full bg-bg-transparent-white"/>
   <div class="flex flex-row bg-whales-bg p-header gap-[5%] h-screen md:px-[2.5%]">
-    <GroupNamesDrawer class="hidden md:flex pt-6 pl-3 lg:pl-12 z-10 w-[22.5%]" :game_alias="game_alias"
-                      :family_groups="family_groups" :group_groups="group_groups"/>
+    <GroupNamesDrawer
+        class="hidden md:flex pt-6 pl-3 lg:pl-12 z-10 w-[22.5%]" :game_alias="game_alias"
+        :family_groups="family_groups" :group_groups="group_groups"
+        :show-family-groups="showFamilyGroups" @show-family="(v)=>showFamilyGroups=v"
+    />
     <div id="groups_scrollview"
          class="flex flex-col md:py-12 md:px-6 w-full overflow-y-scroll scroll-auto no-scrollbar z-10">
-      <div v-if="show_family_groups" class="flex flex-col gap-large w-full">
+      <div v-if="showFamilyGroups" class="flex flex-col gap-large w-full">
         <GroupBlock
             :key="group" :game_alias="game_alias" :group="group"
             v-for="group in family_groups.filter(g=>!groupIsEmpty(g))"
@@ -37,7 +40,7 @@ import {game_images} from "@/constants/gameImages";
 const store = useStore()
 const props = defineProps(['game_alias'])
 const user = store.getters['auth/user']
-const show_family_groups = ref(true)
+const showFamilyGroups = ref(true)
 
 const game = computed(() => store.getters['games/games'][props.game_alias])
 const groups = computed(() => store.getters['games/groups'])

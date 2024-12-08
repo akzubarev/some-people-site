@@ -30,11 +30,11 @@ export const loadGames = async ({next}) => {
         response.data.forEach(game => (games[game.alias] = game))
         store.dispatch("games/setGames", games)
     } else {
-        gamesService.games().then(({data}) => {
-            const games = {}
-            data.forEach(game => (games[game.alias] = game))
-            store.dispatch("games/setGames", games)
-        })
+        // gamesService.games().then(({data}) => {
+        //     const games = {}
+        //     data.forEach(game => (games[game.alias] = game))
+        //     store.dispatch("games/setGames", games)
+        // })
     }
     return next()
 }

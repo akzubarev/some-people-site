@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <div class="flex flex-col gap-small" :id="group.name">
-      <div v-if="group.characters" class="flex items-center flex-row px-[2.5%] md:px-0 md:w-[80%] gap-3">
+      <div v-if="group.characters.length" class="flex items-center flex-row px-[2.5%] md:px-0 md:w-[80%] gap-3">
         <img v-if="!phoneScreen" class="w-12 h-12" :src="group.image"/>
         <inline-svg v-else class="w-12 h-12 rotate-180 text-content-secondary"
                     :src="require('@/assets/images/icons/common/arrow.svg')"/>
@@ -10,7 +10,7 @@
           <div class="text-small text-content-secondary font-semibold">{{ group.description }}</div>
         </div>
       </div>
-      <div v-if="group.characters" class="flex flex-col gap-3">
+      <div class="flex flex-col gap-3">
         <CharacterBlock
             v-for="character in group.characters" :key="character"
             :character="character" :game_alias="game_alias"

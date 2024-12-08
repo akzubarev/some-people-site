@@ -8,14 +8,20 @@
     <div class="text-large font-semibold uppercase text-content-secondary mb-6"> Сетка ролей</div>
     <div class="flex flex-col overflow-y-scroll no-scrollbar gap-medium">
       <div id="families" class="flex flex-col gap-3" v-if="family_groups">
-        <div class="text-medium uppercase font-bold text-content-secondary mb-3">По семьям</div>
+        <div class="text-medium uppercase font-bold text-content-secondary mb-3"
+             :class="showFamilyGroups ? 'underline':''" @click="$emit('showFamily', true)">
+          По семьям
+        </div>
         <GroupNamesBlock
             v-for="group in family_groups.filter(g => !groupIsEmpty(g))"
             :key="group" :game_alias="game_alias" :group="group"
         />
       </div>
       <div id="groups" class="flex flex-col gap-3" v-if="group_groups">
-        <div class="text-medium uppercase font-bold text-content-secondary mb-3"> По занятости</div>
+        <div class="text-medium uppercase font-bold text-content-secondary mb-3"
+             :class="!showFamilyGroups ? 'underline':''" @click="$emit('showFamily', false)">
+          По занятости
+        </div>
         <GroupNamesBlock
             v-for="group in group_groups.filter(g => !groupIsEmpty(g))"
             :key="group" :game_alias="game_alias" :group="group"
@@ -33,10 +39,12 @@ import GroupNamesBlock from "@/views/games/roles/groups/GroupNamesBlock.vue";
 
 const store = useStore()
 const user = store.getters['auth/user']
+const emits = defineEmits(['showFamily'])
 const props = defineProps({
   'game_alias': {type: String},
   'group_groups': {type: Array},
   'family_groups': {type: Array},
+  'showFamilyGroups': {type: Boolean, default: true},
 })
 const game = computed(() => store.getters['games/games'][props.game_alias])
 const groupIsEmpty = (group) => group.characters.length + group.members.length + group.subgroups.length == 0
