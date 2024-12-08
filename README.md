@@ -11,14 +11,16 @@ Website for LARP community to help register and follow the MG "Some-people"
 # startup
 
 - Copy `backend/example.env` to `backend/.env`, change accordingly
+- `ln -s docker/docker-compose.prod.yaml docker/docker-compose.yaml`
 - `sh pre-startup.sh`
-- `docker compose up -d`
-- `docker compose exec -it api sh startup.sh`
-- `docker compose run builder.frontend`
+- `dcu`
+- `dce api sh startup.sh`
+- `dc run builder.frontend yarn`
+- `dc run builder.frontend`
 
 ## stop
 
-- `docker compose down --remove-orphans`
+- `dcd`
 
 # dev
 
