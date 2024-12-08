@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col py-2 px-[5%] md:py-0 md:px-0 md:flex-row justify-between md:gap-[4%]
    bg-bg-transparent-white md:bg-transparent">
-    <div v-if="phoneScreen" class="flex flex-col w-full mb-1">
+    <div v-if="phoneScreen && !personal" class="flex flex-col w-full mb-1">
       <div class="text-xs text-content-secondary"> {{ character.alias }}</div>
       <div class="flex flex-row justify-between w-full">
         <div class="text-sm font-semibold text-content-secondary">{{ character.name }}</div>
@@ -15,8 +15,8 @@
       <div class="flex w-[30%] md:w-[20%] items-center">
         <CharacterPicture :game_alias="game_alias" :src="character.image" :name="character.name_eng"/>
       </div>
-      <div class="flex flex-col w-full gap-1 items-end">
-        <div v-if="!phoneScreen" class="text-medium text-content-secondary font-semibold">
+      <div class="flex flex-col w-full gap-1" :class="!phoneScreen || personal ? 'items-start':'items-end'">
+        <div v-if="!phoneScreen || personal" class="text-medium text-content-secondary font-semibold">
           {{ character.name }}, {{ character.alias }}
         </div>
         <div class="text-xs md:text-sm text-content-secondary-shadowed whitespace-pre-wrap"> {{
@@ -28,7 +28,7 @@
           -> Перейти в сетку
         </a>
         <inline-svg
-            v-if="phoneScreen && !character.player" class="w-6 h-6" @click="like()"
+            v-if="phoneScreen && !character.player && !personal" class="w-6 h-6" @click="like()"
             :src="require(`@/assets/images/icons/roles/heart-${liked ? 'filled': 'unfilled'}.svg`)"
         />
       </div>

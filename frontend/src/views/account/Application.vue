@@ -1,7 +1,7 @@
 <template class="relative">
   <div v-if="!!application.status"
-       class="flex flex-col gap-[5%] bg-bg-transparent-white overflow-y-auto no-scrollbar p-6">
-    <div class="text-large text-content-secondary"> Заявка {{
+       class="flex flex-col gap-[5%] md:bg-bg-transparent-white overflow-y-auto no-scrollbar">
+    <div class="text-large px-6 md:px-0 text-content-secondary"> Заявка {{
         $t(`application.${application.status}`).toLowerCase()
       }}
     </div>
@@ -9,39 +9,42 @@
       <CharacterBlock v-if="!!application.character" :game_alias="game_alias"
                       :character="application.character" :personal="true"
       />
-      <div class="flex flex-row items-center gap-2 text-medium text-content-secondary">
-        <inline-svg v-if="!questionnaire_unfilled" class="w-6 h-6"
-                    :src="require('@/assets/images/icons/common/check.svg')"/>
-        Опросник: {{ !questionnaire_unfilled ? "пройден" : "" }}
-        <a v-if="questionnaire_unfilled" class="underline" :href="`/account/${game_alias}/questionnaire`"> заполнить </a>
-        <Undone :number="questionnaire_unfilled"/>
+      <div class="flex flex-col gap-[5%] px-6 md:px-0">
+        <div class="flex flex-row items-center gap-2 text-medium text-content-secondary">
+          <inline-svg v-if="!questionnaire_unfilled" class="w-6 h-6"
+                      :src="require('@/assets/images/icons/common/check.svg')"/>
+          Опросник: {{ !questionnaire_unfilled ? "пройден" : "" }}
+          <a v-if="questionnaire_unfilled" class="underline" :href="`/account/${game_alias}/questionnaire`">
+            заполнить </a>
+          <Undone :number="questionnaire_unfilled"/>
+        </div>
+        <div class="text-medium text-content-secondary font-bold">
+          <inline-svg v-if="application.price && application.payed == application.price"
+                      class="w-6 h-6" :src="require('@/assets/images/icons/common/check.svg')"/>
+          Взнос: {{ application.price ? `${application.payed} / ${application.price}` : 'не объявлен' }}
+          <a v-if="application.price && application.payed != application.price" class="underline" href="/"> Оплатить </a>
+        </div>
+        <div class="flex flex-row items-center gap-2 text-medium text-content-secondary font-bold">
+          <inline-svg v-if="!application_unfilled" class="w-6 h-6"
+                      :src="require('@/assets/images/icons/common/check.svg')"/>
+          Дополнительная информация
+          <Undone :number="application_unfilled"/>
+        </div>
+        <Form v-if="questions.filter(q => q.order < 0)"
+              class="form flex flex-col w-full gap-6" novalidate="novalidate" @submit="onSubmit">
+          <QuestionField
+              v-for="question in questions.filter(q => q.order < 0)" @change="answerUpdate"
+              :key="`${question.id} ${default_answers[question.id]}`" :horizontal="false"
+              :unfilled="false" :question="question" :errors="errors"
+              :default-value="default_answers[question.id]"
+          />
+        </Form>
+        <button @click="onDelete()" class="btn-gradient w-fit text-center text-xl">
+          Удалить заявку
+        </button>
       </div>
-      <div class="text-medium text-content-secondary font-bold">
-        <inline-svg v-if="application.price && application.payed == application.price"
-                    class="w-6 h-6" :src="require('@/assets/images/icons/common/check.svg')"/>
-        Взнос: {{ application.price ? `${application.payed} / ${application.price}` : 'не объявлен' }}
-        <a v-if="application.price && application.payed != application.price" class="underline" href="/"> Оплатить </a>
-      </div>
-      <div class="flex flex-row items-center gap-2 text-medium text-content-secondary font-bold">
-        <inline-svg v-if="!application_unfilled" class="w-6 h-6"
-                    :src="require('@/assets/images/icons/common/check.svg')"/>
-        Дополнительная информация
-        <Undone :number="application_unfilled"/>
-      </div>
-      <Form v-if="questions.filter(q => q.order < 0)"
-            class="form flex flex-col w-full gap-6" novalidate="novalidate" @submit="onSubmit">
-        <QuestionField
-            v-for="question in questions.filter(q => q.order < 0)" @change="answerUpdate"
-            :key="`${question.id} ${default_answers[question.id]}`" :horizontal="false"
-            :unfilled="false" :question="question" :errors="errors"
-            :default-value="default_answers[question.id]"
-        />
-      </Form>
-      <button @click="onDelete()" class="btn-gradient w-fit text-center text-xl">
-        Удалить заявку
-      </button>
     </div>
-    <button v-else @click="onRestore()" class="btn-gradient w-fit text-center text-xl">
+    <button v-else @click="onRestore()" class="btn-gradient w-fit text-center text-xl px-6 md:px-0">
       Восстановить заявку
     </button>
   </div>
