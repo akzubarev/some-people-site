@@ -40,14 +40,13 @@ const user = store.getters['auth/user']
 const show_family_groups = ref(true)
 
 const game = computed(() => store.getters['games/games'][props.game_alias])
-const groups = ref([]) // computed(() => store.getters['games/groups'])
+const groups = computed(() => store.getters['games/groups'])
 
 if (!user.mg && !game.value.open_character_list)
   router.push(`/game/${props.game_alias}/about`)
 
 gamesService.groups(props.game_alias).then(({data}) => {
-  groups.value = data
-  // store.dispatch('games/setGroups', data)
+  store.dispatch('games/setGroups', data)
 })
 
 const getGroups = (family) => {
