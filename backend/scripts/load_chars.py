@@ -19,7 +19,8 @@ from utils.text_utils import readable_exception
 logger = getLogger(__name__)
 google_creds = gspread.api_key(os.getenv('GOOGLE_API_KEY'))
 games_data = {
-    'spreadsheet_id': '1ucdOv6Hid9toTFUSuTSNRh7z7wpeY2dgCkIOuZtgrz4',
+    'spreadsheet_id': '1y1k7p41v9C7sSDES4Ojs1AOERYsXrnosQeKNoDgnxNI',
+    # 'spreadsheet_id': '1ucdOv6Hid9toTFUSuTSNRh7z7wpeY2dgCkIOuZtgrz4',
     'frostpunk': {
         'groups_worksheet_id': '1746120384', 'characters_worksheet_id': '2055553822',
         # 'questions_worksheet_id': '1440140115',
