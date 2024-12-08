@@ -1,5 +1,5 @@
 <template>
-  <Form class="form flex flex-col h-full gap-6 p-6 bg-bg-transparent-white overflow-y-auto no-scrollbar"
+  <Form class="form flex flex-col h-full gap-6 md:bg-bg-transparent-white overflow-y-auto no-scrollbar px-6 md:px-0"
         novalidate="novalidate" @submit="onSubmit">
     <div class="flex flex-col gap-6">
       <div class="text-large font-bold text-content-secondary uppercase"> {{
@@ -20,8 +20,9 @@
           :unfilled="application.answers?.unfilled?.includes(question.id)"
           :default-value="default_answers[question.id]"
       />
+      <div class="flex w-full md-6"/>
     </div>
-<!--    <button ref="submitButton" type="submit" class="btn-gradient w-full text-center text-xl">-->
+    <!--    <button ref="submitButton" type="submit" class="btn-gradient w-full text-center text-xl">-->
     <!--      {{ 'Сохранить' }}-->
     <!--    </button>-->
   </Form>

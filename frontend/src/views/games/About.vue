@@ -11,9 +11,9 @@
         game.title
       }}
     </div>
-    <div class="flex flex-col items-center md:flex-row h-full md:h-fit gap-medium md:py-6 md:mb-12
+    <div class="flex flex-col items-center md:flex-row h-full gap-medium md:py-6 md:mb-12
     md:bg-bg-transparent-2 md:pl-12 md:pr-3 justify-between md:justify-normal">
-      <div id="description" class="flex flex-col gap-small w-full px-6 md:px-0 md:w-[45%]">
+      <div id="description" class="flex flex-col gap-small w-full px-6 md:px-0 md:w-[70%]">
         <div class="sm:text-base lg:text-xl text-content-secondary md:text-content-primary whitespace-pre-wrap">
           {{ game.short_description }}
         </div>
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="flex flex-col md:flex-row w-full items-center gap-large justify-between md:gap-[5%]">
-        <div class="flex flex-row w-full justify-between md:justify-normal md:gap-[5%]">
+        <div class="flex flex-row w-full items-center justify-between md:justify-normal md:gap-[5%]">
           <div id="links" class="flex flex-col gap-6 justify-center">
             <div v-for="link in links" :key="link" @click="link.locked ? lockedSection(link.lockedText) : link.link()"
                  class="flex flex-row p-3 pl-6 pr-12 md:!p-0 gap-xs text-large uppercase font-semibold items-center
@@ -39,7 +39,7 @@
           </div>
           <inline-svg v-if="!phoneScreen && game_images[game_alias].logo"
                       :src="game_images[game_alias].logo" class="h-full"/>
-          <img v-if="phoneScreen && game_images[game_alias].logo"
+          <img v-if="phoneScreen && game_images[game_alias].logo_half"
                :src="game_images[game_alias].logo_half" class="h-full"/>
         </div>
         <div id="other_games" @click="otherGames()"

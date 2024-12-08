@@ -84,7 +84,7 @@ div {
 }
 
 .text-title {
-  @apply text-xl md:text-2xl;
+  @apply text-lg sm:text-xl md:text-2xl;
 }
 
 .text-largest {

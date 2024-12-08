@@ -6,7 +6,7 @@
       :title="lockedText" :buttonText="$t('common.actions.ok')">
   </ActionModal>
   <div class="absolute w-full bg-bg-transparent p-1 mt-6 z-50">
-    <div class="flex flex-row w-full gap-small justify-between items-center h-8 md:h-12 pl-6 md:pl-10 pr-3">
+    <div class="flex flex-row w-full gap-small justify-between items-center h-8 md:h-12 pl-3 sm:pl-6 md:pl-10 pr-3">
       <inline-svg
           class="h-8 w-8 mr-3 md:hidden cursor-pointer" @click="$emit('asideToggle')"
           :src="require('@/assets/images/icons/common/menu.svg')"
@@ -23,7 +23,7 @@
       <div id="menu" class="w-full hidden md:flex flex-row gap-[5%] lg:gap-[15%]">
         <div v-for="link in links" :key="link"
              @click="link.locked ? lockedSection(link.lockedText) : $router.push(link.link)"
-             class="text-header uppercase flex flex-row gap-xs items-center cursor-pointer"
+             class="text-header uppercase flex flex-row gap-1 items-center cursor-pointer"
              :class="link.locked ? 'text-content-disabled' : 'hover:text-content-accent'">
           {{ link.title }}
           <inline-svg
