@@ -8,6 +8,7 @@ from apps.users.models import User
 class UserSerializer(serializers.ModelSerializer):
     """User serializer."""
     telegram = serializers.SerializerMethodField()
+    vk = serializers.SerializerMethodField()
     applications = serializers.SerializerMethodField()
     mg = serializers.SerializerMethodField()
 
@@ -17,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'email', 'username', 'first_name',
             'last_name', 'uuid', 'mg', 'phone', 'created_at', 'avatar',
-            'telegram', 'applications', 'instagram', 'vk',
+            'telegram', 'applications', 'vk',
         )
         read_only_fields = (
             'id', 'email', 'uuid', 'created_at', 'telegram',
@@ -26,10 +27,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_telegram(self, user: User) -> str:
         """Gets users telegram username."""
-        try:
-            return user.telegram_username
-        except AttributeError:
-            return ''
+        return user.telegram_username if user.tg_public else None
+
+    def get_vk(self, user: User) -> str:
+        """Gets users vk username."""
+        return user.vk if user.vk_public else None
 
     def get_applications(self, user: User) -> dict[str, dict]:
         """Gets users applications."""

@@ -1,6 +1,6 @@
 <template class="relative">
   <div v-if="!!application.status"
-       class="flex flex-col gap-[5%] md:bg-bg-transparent-white overflow-y-auto no-scrollbar">
+       class="flex flex-col gap-6 md:bg-bg-transparent-white overflow-y-auto no-scrollbar">
     <div class="text-large px-6 md:px-0 text-content-secondary"> Заявка {{
         $t(`application.${application.status}`).toLowerCase()
       }}
@@ -44,13 +44,13 @@
         </button>
       </div>
     </div>
-    <button v-else @click="onRestore()" class="btn-gradient w-fit text-center text-xl px-6 md:px-0">
+    <button v-else @click="onRestore()" class="btn-gradient w-fit text-center text-xl p-3 mx-6 md:mx-0">
       Восстановить заявку
     </button>
   </div>
-  <div v-else class="flex flex-col gap-medium bg-bg-transparent-white overflow-y-auto no-scrollbar p-6">
+  <div v-else class="flex flex-col gap-medium md:bg-bg-transparent-white overflow-y-auto no-scrollbar p-6">
     <div class="text-large text-content-secondary"> Заявка не подана</div>
-    <button ref="submitButton" @click="onSubmit(answers)" class="btn-gradient w-full text-center text-xl">
+    <button ref="submitButton" @click="onSubmit(answers)" class="btn-gradient w-full p-3 text-center text-xl">
       Подать заявку
     </button>
   </div>
@@ -85,15 +85,10 @@ const questions = computed(() => store.getters["games/questions"])
 const getApplicationAnswers = (answers) => {
   return Object.fromEntries(Object.entries(answers).filter((q_id, v) => q_id < 0 && !!v))
 }
-const answers = ref(getApplicationAnswers(application.value.answers?.values || {}))
-
-const default_answers = computed(() => application.value.answers?.values || {})
-const questionnaire_unfilled = computed(() =>
-    questions.value.filter(q => q.order > 0 && application.value?.answers?.unfilled.includes(q.id)).length
-)
-const application_unfilled = computed(() =>
-    questions.value.filter(q => q.order < 0 && application.value?.answers?.unfilled.includes(q.id)).length
-)
+const answers = ref(getApplicationAnswers(store.getters['games/answers'].values))
+const default_answers = computed(() => store.getters['games/answers'].values)
+const questionnaire_unfilled = computed(() => store.getters['games/questionnaire_unfilled'])
+const application_unfilled = computed(() => store.getters['games/application_unfilled'])
 
 const loadData = () => {
   gamesService.application(user_id.value, game_alias).then(({data}) => {
@@ -115,12 +110,17 @@ const onSubmit = (values) => {
     loadData()
   })
 }
-
+const noApplication = () => {
+  return ['deleted', null].includes(application.value.status)
+}
 const onLeave = () => {
-  const answersToSend = {...answers.value, game_alias: game_alias}
-  form.send(async () => {
-    await gamesService.apply(answersToSend)
-  })
+  if (!noApplication()) {
+    const answersToSend = {...answers.value, game_alias: game_alias}
+    form.send(async () => {
+      await gamesService.apply(answersToSend)
+    })
+  }
+  window.removeEventListener('beforeunload', onLeave)
 }
 
 const onDelete = () => {

@@ -18,4 +18,5 @@ class QuestionSerializer(serializers.ModelSerializer):
             'type',
             'choices',
             'order',
+            'required',
         ]

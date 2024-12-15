@@ -25,6 +25,22 @@ export default class GameModule extends VuexModule {
         return this.questionsObj
     }
 
+    get answers(): object {
+        return this.applicationObj['answers'] || {'unfilled': [], 'values': {}}
+    }
+
+    get questionnaire_unfilled(): Number {
+        return this.questionsObj ? this.questionsObj.filter(
+            q => q['order'] > 0 && q['order'] && this.answers['unfilled'].includes(q['id'])
+        ).length : 0
+    }
+
+    get application_unfilled(): Number {
+        return this.questionsObj ? this.questionsObj.filter(
+            q => q['order'] < 0 && q['order'] && this.answers['unfilled'].includes(q['id'])
+        ).length : 0
+    }
+
     @Mutation
     [Mutations.SET_GAMES](games) {
         this.gamesObj = games

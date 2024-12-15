@@ -38,6 +38,7 @@ module.exports = {
             "more": 'Подробнее',
             "mint": 'Выпустить NFT',
             "open": 'Открыть',
+            "continue": 'Продолжить',
         },
         "periods": {
             "month": "Месяц",

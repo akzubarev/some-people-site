@@ -5,13 +5,13 @@
       @submit="() => {showLocked = false}">
   </ActionModal>
   <div
-      class="flex flex flex-col gap-1 md:gap-3 pt-[25%] md:justify-end bg-cover h-full w-full min-h-full bg-bottom md:bg-left-bottom"
+      class="flex flex flex-col gap-1 md:gap-3 p-header md:justify-end bg-cover h-screen w-full bg-bottom md:bg-left-bottom"
       :style="`background-image: url('${game_images[game_alias].background}')`">
     <div class="text-largest font-bold md:font-semibold text-content-secondary md:text-content-primary uppercase px-6 md:px-12"> {{
         game.title
       }}
     </div>
-    <div class="flex flex-col items-center md:flex-row h-full gap-medium md:py-6 md:mb-12
+    <div class="flex flex-col items-center md:flex-row h-full md:h-fit gap-medium md:py-6 md:mb-12
     md:bg-bg-transparent-2 md:pl-12 md:pr-3 justify-between md:justify-normal">
       <div id="description" class="flex flex-col gap-small w-full px-6 md:px-0 md:w-[70%]">
         <div class="sm:text-base lg:text-xl text-content-secondary md:text-content-primary whitespace-pre-wrap">
@@ -44,7 +44,7 @@
         </div>
         <div id="other_games" @click="otherGames()"
              class="flex flex-row gap-xs items-center md:w-[15%] md:min-w-[150px] md:justify-end cursor-pointer">
-          <div class="hidden md:flex text-medium text-right"> Какие-то<br>игры</div>
+          <div class="hidden md:flex text-medium text-right md:min-w-[80px]"> Какие-то<br>игры</div>
           <inline-svg class="h-12 w-12 rotate-90 md:rotate-0" :src="require('@/assets/images/icons/common/arrow.svg')"/>
         </div>
       </div>

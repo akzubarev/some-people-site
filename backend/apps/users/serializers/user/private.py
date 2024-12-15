@@ -19,7 +19,7 @@ class UserPrivateSerializer(UserSerializer):
         """Model meta."""
 
         model = User
-        fields = UserSerializer.Meta.fields + ('telegram_code', 'likes',)
+        fields = UserSerializer.Meta.fields + ('telegram_code', 'likes', 'vk_public', 'tg_public',)
         read_only_fields = UserSerializer.Meta.read_only_fields + ('telegram_code', 'likes',)
 
     def __init__(self, instance=None, *args, **kwargs) -> None:
@@ -31,12 +31,17 @@ class UserPrivateSerializer(UserSerializer):
             kwargs['data']['avatar'] = ContentFile(b64decode(image_str), f'{uuid4()}.{ext}')
         super().__init__(instance, *args, **kwargs)
 
-    def save(self, **kwargs):
-        a = super().save()
-
     def get_telegram_code(self, user: User) -> str:
         """Returns users telegram code."""
         return encode_uuid(uuid=user.uuid)
 
     def get_likes(self, user: User) -> str:
         return user.likes.all().values_list('id', flat=True)
+
+    def get_telegram(self, user: User) -> str:
+        """Gets users telegram username."""
+        return user.telegram_username
+
+    def get_vk(self, user: User) -> str:
+        """Gets users vk username."""
+        return user.vk

@@ -84,7 +84,7 @@ div {
 }
 
 .text-title {
-  @apply text-lg sm:text-xl md:text-2xl;
+  @apply text-lg md:text-2xl;
 }
 
 .text-largest {
@@ -112,11 +112,11 @@ div {
 }
 
 .form-input {
-  @apply flex flex-row text-lg items-center w-full basis-full lg:basis-2/3 p-3 mt-2 lg:mt-0 bg-bg-primary rounded-xl;
+  @apply flex flex-row text-lg items-center w-full basis-full lg:basis-2/3 p-3 bg-bg-primary rounded-xl;
 }
 
 .form-input-error {
-  @apply absolute text-sm font-semibold -bottom-6 left-1;
+  @apply absolute text-sm font-semibold -bottom-6 right-1;
 }
 
 .Layout-Body {
@@ -178,7 +178,7 @@ div {
 }
 
 .form-check {
-  @apply flex flex-row gap-3 items-center;
+  @apply flex flex-row gap-3 items-center cursor-pointer;
 }
 
 .form-check-input {

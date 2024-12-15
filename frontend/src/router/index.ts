@@ -2,7 +2,7 @@ import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router"
 import store from "@/store"
 import {Mutations} from "@/store/enums/StoreEnums"
 import {isAuth, isMg, guest} from "@/middleware/auth"
-import {loadUser, loadGames} from "@/middleware/load"
+import {loadUser, loadGames, loadApplication} from "@/middleware/load"
 import {setPageTitle} from "@/store"
 import Layout from "@/layout/Layout.vue"
 
@@ -23,16 +23,16 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import("@/views/title/MG.vue"),
                 meta: {middleware: [loadUser, isMg]}
             },
-            {
-                path: "/games",
-                name: "games",
-                component: () => import("@/views/games/games/Games.vue"),
-                meta: {middleware: [loadUser, loadGames, isMg]}
-            },
+            // {
+            //     path: "/games",
+            //     name: "games",
+            //     component: () => import("@/views/games/games/Games.vue"),
+            //     meta: {middleware: [loadUser, loadGames, isMg]}
+            // },
             {
                 path: "/game/:game_alias",
                 name: "game",
-                redirect: "/game/:game_alias/about",
+                redirect: "/game/whales/about",
                 component: () => import("@/views/games/GameRoot.vue"),
                 meta: {middleware: [loadUser, loadGames, guest]},
                 props: true,
@@ -85,7 +85,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "account",
                 redirect: "/account/whales/application",
                 component: () => import("@/views/account/LK.vue"),
-                meta: {middleware: [loadUser, loadGames, isAuth]},
+                meta: {middleware: [loadUser, isAuth, loadGames, loadApplication]},
                 props: true,
                 children: [
                     {

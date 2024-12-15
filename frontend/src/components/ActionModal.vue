@@ -1,5 +1,5 @@
 <template>
-  <Popup :hide-x="hideX" @close="$emit('close')">
+  <Modal :hide-x="hideX" @close="$emit('close')">
     <div class="flex flex-col w-full gap-6 items-center p-12">
       <slot name="icon">
         <img :src="typeConf[type || defaultConf].icon" class=""/>
@@ -10,7 +10,7 @@
           {{ title }}
         </span>
         <span v-if="description" class="text-xl text-center text-gray-400">
-          {{ description || typeConf[type || defaultConf].defaultText}}
+          {{ description || typeConf[type || defaultConf].defaultText }}
         </span>
       </slot>
       <slot name="button">
@@ -22,12 +22,12 @@
         </button>
       </slot>
     </div>
-  </Popup>
+  </Modal>
 </template>
 
 
 <script setup>
-import Popup from '@/components/Popup.vue'
+import Modal from '@/components/Modal.vue'
 import {useI18n} from 'vue-i18n'
 
 const {t} = useI18n()

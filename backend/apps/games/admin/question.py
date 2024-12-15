@@ -17,4 +17,5 @@ class QuestionAdmin(admin.ModelAdmin):
         'type',
         'choices',
         'order',
+        'required',
     ]

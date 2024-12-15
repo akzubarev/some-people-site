@@ -16,7 +16,7 @@
 
 <script setup>
 import Avatar from "@/components/Avatar.vue"
-import Popup from "@/components/Popup.vue"
+import Popup from "@/components/PopupWrapper.vue"
 import {useI18n} from "vue-i18n"
 import {useStore} from "vuex";
 

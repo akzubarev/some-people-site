@@ -44,14 +44,12 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
         verbose_name='telegram_username', max_length=250,
         blank=True, null=True, default=None
     )
-    instagram = models.CharField(
-        verbose_name='instagram', max_length=250,
-        blank=True, null=True, default=None
-    )
     vk = models.CharField(
         verbose_name='vk', max_length=250,
         blank=True, null=True, default=None
     )
+    vk_public = models.BooleanField(verbose_name='vk_public', default=True)
+    tg_public = models.BooleanField(verbose_name='tg_public', default=True)
 
     # Fields settings
     EMAIL_FIELD = 'email'

@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col cursor-pointer gap-3">
+  <div class="flex flex-col gap-3">
     <div v-for="(option, i) in question.choices" :key="option">
       <div class="form-check" @click="() => { if (!readonly) {res[i] = !res[i]; $emit('change',answer)}}">
         <input type="checkbox" class="form-check-input m-0 w-[20px]" :name="'checkbox' + question.id"
                :checked="res[i]" :id="`checkbox${question.id}${i}`">
-        <label :for="`checkbox${question.id}${i}`" class="text-medium text-content-secondary w-[95%]">
+        <div class="text-medium text-content-secondary w-[95%]">
           {{ option }}
-        </label>
+        </div>
       </div>
     </div>
   </div>
