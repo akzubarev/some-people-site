@@ -10,33 +10,33 @@
     <Field v-if="question.type==='line'" v-model="answer"
            class="form-input text-content-secondary bg-white" type="text"
            :name="field_name" placeholder="Строка..." :readonly="readonly"
-           @input="$emit('change', field_name, answer)"
+           @input="$emit('change', field_name, answer, true)"
     />
     <Field v-if="question.type==='paragraph'" v-model="answer" as="textarea"
            class="form-input text-content-secondary bg-white h-[150px]" type="text"
            :name="field_name" placeholder="Абзац..." :readonly="readonly"
-           @input="$emit('change', field_name, answer)"
+           @input="$emit('change', field_name, answer, true)"
     />
     <RadioQuestion
         v-if="question.type==='single_choice'" :question="question"
         :default-value="defaultValue ? defaultValue : null" :readonly="readonly"
-        @change="(value) => { answer=value; $emit('change', field_name, answer) }"
+        @change="(value) => { answer=value; $emit('change', field_name, answer, true) }"
     />
     <CheckboxQuestion
         v-if="question.type==='multiple_choice'" :question="question"
         :default-value="!!defaultValue ? defaultValue : null" :readonly="readonly"
-        @change="(value) => { answer=value; $emit('change', field_name, answer) }"
+        @change="(value) => { answer=value; $emit('change', field_name, answer, true) }"
     />
     <ScaleQuestion
         v-if="question.type==='scale'" :question="question"
         :default-value="!!defaultValue ? defaultValue : null" :readonly="readonly"
-        @change="(value) => { answer=value; $emit('change', field_name, answer) }"
+        @change="(value) => { answer=value; $emit('change', field_name, answer, true) }"
     />
     <MatrixQuestion
         v-if="question.type.includes('matrix')"
         :question="question" :checkbox="question.type=='matrix_checkbox'"
         :default-value="!!defaultValue ? defaultValue : null" :readonly="readonly"
-        @change="(value) => {answer=value; $emit('change', field_name, answer)}"
+        @change="(value) => {answer=value; $emit('change', field_name, answer, true)}"
     />
     <div class="fv-plugins-message-container" v-if="!!errors[field_name]">
       <div class="fv-help-block">
@@ -63,5 +63,5 @@ const props = defineProps([
 ])
 const answer = ref(props.defaultValue || "")
 const field_name = `question_${props.question.id}`
-emit("change", field_name, answer.value)
+emit("change", field_name, answer.value, false)
 </script>

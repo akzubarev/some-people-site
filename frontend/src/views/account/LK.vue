@@ -40,5 +40,12 @@ gamesService.application(user.value.id, props.game_alias).then(({data}) => {
 gamesService.questions(props.game_alias).then(({data}) => {
   store.dispatch("games/setQuestions", data)
 })
-const phoneScreen = computed(() => window.screen.width < 768)
+const phoneScreen = ref(window.innerWidth < 768)
+const updateWidth = () => phoneScreen.value = window.innerWidth < 768
+const onLeave = () => {
+  window.removeEventListener('resize', updateWidth);
+  window.removeEventListener('beforeunload', onLeave);
+}
+window.addEventListener('resize', updateWidth)
+window.addEventListener('beforeunload', onLeave)
 </script>

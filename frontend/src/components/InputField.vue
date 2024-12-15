@@ -1,6 +1,6 @@
 <template>
   <div class="flex relative w-full gap-1" :class="horizontal ? 'flex-row' : 'flex-col'">
-    <label class="flex items-center basis-full lg:basis-1/3 text-xl"> {{ title }} </label>
+    <label v-if="!!title" class="flex items-center basis-full lg:basis-1/3 text-xl"> {{ title }} </label>
     <div class="flex flex-col w-full relative items-end gap-1">
       <slot/>
       <Field

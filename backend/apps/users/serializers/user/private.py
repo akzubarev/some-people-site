@@ -7,7 +7,7 @@ from rest_framework import serializers
 
 from apps.users.models import User
 from utils.auth import encode_uuid
-from .public import UserSerializer
+from .base import UserSerializer
 
 
 class UserPrivateSerializer(UserSerializer):
@@ -29,7 +29,16 @@ class UserPrivateSerializer(UserSerializer):
             avatar_format, image_str = avatar.split(';base64,')
             ext = avatar_format.split('/')[-1]
             kwargs['data']['avatar'] = ContentFile(b64decode(image_str), f'{uuid4()}.{ext}')
+
+        phone = kwargs.get('data', {}).get('phone')
+        if phone and phone[0] == '8':
+            kwargs['data']['phone'] = phone.replace('8', '+7')
+
         super().__init__(instance, *args, **kwargs)
+
+    def get_telegram(self, user: User) -> str:
+        """Gets users telegram username."""
+        return user.telegram_username
 
     def get_telegram_code(self, user: User) -> str:
         """Returns users telegram code."""
@@ -37,11 +46,3 @@ class UserPrivateSerializer(UserSerializer):
 
     def get_likes(self, user: User) -> str:
         return user.likes.all().values_list('id', flat=True)
-
-    def get_telegram(self, user: User) -> str:
-        """Gets users telegram username."""
-        return user.telegram_username
-
-    def get_vk(self, user: User) -> str:
-        """Gets users vk username."""
-        return user.vk

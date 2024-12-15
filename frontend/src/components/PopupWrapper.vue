@@ -3,11 +3,9 @@
     <div @click="toggle">
       <slot name="header"/>
     </div>
-<!--    <div class="relative">-->
-      <div v-if="showPopup" class="absolute top-[100%] right-0 bg-bg-transparent rounded-xl" @click.stop>
-        <slot name="content"/>
-      </div>
-<!--    </div>-->
+    <div v-if="showPopup" class="absolute top-[100%] right-0 lg:left-0 lg:right-none" @click.stop>
+      <slot name="content"/>
+    </div>
   </div>
 </template>
 

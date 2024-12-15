@@ -1,45 +1,20 @@
 """User serializers module."""
 from rest_framework import serializers
 
-from apps.games.serializers import ApplicationPublicSerializer
 from apps.users.models import User
+from .base import UserSerializer
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserPublicSerializer(UserSerializer):
     """User serializer."""
-    telegram = serializers.SerializerMethodField()
     vk = serializers.SerializerMethodField()
-    applications = serializers.SerializerMethodField()
-    mg = serializers.SerializerMethodField()
 
     class Meta:
         """Serializer meta."""
         model = User
-        fields = (
-            'id', 'email', 'username', 'first_name',
-            'last_name', 'uuid', 'mg', 'phone', 'created_at', 'avatar',
-            'telegram', 'applications', 'vk',
-        )
-        read_only_fields = (
-            'id', 'email', 'uuid', 'created_at', 'telegram',
-            'updated_at', 'applications', 'vk',
-        )
-
-    def get_telegram(self, user: User) -> str:
-        """Gets users telegram username."""
-        return user.telegram_username if user.tg_public else None
+        fields = UserSerializer.Meta.fields
+        read_only_fields = UserSerializer.Meta.fields
 
     def get_vk(self, user: User) -> str:
         """Gets users vk username."""
         return user.vk if user.vk_public else None
-
-    def get_applications(self, user: User) -> dict[str, dict]:
-        """Gets users applications."""
-        return {
-            application.game.alias: ApplicationPublicSerializer(application).data
-            for application in user.applications.all()
-        }
-
-    def get_mg(self, user: User) -> bool:
-        """Gets user mg status."""
-        return user.is_superuser or user.is_staff

@@ -1,5 +1,5 @@
 <template>
-  <div id="menu" class="flex" :class="horizontal ? 'flex-row w-full gap-[5%] lg:gap-[15%]' : 'flex-col gap-6'">
+  <div id="menu" class="flex" :class="horizontal ? 'flex-row justify-end w-full gap-[5%] lg:gap-[15%]' : 'flex-col gap-6'">
     <ActionModal
         v-if="showLocked" type="lock"
         @close="() => {showLocked = false}"

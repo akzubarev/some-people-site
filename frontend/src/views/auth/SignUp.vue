@@ -1,6 +1,7 @@
 <template>
-  <Form class="form w-full flex flex-col gap-6 p-3" novalidate="novalidate" @submit="onSubmitRegister">
-    <div class="flex flex-row gap-3">
+  <Form class="form w-full max-w-[500px] flex flex-col items-center overflow-auto no-scrollbar gap-6 p-3"
+        novalidate="novalidate" @submit="onSubmitRegister">
+    <div class="flex flex-col md:flex-row gap-3">
       <InputField
           :title="$t('user.firstName')" :errors="errors.first_name"
           name="first_name" placeholder="Имя" :horizontal="false"
@@ -10,7 +11,7 @@
           name="last_name" placeholder="Фамилия" :horizontal="false"
       />
     </div>
-    <div class="flex flex-row gap-3">
+    <div class="flex flex-col md:flex-row gap-3">
       <InputField
           :title="$t('user.username')" :errors="errors.username"
           name="username" :horizontal="false"
@@ -20,7 +21,7 @@
           name="email" type="email" placeholder="email" :horizontal="false"
       />
     </div>
-    <div class="flex flex-row gap-3">
+    <div class="flex flex-col md:flex-row gap-3">
       <InputField
           :title="$t('common.password')" :errors="errors.password"
           name="password" type="password" placeholder="Пароль" :horizontal="false"
@@ -30,12 +31,14 @@
           name="re_password" type="password" placeholder="Повторите пароль" :horizontal="false"
       />
     </div>
-    <button id="kt_sign_up_submit" ref="submitButton" type="submit" class="btn-gradient w-full mt-3">
-      <div class="indicator-label"> {{ $t("auth.signUp") }}</div>
-      <div class="indicator-progress">
-        <div class="spinner-border spinner-border-sm align-middle ms-2"></div>
-      </div>
-    </button>
+    <div class="flex flex-col w-full items-center gap-1">
+      <router-link class="text-lg text-active-primary underline" to="/sign-in">
+        {{ $t("auth.signIn") }}
+      </router-link>
+      <button id="kt_sign_up_submit" ref="submitButton" type="submit" class="btn-primary w-full p-3">
+        {{ $t("auth.signUp") }}
+      </button>
+    </div>
   </Form>
 </template>
 
@@ -56,14 +59,18 @@ const form = formhelper()
 const {errors} = form
 
 const onSubmitRegister = values => {
+  store.dispatch("body/showActionLoader")
   form.send(async () => {
-    values.email = (values.email || "").trim()
-    const data = (await authService.register(values))["data"]
-    console.log(errors.value)
-    if (!Object.keys(errors.value).length) {
-      await store.dispatch("auth/setToken", data.auth_token)
-      await router.push("/account/settings")
+    try {
+      values.email = (values.email || "").trim()
+      const data = (await authService.register(values))["data"]
+      if (!Object.keys(errors.value).length) {
+        await store.dispatch("auth/setToken", data.auth_token)
+        await router.push("/account/settings")
+      }
+    } catch (Exception) {
     }
+    store.dispatch("body/hideActionLoader")
   })
 }
 

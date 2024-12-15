@@ -48,7 +48,10 @@ export default class AuthModule extends VuexModule {
     @Mutation
     [Mutations.SET_TOKEN](token) {
         this.authToken = token
-        Cookies.set("auth_token", token, {expires: 365})
+        if (!!token)
+            Cookies.set("auth_token", token, {expires: 365})
+        else
+            Cookies.remove("auth_token")
     }
 
     @Action
@@ -64,7 +67,6 @@ export default class AuthModule extends VuexModule {
     @Action
     [Actions.LOGOUT]() {
         this.context.commit(Mutations.SET_USER, {})
-        // Cookies.remove("auth_token")
         Cookies.remove("sessionid")
         Cookies.remove("csrftoken")
         this.context.commit(Mutations.SET_TOKEN, undefined)

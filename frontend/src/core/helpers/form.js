@@ -61,16 +61,16 @@ export default () => {
   }
   const send = async dataHandler => {
     // popup.showLoading()
-    store.dispatch("body/showActionLoader")
+    // store.dispatch("body/showActionLoader")
     data.value = {}
     errors.value = {}
     try {
       await dataHandler()
       // popup.close()
-      store.dispatch("body/hideActionLoader")
+      // store.dispatch("body/hideActionLoader")
       return true
     } catch (e) {
-      store.dispatch("body/hideActionLoader")
+      // store.dispatch("body/hideActionLoader")
       console.log(e);
       data.value = {}
       try {
