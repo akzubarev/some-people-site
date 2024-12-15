@@ -3,6 +3,13 @@
   <div class="hidden md:flex absolute z-0 top-20 left-[2.5%] w-[20%] h-full bg-bg-transparent-white"/>
   <div class="hidden md:flex absolute z-0 top-20 left-[25%] w-[57.5%] h-full bg-bg-transparent-white"/>
   <div class="hidden md:flex absolute z-0 top-20 right-[2.5%] w-[12.5%] h-full bg-bg-transparent-white"/>
+  <Drawer :show-drawer="showDrawer" @close="showDrawer=false">
+    <GroupNamesDrawer
+        :game_alias="game_alias" :family_groups="family_groups" :group_groups="group_groups"
+        :show-family-groups="showFamilyGroups" @show-family="(v)=>showFamilyGroups=v"
+        @close-drawer="showDrawer=false"
+    />
+  </Drawer>
   <div class="flex flex-row bg-whales-bg p-header gap-[5%] h-screen md:px-[2.5%]">
     <GroupNamesDrawer
         class="hidden md:flex pt-6 pl-3 lg:pl-12 z-10 w-[22.5%]" :game_alias="game_alias"
@@ -13,7 +20,7 @@
          class="flex flex-col md:py-12 md:px-6 w-full overflow-y-scroll scroll-auto no-scrollbar z-10">
       <div v-if="showFamilyGroups" class="flex flex-col gap-large w-full">
         <GroupBlock
-            :key="group" :game_alias="game_alias" :group="group"
+            :key="group" :game_alias="game_alias" :group="group" @showDrawer="showDrawer=true"
             v-for="group in family_groups.filter(g=>!groupIsEmpty(g))"
         />
       </div>
@@ -36,11 +43,14 @@ import GroupNamesDrawer from "@/views/games/roles/GroupNamesDrawer.vue";
 import router from "@/router";
 import {useStore} from "vuex";
 import {game_images} from "@/constants/gameImages";
+import Drawer from "@/layout/Drawer.vue";
 
 const store = useStore()
 const props = defineProps(['game_alias'])
+const emit = defineEmits(["closeDrawer"])
 const user = store.getters['auth/user']
 const showFamilyGroups = ref(true)
+const showDrawer = ref(false)
 
 const game = computed(() => store.getters['games/games'][props.game_alias])
 const groups = computed(() => store.getters['games/groups'])

@@ -1,5 +1,5 @@
 <template>
-  <Form class="form flex flex-col h-full gap-6 md:bg-bg-transparent-white overflow-y-auto no-scrollbar px-6 md:px-0"
+  <Form class="form flex flex-col h-full gap-6 md:bg-bg-transparent-white overflow-y-auto no-scrollbar px-6"
         novalidate="novalidate" @submit="onSubmit">
     <div class="flex flex-col gap-6">
       <div class="text-large font-bold text-content-secondary uppercase"> {{

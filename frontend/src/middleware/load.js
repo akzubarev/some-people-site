@@ -38,3 +38,13 @@ export const loadGames = async ({next}) => {
     }
     return next()
 }
+
+export const loadApplication = async ({next}) => {
+    if (!Object.keys(store.getters['games/games']).length) {
+        const applicationData = await gamesService.application(store.getters['auth/user'].id, 'whales')
+        store.dispatch("games/setApplication", applicationData.data)
+        const questionsData = await gamesService.questions('whales')
+        store.dispatch("games/setQuestions", questionsData.data)
+    }
+    return next()
+}

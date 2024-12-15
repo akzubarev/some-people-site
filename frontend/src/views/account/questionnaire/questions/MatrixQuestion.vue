@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col gap-6">
-    <div class="flex flex-row items-center gap-3">
+    <div class="flex flex-row items-center gap-3 md:gap-6">
       <div class="w-full min-w-[40%] items-center"/>
       <div v-for="option in question.choices[0]" :key="option"
            class="w-full items-center text-center text-medium text-content-secondary">
         {{ option }}
       </div>
     </div>
-    <div class="flex flex-row items-center rounded-xl gap-6"
+    <div class="flex flex-row items-center rounded-xl gap-3 md:gap-6"
          v-for="(option, i) in question.choices[1]" :key="option">
       <div class="w-full min-w-[40%] text-medium text-content-secondary"> {{ option }}</div>
       <input

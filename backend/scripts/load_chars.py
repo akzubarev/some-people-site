@@ -14,13 +14,14 @@ if __name__ == '__main__':
     django.setup()
 
 from apps.games.models import Game, Character, Question, Tag, Group
+from apps.users.models import User
 from utils.text_utils import readable_exception
 
 logger = getLogger(__name__)
 google_creds = gspread.api_key(os.getenv('GOOGLE_API_KEY'))
 games_data = {
-    'spreadsheet_id': '1y1k7p41v9C7sSDES4Ojs1AOERYsXrnosQeKNoDgnxNI',
-    # 'spreadsheet_id': '1ucdOv6Hid9toTFUSuTSNRh7z7wpeY2dgCkIOuZtgrz4',
+    'spreadsheet_id': '1ucdOv6Hid9toTFUSuTSNRh7z7wpeY2dgCkIOuZtgrz4',
+    # 'spreadsheet_id': '1y1k7p41v9C7sSDES4Ojs1AOERYsXrnosQeKNoDgnxNI',
     'frostpunk': {
         'groups_worksheet_id': '1746120384', 'characters_worksheet_id': '2055553822',
         # 'questions_worksheet_id': '1440140115',
@@ -85,7 +86,7 @@ def get_groups(game: Game, worksheet: gspread.Worksheet) -> None:
             hidden = row[4] == 'TRUE'
             family = row[5] == 'TRUE'
             image = get_image(path=row[6], order=order, target='caracter') if len(row) > 6 else None
-            parent_group = Group.objects.get(name=parent_group_name) if parent_group_name else None
+            parent_group = Group.objects.get(name=parent_group_name, family=family) if parent_group_name else None
             group, _ = Group.objects.update_or_create(
                 name=name, game_id=game.id, family=family,
                 defaults={'hidden': hidden, 'image': image, 'description': description,
@@ -93,6 +94,7 @@ def get_groups(game: Game, worksheet: gspread.Worksheet) -> None:
             )
             group.save()
         except Exception as e:
+            logger.warning(group)
             logger.warning(readable_exception(e))
 
 
@@ -108,16 +110,17 @@ def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
             order, _, name_eng, master, tags, group_name, family_name, description, *_ = row
             image = get_image(path=row[8], target='character', order=order) if len(row) > 8 else None
 
-            group = Group.objects.get(name=group_name, game_id=game.id) if group_name and group_name != '-' else None
-            family = Group.objects.get(name=family_name, game_id=game.id) if family_name and family_name != '-' else None
+            group = Group.objects.get(name=group_name, game_id=game.id, family=False) \
+                if group_name and group_name != '-' else None
+            family = Group.objects.get(name=family_name, game_id=game.id, family=True) \
+                if family_name and family_name != '-' else None
+            master_obj = User.objects.filter(is_staff=True, first_name=master).first()
             char, _ = Character.objects.update_or_create(
                 name=character_name,
                 defaults={
                     'alias': alias, 'image': image, 'description': description,
-                    'group': group, 'family': family, 'order': order, 'name_eng':name_eng,
-                    'master_id': {
-                        'Леша': 2, 'Катя': 3, 'Лиза': 4, 'Аня': 5, 'Оля': 6, 'Полина': 7, 'Саша': 8,
-                    }.get(master, None)
+                    'group': group, 'family': family, 'order': order, 'name_eng': name_eng,
+                    'master': master_obj,
                 },
             )
             for tag in tags.split(', '):
@@ -125,6 +128,8 @@ def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
                 char.tags.add(tag)
             char.save()
         except Exception as e:
+            logger.warning(group_name)
+            logger.warning(family_name)
             logger.warning(readable_exception(e))
 
 

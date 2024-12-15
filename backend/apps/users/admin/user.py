@@ -42,7 +42,6 @@ class UserAdmin(BaseUserAdmin):
                 'avatar',
                 'telegram_chat_id',
                 'telegram_username',
-                'instagram',
                 'vk',
             ]
         }

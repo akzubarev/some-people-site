@@ -1,11 +1,11 @@
 <template>
   <Form class="form" novalidate="novalidate" @submit="saveProfile">
-    <div class="card-body flex flex-col w-full gap-3">
+    <div class="flex flex-col w-full gap-3">
       <div class="flex flex-row w-full items-center gap-6">
         <label class="text-xl"> {{ $t("settings.avatar") }} </label>
         <TinyImageUploader
             icon class="bg-bg-primary !w-[100px] !h-[100px] rounded-full"
-            :image="avatar" @upload="user.avatar = $event"
+            :image="user.avatar" @upload="user.avatar = $event"
         />
       </div>
       <div class="flex flex-col items-center gap-3">
@@ -40,12 +40,24 @@
               placeholder="+79000000000"
           />
           <InputField
-              title="Instagram" :errors="errors.instagram"
-              name="instagram" :horizontal="false" :v_model="user.instagram"
-              placeholder="@instagram"
+              title="Vk" :errors="errors.vk"
+              name="vk" :horizontal="false" :v_model="user.vk"
+              placeholder="@vk"
           />
         </div>
-        <Telegram/>
+        <div class="flex flex-col w-full gap-1">
+          <div class="flex text-xl"> Показывать в сетке ролей</div>
+          <div class="flex flex-row items-center gap-3" @click="user.tg_public=!user.tg_public">
+            <input type="checkbox" class="form-check-input m-0 w-[20px]" name="checkbox_tg"
+                   :checked="user.tg_public" id="checkbox_tg">
+            <div class="flex items-center text-xl">ТГ</div>
+          </div>
+          <div class="flex flex-row items-center gap-3" @click="user.vk_public=!user.vk_public">
+            <input type="checkbox" class="form-check-input m-0 w-[20px]" name="checkbox_vk"
+                   :checked="user.vk_public" id="checkbox_vk">
+            <div class="flex items-center text-xl">ВК</div>
+          </div>
+        </div>
         <button type="submit" id="kt_account_profile_details_submit" class="btn-gray ml-auto w-fit max-sm:w-full">
           <span class="indicator-label"> {{ $t("common.actions.save") }} </span>
         </button>
@@ -62,7 +74,6 @@ import {Form} from "vee-validate"
 import authService from "@/services/authService"
 import {useI18n} from "vue-i18n"
 import TinyImageUploader from "@/components/image-uploader/TinyImageUploader.vue"
-import Telegram from "@/views/account/settings/Telegram.vue";
 import InputField from "@/components/InputField.vue";
 
 
@@ -71,17 +82,12 @@ const form = formhelper()
 const {errors} = form
 const {t} = useI18n()
 const emit = defineEmits(['saved'])
-
 const user = computed(() => store.getters["auth/user"])
-console.log(user)
-const avatar = computed(() => user.avatar)
 
 const saveProfile = values => {
-  values["avatar"] = avatar.value
   form.send(async () => {
-    await authService.update_me(values).then(data => {
-      store.dispatch('auth/setUser', data)
-    })
+    const response = await authService.update_me({...user.value, ...values})
+    await store.dispatch('auth/setUser', response.data)
     emit('saved')
   })
 }
@@ -90,6 +96,6 @@ const saveProfile = values => {
 
 <style scoped>
 .settings-row {
-  @apply flex flex-row w-full items-center gap-3;
+  @apply flex flex-col md:flex-row w-full items-center gap-3;
 }
 </style>

@@ -7,7 +7,8 @@
         ▶
       </div>
       <div class="text-medium font-semibold text-content-secondary"
-           :class="group.subgroups.length > 0 ? '' : 'ml-3'" @click="$router.push(`#${group.name}`)">
+           :class="group.subgroups.length > 0 ? '' : 'ml-3'"
+           @click="reroute(`#${group.name}`)">
         {{ group.name }}
       </div>
     </div>
@@ -23,8 +24,11 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
 const expanded = ref(false)
+const router = useRouter()
+const emit = defineEmits(["closeDrawer"])
 const props = defineProps({
   group: {
     default: {
@@ -40,4 +44,9 @@ const props = defineProps({
   },
   game_alias: {type: String},
 })
+
+const reroute = (group_name) => {
+  emit('closeDrawer')
+  router.push(group_name)
+}
 </script>
