@@ -48,23 +48,15 @@ div {
 @tailwind components;
 
 .btn {
-  @apply flex justify-center items-center p-3 rounded-xl;
+  @apply flex justify-center items-center py-1 px-3 rounded-xl;
+}
+
+.btn-primary {
+  @apply btn bg-[#696F7C];
 }
 
 .btn-gradient {
   @apply btn bg-gradient-to-r from-gradient-start to-gradient-end;
-}
-
-.btn-gray {
-  @apply btn bg-gray-800;
-}
-
-.btn-white {
-  @apply btn bg-white hover:bg-gray-500;
-}
-
-.btn-outline {
-  @apply btn bg-transparent border border-[1px] border-content-primary;
 }
 
 .text-small {

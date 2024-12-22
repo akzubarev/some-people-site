@@ -18,16 +18,10 @@
     />
     <div id="groups_scrollview"
          class="flex flex-col md:py-12 md:px-6 w-full overflow-y-scroll scroll-auto no-scrollbar z-10">
-      <div v-if="showFamilyGroups" class="flex flex-col gap-large w-full">
+      <div class="flex flex-col gap-large w-full">
         <GroupBlock
-            :key="group" :game_alias="game_alias" :group="group" @showDrawer="showDrawer=true"
-            v-for="group in family_groups.filter(g=>!groupIsEmpty(g))"
-        />
-      </div>
-      <div v-else class="flex flex-col gap-large w-full">
-        <GroupBlock
-            :key="group" :game_alias="game_alias" :group="group"
-            v-for="group in group_groups.filter(g=>!groupIsEmpty(g))"
+            v-for="group in (showFamilyGroups ?  family_groups : group_groups).filter(g => !groupIsEmpty(g))"
+            :key="group" :group="group" :game_alias="game_alias" @showDrawer="showDrawer=true"
         />
       </div>
     </div>
@@ -62,7 +56,7 @@ gamesService.groups(props.game_alias).then(({data}) => {
   store.dispatch('games/setGroups', data)
 })
 
-const getGroups = (family) => {
+const getGroups = (family: boolean) => {
   const main_group = groups.value.find(group => group.family == family)
   if (!main_group)
     return []

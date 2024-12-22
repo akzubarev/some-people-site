@@ -1,21 +1,26 @@
 <template>
-  <Form class="flex flex-col gap-6 p-3 form w-full" @submit="onSubmitLogin">
+  <Form class="flex flex-col items-center gap-6 p-3 form w-full max-w-[500px]" @submit="onSubmitLogin">
     <InputField
-        :title="$t('auth.loginField')" :errors="errors.login_field"
+        title="" :errors="errors.login_field"
         name="login_field" type="email" :horizontal="true"
-        placeholder="email" :autocomplete="true"
+        :placeholder="$t('auth.loginField')" :autocomplete="true"
 
     />
     <InputField
-        :title="$t('common.password')" :errors="errors.password"
+        title="" :errors="errors.password"
         name="password" :type="passVisible ? 'text' : 'password'" :horizontal="true"
-        placeholder="Пароль" :autocomplete="true"
+        :placeholder="$t('common.password')" :autocomplete="true"
     >
-      <router-link to="/lost-pass" class="link-primary"> {{ $t("auth.lostPassword") }}?</router-link>
+      <!--      <router-link to="/lost-pass" class="link-primary"> {{ $t("auth.lostPassword") }}?</router-link>-->
     </InputField>
-    <button class="btn-gradient text-center w-full mt-3" type="submit" ref="submitButton">
-      {{ $t("auth.signIn") }}
-    </button>
+    <div class="flex flex-col w-full items-center gap-1">
+      <router-link class="text-lg text-active-primary underline" to="/sign-up">
+        {{ $t("auth.signUp") }}
+      </router-link>
+      <button class="btn-primary text-center w-full p-3" type="submit" ref="submitButton">
+        {{ $t("auth.signIn") }}
+      </button>
+    </div>
   </Form>
 </template>
 

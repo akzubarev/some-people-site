@@ -37,7 +37,7 @@ class CharacterSerializer(serializers.ModelSerializer):
             applications__status=Application.Status.CONFIRMED
         ).first()
         if player is not None:
-            from apps.users.serializers import UserSerializer
-            return UserSerializer(player).data
+            from apps.users.serializers import UserPublicSerializer
+            return UserPublicSerializer(player).data
         else:
             return None

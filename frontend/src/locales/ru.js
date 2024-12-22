@@ -141,7 +141,7 @@ module.exports = {
         "signIn": "Войти",
         "noAccount": "Впервые?",
         "hasAccount": "Уже зарегистрированы",
-        "signUp": "Регистрация",
+        "signUp": "Зарегистрироваться",
         "lostPassword": "Забыли пароль",
         "loginField": "Email / Никнейм",
         "enterEmail": "Введите email",

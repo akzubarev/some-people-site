@@ -12,7 +12,7 @@
             </div>
           </template>
           <template #content>
-            <div class="flex flex-row gap-3 items-center p-1">
+            <div class="flex flex-row gap-3 items-center p-1 bg-bg-transparent rounded-xl">
               <div v-if="character.player?.vk" @click="openVK(character.player.vk)"
                    class="text-medium cursor-pointer">
                 VK
@@ -54,7 +54,7 @@
             />
           </template>
           <template #content>
-            <div class="text-sm min-w-[140px] p-1"> Хочу играть этого персонажа!</div>
+            <div class="text-sm bg-bg-transparent rounded-xl min-w-[140px] p-1"> Хочу играть этого персонажа!</div>
           </template>
         </PopupWrapper>
         <inline-svg

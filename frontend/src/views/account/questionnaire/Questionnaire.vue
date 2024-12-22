@@ -22,7 +22,7 @@
       />
       <div class="flex w-full md-6"/>
     </div>
-    <!--    <button ref="submitButton" type="submit" class="btn-gradient w-full text-center text-xl">-->
+    <!--    <button ref="submitButton" type="submit" class="btn-primary w-full text-center text-xl">-->
     <!--      {{ 'Сохранить' }}-->
     <!--    </button>-->
   </Form>

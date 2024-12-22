@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-3">
+  <div v-if="group.characters.length + displaySubgroups.length" class="flex flex-col gap-3">
     <div v-if="group.characters.length" class="flex flex-col gap-small" :id="group.name">
       <div class="flex items-center flex-row px-[2.5%] md:px-0 md:w-[80%] gap-3">
         <img v-if="!phoneScreen" class="w-12 h-12" :src="group.image"/>
@@ -10,16 +10,15 @@
           <div class="text-small text-content-secondary font-semibold">{{ group.description }}</div>
         </div>
       </div>
-      <div class="flex flex-col gap-3">
+      <div v-if="group.characters.length" class="flex flex-col gap-3">
         <CharacterBlock
             v-for="character in group.characters" :key="character"
             :character="character" :game_alias="game_alias"
         />
       </div>
-      <div class="flex flex-col gap-3">
+      <div v-if="displaySubgroups.length" class="flex flex-col gap-3">
         <GroupBlock
-            v-for="subgroup in group.subgroups.filter(s=>s.characters.length+s.members.length+s.subgroups.length>0)"
-            :key="subgroup" :group="subgroup" :game_alias="game_alias"
+            v-for="subgroup in displaySubgroups"  :key="subgroup" :group="subgroup" :game_alias="game_alias"
         />
       </div>
     </div>
@@ -50,5 +49,9 @@ const props = defineProps({
 const emit = defineEmits(['showDrawer'])
 
 props.group.characters = props.group.characters.concat(props.group.members)
+const displaySubgroups = computed(() => props.group.subgroups.filter(
+        s => s.characters.length + s.members.length + s.subgroups.length > 0
+    )
+)
 const phoneScreen = computed(() => window.screen.width < 768)
 </script>

@@ -11,23 +11,22 @@
       />
       <div class="flex flex-col gap-[5%] px-6 md:px-0">
         <div class="flex flex-row items-center gap-2 text-medium text-content-secondary">
-          <inline-svg v-if="!questionnaire_unfilled" class="w-6 h-6"
-                      :src="require('@/assets/images/icons/common/check.svg')"/>
           Опросник: {{ !questionnaire_unfilled ? "пройден" : "" }}
           <a v-if="questionnaire_unfilled" class="underline" :href="`/account/${game_alias}/questionnaire`">
             заполнить </a>
+          <inline-svg v-else class="w-6 h-6" :src="require('@/assets/images/icons/common/check.svg')"/>
           <Undone :number="questionnaire_unfilled"/>
         </div>
         <div class="text-medium text-content-secondary font-bold">
+          Взнос: {{ application.price ? `${application.payed} / ${application.price}` : 'не объявлен' }}
           <inline-svg v-if="application.price && application.payed == application.price"
                       class="w-6 h-6" :src="require('@/assets/images/icons/common/check.svg')"/>
-          Взнос: {{ application.price ? `${application.payed} / ${application.price}` : 'не объявлен' }}
           <a v-if="application.price && application.payed != application.price" class="underline" href="/"> Оплатить </a>
         </div>
         <div class="flex flex-row items-center gap-2 text-medium text-content-secondary font-bold">
+          Дополнительная информация
           <inline-svg v-if="!application_unfilled" class="w-6 h-6"
                       :src="require('@/assets/images/icons/common/check.svg')"/>
-          Дополнительная информация
           <Undone :number="application_unfilled"/>
         </div>
         <Form v-if="questions.filter(q => q.order < 0)"
@@ -39,18 +38,18 @@
               :default-value="default_answers[question.id]"
           />
         </Form>
-        <button @click="onDelete()" class="btn-gradient w-fit text-center text-xl">
+        <button @click="onDelete()" class="btn-primary w-fit text-center text-xl">
           Удалить заявку
         </button>
       </div>
     </div>
-    <button v-else @click="onRestore()" class="btn-gradient w-fit text-center text-xl p-3 mx-6 md:mx-0">
+    <button v-else @click="onRestore()" class="btn-primary w-fit text-center text-xl p-3 mx-6 md:mx-0">
       Восстановить заявку
     </button>
   </div>
   <div v-else class="flex flex-col gap-medium md:bg-bg-transparent-white overflow-y-auto no-scrollbar p-6">
     <div class="text-large text-content-secondary"> Заявка не подана</div>
-    <button ref="submitButton" @click="onSubmit(answers)" class="btn-gradient w-full p-3 text-center text-xl">
+    <button ref="submitButton" @click="onSubmit(answers)" class="btn-primary w-full p-3 text-center text-xl">
       Подать заявку
     </button>
   </div>

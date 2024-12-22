@@ -19,7 +19,7 @@
       </div>
     </div>
     <button type="submit" id="kt_account_profile_details_submit" ref="submitButton1"
-            class="btn-gray ml-auto w-fit max-sm:w-full">
+            class="btn-primary ml-auto w-fit max-sm:w-full">
       {{ $t("common.actions.change") }}
     </button>
   </Form>

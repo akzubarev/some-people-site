@@ -10,21 +10,22 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.serializers import Serializer
 
 from apps.games.models import Character
 from apps.users.models import User
-from apps.users.serializers import UserPrivateSerializer, UserCreateSerializer, UserSerializer
+from apps.users.serializers import UserCreateSerializer, UserPrivateSerializer, UserPublicSerializer
 
 
 class UserViewSet(viewsets.GenericViewSet, mixins.UpdateModelMixin, mixins.RetrieveModelMixin):
     """Users viewset."""
 
-    serializer_class = UserSerializer
+    serializer_class = UserPublicSerializer
     queryset = User.objects
     permission_classes = [AllowAny]
     lookup_field = "uuid"
 
-    def get_serializer_class(self) -> Type[UserCreateSerializer | UserSerializer]:
+    def get_serializer_class(self) -> Type[Serializer]:
         """Gets serializer class based on action."""
         match self.action:
             case 'register':

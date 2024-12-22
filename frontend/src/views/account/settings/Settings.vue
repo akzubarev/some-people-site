@@ -19,7 +19,7 @@
       <Telegram/>
       <div class="form flex flex-col gap-3">
         <button @click="$router.push('/sign-out')"
-                class="btn-gray ml-auto w-fit max-sm:w-full">
+                class="btn-primary ml-auto w-fit max-sm:w-full">
           {{ $t("menu.logout") }}
         </button>
       </div>

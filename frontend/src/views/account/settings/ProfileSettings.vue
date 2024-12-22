@@ -1,12 +1,15 @@
 <template>
   <Form class="form" novalidate="novalidate" @submit="saveProfile">
     <div class="flex flex-col w-full gap-3">
-      <div class="flex flex-row w-full items-center gap-6">
+      <div class="hidden md:flex flex-row w-full items-center gap-6">
         <label class="text-xl"> {{ $t("settings.avatar") }} </label>
         <TinyImageUploader
             icon class="bg-bg-primary !w-[100px] !h-[100px] rounded-full"
-            :image="user.avatar" @upload="user.avatar = $event"
+            :image="user.avatar" @upload="uploadAvatar = $event; user.avatar = uploadAvatar"
         />
+      </div>
+      <div class="flex md:hidden text-lg text-content-disabled w-full">
+        Поменять аватар пока что можно только в десктопной версии
       </div>
       <div class="flex flex-col items-center gap-3">
         <div class="settings-row">
@@ -58,7 +61,7 @@
             <div class="flex items-center text-xl">ВК</div>
           </div>
         </div>
-        <button type="submit" id="kt_account_profile_details_submit" class="btn-gray ml-auto w-fit max-sm:w-full">
+        <button type="submit" id="kt_account_profile_details_submit" class="btn-primary ml-auto w-fit max-sm:w-full">
           <span class="indicator-label"> {{ $t("common.actions.save") }} </span>
         </button>
       </div>
@@ -69,7 +72,7 @@
 <script setup lang="ts">
 import formhelper from "@/core/helpers/form"
 import {useStore} from "vuex"
-import {computed} from "vue"
+import {computed, ref} from "vue"
 import {Form} from "vee-validate"
 import authService from "@/services/authService"
 import {useI18n} from "vue-i18n"
@@ -83,10 +86,13 @@ const {errors} = form
 const {t} = useI18n()
 const emit = defineEmits(['saved'])
 const user = computed(() => store.getters["auth/user"])
+const uploadAvatar = ref(null)
 
 const saveProfile = values => {
   form.send(async () => {
-    const response = await authService.update_me({...user.value, ...values})
+    if (uploadAvatar)
+      values.avatar = uploadAvatar.value
+    const response = await authService.update_me(values)
     await store.dispatch('auth/setUser', response.data)
     emit('saved')
   })

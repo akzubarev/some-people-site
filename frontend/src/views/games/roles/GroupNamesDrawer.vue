@@ -7,9 +7,9 @@
     </a>
     <div class="text-large font-semibold uppercase text-content-secondary mb-6" v-if="!phoneScreen"> Сетка ролей</div>
     <div class="flex flex-col overflow-y-scroll no-scrollbar gap-medium">
-      <div id="families" class="flex flex-col gap-3" v-if="family_groups">
+      <div id="families" class="flex flex-col gap-3" v-if="family_groups" @click="$emit('showFamily', true)">
         <div class="text-medium uppercase font-bold text-content-secondary mb-3 cursor-pointer"
-             :class="showFamilyGroups ? 'underline':''" @click="$emit('showFamily', true)">
+             :class="showFamilyGroups ? 'underline':''" >
           По семьям
         </div>
         <GroupNamesBlock
@@ -17,9 +17,9 @@
             :key="group" :game_alias="game_alias" :group="group" @close-drawer="$emit('closeDrawer')"
         />
       </div>
-      <div id="groups" class="flex flex-col gap-3" v-if="group_groups">
+      <div id="groups" class="flex flex-col gap-3" v-if="group_groups" @click="$emit('showFamily', false)">
         <div class="text-medium uppercase font-bold text-content-secondary mb-3 cursor-pointer"
-             :class="!showFamilyGroups ? 'underline':''" @click="$emit('showFamily', false)">
+             :class="showFamilyGroups ? '':'underline'">
           По занятости
         </div>
         <GroupNamesBlock
