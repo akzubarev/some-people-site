@@ -21,7 +21,7 @@
       <div class="flex flex-col gap-large w-full">
         <GroupBlock
             v-for="group in (showFamilyGroups ?  family_groups : group_groups).filter(g => !groupIsEmpty(g))"
-            :key="group" :group="group" :game_alias="game_alias" @showDrawer="showDrawer=true"
+            :key="group.id" :group="group" :game_alias="game_alias" @showDrawer="showDrawer=true"
         />
       </div>
     </div>

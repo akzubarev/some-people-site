@@ -1,6 +1,6 @@
 <template>
-  <div v-if="group.characters.length + displaySubgroups.length" class="flex flex-col gap-3">
-    <div v-if="group.characters.length" class="flex flex-col gap-small" :id="group.name">
+  <div v-if="characters.length + displaySubgroups.length" class="flex flex-col gap-3">
+    <div v-if="characters.length" class="flex flex-col gap-small" :id="group.name">
       <div class="flex items-center flex-row px-[2.5%] md:px-0 md:w-[80%] gap-3">
         <img v-if="!phoneScreen" class="w-12 h-12" :src="group.image"/>
         <inline-svg v-else class="w-12 h-12 rotate-180 text-content-secondary"
@@ -10,17 +10,18 @@
           <div class="text-small text-content-secondary font-semibold">{{ group.description }}</div>
         </div>
       </div>
-      <div v-if="group.characters.length" class="flex flex-col gap-3">
+      <div v-if="characters.length" class="flex flex-col gap-3">
         <CharacterBlock
-            v-for="character in group.characters" :key="character"
+            v-for="character in characters" :key="character"
             :character="character" :game_alias="game_alias"
         />
       </div>
-      <div v-if="displaySubgroups.length" class="flex flex-col gap-3">
-        <GroupBlock
-            v-for="subgroup in displaySubgroups"  :key="subgroup" :group="subgroup" :game_alias="game_alias"
-        />
-      </div>
+    </div>
+    <div v-if="displaySubgroups.length" class="flex flex-col gap-3">
+      <GroupBlock
+          v-for="subgroup in displaySubgroups" :key="subgroup"
+          :group="subgroup" :game_alias="game_alias"
+      />
     </div>
   </div>
 </template>
@@ -48,7 +49,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['showDrawer'])
 
-props.group.characters = props.group.characters.concat(props.group.members)
+const characters = computed(() => [...props.group.characters, ...props.group.members])
 const displaySubgroups = computed(() => props.group.subgroups.filter(
         s => s.characters.length + s.members.length + s.subgroups.length > 0
     )
