@@ -7,16 +7,6 @@
     </a>
     <div class="text-large font-semibold uppercase text-content-secondary mb-6" v-if="!phoneScreen"> Сетка ролей</div>
     <div class="flex flex-col overflow-y-scroll no-scrollbar gap-medium">
-      <div id="families" class="flex flex-col gap-3" v-if="family_groups" @click="$emit('showFamily', true)">
-        <div class="text-medium uppercase font-bold text-content-secondary mb-3 cursor-pointer"
-             :class="showFamilyGroups ? 'underline':''" >
-          По семьям
-        </div>
-        <GroupNamesBlock
-            v-for="group in family_groups.filter(g => !groupIsEmpty(g))"
-            :key="group" :game_alias="game_alias" :group="group" @close-drawer="$emit('closeDrawer')"
-        />
-      </div>
       <div id="groups" class="flex flex-col gap-3" v-if="group_groups" @click="$emit('showFamily', false)">
         <div class="text-medium uppercase font-bold text-content-secondary mb-3 cursor-pointer"
              :class="showFamilyGroups ? '':'underline'">
@@ -27,13 +17,23 @@
             :key="group" :game_alias="game_alias" :group="group"
         />
       </div>
+      <div id="families" class="flex flex-col gap-3" v-if="family_groups" @click="$emit('showFamily', true)">
+        <div class="text-medium uppercase font-bold text-content-secondary mb-3 cursor-pointer"
+             :class="showFamilyGroups ? 'underline':''">
+          По семьям
+        </div>
+        <GroupNamesBlock
+            v-for="group in family_groups.filter(g => !groupIsEmpty(g))"
+            :key="group" :game_alias="game_alias" :group="group" @close-drawer="$emit('closeDrawer')"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 
 <script setup lang="ts">
-import {computed} from "vue"
+import {computed, ref} from "vue"
 import {useStore} from "vuex";
 import GroupNamesBlock from "@/views/games/roles/groups/GroupNamesBlock.vue";
 
@@ -48,5 +48,12 @@ const props = defineProps({
 })
 const game = computed(() => store.getters['games/games'][props.game_alias])
 const groupIsEmpty = (group) => group.characters.length + group.members.length + group.subgroups.length == 0
-const phoneScreen = computed(() => window.screen.width < 768)
+const phoneScreen = ref(window.innerWidth < 768)
+const updateWidth = () => phoneScreen.value = window.innerWidth < 768
+const onLeave = () => {
+  window.removeEventListener('resize', updateWidth);
+  window.removeEventListener('beforeunload', onLeave);
+}
+window.addEventListener('resize', updateWidth)
+window.addEventListener('beforeunload', onLeave)
 </script>

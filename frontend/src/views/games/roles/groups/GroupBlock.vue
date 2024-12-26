@@ -1,8 +1,8 @@
-<template>
-  <div v-if="characters.length + displaySubgroups.length" class="flex flex-col gap-3">
-    <div v-if="characters.length" class="flex flex-col gap-small" :id="group.name">
+<template >
+  <div v-if="characters.length + displaySubgroups.length" class="flex flex-col gap-3" :id="group.name">
+     <div v-if="characters.length" class="flex flex-col gap-small">
       <div class="flex items-center flex-row px-[2.5%] md:px-0 md:w-[80%] gap-3">
-        <img v-if="!phoneScreen" class="w-12 h-12" :src="group.image"/>
+        <img v-if="!phoneScreen" class="w-12 h-12" :src="game_images[game_alias].group"/>
         <inline-svg v-else class="w-12 h-12 rotate-180 text-content-secondary"
                     @click="$emit('showDrawer')" :src="require('@/assets/images/icons/common/arrow.svg')"/>
         <div class="flex flex-col">
@@ -29,7 +29,8 @@
 
 <script setup lang="ts">
 import CharacterBlock from "@/views/games/roles/groups/CharacterBlock.vue";
-import {computed} from "vue";
+import {computed, ref} from "vue";
+import {game_images} from "@/constants/gameImages";
 
 const props = defineProps({
   group: {
@@ -54,5 +55,14 @@ const displaySubgroups = computed(() => props.group.subgroups.filter(
         s => s.characters.length + s.members.length + s.subgroups.length > 0
     )
 )
-const phoneScreen = computed(() => window.screen.width < 768)
+const phoneScreen = ref(window.innerWidth < 768)
+const updateWidth = () => {
+  phoneScreen.value = window.innerWidth < 768
+}
+const onLeave = () => {
+  window.removeEventListener('resize', updateWidth);
+  window.removeEventListener('beforeunload', onLeave);
+}
+window.addEventListener('resize', updateWidth)
+window.addEventListener('beforeunload', onLeave)
 </script>

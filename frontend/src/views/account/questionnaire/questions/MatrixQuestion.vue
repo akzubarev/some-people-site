@@ -12,10 +12,9 @@
       <div class="w-full min-w-[40%] text-medium text-content-secondary"> {{ option }}</div>
       <input
           class="form-check-input w-full cursor-pointer"
-          v-for="(_, j) in question.choices[0]" :key="j"
+          v-for="(_, j) in question.choices[0]" :key="j" @click="onInput(i, j)"
           :id="`input${question.id}${i}${j}`" :name="`input${question.id}${i}`"
           :type="checkbox? 'checkbox' : 'radio'" :checked="res[i][j]"
-          @click="() => { if (!readonly) {res[i][j] = !res[i][j]; $emit('change', answer)}}"
       />
     </div>
   </div>
@@ -40,4 +39,14 @@ const answer = computed(() => {
       (question, i) => props.question.choices[0].filter((choice, j) => res.value[i][j])
   )
 })
+const onInput = (i, j) => {
+  if (!props.readonly) {
+    if (!props.checkbox) {
+      res.value[i] = props.question.choices[0].map(() => false)
+      res.value[i][j] = true
+    } else
+      res.value[i][j] = !res.value[i][j]
+    emit('change', answer.value)
+  }
+}
 </script>

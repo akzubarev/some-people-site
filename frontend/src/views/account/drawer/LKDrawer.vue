@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from "vue"
+import {computed, ref} from "vue"
 import {useStore} from "vuex";
 import LKGamesDrawer from "@/views/account/drawer/LKDrawerGame.vue";
 
@@ -35,5 +35,13 @@ const props = defineProps(["game_alias"])
 const emit = defineEmits(["closeDrawer"])
 const user = store.getters['auth/user']
 const games = computed(() => Object.values(store.getters['games/games']))
-const phoneScreen = computed(() => window.screen.width < 768)
+const phoneScreen = ref(window.innerWidth < 768)
+
+const updateWidth = () => phoneScreen.value = window.innerWidth < 768
+const onLeave = () => {
+  window.removeEventListener('resize', updateWidth);
+  window.removeEventListener('beforeunload', onLeave);
+}
+window.addEventListener('resize', updateWidth)
+window.addEventListener('beforeunload', onLeave)
 </script>

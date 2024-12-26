@@ -20,5 +20,4 @@ class GroupAdmin(admin.ModelAdmin):
         'description',
         'game',
         'parent',
-        'image',
     ]

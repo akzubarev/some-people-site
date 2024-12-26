@@ -85,12 +85,10 @@ def get_groups(game: Game, worksheet: gspread.Worksheet) -> None:
             order, name, description, parent_group_name, *_ = row
             hidden = row[4] == 'TRUE'
             family = row[5] == 'TRUE'
-            image = get_image(path=row[6], order=order, target='caracter') if len(row) > 6 else None
             parent_group = Group.objects.get(name=parent_group_name, family=family) if parent_group_name else None
             group, _ = Group.objects.update_or_create(
                 name=name, game_id=game.id, family=family,
-                defaults={'hidden': hidden, 'image': image, 'description': description,
-                          'parent': parent_group, 'order': order},
+                defaults={'hidden': hidden, 'description': description, 'parent': parent_group, 'order': order},
             )
             group.save()
         except Exception as e:

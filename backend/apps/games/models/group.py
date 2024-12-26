@@ -27,12 +27,6 @@ class Group(models.Model):
         null=True, blank=True
     )
 
-    image = models.ImageField(
-        verbose_name='image',
-        upload_to='groups/images/',
-        blank=True, null=True
-    )
-
     class Meta:
         """Model meta."""
 

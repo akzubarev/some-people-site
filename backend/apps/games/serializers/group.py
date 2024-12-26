@@ -29,7 +29,6 @@ class GroupSerializer(serializers.ModelSerializer):
             'characters',
             'members',
             'subgroups',
-            'image',
         ]
 
     def get_subgroups(self, group: Group) -> list[dict]:

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col p-header gap-6 rounded-xl h-screen overflow-auto no-scrollbar">
-    <div class="flex flex-col p-6 gap-6 rounded-xl bg-gray-700 bg-opacity-60 mx-3">
+    <div class="flex flex-col p-6 gap-6 rounded-xl bg-gray-700 bg-opacity-60 mx-3 mt-6">
       <div class="flex flex-row items-center gap-3 text-header text-content-primary"
            @click="$router.push(`/account/whales/application`)">
         <inline-svg class="w-6 h-6 rotate-180" :src="require('@/assets/images/icons/common/arrow.svg')"/>

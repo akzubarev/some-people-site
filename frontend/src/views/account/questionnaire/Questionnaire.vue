@@ -14,7 +14,7 @@
     <div class="flex flex-col gap-medium">
       <QuestionField
           v-for="question in questions" @change="answerUpdate"
-          :key="`${question.id} ${default_answers[question.id]}`"
+          :key="`${question.id} ${!!default_answers[question.id]}`"
           :question="question" :horizontal="false"
           :readonly="!!userId" :show-errors="showErrors" :errors="errors"
           :unfilled="application.answers?.unfilled?.includes(question.id)"
@@ -22,9 +22,6 @@
       />
       <div class="flex w-full md-6"/>
     </div>
-    <!--    <button ref="submitButton" type="submit" class="btn-primary w-full text-center text-xl">-->
-    <!--      {{ 'Сохранить' }}-->
-    <!--    </button>-->
   </Form>
 </template>
 
@@ -46,45 +43,51 @@ const props = defineProps(["game_alias", "userId"])
 const showErrors = ref(false)
 const game_alias = props.game_alias
 
-const user_id = computed(() => props.userId || store.getters['auth/user'].id)
 const application = computed(() => store.getters["games/application"])
 const questions = computed(() => store.getters["games/questions"].filter(question => question.order > 0))
 
-const getQAnswers = (answers) => {
-  return Object.fromEntries(Object.entries(answers).filter((q_id, v) => q_id > 0 && !!v))
+const getQuestionnaireAnswers = (answers) => {
+  return Object.fromEntries(
+      Object.entries(answers).filter(
+          (q_id, v) => questions.value.find((q) => q.id == q_id)?.order > 0 && !!v
+      )
+  )
 }
 
-const answers = ref(getQAnswers(application.value.answers?.values || {}))
+const answers = ref(getQuestionnaireAnswers(application.value.answers?.values || {}))
 const default_answers = computed(() => application.value.answers?.values || {})
 
-const answerUpdate = (field_name, answer) => {
+const answerUpdate = (field_name: string, answer, true_update: boolean) => {
   answers.value[field_name] = answer
+  if (true_update)
+    onInput()
 }
 
-const loadData = () => {
-  gamesService.application(user_id.value, game_alias).then(({data}) => {
-    store.dispatch("games/setApplication", data)
-    answers.value = getQAnswers(data.answers.values)
-  })
-  gamesService.questions(props.game_alias).then(({data}) => {
-    store.dispatch("games/setQuestions", data)
-  })
-}
-
-const onSubmit = (values) => {
+const onSubmit = (values = {}) => {
   const answersToSend = {...answers.value, game_alias: game_alias}
   showErrors.value = true
   form.send(async () => {
-    await gamesService.apply(answersToSend)
-    loadData()
+    gamesService.apply(answersToSend).then(({data}) => {
+      store.dispatch("games/setApplication", data)
+    })
   })
+}
+// const onInput = debounce(onSubmit, 5000)
+
+let timer;
+const onInput = (force: boolean = false) => {
+  if (timer)
+    clearTimeout(timer);
+  if (force)
+    onSubmit()
+  else
+    timer = setTimeout(onSubmit, 1000)
 }
 const onLeave = () => {
-  const answersToSend = {...answers.value, game_alias: game_alias}
-  form.send(async () => {
-    await gamesService.apply(answersToSend)
-  })
+  onInput(true)
+  window.removeEventListener('beforeunload', onLeave)
 }
+
 
 window.addEventListener('beforeunload', onLeave)
 </script>

@@ -97,7 +97,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import gamesService from "@/services/gamesService";
 import CharacterPicture from "@/views/games/roles/groups/CharacterPicture.vue";
 import {useStore} from "vuex";
@@ -150,5 +150,12 @@ const like = () => {
     store.dispatch('auth/setUser', userToSet)
   })
 }
-const phoneScreen = computed(() => window.screen.width < 768)
+const phoneScreen = ref(window.innerWidth < 768)
+const updateWidth = () => phoneScreen.value = window.innerWidth < 768
+const onLeave = () => {
+  window.removeEventListener('resize', updateWidth);
+  window.removeEventListener('beforeunload', onLeave);
+}
+window.addEventListener('resize', updateWidth)
+window.addEventListener('beforeunload', onLeave)
 </script>

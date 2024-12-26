@@ -33,7 +33,7 @@
               class="form flex flex-col w-full gap-6" novalidate="novalidate" @submit="onSubmit">
           <QuestionField
               v-for="question in questions.filter(q => q.order < 0)" @change="answerUpdate"
-              :key="`${question.id} ${default_answers[question.id]}`" :horizontal="false"
+              :key="`${question.id} ${!!default_answers[question.id]}`" :horizontal="false"
               :unfilled="false" :question="question" :errors="errors"
               :default-value="default_answers[question.id]"
           />
@@ -77,61 +77,65 @@ const {errors} = form
 
 
 const user = computed(() => store.getters["auth/user"])
-const user_id = computed(() => props.userId || user.value.id)
 const application = computed(() => store.getters["games/application"])
 const questions = computed(() => store.getters["games/questions"])
 
 const getApplicationAnswers = (answers) => {
-  return Object.fromEntries(Object.entries(answers).filter((q_id, v) => q_id < 0 && !!v))
+  return Object.fromEntries(
+      Object.entries(answers).filter(
+          (q_id, v) => questions.value.find((q) => q.id == q_id)?.order < 0 && !!v
+      )
+  )
 }
 const answers = ref(getApplicationAnswers(store.getters['games/answers'].values))
 const default_answers = computed(() => store.getters['games/answers'].values)
 const questionnaire_unfilled = computed(() => store.getters['games/questionnaire_unfilled'])
 const application_unfilled = computed(() => store.getters['games/application_unfilled'])
 
-const loadData = () => {
-  gamesService.application(user_id.value, game_alias).then(({data}) => {
-    store.dispatch("games/setApplication", data)
-  })
-  gamesService.questions(game_alias).then(({data}) => {
-    store.dispatch("games/setQuestions", data)
-  })
-}
-
-const answerUpdate = (field_name, answer) => {
+const answerUpdate = (field_name: string, answer, true_update: boolean) => {
   answers.value[field_name] = answer
+  if (true_update)
+    onInput()
 }
 
-const onSubmit = (values) => {
+const onSubmit = (values = {}) => {
   const answersToSend = {...answers.value, game_alias: game_alias}
   form.send(async () => {
-    await gamesService.apply(answersToSend)
-    loadData()
+    gamesService.apply(answersToSend).then(({data}) => {
+      store.dispatch("games/setApplication", data)
+    })
   })
 }
+
 const noApplication = () => {
-  return ['deleted', null].includes(application.value.status)
-}
-const onLeave = () => {
-  if (!noApplication()) {
-    const answersToSend = {...answers.value, game_alias: game_alias}
-    form.send(async () => {
-      await gamesService.apply(answersToSend)
-    })
-  }
-  window.removeEventListener('beforeunload', onLeave)
+  return ['deleted', '', null].includes(application.value.status)
 }
 
 const onDelete = () => {
   gamesService.delete_application(game_alias).then(({data}) => {
-    loadData()
+    store.dispatch("games/setApplication", data)
   })
 }
 
 const onRestore = async () => {
   await gamesService.restore_application(game_alias).then(({data}) => {
-    loadData()
+    store.dispatch("games/setApplication", data)
   })
+}
+
+let timer;
+const onInput = (force: boolean = false) => {
+  if (timer)
+    clearTimeout(timer);
+  if (force)
+    onSubmit()
+  else
+    timer = setTimeout(onSubmit, 1000)
+}
+const onLeave = () => {
+  if (!noApplication)
+    onInput(true)
+  window.removeEventListener('beforeunload', onLeave)
 }
 
 window.addEventListener('beforeunload', onLeave)

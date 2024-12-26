@@ -101,5 +101,12 @@ const lockedSection = (lockedSectionText) => {
 const otherGames = () => router.push(`/game/${{'whales': 'frostpunk', 'frostpunk': 'whales'}[props.game_alias]}/about`)
 
 
-const phoneScreen = computed(() => window.screen.width < 768)
+const phoneScreen = ref(window.innerWidth < 768)
+const updateWidth = () => phoneScreen.value = window.innerWidth < 768
+const onLeave = () => {
+  window.removeEventListener('resize', updateWidth);
+  window.removeEventListener('beforeunload', onLeave);
+}
+window.addEventListener('resize', updateWidth)
+window.addEventListener('beforeunload', onLeave)
 </script>

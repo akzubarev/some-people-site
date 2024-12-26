@@ -21,7 +21,7 @@
   --content-secondary-shadowed: 98 106 106;
   --content-disabled: 140 140 140;
   --content-muted: 60 60 60;
-  --content-accent: 255 244 221;
+  --content-accent: 187 201 202;
 
   --bg-default: 64 75 95;
   --bg-shadowed: 29 33 38;

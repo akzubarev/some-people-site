@@ -1,5 +1,6 @@
 <template>
-  <Form class="form w-full max-w-[500px] flex flex-col items-center overflow-auto no-scrollbar gap-6 p-3" novalidate="novalidate" @submit="onSubmitRegister">
+  <Form class="form w-full max-w-[500px] flex flex-col items-center overflow-auto no-scrollbar gap-6 p-3"
+        novalidate="novalidate" @submit="onSubmitRegister">
     <div class="flex flex-col md:flex-row gap-3">
       <InputField
           :title="$t('user.firstName')" :errors="errors.first_name"
@@ -58,14 +59,18 @@ const form = formhelper()
 const {errors} = form
 
 const onSubmitRegister = values => {
+  store.dispatch("body/showActionLoader")
   form.send(async () => {
-    values.email = (values.email || "").trim()
-    const data = (await authService.register(values))["data"]
-    console.log(errors.value)
-    if (!Object.keys(errors.value).length) {
-      await store.dispatch("auth/setToken", data.auth_token)
-      await router.push("/account/settings")
+    try {
+      values.email = (values.email || "").trim()
+      const data = (await authService.register(values))["data"]
+      if (!Object.keys(errors.value).length) {
+        await store.dispatch("auth/setToken", data.auth_token)
+        await router.push("/account/settings")
+      }
+    } catch (Exception) {
     }
+    store.dispatch("body/hideActionLoader")
   })
 }
 
