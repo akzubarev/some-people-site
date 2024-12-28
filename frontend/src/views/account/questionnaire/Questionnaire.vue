@@ -11,11 +11,10 @@
         }}
       </div>
     </div>
-    <div class="flex flex-col gap-medium">
+    <div class="flex flex-col gap-medium" v-if="Object.keys(default_answers).length">
       <QuestionField
-          v-for="question in questions" @change="answerUpdate"
-          :key="`${question.id} ${!!default_answers[question.id]}`"
-          :question="question" :horizontal="false"
+          v-for="question in questions" :key="question.id"
+          :question="question" :horizontal="false" @change="answerUpdate"
           :readonly="!!userId" :show-errors="showErrors" :errors="errors"
           :unfilled="application.answers?.unfilled?.includes(question.id)"
           :default-value="default_answers[question.id]"
@@ -75,7 +74,6 @@ const onSubmit = (values = {}) => {
     })
   })
 }
-// const onInput = debounce(onSubmit, 5000)
 
 let timer;
 const onInput = (force: boolean = false) => {
