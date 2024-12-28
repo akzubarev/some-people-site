@@ -29,7 +29,7 @@ const copyLink = () => {
   setTimeout(() => copied.value = false, 3000)
 }
 const openTelegram = () => {
-  const url = "https://t.me/tomatoboto_bot" + (user.value.telegram ? "" : `?start=${user.value.telegram_code}`)
+  const url = "https://t.me/Somepeopllarpebot" + (user.value.telegram ? "" : `?start=${user.value.telegram_code}`)
   window.open(url, '_blank').focus()
 }
 </script>
