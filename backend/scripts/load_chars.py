@@ -147,9 +147,9 @@ def get_questions(game: Game, worksheet: gspread.Worksheet) -> None:
                 line_options.remove('')
             choices = [choices, line_options]
         question, _ = Question.objects.update_or_create(
-            order=order,
+            title=title,
             defaults={
-                'title': title, 'description': description, 'choices': choices,
+                'order': order, 'description': description, 'choices': choices,
                 'type': {
                     'Строка': 'line',
                     'Абзац': 'paragraph',

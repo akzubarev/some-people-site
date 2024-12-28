@@ -2,7 +2,7 @@ import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router"
 import store from "@/store"
 import {Mutations} from "@/store/enums/StoreEnums"
 import {isAuth, isMg, guest} from "@/middleware/auth"
-import {loadUser, loadGames, loadApplication} from "@/middleware/load"
+import {loadUser, loadGames, loadApplication, loadQuestions} from "@/middleware/load"
 import {setPageTitle} from "@/store"
 import Layout from "@/layout/Layout.vue"
 
@@ -85,7 +85,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "account",
                 redirect: "/account/whales/application",
                 component: () => import("@/views/account/LK.vue"),
-                meta: {middleware: [loadUser, isAuth, loadGames, loadApplication]},
+                meta: {middleware: [loadUser, isAuth, loadGames, loadApplication, loadQuestions]},
                 props: true,
                 children: [
                     {

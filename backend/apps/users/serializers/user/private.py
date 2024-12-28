@@ -34,6 +34,10 @@ class UserPrivateSerializer(UserSerializer):
         if phone and phone[0] == '8':
             kwargs['data']['phone'] = phone.replace('8', '+7')
 
+        vk = kwargs.get('vk', {}).get('vk')
+        if vk:
+            kwargs['data']['vk'] = vk.replace('https://', '').replace('vk.com/', '')
+
         super().__init__(instance, *args, **kwargs)
 
     def get_telegram(self, user: User) -> str:

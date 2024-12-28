@@ -21,6 +21,7 @@
   --content-secondary-shadowed: 98 106 106;
   --content-disabled: 140 140 140;
   --content-muted: 60 60 60;
+  --content-accent-1: 255 244 221;
   --content-accent: 187 201 202;
 
   --bg-default: 64 75 95;
@@ -76,11 +77,16 @@ div {
 }
 
 .text-title {
-  @apply text-lg md:text-2xl;
+  @apply max-[315px]:text-base sm:text-lg md:text-2xl;
 }
 
 .text-largest {
   @apply text-6xl xl:text-8xl;
+}
+
+.text-xxs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .gap-xs {
@@ -108,7 +114,7 @@ div {
 }
 
 .form-input-error {
-  @apply absolute text-sm font-semibold -bottom-6 right-1;
+  @apply absolute text-sm font-semibold -bottom-1 -translate-y-[100%] right-1;
 }
 
 .Layout-Body {

@@ -1,6 +1,6 @@
-<template >
-  <div v-if="characters.length + displaySubgroups.length" class="flex flex-col gap-3" :id="group.name">
-     <div v-if="characters.length" class="flex flex-col gap-small">
+<template>
+  <div v-if="characters.length + displaySubgroups.length" class="flex flex-col gap-large" :id="group.name">
+    <div v-if="characters.length" class="flex flex-col gap-small">
       <div class="flex items-center flex-row px-[2.5%] md:px-0 md:w-[80%] gap-3">
         <img v-if="!phoneScreen" class="w-12 h-12" :src="game_images[game_alias].group"/>
         <inline-svg v-else class="w-12 h-12 rotate-180 text-content-secondary"
@@ -17,7 +17,7 @@
         />
       </div>
     </div>
-    <div v-if="displaySubgroups.length" class="flex flex-col gap-3">
+    <div v-if="displaySubgroups.length" class="flex flex-col gap-large">
       <GroupBlock
           v-for="subgroup in displaySubgroups" :key="subgroup"
           :group="subgroup" :game_alias="game_alias"
