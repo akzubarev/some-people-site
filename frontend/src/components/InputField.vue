@@ -1,12 +1,15 @@
 <template>
   <div class="flex relative w-full gap-1" :class="horizontal ? 'flex-row' : 'flex-col'">
-    <label v-if="!!title" class="flex items-center basis-full lg:basis-1/3 text-xl"> {{ title }} </label>
+    <div class="flex flex-col md:flex-row justify-between basis-full lg:basis-1/3">
+      <label v-if="!!title" class="text-xl"> {{ title }} </label>
+      <slot name="label"/>
+    </div>
     <div class="flex flex-col w-full relative items-end gap-1">
-      <slot/>
+      <slot name="content"/>
       <Field
           class="form-input" :autocomplete="autocomplete ? 'on' : 'off'"
-          :type="passVisible ? 'text' : type" :name="name" v-model="props.v_model"
-          :placeholder="placeholder"
+          :type="passVisible ? 'text' : type" :name="name" v-model="result"
+          :placeholder="placeholder" @change="$emit('input', name, result, true)"
       />
       <inline-svg
           v-if="type=='password'" @click="passVisible = !passVisible"
@@ -31,6 +34,8 @@ const props = defineProps({
   'horizontal': {type: Boolean, default: true},
   'autocomplete': {type: Boolean, default: false},
   'type': {type: String, default: 'text'},
-  'v_model': {type: String},
+  'defaultValue': {},
 })
+const result = ref(props.defaultValue)
+defineEmits(['input'])
 </script>

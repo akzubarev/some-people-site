@@ -65,15 +65,17 @@ const onSubmitRegister = values => {
   form.send(async () => {
     try {
       values.email = (values.email || "").trim()
-      const data = (await authService.register(values))["data"]
+      const {data} = await authService.register(values)
       if (!Object.keys(errors.value).length) {
+        store.dispatch("body/hideActionLoader")
         await store.dispatch("auth/setToken", data.auth_token)
         await router.push("/account/settings")
       }
+      store.dispatch("body/hideActionLoader")
     } catch (error) {
       our_errors.value = error.response.data
+      store.dispatch("body/hideActionLoader")
     }
-    store.dispatch("body/hideActionLoader")
   })
 }
 

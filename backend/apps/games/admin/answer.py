@@ -12,5 +12,6 @@ class AnswerAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "question",
+        "application__user",
         "value",
     ]
