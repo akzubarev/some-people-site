@@ -12,7 +12,7 @@
         {{ group.name }}
       </div>
     </div>
-    <div class="flex flex-col gap-1 pl-1" v-if="expanded">
+    <div class="flex flex-col gap-2 pl-1" v-if="expanded">
       <GroupNamesBlock
           v-for="subgroup in group.subgroups.filter(s => s.characters.length+s.members.length+s.subgroups.length>0)"
           :key="subgroup" :group="subgroup" :game_alias="game_alias"
