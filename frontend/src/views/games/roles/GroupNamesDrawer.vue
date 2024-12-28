@@ -8,16 +8,16 @@
     <div class="text-large font-semibold uppercase text-content-secondary mb-6" v-if="!phoneScreen"> Сетка ролей</div>
     <div class="flex flex-col overflow-y-auto no-scrollbar gap-medium">
       <div id="groups" class="flex flex-col gap-3">
-        <div class="flex flex-col xl:flex-row mb-3 cursor-pointer gap-1">
+        <div class="flex flex-col xl:flex-row mb-3 gap-1">
           <div class="flex flex-row uppercase font-bold text-content-secondary gap-1">
             По
-            <div class="text-content-secondary" :class="showFamilyGroups ? '':'underline'"
+            <div class="text-content-secondary cursor-pointer" :class="showFamilyGroups ? '':'underline'"
                  @click="$emit('showFamily', false)">
               занятости
             </div>
             /
           </div>
-          <div class="text-content-secondary uppercase font-bold" :class="showFamilyGroups ? 'underline':''"
+          <div class="text-content-secondary uppercase font-bold cursor-pointer" :class="showFamilyGroups ? 'underline':''"
                @click="$emit('showFamily', true)"> семьям
           </div>
         </div>

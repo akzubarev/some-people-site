@@ -6,8 +6,8 @@
       >
         ▶
       </div>
-      <div class="text-medium leading-4 font-semibold text-content-secondary"
-           :class="group.subgroups.length > 0 ? '' : 'ml-3'"
+      <div class="text-medium leading-5 text-content-secondary"
+           :class="[group.subgroups.length > 0 ? '' : 'ml-3', group.subgroups?.length > 0? 'font-semibold' : '']"
            @click="reroute(`#${group.name}`)">
         {{ group.name }}
       </div>
