@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-1">
+  <div class="flex flex-col gap-2">
     <div class="flex flex-row gap-2 items-center cursor-pointer">
       <div v-if="group.subgroups?.length > 0" class="text-content-secondary text-sm"
            @click="expanded=!expanded" :class="expanded ? 'rotate-90' : ''"
@@ -12,7 +12,7 @@
         {{ group.name }}
       </div>
     </div>
-    <div class="flex flex-col gap-2 pl-1" v-if="expanded">
+    <div class="flex flex-col gap-3 pl-4" v-if="expanded">
       <GroupNamesBlock
           v-for="subgroup in group.subgroups.filter(s => s.characters.length+s.members.length+s.subgroups.length>0)"
           :key="subgroup" :group="subgroup" :game_alias="game_alias"

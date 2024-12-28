@@ -21,7 +21,7 @@
                @click="$emit('showFamily', true)"> семьям
           </div>
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-3">
           <GroupNamesBlock
               v-for="(group, i) in (showFamilyGroups ? family_groups : group_groups).filter(g => !groupIsEmpty(g))"
               :key="group" :game_alias="game_alias" :group="group" :expanded="i==0"

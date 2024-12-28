@@ -12,7 +12,7 @@
   </Drawer>
   <div class="flex flex-row bg-whales-bg p-header gap-[5%] h-screen md:px-[2.5%]">
     <GroupNamesDrawer
-        class="hidden md:flex pt-6 pl-3 lg:pl-12 z-10 w-[22.5%]" :game_alias="game_alias"
+        class="hidden md:flex pt-6 pl-3 lg:pl-6 z-10 w-[22.5%]" :game_alias="game_alias"
         :family_groups="family_groups" :group_groups="group_groups"
         :show-family-groups="showFamilyGroups" @show-family="(v)=>showFamilyGroups=v"
     />
