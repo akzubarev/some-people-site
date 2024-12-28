@@ -46,7 +46,9 @@
               title="Vk" :errors="errors.vk"
               name="vk" :horizontal="false" :v_model="user.vk"
               placeholder="@vk" @input="inputEvent"
-          />
+          >
+            <div class="text-content-shadowed">Часть после vk.com/</div>
+          </InputField>
         </div>
         <div class="flex flex-col w-full gap-1">
           <div class="flex text-xl"> Показывать в сетке ролей</div>
@@ -90,7 +92,7 @@ const uploadAvatar = ref(null)
 
 const saveProfile = (values) => {
   form.send(async () => {
-    if (uploadAvatar)
+    if (!!uploadAvatar.value)
       values.avatar = uploadAvatar.value
     const response = await authService.update_me(values)
     await store.dispatch('auth/setUser', response.data)

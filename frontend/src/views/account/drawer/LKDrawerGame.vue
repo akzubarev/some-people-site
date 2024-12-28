@@ -50,7 +50,7 @@ const expanded = ref(props.game_alias == 'whales')
 const showLocked = ref(false)
 
 const noApplication = () => {
-  return ['deleted', null].includes(application.value.status)
+  return ['deleted', '', null].includes(application.value.status)
 }
 const openQuestionnaire = (game_alias) => {
   if (noApplication())

@@ -43,7 +43,7 @@ const store = useStore()
 const props = defineProps(['game_alias'])
 const emit = defineEmits(["closeDrawer"])
 const user = store.getters['auth/user']
-const showFamilyGroups = ref(true)
+const showFamilyGroups = ref(false)
 const showDrawer = ref(false)
 
 const game = computed(() => store.getters['games/games'][props.game_alias])

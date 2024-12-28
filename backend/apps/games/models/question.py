@@ -30,7 +30,7 @@ class Question(models.Model):
     type = models.CharField(verbose_name="Тип", choices=Type.CHOICES, default=Type.LINE)
     choices = models.JSONField(verbose_name="Варианты", null=True, blank=True)
     order = models.IntegerField(verbose_name="Порядковый номер", default=1)
-    required = models.BooleanField(verbose_name="Обязательный", default=1)
+    required = models.BooleanField(verbose_name="Обязательный", default=True)
 
     class Meta:
         """Model meta."""

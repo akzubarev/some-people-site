@@ -4,7 +4,7 @@
     <div v-if="phoneScreen && !personal" class="flex flex-col w-full mb-1">
       <div class="text-xs text-content-secondary"> {{ character.alias }}</div>
       <div class="flex flex-row justify-between w-full">
-        <div class="text-sm font-semibold text-content-secondary">{{ character.name }}</div>
+        <div class="text-medium font-semibold text-content-secondary">{{ character.name }}</div>
         <PopupWrapper v-if="character.player">
           <template #header>
             <div class="text-medium text-content-secondary sm:cursor-pointer md:cursor-default text-start">
@@ -31,14 +31,14 @@
       </div>
     </div>
     <div class="flex flex-row gap-medium w-full md:pr-6">
-      <div class="flex w-[30%] md:w-[20%] items-center">
+      <div class="flex w-[30%] md:w-[20%]">
         <CharacterPicture :game_alias="game_alias" :src="character.image" :name="character.name_eng"/>
       </div>
       <div class="flex flex-col w-full gap-1" :class="!phoneScreen || personal ? 'items-start':'items-end'">
         <div v-if="!phoneScreen || personal" class="text-medium text-content-secondary font-semibold">
           {{ character.name }}, {{ character.alias }}
         </div>
-        <div class="text-xs md:text-sm text-content-secondary-shadowed whitespace-pre-wrap"> {{
+        <div class="text-xxs md:text-sm text-content-secondary-shadowed whitespace-pre-wrap"> {{
             character.description
           }}
         </div>
@@ -54,7 +54,9 @@
             />
           </template>
           <template #content>
-            <div class="text-sm bg-bg-transparent rounded-xl min-w-[140px] p-1"> Хочу играть этого персонажа!</div>
+            <div class="text-sm bg-bg-transparent rounded-xl min-w-[140px] p-1">
+              {{ user.id ? 'Хочу играть этого персонажа!' : 'Сначала нужно подать заявку' }}
+            </div>
           </template>
         </PopupWrapper>
         <inline-svg
@@ -84,7 +86,9 @@
             />
           </template>
           <template #content>
-            <div class="text-sm bg-bg-transparent rounded-xl min-w-[140px] p-1"> Хочу играть этого персонажа!</div>
+            <div class="text-sm bg-bg-transparent rounded-xl min-w-[140px] p-1">
+              {{ user.id ? 'Хочу играть этого персонажа!' : 'Сначала нужно подать заявку' }}
+            </div>
           </template>
         </PopupWrapper>
         <inline-svg

@@ -6,7 +6,7 @@
       >
         ▶
       </div>
-      <div class="text-medium font-semibold text-content-secondary"
+      <div class="text-medium leading-4 font-semibold text-content-secondary"
            :class="group.subgroups.length > 0 ? '' : 'ml-3'"
            @click="reroute(`#${group.name}`)">
         {{ group.name }}
@@ -26,7 +26,6 @@
 import {ref} from "vue";
 import {useRouter} from "vue-router";
 
-const expanded = ref(false)
 const router = useRouter()
 const emit = defineEmits(["closeDrawer"])
 const props = defineProps({
@@ -43,8 +42,10 @@ const props = defineProps({
     }
   },
   game_alias: {type: String},
+  expanded: {type: Boolean, default: false},
 })
 
+const expanded = ref(props.expanded)
 const reroute = (group_name) => {
   emit('closeDrawer')
   router.push(group_name)

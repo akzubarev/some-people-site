@@ -22,6 +22,9 @@
       />
       <div class="flex w-full md-6"/>
     </div>
+    <div class="text-content-secondary">
+      Здесь нет кнопки сохранения, потому что мы уже сохранили ответы автоматически!
+    </div>
   </Form>
 </template>
 

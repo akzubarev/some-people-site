@@ -15,6 +15,7 @@ module.exports = {
                 'content-disabled-transparent': "rgb(var(--content-disabled) / 0.3)",
                 'content-muted': "rgb(var(--content-muted))",
                 'content-accent': "rgb(var(--content-accent))",
+                'content-accent-1': "rgb(var(--content-accent-1))",
                 'bg-primary': "rgb(var(--bg-default))",
                 'bg-transparent': "rgb(0 0 0 / 0.75)",
                 'bg-transparent-2': "rgb(0 0 0 / 0.4)",

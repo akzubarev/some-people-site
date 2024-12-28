@@ -3,31 +3,31 @@
         novalidate="novalidate" @submit="onSubmitRegister">
     <div class="flex flex-col md:flex-row gap-3">
       <InputField
-          :title="$t('user.firstName')" :errors="errors.first_name"
+          :title="$t('user.firstName')" :errors="errors.first_name|| our_errors.first_name"
           name="first_name" placeholder="Имя" :horizontal="false"
       />
       <InputField
-          :title="$t('user.lastName')" :errors="errors.first_name"
+          :title="$t('user.lastName')" :errors="errors.first_name|| our_errors.first_name"
           name="last_name" placeholder="Фамилия" :horizontal="false"
       />
     </div>
     <div class="flex flex-col md:flex-row gap-3">
       <InputField
-          :title="$t('user.username')" :errors="errors.username"
+          :title="$t('user.username')" :errors="errors.username|| our_errors.username"
           name="username" :horizontal="false"
       />
       <InputField
-          :title="$t('user.email')" :errors="errors.email"
+          :title="$t('user.email')" :errors="errors.email|| our_errors.email"
           name="email" type="email" placeholder="email" :horizontal="false"
       />
     </div>
     <div class="flex flex-col md:flex-row gap-3">
       <InputField
-          :title="$t('common.password')" :errors="errors.password"
+          :title="$t('common.password')" :errors="errors.password|| our_errors.password"
           name="password" type="password" placeholder="Пароль" :horizontal="false"
       />
       <InputField
-          :title="$t('settings.repeatPassword')" :errors="errors.re_password"
+          :title="$t('settings.repeatPassword')" :errors="errors.re_password|| our_errors.re_password"
           name="re_password" type="password" placeholder="Повторите пароль" :horizontal="false"
       />
     </div>
@@ -57,9 +57,11 @@ const router = useRouter()
 const submitButton = ref<HTMLElement | null>(null)
 const form = formhelper()
 const {errors} = form
+const our_errors = ref({})
 
 const onSubmitRegister = values => {
   store.dispatch("body/showActionLoader")
+  our_errors.value = {}
   form.send(async () => {
     try {
       values.email = (values.email || "").trim()
@@ -68,7 +70,8 @@ const onSubmitRegister = values => {
         await store.dispatch("auth/setToken", data.auth_token)
         await router.push("/account/settings")
       }
-    } catch (Exception) {
+    } catch (error) {
+      our_errors.value = error.response.data
     }
     store.dispatch("body/hideActionLoader")
   })

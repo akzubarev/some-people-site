@@ -8,7 +8,7 @@
           class="h-8 w-8 mr-3 md:hidden cursor-pointer" @click="showDrawer=true"
           :src="require('@/assets/images/icons/common/menu.svg')"
       />
-      <TitleText class="text-content-accent hover:text-content-primary"/>
+      <TitleText class="text-content-accent-1 hover:text-content-accent"/>
       <Menu :horizontal="true" class="hidden md:flex"/>
       <Avatar
           class="h-14 w-14 md:h-20 md:w-20 md:ml-[5%] cursor-pointer"
