@@ -44,8 +44,8 @@ class UserViewSet(viewsets.GenericViewSet, mixins.UpdateModelMixin, mixins.Retri
     @action(['get'], detail=False)
     def me(self, request: Request, *args: Any, **kwargs: Any):
         """Makes an action for current user based on query action."""
-        # if request.user.is_anonymous:
-        #     return Response(data={}, status=HTTPStatus.NO_CONTENT)
+        if request.user.is_anonymous:
+            return Response(data={}, status=HTTPStatus.NO_CONTENT)
         return self.retrieve(request, *args, **kwargs)
 
     @action(['put'], detail=False)
