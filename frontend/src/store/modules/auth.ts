@@ -1,13 +1,7 @@
-import authService from "@/services/authService"
 import {Actions, Mutations} from "@/store/enums/StoreEnums"
 import {Module, Action, Mutation, VuexModule} from "vuex-module-decorators"
 import Cookies from "js-cookie"
 
-// export interface User {
-//   name: string;
-//   surname: string;
-//   email: string;
-// }
 
 @Module
 export default class AuthModule extends VuexModule {
@@ -50,8 +44,11 @@ export default class AuthModule extends VuexModule {
         this.authToken = token
         if (!!token)
             Cookies.set("auth_token", token, {expires: 365})
-        else
+        else {
             Cookies.remove("auth_token")
+            Cookies.remove("sessionid")
+            Cookies.remove("csrftoken")
+        }
     }
 
     @Action
@@ -67,8 +64,6 @@ export default class AuthModule extends VuexModule {
     @Action
     [Actions.LOGOUT]() {
         this.context.commit(Mutations.SET_USER, {})
-        Cookies.remove("sessionid")
-        Cookies.remove("csrftoken")
         this.context.commit(Mutations.SET_TOKEN, undefined)
     }
 }

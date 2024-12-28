@@ -48,3 +48,9 @@ export const loadApplication = async ({next}) => {
     }
     return next()
 }
+export const loadQuestions = async ({next}) => {
+    gamesService.questions('whales').then(({data}) => {
+        store.dispatch("games/setQuestions", data)
+    })
+    return next()
+}

@@ -1,15 +1,21 @@
 <template>
   <Form class="form" novalidate="novalidate" @submit="saveProfile">
     <div class="flex flex-col w-full gap-3">
-      <div class="hidden md:flex flex-row w-full items-center gap-6">
-        <label class="text-xl"> {{ $t("settings.avatar") }} </label>
-        <TinyImageUploader
-            icon class="bg-bg-primary !w-[100px] !h-[100px] rounded-full"
-            :image="user.avatar" @upload="uploadAvatar = $event; user.avatar = uploadAvatar; inputEvent()"
-        />
-      </div>
-      <div class="flex md:hidden text-lg text-content-disabled w-full">
-        Поменять аватар пока что можно только в десктопной версии
+      <div class="flex flex-row w-full justify-between gap-3">
+        <div class="hidden md:flex flex-row w-full items-center gap-6">
+          <label class="text-xl"> {{ $t("settings.avatar") }} </label>
+          <TinyImageUploader
+              icon class="bg-bg-primary !w-[100px] !h-[100px] rounded-full"
+              :image="user.avatar" @upload="uploadAvatar = $event; user.avatar = uploadAvatar; inputEvent()"
+          />
+        </div>
+        <div class="flex md:hidden text-lg text-content-disabled w-full">
+          Поменять аватар пока что можно только в десктопной версии
+        </div>
+        <button type="submit" id="kt_account_profile_details_submit"
+                class="btn-primary ml-auto w-fit h-fit max-sm:w-full">
+          <span class="indicator-label"> {{ $t("common.actions.save") }} </span>
+        </button>
       </div>
       <div class="flex flex-col items-center gap-3">
         <div class="settings-row">
@@ -45,7 +51,7 @@
           <InputField
               title="Vk" :errors="errors.vk"
               name="vk" :horizontal="false" :v_model="user.vk"
-              placeholder="@vk" @input="inputEvent"
+              placeholder="vk" @input="inputEvent"
           >
             <div class="text-content-shadowed">Часть после vk.com/</div>
           </InputField>
@@ -63,9 +69,7 @@
             <div class="flex items-center text-xl">ВК</div>
           </div>
         </div>
-        <!--        <button type="submit" id="kt_account_profile_details_submit" class="btn-primary ml-auto w-fit max-sm:w-full">-->
-        <!--          <span class="indicator-label"> {{ $t("common.actions.save") }} </span>-->
-        <!--        </button>-->
+
       </div>
     </div>
   </Form>
@@ -100,27 +104,27 @@ const saveProfile = (values) => {
   })
 }
 
-let timer;
+// let timer;
 
 const inputEvent = (...args) => {
-  onInput()
+  // onInput()
 }
 
-const onInput = (force: boolean = false) => {
-  if (timer)
-    clearTimeout(timer);
-  if (force)
-    saveProfile(user.value || {})
-  else
-    timer = setTimeout(saveProfile, 1000)
-}
-const onLeave = () => {
-  onInput(true)
-  window.removeEventListener('beforeunload', onLeave)
-}
-
-
-window.addEventListener('beforeunload', onLeave)
+// const onInput = (force: boolean = false) => {
+// if (timer)
+//   clearTimeout(timer);
+// if (force)
+//   saveProfile({})
+// else
+//   timer = setTimeout(() => saveProfile({}), 1000)
+// }
+// const onLeave = () => {
+//   onInput(true)
+//   window.removeEventListener('beforeunload', onLeave)
+// }
+//
+//
+// window.addEventListener('beforeunload', onLeave)
 </script>
 
 <style scoped>
