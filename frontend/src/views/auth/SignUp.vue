@@ -1,33 +1,33 @@
 <template>
   <Form class="form w-full max-w-[500px] flex flex-col items-center overflow-auto no-scrollbar gap-6 p-3"
         novalidate="novalidate" @submit="onSubmitRegister">
-    <div class="flex flex-col md:flex-row gap-3">
+    <div class="input-row">
       <InputField
-          :title="$t('user.firstName')" :errors="errors.first_name|| our_errors.first_name"
+          :title="$t('user.firstName')" :errors="all_errors.first_name"
           name="first_name" placeholder="Имя" :horizontal="false"
       />
       <InputField
-          :title="$t('user.lastName')" :errors="errors.first_name|| our_errors.first_name"
+          :title="$t('user.lastName')" :errors="all_errors.last_name"
           name="last_name" placeholder="Фамилия" :horizontal="false"
       />
     </div>
-    <div class="flex flex-col md:flex-row gap-3">
+    <div class="input-row">
       <InputField
-          :title="$t('user.username')" :errors="errors.username|| our_errors.username"
-          name="username" :horizontal="false"
+          :title="$t('user.username')" :errors="all_errors.username"
+          name="username" placeholder="Никнейм" :horizontal="false"
       />
       <InputField
-          :title="$t('user.email')" :errors="errors.email|| our_errors.email"
+          :title="$t('user.email')" :errors="all_errors.email"
           name="email" type="email" placeholder="email" :horizontal="false"
       />
     </div>
-    <div class="flex flex-col md:flex-row gap-3">
+    <div class="input-row">
       <InputField
-          :title="$t('common.password')" :errors="errors.password|| our_errors.password"
+          :title="$t('common.password')" :errors="all_errors.password"
           name="password" type="password" placeholder="Пароль" :horizontal="false"
       />
       <InputField
-          :title="$t('settings.repeatPassword')" :errors="errors.re_password|| our_errors.re_password"
+          :title="$t('settings.repeatPassword')" :errors="all_errors.re_password"
           name="re_password" type="password" placeholder="Повторите пароль" :horizontal="false"
       />
     </div>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue"
+import {computed, ref} from "vue"
 import {Form} from "vee-validate"
 import {useStore} from "vuex"
 import {useRouter} from "vue-router"
@@ -58,25 +58,41 @@ const submitButton = ref<HTMLElement | null>(null)
 const form = formhelper()
 const {errors} = form
 const our_errors = ref({})
+const all_errors = computed(() => {
+  return {
+    first_name: errors.value.first_name || our_errors.value.first_name,
+    last_name: errors.value.last_name || our_errors.value.last_name,
+    username: errors.value.username || our_errors.value.username,
+    email: errors.value.email || our_errors.value.email,
+    password: errors.value.password || our_errors.value.password,
+    re_password: errors.value.re_password || our_errors.value.re_password,
+  }
+})
 
 const onSubmitRegister = values => {
-  store.dispatch("body/showActionLoader")
-  our_errors.value = {}
   form.send(async () => {
+    our_errors.value = {}
+    store.dispatch("body/showActionLoader")
     try {
       values.email = (values.email || "").trim()
-      const {data} = await authService.register(values)
+      const data = (await authService.register(values))["data"]
       if (!Object.keys(errors.value).length) {
-        store.dispatch("body/hideActionLoader")
         await store.dispatch("auth/setToken", data.auth_token)
         await router.push("/account/settings")
       }
-      store.dispatch("body/hideActionLoader")
     } catch (error) {
-      our_errors.value = error.response.data
-      store.dispatch("body/hideActionLoader")
+      Object.entries(error.response.data).forEach(([k, v]) => {
+        our_errors.value[k] = Array.isArray(v) ? v[0] : v
+      })
     }
+    store.dispatch("body/hideActionLoader")
   })
 }
 
 </script>
+
+<style scoped>
+.input-row {
+  @apply flex flex-col md:flex-row w-full gap-3;
+}
+</style>
