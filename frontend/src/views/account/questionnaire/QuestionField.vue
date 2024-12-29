@@ -10,12 +10,12 @@
     <Field v-if="question.type==='line'" v-model="answer"
            class="form-input text-content-secondary bg-white" type="text"
            :name="field_name" placeholder="Строка..." :readonly="readonly"
-           @input="$emit('change', field_name, answer, true)"
+           @change="$emit('change', field_name, answer, true)"
     />
     <Field v-if="question.type==='paragraph'" v-model="answer" as="textarea"
            class="form-input text-content-secondary bg-white h-[150px]" type="text"
            :name="field_name" placeholder="Абзац..." :readonly="readonly"
-           @input="$emit('change', field_name, answer, true)"
+           @change="$emit('change', field_name, answer, true)"
     />
     <RadioQuestion
         v-if="question.type==='single_choice'" :question="question"

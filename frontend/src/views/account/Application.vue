@@ -32,8 +32,9 @@
                       :src="require('@/assets/images/icons/common/check.svg')"/>
           <Undone :number="application_unfilled"/>
         </div>
-        <Form v-if="questions.filter(q => q.order < 0) && Object.keys(default_answers).length"
-              class="form flex flex-col w-full gap-6" novalidate="novalidate" @submit="onSubmit">
+        <Form
+            v-if="questions.filter(q => q.order < 0) && (Object.keys(default_answers).length + application_unfilled)"
+            class="form flex flex-col w-full gap-6" novalidate="novalidate" @submit="onSubmit">
           <QuestionField
               v-for="question in questions.filter(q => q.order < 0)"
               :key="question.id" :horizontal="false" @change="answerUpdate"

@@ -11,12 +11,12 @@
         }}
       </div>
     </div>
-    <div class="flex flex-col gap-medium" v-if="Object.keys(default_answers).length">
+    <div class="flex flex-col gap-medium" v-if="Object.keys(default_answers).length + unfilled.length">
       <QuestionField
           v-for="question in questions" :key="question.id"
           :question="question" :horizontal="false" @change="answerUpdate"
           :readonly="!!userId" :show-errors="showErrors" :errors="errors"
-          :unfilled="application.answers?.unfilled?.includes(question.id)"
+          :unfilled="unfilled.includes(question.id)"
           :default-value="default_answers[question.id]"
       />
       <div class="flex w-full md-6"/>
@@ -58,6 +58,7 @@ const getQuestionnaireAnswers = (answers) => {
 
 const answers = ref(getQuestionnaireAnswers(application.value.answers?.values || {}))
 const default_answers = computed(() => application.value.answers?.values || {})
+const unfilled = computed(() => application.value.answers?.unfilled || [])
 
 const answerUpdate = (field_name: string, answer, true_update: boolean) => {
   answers.value[field_name] = answer
