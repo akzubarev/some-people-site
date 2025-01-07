@@ -42,7 +42,7 @@ def _get_answer_value(answer: Answer | None) -> list[str]:
         return ['']
     value = answer.value
     if isinstance(value, list):
-        if isinstance(value[0], list):
+        if len(value) > 0 and isinstance(value[0], list):
             return [','.join(v) for v in value]
         return [','.join(value)]
     return [value]
@@ -65,8 +65,11 @@ def upload_applications(worksheet: Worksheet, game_alias: str) -> None:
     """Формирование и выгрузка в гугл таблицу рядов данных рекламных кампаний."""
     questions = Question.objects.filter(games__alias=game_alias).order_by('order')
     applications = Application.objects.filter(game__alias=game_alias).order_by('id')
-    rows = [_make_title(questions=questions)]
+    title = _make_title(questions=questions)
+    rows = []
     for application in applications:
+        if application.unfilled(only_questionnaire=True):
+            continue
         answers = {answer.question_id: answer for answer in application.answers.all()}
         answers_values = []
         for question in questions:
@@ -77,7 +80,7 @@ def upload_applications(worksheet: Worksheet, game_alias: str) -> None:
     if rows:
         worksheet.clear()
         worksheet.append_rows(
-            values=rows, value_input_option=ValueInputOption.user_entered,
+            values=[title, *rows], value_input_option=ValueInputOption.user_entered,
         )
         logger.info(f'Выгружено {len(applications)} заявок.')
 

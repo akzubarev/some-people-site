@@ -63,3 +63,12 @@ class Application(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.game} {self.character or ""}'
+
+    def unfilled(self, only_questionnaire: bool = False) -> list[int]:
+        questions = self.game.questions.filter(required=True)
+        if only_questionnaire:
+            questions = questions.filter(order__gt=0)
+        return [
+            question.id for question in questions
+            if not (answer := question.answers.filter(application=self).first()) or (answer and not answer.filled)
+        ]
