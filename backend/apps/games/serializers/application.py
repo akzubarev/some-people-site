@@ -45,9 +45,5 @@ class ApplicationPrivateSerializer(ApplicationPublicSerializer):
         """Gets application answers."""
         return {
             'values': {answer.question.id: answer.value for answer in application.answers.all()},
-            'unfilled': [
-                question.id for question in application.game.questions.filter(required=True)
-                if not (answer := question.answers.filter(application=application).first()) or
-                   (answer and not answer.filled)
-            ],
+            'unfilled': application.unfilled(),
         }
