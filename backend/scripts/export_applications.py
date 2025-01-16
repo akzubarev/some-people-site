@@ -61,7 +61,9 @@ def _make_title(questions: Collection[Question]):
 
 def upload_applications(worksheet: Worksheet, game_alias: str) -> None:
     questions = Question.objects.filter(games__alias=game_alias).order_by('order')
-    applications = Application.objects.filter(game__alias=game_alias).order_by('id')
+    applications = Application.objects.filter(game__alias=game_alias).exclude(
+        status=Application.Status.DELETED,
+    ).order_by('id')
     title = _make_title(questions=questions)
     rows = []
     for application in applications:
@@ -86,7 +88,9 @@ def upload_unfinished(worksheet: Worksheet, game_alias: str) -> None:
     title = ['Игрок', 'Неотвеченные вопросы']
     rows = []
     questions = Question.objects.filter(games__alias=game_alias).order_by('order')
-    applications = Application.objects.filter(game__alias=game_alias).order_by('id')
+    applications = Application.objects.filter(game__alias=game_alias).exclude(
+        status=Application.Status.DELETED,
+    ).order_by('id')
     for application in applications:
         unfilled_ids = application.unfilled(only_questionnaire=True)
         if unfilled_ids:
