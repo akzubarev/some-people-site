@@ -19,8 +19,8 @@ class UserAdmin(BaseUserAdmin):
         'username',
         'first_name',
         'last_name',
-        'telegram_chat_id',
         'telegram_username',
+        'vk',
         'created_at',
     ]
 
