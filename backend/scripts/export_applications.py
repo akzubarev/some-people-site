@@ -20,9 +20,7 @@ from apps.games.models import Answer, Application, Question
 logger = getLogger(__name__)
 games_data = {
     'spreadsheet_id': '1obEoiPrtLyIpVdWVODDfNz1gBeQ6EiDFRel82j_e584',
-    'whales': {'applications_worksheet_id': '418879773'},
-    # 'spreadsheet_id': '1ucdOv6Hid9toTFUSuTSNRh7z7wpeY2dgCkIOuZtgrz4',
-    # 'whales': {'applications_worksheet_id': '1417613417'},
+    'whales': {'applications_worksheet_id': '418879773', 'unfinished_worksheet_id': '1018078207'},
 }
 
 
@@ -62,7 +60,6 @@ def _make_title(questions: Collection[Question]):
 
 
 def upload_applications(worksheet: Worksheet, game_alias: str) -> None:
-    """Формирование и выгрузка в гугл таблицу рядов данных рекламных кампаний."""
     questions = Question.objects.filter(games__alias=game_alias).order_by('order')
     applications = Application.objects.filter(game__alias=game_alias).order_by('id')
     title = _make_title(questions=questions)
@@ -85,7 +82,25 @@ def upload_applications(worksheet: Worksheet, game_alias: str) -> None:
         logger.info(f'Выгружено {len(applications)} заявок.')
 
 
-def export_apps():
+def upload_unfinished(worksheet: Worksheet, game_alias: str) -> None:
+    title = ['Игрок', 'Неотвеченные вопросы']
+    rows = []
+    questions = Question.objects.filter(games__alias=game_alias).order_by('order')
+    applications = Application.objects.filter(game__alias=game_alias).order_by('id')
+    for application in applications:
+        unfilled_ids = application.unfilled(only_questionnaire=True)
+        if unfilled_ids:
+            unfilled_questions = questions.filter(id__in=unfilled_ids).values_list('title', flat=True)
+            user = application.user
+            rows.append([f'{user.username} ({user.first_name} {user.last_name})', ', '.join(unfilled_questions)])
+    if rows:
+        worksheet.clear()
+        worksheet.append_rows(
+            values=[title, *rows], value_input_option=ValueInputOption.user_entered,
+        )
+
+
+def export_finished():
     """Entrypoint for loading games characters."""
     for game_alias in [
         # 'frostpunk',
@@ -95,8 +110,27 @@ def export_apps():
             game_alias=game_alias, worksheet=_get_worksheet(
                 spreadsheet_id=games_data['spreadsheet_id'],
                 worksheet_id=games_data[game_alias]['applications_worksheet_id'],
-            )
+            ),
         )
+
+
+def export_unfinished():
+    """Entrypoint for loading games characters."""
+    for game_alias in [
+        # 'frostpunk',
+        'whales'
+    ]:
+        upload_unfinished(
+            game_alias=game_alias, worksheet=_get_worksheet(
+                spreadsheet_id=games_data['spreadsheet_id'],
+                worksheet_id=games_data[game_alias]['unfinished_worksheet_id'],
+            ),
+        )
+
+
+def export_apps():
+    # export_finished()
+    export_unfinished()
 
 
 if __name__ == '__main__':

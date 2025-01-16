@@ -44,3 +44,7 @@ class ApplicationAdmin(admin.ModelAdmin):
     def export(self, request):
         export_apps()
         return HttpResponseRedirect("../")
+
+    def unfinished(self, request):
+        export_apps()
+        return HttpResponseRedirect("../")
