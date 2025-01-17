@@ -110,7 +110,7 @@ div {
 }
 
 .form-input {
-  @apply flex flex-row text-lg items-center w-full basis-full lg:basis-2/3 p-3 bg-bg-primary rounded-xl;
+  @apply flex flex-row text-lg items-center w-full p-3 bg-bg-primary rounded-xl;
 }
 
 .Layout-Body {

@@ -17,7 +17,7 @@
         :show-family-groups="showFamilyGroups" @show-family="(v)=>showFamilyGroups=v"
     />
     <div id="groups_scrollview"
-         class="flex flex-col md:py-12 md:px-6 w-full overflow-y-scroll scroll-auto no-scrollbar z-10">
+         class="flex flex-col md:py-12 md:pl-6 md:pr-2 w-full overflow-y-scroll scroll-auto no-scrollbar z-10">
       <div class="flex flex-col gap-large w-full">
         <GroupBlock
             v-for="group in (showFamilyGroups ?  family_groups : group_groups).filter(g => !groupIsEmpty(g))"

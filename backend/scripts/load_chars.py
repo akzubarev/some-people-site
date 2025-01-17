@@ -114,9 +114,9 @@ def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
                 if family_name and family_name != '-' else None
             master_obj = User.objects.filter(is_staff=True, first_name=master).first()
             char, _ = Character.objects.update_or_create(
-                name=character_name,
+                order=order, group__game_id=game.id,
                 defaults={
-                    'alias': alias, 'image': image, 'description': description,
+                    'name': character_name, 'alias': alias, 'image': image, 'description': description,
                     'group': group, 'family': family, 'order': order, 'name_eng': name_eng,
                     'master': master_obj,
                 },
@@ -134,11 +134,12 @@ def get_characters(game: Game, worksheet: gspread.Worksheet) -> None:
 def get_questions(game: Game, worksheet: gspread.Worksheet) -> None:
     """Parses the questions from google sheet."""
     num_rows = len([item for item in worksheet.col_values(1) if item])
-    rows: list[list] = worksheet.get_values(f'A2:F{num_rows}')
+    rows: list[list] = worksheet.get_values(f'A2:G{num_rows}')
     for i, row in enumerate(rows):
         # try:
-        order, title, description, question_type, choices, line_options, *_ = row
+        order, title, description, question_type, choices, line_options, required, *_ = row
         choices = [choice.strip('\n').strip() for choice in choices.split(';')]
+        required = required == 'TRUE'
         if '' in choices:
             choices.remove('')
         if line_options:
@@ -149,7 +150,7 @@ def get_questions(game: Game, worksheet: gspread.Worksheet) -> None:
         question, _ = Question.objects.update_or_create(
             title=title,
             defaults={
-                'order': order, 'description': description, 'choices': choices,
+                'order': order, 'description': description, 'choices': choices, 'required': required,
                 'type': {
                     'Строка': 'line',
                     'Абзац': 'paragraph',
