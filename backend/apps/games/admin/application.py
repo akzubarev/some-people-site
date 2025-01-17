@@ -14,7 +14,7 @@ class ApplicationAdmin(admin.ModelAdmin):
 
     change_list_template = "games/applications_changelist.html"
     ordering = ('-id',)
-    list_filter = ['game', 'user__username']
+    list_filter = ['game', 'user__username', 'status', 'payed']
     list_display = [
         'id',
         'user_str',
