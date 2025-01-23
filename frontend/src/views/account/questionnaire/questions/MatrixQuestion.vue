@@ -3,7 +3,7 @@
     <div class="flex flex-row items-center gap-3 md:gap-6">
       <div class="w-full min-w-[40%] items-center"/>
       <div v-for="option in question.choices[0]" :key="option"
-           class="w-full max-w-[120px] items-center text-center text-medium text-content-secondary">
+           class="w-full items-center text-center text-medium text-content-secondary">
         {{ option }}
       </div>
     </div>
@@ -11,7 +11,7 @@
          v-for="(option, i) in question.choices[1]" :key="option">
       <div class="w-full min-w-[40%] text-medium break-all text-content-secondary"> {{ option }}</div>
       <input
-          class="form-check-input w-full max-w-[120px] cursor-pointer"
+          class="form-check-input w-full cursor-pointer"
           v-for="(_, j) in question.choices[0]" :key="j" @click="onInput(i, j)"
           :id="`input${question.id}${i}${j}`" :name="`input${question.id}${i}`"
           :type="checkbox? 'checkbox' : 'radio'" :checked="res[i][j]"

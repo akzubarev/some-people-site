@@ -42,6 +42,14 @@
   }
 }
 
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 div {
   @apply font-primary text-content-primary;
 }
