@@ -7,20 +7,22 @@
   <div
       class="flex flex flex-col gap-1 md:gap-3 p-header md:justify-end bg-cover h-screen w-full bg-bottom md:bg-left-bottom"
       :style="`background-image: url('${game_images[game_alias].background}')`">
-    <div class="text-largest font-bold md:font-semibold text-content-secondary md:text-content-primary uppercase px-6 md:px-12"> {{
-        game.title
-      }}
+    <div class="text-largest font-bold md:font-semibold uppercase px-6 md:px-12"
+         :class="game_alias == 'frostpunk' ? 'text-content-primary ': 'text-content-secondary md:text-content-primary'">
+      {{ game.title }}
     </div>
     <div class="flex flex-col items-center md:flex-row h-full md:h-fit gap-medium md:py-6 md:mb-12
     md:bg-bg-transparent-2 md:pl-12 md:pr-3 justify-between md:justify-normal">
       <div id="description" class="flex flex-col gap-small w-full px-6 md:px-0 md:w-[70%]">
-        <div class="text-base md:text-lg lg:text-2xl text-content-secondary md:text-content-primary whitespace-pre-wrap">
+        <div class="text-base md:text-lg lg:text-2xl whitespace-pre-wrap"
+             :class="game_alias == 'frostpunk' ? 'text-content-primary ': 'text-content-secondary md:text-content-primary'">
           {{ game.short_description }}
         </div>
         <div id="tags" class="flex flex-row gap-2">
           <div v-for="data in gameData" :key="data"
-               class="flex sm:text-sm md:text-lg lg:text-xl text-content-secondary md:text-content-primary p-1 lg:p-2
-               min-h-[40px] md:min-h-none justify-center items-center bg-content-disabled-transparent text-center w-full rounded-sm">
+               class="flex sm:text-sm md:text-lg lg:text-xl p-1 lg:p-2
+               min-h-[40px] md:min-h-none justify-center items-center bg-content-disabled-transparent text-center w-full rounded-sm"
+               :class="game_alias == 'frostpunk' ? 'text-content-primary ': 'text-content-secondary md:text-content-primary'">
             {{ data }}
           </div>
         </div>

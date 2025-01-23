@@ -65,8 +65,8 @@
         />
       </div>
     </div>
-    <div v-if="!phoneScreen && !personal" class="flex flex-col w-[17.5%] ml-[2,5%] pl-6 gap-1">
-      <div class="text-medium text-content-secondary sm:cursor-pointer md:cursor-default text-start">
+    <div v-if="!phoneScreen && !personal" class="flex flex-col w-[17.5%] gap-1">
+      <div class="text-medium text-content-secondary break-all sm:cursor-pointer md:cursor-default text-start">
         {{ character.player ? character.player.username : "Свободно" }}
       </div>
       <div class="flex flex-row gap-3 items-center pr-[2.5%]">
