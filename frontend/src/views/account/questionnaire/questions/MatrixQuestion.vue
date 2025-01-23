@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col w-full gap-6">
     <div class="flex flex-row items-center gap-3 md:gap-6">
       <div class="w-full min-w-[40%] items-center"/>
       <div v-for="option in question.choices[0]" :key="option"
@@ -7,15 +7,16 @@
         {{ option }}
       </div>
     </div>
-    <div class="flex flex-row items-center rounded-xl gap-3 md:gap-6"
+    <div class="flex flex-row w-full items-center rounded-xl gap-3 md:gap-6"
          v-for="(option, i) in question.choices[1]" :key="option">
-      <div class="w-full min-w-[40%] text-medium break-all text-content-secondary"> {{ option }}</div>
-      <input
-          class="form-check-input w-full cursor-pointer"
-          v-for="(_, j) in question.choices[0]" :key="j" @click="onInput(i, j)"
-          :id="`input${question.id}${i}${j}`" :name="`input${question.id}${i}`"
-          :type="checkbox? 'checkbox' : 'radio'" :checked="res[i][j]"
-      />
+      <div class="w-full min-w-[40%] text-medium text-content-secondary"> {{ option }}</div>
+      <div class="flex w-full cursor-pointer justify-center items-center" v-for="(_, j) in question.choices[0]"
+           :key="j" @click="onInput(i, j)">
+        <input
+            class="form-check-input" :id="`input${question.id}${i}${j}`" :name="`input${question.id}${i}`"
+            :type="checkbox? 'checkbox' : 'radio'" :checked="res[i][j]"
+        />
+      </div>
     </div>
   </div>
 </template>
