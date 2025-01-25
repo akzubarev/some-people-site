@@ -57,4 +57,4 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return self.email
+        return f'{self.username} ({self.first_name} {self.last_name})'

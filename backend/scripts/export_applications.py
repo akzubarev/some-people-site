@@ -35,9 +35,9 @@ def _get_worksheet(spreadsheet_id: str, worksheet_id: str) -> gspread.Worksheet:
     return google_creds.open_by_key(key=spreadsheet_id).get_worksheet_by_id(id=worksheet_id)
 
 
-def _get_answer_value(answer: Answer | None) -> list[str]:
-    if not answer:
-        return ['']
+def _get_answer_value(answer: Answer | None, question: Question) -> list[str]:
+    if not answer or not answer.value:
+        return ['' for _ in get_titles(question)]
     value = answer.value
     if isinstance(value, list):
         if len(value) > 0 and isinstance(value[0], list):
@@ -67,15 +67,11 @@ def upload_applications(worksheet: Worksheet, game_alias: str) -> None:
     title = _make_title(questions=questions)
     rows = []
     for application in applications:
-        if application.unfilled(only_questionnaire=True):
-            continue
         answers = {answer.question_id: answer for answer in application.answers.all()}
         answers_values = []
         for question in questions:
-            answers_values.extend(_get_answer_value(answers.get(question.id)))
-        if any(answers_values):
-            user = application.user
-            rows.append([f'{user.username} ({user.first_name} {user.last_name})'] + answers_values)
+            answers_values.extend(_get_answer_value(answer=answers.get(question.id), question=question))
+        rows.append([str(application.user)] + answers_values)
     if rows:
         worksheet.clear()
         worksheet.append_rows(
@@ -95,8 +91,7 @@ def upload_unfinished(worksheet: Worksheet, game_alias: str) -> None:
         unfilled_ids = application.unfilled(only_questionnaire=True)
         if unfilled_ids:
             unfilled_questions = questions.filter(id__in=unfilled_ids).values_list('title', flat=True)
-            user = application.user
-            rows.append([f'{user.username} ({user.first_name} {user.last_name})', ', '.join(unfilled_questions)])
+            rows.append([str(application.user), ', '.join(unfilled_questions)])
     if rows:
         worksheet.clear()
         worksheet.append_rows(
@@ -134,7 +129,7 @@ def export_unfinished():
 
 def export_apps():
     export_finished()
-    export_unfinished()
+    # export_unfinished()
 
 
 if __name__ == '__main__':

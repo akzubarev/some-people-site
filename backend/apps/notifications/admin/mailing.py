@@ -2,15 +2,14 @@
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
 from django.contrib import admin
-from django.utils.html import strip_tags
+from django.utils.html import format_html, strip_tags
 
 from apps.notifications.models import Mailing
+from apps.users.models import User
 
 
 class MailingAdminForm(forms.ModelForm):
     """Mailing admin form."""
-    # users = forms.CharField(widget=forms.Textarea)
-    # kwargs['widget'] = ManyToManyRawIdWidget(db_field.remote_field, self.admin_site)
     text = forms.CharField(widget=CKEditorUploadingWidget())
 
     class Meta:
@@ -25,11 +24,12 @@ class MailingAdmin(admin.ModelAdmin):
     ordering = ('-id',)
     list_display = [
         'id',
+        'ready',
         'display_text',
         'image',
+        'get_users',
         'time',
-        'ready',
-        'created_at'
+        # 'created_at',
     ]
 
     def display_text(self, obj):
@@ -40,16 +40,11 @@ class MailingAdmin(admin.ModelAdmin):
 
     search_fields = ['text']
 
-    # def save_related(self, request, form, formsets, change):
-    #     from apps.users.models import User
-    #     from mixins.enums import MatrixPermissionLevel
-    #     # if str(form.data.get('user')) == '1':
-    #     #     form.data['user'] = ','.join(set(User.objects.all().values_list('id', flat=True)))
-    #     # print(form.instance)
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        user_ids = request.GET.get('user_ids', '')
+        if db_field.name == 'users' and user_ids:
+            kwargs['initial'] = User.objects.filter(id__in=user_ids.split(','))
+        return super(MailingAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
-    #     request.POST._mutable = True
-    #     request.POST['user'] = ','.join(map(str, set(base_qs.values_list('id', flat=True))))
-    #     form.instance.user.clear()
-    #     print(form.data, form.instance.user.select_related())
-
-    #     super().save_related(request, form, formsets, change)
+    def get_users(self, mailing):
+        return format_html('<br>'.join([str(user) for user in mailing.users.all()]))

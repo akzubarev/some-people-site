@@ -31,11 +31,13 @@ class Mailing(AutoCreatedUpdatedMixin):
         db_index=True,
     )
 
+    users = models.ManyToManyField(to=User, related_name='mailings')
+
     def save(self, *args, **kwargs):
         """Model save with notification creation."""
         super().save(*args, **kwargs)
         if self.ready:
-            base_qs = User.objects.all()
+            users = self.users.all() if self.users.all().count() else User.objects.all()
             Notification.objects.bulk_create([
-                Notification(user=user, mailing=self) for user in base_qs
+                Notification(user=user, mailing=self) for user in users
             ])

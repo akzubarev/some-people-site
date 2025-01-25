@@ -13,11 +13,6 @@ class AnswerAdmin(admin.ModelAdmin):
     list_display = [
         'id',
         'question',
-        'user_str',
+        'application__user',
         'value',
     ]
-
-    @admin.display
-    def user_str(self, answer: Answer) -> str:  # type: ignore
-        user = answer.application.user
-        return f'{user.username} ({user.first_name} {user.last_name})'

@@ -14,10 +14,11 @@ class ApplicationAdmin(admin.ModelAdmin):
 
     change_list_template = "games/applications_changelist.html"
     ordering = ('-id',)
+    actions = ('mailing',)
     list_filter = ['game', 'user__username', 'status', 'payed']
     list_display = [
         'id',
-        'user_str',
+        'user',
         'price',
         'payed',
         'game',
@@ -29,11 +30,6 @@ class ApplicationAdmin(admin.ModelAdmin):
     def likes(self, application: Application) -> str:
         return format_html('<br>'.join([str(characters) for characters in application.user.likes.all()]))
 
-    @admin.display
-    def user_str(self, application: Application) -> str:
-        user = application.user
-        return f'{user.username} ({user.first_name} {user.last_name})'
-
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [
@@ -43,8 +39,13 @@ class ApplicationAdmin(admin.ModelAdmin):
 
     def export(self, request):
         export_apps()
-        return HttpResponseRedirect("../")
+        return HttpResponseRedirect('../')
 
     def unfinished(self, request):
         export_apps()
-        return HttpResponseRedirect("../")
+        return HttpResponseRedirect('../')
+
+    @admin.action(description='Создать рассылку')
+    def mailing(self, request, queryset):
+        users_ids = ','.join([str(obj.id) for obj in queryset])
+        return HttpResponseRedirect(f'/admin/notifications/mailing/add/?user_ids={users_ids}')
