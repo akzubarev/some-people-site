@@ -31,6 +31,7 @@ class MailingAdmin(admin.ModelAdmin):
         'time',
         # 'created_at',
     ]
+    readonly_fields = ('created_at', 'updated_at')
 
     def display_text(self, obj):
         """Displays text without tags."""

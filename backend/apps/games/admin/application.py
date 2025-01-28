@@ -47,5 +47,5 @@ class ApplicationAdmin(admin.ModelAdmin):
 
     @admin.action(description='Создать рассылку')
     def mailing(self, request, queryset):
-        users_ids = ','.join([str(obj.id) for obj in queryset])
+        users_ids = ','.join([str(obj.user.id) for obj in queryset])
         return HttpResponseRedirect(f'/admin/notifications/mailing/add/?user_ids={users_ids}')

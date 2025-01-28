@@ -129,7 +129,7 @@ def export_unfinished():
 
 def export_apps():
     export_finished()
-    # export_unfinished()
+    export_unfinished()
 
 
 if __name__ == '__main__':
