@@ -32,5 +32,3 @@ export const default_games = {
         "player_count": 0
     }
 }
-
-export const default_groups = {};

@@ -1,0 +1,25 @@
+name: some-people-security-tests
+services:
+  security-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: security_tests
+      POSTGRES_USER: security_tests
+      POSTGRES_PASSWORD: synthetic-tests-only
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U security_tests"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  tests:
+    build:
+      context: ..
+      dockerfile: docker/images/security-tests.Dockerfile
+    volumes:
+      - ../backend:/app
+    depends_on:
+      security-db:
+        condition: service_healthy
+    command: python manage.py test tests --noinput

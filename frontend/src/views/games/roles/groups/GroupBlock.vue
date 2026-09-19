@@ -1,13 +1,13 @@
 <template>
-  <div v-if="characters.length + displaySubgroups.length" class="flex flex-col gap-large" :id="group.name">
+  <div v-if="!group.hidden && characters.length + displaySubgroups.length" class="flex flex-col gap-large" :id="group.name">
     <div v-if="characters.length" class="flex flex-col gap-small">
       <div class="flex items-center flex-row px-[2.5%] md:px-0 md:w-[80%] gap-3">
-        <img v-if="!phoneScreen" class="w-12 h-12" :src="game_images[game_alias].group"/>
-        <inline-svg v-else class="w-16 h-16 rotate-180 text-content-secondary"
+        <img v-if="!phoneScreen && groupImage" class="w-12 h-12" :src="groupImage" alt=""/>
+        <inline-svg v-if="phoneScreen" class="w-16 h-16 rotate-180 text-content-secondary"
                     @click="$emit('showDrawer')" :src="require('@/assets/images/icons/common/arrow.svg')"/>
         <div class="flex flex-col">
           <div class="text-medium text-content-secondary font-bold uppercase"> {{ group.name }}</div>
-          <div class="text-small text-content-secondary font-semibold">{{ group.description }}</div>
+          <div v-if="description" class="text-small text-content-secondary font-semibold">{{ description }}</div>
         </div>
       </div>
       <div v-if="characters.length" class="flex flex-col gap-3">
@@ -51,8 +51,10 @@ const props = defineProps({
 defineEmits(['showDrawer'])
 
 const characters = computed(() => [...props.group.characters, ...props.group.members])
+const groupImage = computed(() => game_images[props.game_alias]?.groups?.[props.group.name] || game_images[props.game_alias]?.group)
+const description = computed(() => /^\s*lorem ipsum\b/i.test(props.group.description || '') ? '' : props.group.description)
 const displaySubgroups = computed(() => props.group.subgroups.filter(
-        s => s.characters.length + s.members.length + s.subgroups.length > 0
+        s => !s.hidden && s.characters.length + s.members.length + s.subgroups.length > 0
     )
 )
 const phoneScreen = ref(window.innerWidth < 768)

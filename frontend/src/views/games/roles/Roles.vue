@@ -1,5 +1,5 @@
 <template class="relative">
-  <img class="absolute h-[300px] w-full bg-cover" :src="game_images[game_alias].header"/>
+  <img class="absolute h-[300px] w-full bg-cover opacity-20 pointer-events-none" :src="game_images[game_alias].header" alt=""/>
   <div class="hidden md:flex absolute z-0 top-20 left-[2.5%] w-[20%] h-full bg-bg-transparent-white"/>
   <div class="hidden md:flex absolute z-0 top-20 left-[25%] w-[57.5%] h-full bg-bg-transparent-white"/>
   <div class="hidden md:flex absolute z-0 top-20 right-[2.5%] w-[12.5%] h-full bg-bg-transparent-white"/>
@@ -30,7 +30,7 @@
 
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from "vue"
+import {computed, onMounted, ref, watch} from "vue"
 import gamesService from "@/services/gamesService";
 import GroupBlock from "@/views/games/roles/groups/GroupBlock.vue";
 import GroupNamesDrawer from "@/views/games/roles/GroupNamesDrawer.vue";
@@ -49,20 +49,22 @@ const showDrawer = ref(false)
 const game = computed(() => store.getters['games/games'][props.game_alias])
 const groups = computed(() => store.getters['games/groups'])
 
-if (!user.mg && !game.value.open_character_list)
+if (!user.mg && game.value && !game.value.open_character_list)
   router.push(`/game/${props.game_alias}/about`)
 
-gamesService.groups(props.game_alias).then(({data}) => {
-  store.dispatch('games/setGroups', data)
-})
+watch(() => props.game_alias, async alias => {
+  store.dispatch('games/setGroups', [])
+  try {
+    const {data} = await gamesService.groups(alias)
+    if (props.game_alias === alias) store.dispatch('games/setGroups', data)
+  } catch {
+    if (props.game_alias === alias) router.replace(`/game/${alias}/about`)
+  }
+}, {immediate: true})
 
 const getGroups = (family: boolean) => {
-  const main_group = groups.value.find(group => group.family == family)
-  if (!main_group)
-    return []
-  const subgroups = main_group.subgroups
-  main_group.subgroups = []
-  return subgroups.concat(main_group)
+  return groups.value.filter(group => group.family == family && !group.hidden)
+      .flatMap(group => [...group.subgroups.filter(subgroup => !subgroup.hidden), {...group, subgroups: []}])
 }
 
 const family_groups = computed(() => getGroups(true))

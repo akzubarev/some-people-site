@@ -20,10 +20,10 @@ class TokenSerializer(serializers.ModelSerializer):
 class TokenCreateSerializer(serializers.Serializer):
     """Token create serializer."""
     password = serializers.CharField(
-        required=False, style={"input_type": "password"}
+        required=True, write_only=True, trim_whitespace=False, style={"input_type": "password"}
     )
     login_field = serializers.CharField(
-        required=False
+        required=True
     )
 
     default_error_messages = {
@@ -40,16 +40,10 @@ class TokenCreateSerializer(serializers.Serializer):
         """Validated model fields."""
         password = attrs.get("password")
         login_field = attrs.get("login_field")
-        self.user = authenticate(
-            request=self.context.get("request"),
-            login_field=login_field, password=password
-        )
-        if not self.user:
-            self.user = User.objects.filter(
-                Q(username=login_field) | Q(email=login_field)
-            ).first()
-            if self.user and not self.user.check_password(password):
-                self.fail("invalid_credentials")
+        candidate = User.objects.filter(Q(username=login_field) | Q(email=login_field)).first()
+        self.user = authenticate(request=self.context.get('request'),
+                                 username=candidate.username if candidate else login_field,
+                                 password=password)
         if self.user:
             return attrs
         self.fail("invalid_credentials")

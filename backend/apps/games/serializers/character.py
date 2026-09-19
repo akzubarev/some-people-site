@@ -23,9 +23,7 @@ class CharacterSerializer(serializers.ModelSerializer):
             'name_eng',
             'alias',
             'description',
-            'master',
             'image',
-            'application',
             'player',
             'tags',
         ]

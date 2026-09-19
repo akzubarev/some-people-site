@@ -11,14 +11,14 @@
       <div class="flex flex-col p-3 gap-6">
         <CharacterBlock
             v-for="character in characters" :key="character"
-            :character="character">
+            :character="character" :game_alias="game_alias">
           <UserBlock
               v-if="character.player" :user="character.player"
               :game="game_alias" :full="false"
           />
           <div v-else
                class="px-2 border border-1 rounded-xl text-md text-gray-500 border-gray-500">
-            {{ character.applications.length }} заявок
+            Роль свободна
           </div>
         </CharacterBlock>
       </div>
@@ -28,7 +28,7 @@
 
 
 <script setup lang="ts">
-import {ref} from "vue"
+import {computed, ref, watch} from "vue"
 import gamesService from "@/services/gamesService";
 import CharacterBlock from "@/views/games/roles/groups/CharacterBlock.vue";
 import UserBlock from "@/views/games/roles/users/UserBlock.vue";
@@ -39,14 +39,20 @@ import {useStore} from "vuex";
 const store = useStore()
 const props = defineProps(["game_alias"])
 const user = store.getters['auth/user']
-const game = store.getters['games/game']
+const game = computed(() => store.getters['games/games'][props.game_alias])
 const characters = ref([])
 
-if (!user.mg && !game.open_character_list)
+if (!user.mg && game.value && !game.value.open_character_list)
     router.push(`/game/${props.game_alias}/about`)
-gamesService.characters(props.game_alias).then(({data}) => {
-  characters.value = data
-})
+watch(() => props.game_alias, async alias => {
+  characters.value = []
+  try {
+    const {data} = await gamesService.characters(alias)
+    if (props.game_alias === alias) characters.value = data
+  } catch {
+    if (props.game_alias === alias) router.replace(`/game/${alias}/about`)
+  }
+}, {immediate: true})
 
 const searchCharacters = (search, tag) => {
   gamesService.characters(props.game_alias, search, tag).then(({data}) => {

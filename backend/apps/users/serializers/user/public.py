@@ -2,19 +2,22 @@
 from rest_framework import serializers
 
 from apps.users.models import User
-from .base import UserSerializer
 
 
-class UserPublicSerializer(UserSerializer):
-    """User serializer."""
+class UserPublicSerializer(serializers.ModelSerializer):
+    """Explicit public profile; never inherit private profile fields."""
     vk = serializers.SerializerMethodField()
+    telegram = serializers.SerializerMethodField()
 
     class Meta:
         """Serializer meta."""
         model = User
-        fields = UserSerializer.Meta.fields
-        read_only_fields = UserSerializer.Meta.fields
+        fields = ('username', 'first_name', 'last_name', 'avatar', 'vk', 'telegram')
+        read_only_fields = fields
 
     def get_vk(self, user: User) -> str:
         """Gets users vk username."""
         return user.vk if user.vk_public else None
+
+    def get_telegram(self, user: User) -> str | None:
+        return user.telegram_username if user.tg_public else None

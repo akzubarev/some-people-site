@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-2">
+  <div v-if="!group.hidden" class="flex flex-col gap-2">
     <div class="flex flex-row gap-2 items-center cursor-pointer">
       <div v-if="group.subgroups?.length > 0" class="text-content-secondary text-sm"
            @click="expanded=!expanded" :class="expanded ? 'rotate-90' : ''"

@@ -20,7 +20,7 @@
       </div>
       <slot/>
       <div class="flex flex-row items-center justify-between w-[30%] gap-3"
-           v-if="full && game">
+           v-if="full && game && application">
         <div class="text-sm whitespace-pre-wrap text-center"> Статус: {{
             {
               "pending": "Подана",
@@ -50,6 +50,7 @@
 
 <script setup lang="ts">
 import Avatar from "@/components/Avatar.vue";
+import {computed} from "vue";
 // import CharacterBlock from "@/views/games/groups/CharacterBlock.vue";
 
 const props = defineProps({
@@ -75,5 +76,5 @@ const props = defineProps({
 
 })
 
-const application = props.user.applications[props.game]
+const application = computed(() => props.full ? props.user?.applications?.[props.game] : null)
 </script>

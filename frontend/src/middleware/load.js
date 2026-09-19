@@ -1,4 +1,5 @@
 import store from "@/store"
+import axios from 'axios'
 import authService from "@/services/authService"
 import gamesService from "../services/gamesService";
 import {default_games} from "../constants/defaults";
@@ -12,7 +13,7 @@ export const loadUser = async ({next}) => {
                     store.dispatch('auth/setUser', data)
             })
         } catch (Exception) {
-            store.dispatch("auth/logout")
+            if (!axios.isCancel(Exception)) store.dispatch("auth/logout")
         }
     return next()
 }
@@ -42,7 +43,7 @@ export const loadGames = async ({next}) => {
 
 export const loadApplication = async ({next}) => {
     if (!Object.keys(store.getters['games/games']).length) {
-        const applicationData = await gamesService.application(store.getters['auth/user'].id, 'whales')
+        const applicationData = await gamesService.application('whales')
         store.dispatch("games/setApplication", applicationData.data)
         const questionsData = await gamesService.questions('whales')
         store.dispatch("games/setQuestions", questionsData.data)

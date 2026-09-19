@@ -1,8 +1,10 @@
 """Application admin module."""
 from django.contrib import admin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import path
 from django.utils.html import format_html
+from django.views.decorators.http import require_POST
 
 from apps.games.models import Application
 from scripts.export_applications import export_apps
@@ -33,11 +35,13 @@ class ApplicationAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [
-            path('export/', self.export),
+            path('export/', self.admin_site.admin_view(require_POST(self.export))),
         ]
         return my_urls + urls
 
     def export(self, request):
+        if not self.has_view_permission(request):
+            raise PermissionDenied
         export_apps()
         return HttpResponseRedirect('../')
 

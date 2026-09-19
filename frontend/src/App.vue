@@ -32,16 +32,6 @@
 }
 
 
-@layer base {
-  @font-face {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url(https://fonts.googleapis.com/) format('woff2');
-  }
-}
-
 div {
   @apply font-primary text-content-primary;
 }
