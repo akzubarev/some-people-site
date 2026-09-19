@@ -6,21 +6,19 @@ from django.core.files.base import ContentFile
 from rest_framework import serializers
 
 from apps.users.models import User
-from utils.auth import encode_uuid
 from .base import UserSerializer
 
 
 class UserPrivateSerializer(UserSerializer):
     """Serializes for /me route."""
-    telegram_code = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
 
     class Meta:
         """Model meta."""
 
         model = User
-        fields = UserSerializer.Meta.fields + ('telegram_code', 'likes', 'vk_public', 'tg_public',)
-        read_only_fields = UserSerializer.Meta.read_only_fields + ('telegram_code', 'likes',)
+        fields = UserSerializer.Meta.fields + ('likes', 'vk_public', 'tg_public',)
+        read_only_fields = fields
 
     def __init__(self, instance=None, *args, **kwargs) -> None:
         """Initializes the serializer."""
@@ -44,9 +42,14 @@ class UserPrivateSerializer(UserSerializer):
         """Gets users telegram username."""
         return user.telegram_username
 
-    def get_telegram_code(self, user: User) -> str:
-        """Returns users telegram code."""
-        return encode_uuid(uuid=user.uuid)
-
     def get_likes(self, user: User) -> str:
         return user.likes.all().values_list('id', flat=True)
+
+
+class UserProfileUpdateSerializer(UserPrivateSerializer):
+    """Only these profile fields may be changed through the SPA."""
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'phone', 'avatar',
+                  'vk', 'vk_public', 'tg_public')

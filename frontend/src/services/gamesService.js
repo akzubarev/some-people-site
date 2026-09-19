@@ -16,11 +16,11 @@ export default {
             (!tag ? '' : `&tag=${tag}`)
         return await request.get(`/api/games/characters/?${queryString}`)
     },
-    async application(user_id, game_alias) {
-        return await request.get(`/api/applications/get/?user_id=${user_id}&game_alias=${game_alias}`)
+    async application(game_alias) {
+        return await request.get(`/api/applications/get/?game_alias=${encodeURIComponent(game_alias)}`)
     },
-    async applications(user_id, game_alias = null) {
-        const params = `user_id=${user_id}` + (game_alias ? `&game_alias=${game_alias}` : "")
+    async applications(game_alias = null) {
+        const params = game_alias ? `game_alias=${encodeURIComponent(game_alias)}` : ""
         return await request.get(`/api/applications/?${params}`)
     },
     async apply(payload) {

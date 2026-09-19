@@ -2,10 +2,13 @@
 from typing import Any
 
 from django.db import transaction
+from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError
 
 from apps.games.models import Answer, Application, Game
 from apps.games.serializers import ApplicationPrivateSerializer
@@ -16,6 +19,10 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
     queryset = Application.objects
     serializer_class = ApplicationPrivateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Application.objects.filter(user=self.request.user)
 
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Gets an application."""
@@ -35,8 +42,12 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Gets an application."""
         user_id = request.GET.get('user_id')
+        if user_id is not None and user_id != str(request.user.pk):
+            raise ValidationError({'user_id': 'Only your own application may be requested.'})
         game_alias = request.GET.get('game_alias')
-        application = Application.objects.filter(user__id=user_id, game__alias=game_alias).first()
+        application = self.get_queryset().filter(game__alias=game_alias).first()
+        if application is None:
+            return Response({})
         serializer = self.serializer_class(application, context={'request': request})
         return Response(serializer.data)
 
@@ -61,7 +72,7 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def delete(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Deletes an application."""
         user, game_alias = request.user, request.data.get('game_alias')
-        application = Application.objects.get(user=user, game__alias=game_alias)
+        application = get_object_or_404(self.get_queryset(), game__alias=game_alias)
         application.status = Application.Status.DELETED
         application.save()
         serializer = self.serializer_class(application, context={'request': request})
@@ -72,7 +83,7 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def restore(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Restores an application."""
         user, game_alias = request.user, request.data.get('game_alias')
-        application = Application.objects.get(user=user, game__alias=game_alias)
+        application = get_object_or_404(self.get_queryset(), game__alias=game_alias)
         application.status = Application.Status.PENDING
         application.save()
         serializer = self.serializer_class(application, context={'request': request})

@@ -27,8 +27,8 @@ class TokenViewSet(viewsets.GenericViewSet):
     @action(detail=False, methods=["post"], permission_classes=[AllowAny], authentication_classes=[])
     def login(self, request: Request) -> Response:
         """Logs user in."""
-        token_serializer = self.get_serializer()
-        token_serializer.validate(request.data)
+        token_serializer = self.get_serializer(data=request.data)
+        token_serializer.is_valid(raise_exception=True)
         token, _ = self.get_queryset().get_or_create(user=token_serializer.user)
         return Response(data=TokenSerializer(token).data, status=status.HTTP_200_OK)
 

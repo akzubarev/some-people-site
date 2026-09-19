@@ -5,6 +5,7 @@ from rest_framework.fields import SerializerMethodField
 from apps.games.models import Game, Character
 from .character import CharacterSerializer
 from .group import GroupSerializer
+from apps.games.visibility import public_characters
 
 
 class GameSerializer(serializers.ModelSerializer):
@@ -38,4 +39,4 @@ class GameSerializer(serializers.ModelSerializer):
     #     ).data
 
     def get_player_count(self, obj: Game):
-        return Character.objects.filter(group__game=obj).count()
+        return public_characters(obj.pk).count() if obj.open_character_list else 0

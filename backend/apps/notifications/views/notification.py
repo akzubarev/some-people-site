@@ -5,7 +5,7 @@ from django.db.models import QuerySet
 from rest_framework import filters, mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -40,7 +40,7 @@ class NotificationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         self.queryset = self.queryset.order_by('-id')
         return super().list(*args, **kwargs)
 
-    @action(methods=["post"], detail=False, permission_classes=[AllowAny])
+    @action(methods=["post"], detail=False, permission_classes=[IsAuthenticated])
     def viewed(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Set notification status as viewed."""
         self.queryset.filter(user_id=request.user.id).update(viewed=True)

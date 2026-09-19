@@ -34,7 +34,7 @@ const store = useStore()
 const user = computed(() => store.getters["auth/user"])
 const showDrawer = ref(false)
 
-gamesService.application(user.value.id, props.game_alias).then(({data}) => {
+gamesService.application(props.game_alias).then(({data}) => {
   store.dispatch("games/setApplication", data)
 })
 gamesService.questions(props.game_alias).then(({data}) => {

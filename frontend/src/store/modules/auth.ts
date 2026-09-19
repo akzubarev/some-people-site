@@ -1,6 +1,7 @@
 import {Actions, Mutations} from "@/store/enums/StoreEnums"
 import {Module, Action, Mutation, VuexModule} from "vuex-module-decorators"
 import Cookies from "js-cookie"
+import {invalidateSession} from '@/services/sessionVersion'
 
 
 @Module
@@ -41,6 +42,7 @@ export default class AuthModule extends VuexModule {
 
     @Mutation
     [Mutations.SET_TOKEN](token) {
+        invalidateSession()
         this.authToken = token
         if (!!token)
             Cookies.set("auth_token", token, {expires: 365})
@@ -65,5 +67,8 @@ export default class AuthModule extends VuexModule {
     [Actions.LOGOUT]() {
         this.context.commit(Mutations.SET_USER, {})
         this.context.commit(Mutations.SET_TOKEN, undefined)
+        this.context.commit(`games/${Mutations.SET_APPLICATION}`, {}, {root: true})
+        this.context.commit(`games/${Mutations.SET_GROUPS}`, [], {root: true})
+        this.context.commit(`games/${Mutations.SET_QUESTIONS}`, [], {root: true})
     }
 }
