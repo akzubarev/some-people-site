@@ -26,7 +26,6 @@ import Menu from "@/layout/Menu.vue";
 import store from "@/store";
 import Avatar from "@/components/Avatar.vue";
 import TitleText from "@/layout/TitleText.vue";
-import GroupNamesDrawer from "@/views/games/roles/GroupNamesDrawer.vue";
 
 const user = computed(() => store.getters["auth/user"])
 

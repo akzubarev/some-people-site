@@ -1,28 +1,14 @@
 import { createStore } from "vuex"
 import { config } from "vuex-module-decorators"
 import { ref, readonly } from "vue"
-// import AuthModule from "@/store/modules/AuthModule";
-// import BodyModule from "@/store/modules/BodyModule";
-// import BreadcrumbsModule from "@/store/modules/BreadcrumbsModule";
-// import ConfigModule from "@/store/modules/ConfigModule";
+import auth from './modules/auth'
+import body from './modules/body'
+import games from './modules/games'
 
 config.rawError = true
 
-const requireContext = require.context("./modules", false, /.*\.ts$/)
-
-const modules = requireContext
-  .keys()
-  .filter(file => file.search(".ts") !== -1)
-  .map(file => [file.replace(/(^.\/)|(\.ts$)/g, ""), requireContext(file)])
-  .reduce((modules, [name, module]) => {
-    if (module.default) {
-      module = module.default
-    }
-    if (module.namespaced === undefined) {
-      module.namespaced = true
-    }
-    return { ...modules, [name]: module }
-  }, {})
+const modules: Record<string, any> = {auth, body, games}
+Object.values(modules).forEach(module => { module.namespaced = true })
 
 const store = createStore({
   modules
@@ -39,3 +25,5 @@ export const setPageTitle = v => (_title.value = v)
 export const setMetaData = v => (_metaData.value = v)
 export const updateMetaData = v =>
   (_metaData.value = Object.assign({}, _metaData.value, v))
+
+export const navigationPending = ref(true)

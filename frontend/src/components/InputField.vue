@@ -10,7 +10,7 @@
         <Field
             class="form-input" :autocomplete="autocomplete ? 'on' : 'off'"
             :type="passVisible ? 'text' : type" :name="name" v-model="result"
-            :placeholder="placeholder" @change="$emit('input', name, result, true)"
+            :readonly="readonly" :placeholder="placeholder" @change="$emit('input', name, result, true)"
         />
         <inline-svg
             v-if="type=='password'" @click="passVisible = !passVisible"
@@ -29,6 +29,7 @@ import {ref} from "vue";
 
 const passVisible = ref(false)
 const props = defineProps({
+  'readonly': {type: Boolean, default: false},
   'title': {type: String},
   'name': {type: String},
   'placeholder': {type: String},

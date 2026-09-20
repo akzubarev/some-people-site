@@ -11,16 +11,7 @@
       <div class="flex flex-col p-3 gap-6">
         <CharacterBlock
             v-for="character in characters" :key="character"
-            :character="character" :game_alias="game_alias">
-          <UserBlock
-              v-if="character.player" :user="character.player"
-              :game="game_alias" :full="false"
-          />
-          <div v-else
-               class="px-2 border border-1 rounded-xl text-md text-gray-500 border-gray-500">
-            Роль свободна
-          </div>
-        </CharacterBlock>
+            :character="character" :game_alias="game_alias"/>
       </div>
     </div>
   </div>
@@ -31,7 +22,6 @@
 import {computed, ref, watch} from "vue"
 import gamesService from "@/services/gamesService";
 import CharacterBlock from "@/views/games/roles/groups/CharacterBlock.vue";
-import UserBlock from "@/views/games/roles/users/UserBlock.vue";
 import CharacterFilter from "@/views/games/roles/users/CharacterFilter.vue";
 import router from "@/router";
 import {useStore} from "vuex";

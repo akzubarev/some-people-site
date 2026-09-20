@@ -1,9 +1,6 @@
 import request from "@/services/request"
 
 export default {
-    async game(alias) {
-        return await request.get(`/api/games/${alias}/`)
-    },
     async groups(game_alias) {
         return await request.get(`/api/games/groups/?game_alias=${game_alias}`)
     },
@@ -11,17 +8,12 @@ export default {
         return await request.get(`/api/games/`, payload)
     },
     async characters(game_alias, search = null, tag = null) {
-        const queryString = `game_alias=${game_alias}` +
-            (!search ? '' : `&search=${search}`) +
-            (!tag ? '' : `&tag=${tag}`)
+        const queryString = new URLSearchParams({game_alias,
+            ...(search ? {search} : {}), ...(tag ? {tag} : {})}).toString()
         return await request.get(`/api/games/characters/?${queryString}`)
     },
     async application(game_alias) {
         return await request.get(`/api/applications/get/?game_alias=${encodeURIComponent(game_alias)}`)
-    },
-    async applications(game_alias = null) {
-        const params = game_alias ? `game_alias=${encodeURIComponent(game_alias)}` : ""
-        return await request.get(`/api/applications/?${params}`)
     },
     async apply(payload) {
         return await request.post(`/api/applications/apply/`, payload)
@@ -37,10 +29,6 @@ export default {
     },
     async tags(game_alias) {
         return await request.get(`/api/games/tags/?game_alias=${game_alias}`)
-    },
-    async likes(game_alias, character_id, like) {
-        const payload = {game_alias: game_alias, character_id: character_id, like: like}
-        return await request.get(`/api/users/likes/?game_alias=${game_alias}`, payload)
     },
     async like_character(game_alias, character_id, like) {
         const payload = {game_alias: game_alias, character_id: character_id, like: like}

@@ -12,10 +12,7 @@
         <div class="flex md:hidden text-lg text-content-disabled w-full">
           Поменять аватар пока что можно только в десктопной версии
         </div>
-        <!--        <button type="submit" id="kt_account_profile_details_submit"-->
-        <!--                class="btn-primary ml-auto w-fit h-fit max-sm:w-full">-->
-        <!--          <span class="indicator-label"> {{ $t("common.actions.save") }} </span>-->
-        <!--        </button>-->
+
       </div>
       <div class="flex flex-col items-center gap-3">
         <div class="settings-row">
@@ -40,7 +37,7 @@
           <InputField
               :title="$t('user.email')" :errors="errors.email"
               name="email" :horizontal="false" :defaultValue="user.email"
-              :placeholder="$t('user.email')" @input="inputEvent"
+              :placeholder="$t('user.email')" readonly
           />
         </div>
         <div class="settings-row">
@@ -79,13 +76,12 @@
 <script setup lang="ts">
 import formhelper from "@/core/helpers/form"
 import {useStore} from "vuex"
-import {computed, ref} from "vue"
+import {computed, ref, onBeforeUnmount} from "vue"
 import {Form} from "vee-validate"
 import authService from "@/services/authService"
 import {useI18n} from "vue-i18n"
 import TinyImageUploader from "@/components/image-uploader/TinyImageUploader.vue"
 import InputField from "@/components/InputField.vue";
-
 
 const store = useStore()
 const form = formhelper()
@@ -98,7 +94,6 @@ const uploadAvatar = ref(null)
 
 const saveProfile = (form_values: Object = null) => {
   const values = {
-    email: changed_data.value.email || user.value.email,
     first_name: changed_data.value.first_name || user.value.first_name,
     last_name: changed_data.value.last_name || user.value.last_name,
     phone: changed_data.value.phone || user.value.phone,
@@ -134,8 +129,11 @@ const onLeave = () => {
   window.removeEventListener('beforeunload', onLeave)
 }
 
-
 window.addEventListener('beforeunload', onLeave)
+onBeforeUnmount(() => {
+  clearTimeout(timer)
+  window.removeEventListener('beforeunload', onLeave)
+})
 </script>
 
 <style scoped>

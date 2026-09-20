@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from "vue"
+import {computed, ref, onBeforeUnmount} from "vue"
 import {useStore} from "vuex"
 import {useI18n} from "vue-i18n"
 import CharacterBlock from "@/views/games/roles/groups/CharacterBlock.vue";
@@ -87,8 +87,8 @@ const questions = computed(() => store.getters["games/questions"])
 const getApplicationAnswers = (answers) => {
   return Object.fromEntries(
       Object.entries(answers).filter(
-          (q_id, v) => questions.value.find((q) => q.id == q_id)?.order < 0 && !!v
-      )
+          ([q_id, v]) => questions.value.find((q) => q.id == q_id)?.order < 0 && v !== undefined && v !== null
+      ).map(([id, value]) => [`question_${id}`, value])
   )
 }
 const answers = ref(getApplicationAnswers(store.getters['games/answers'].values))
@@ -105,8 +105,8 @@ const answerUpdate = (field_name: string, answer, true_update: boolean) => {
 const onSubmit = (values = {}) => {
   const answersToSend = {...answers.value, game_alias: game_alias}
   form.send(async () => {
-    gamesService.apply(answersToSend).then(({data}) => {
-      store.dispatch("games/setApplication", data)
+    await gamesService.apply(answersToSend).then(({data}) => {
+      if (store.state.games.accountAlias === game_alias) store.dispatch("games/setApplication", data)
     })
   })
 }
@@ -137,10 +137,14 @@ const onInput = (force: boolean = false) => {
     timer = setTimeout(onSubmit, 1000)
 }
 const onLeave = () => {
-  if (!noApplication)
+  if (!noApplication())
     onInput(true)
   window.removeEventListener('beforeunload', onLeave)
 }
 
 window.addEventListener('beforeunload', onLeave)
+onBeforeUnmount(() => {
+  clearTimeout(timer)
+  window.removeEventListener('beforeunload', onLeave)
+})
 </script>

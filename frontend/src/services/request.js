@@ -7,11 +7,6 @@ const request = axios.create({
     timeout: 20000,
     headers: {
         "Content-Type": "application/json",
-        // 'X-CSRFToken': {
-        //   toString () {
-        //     return Cookies.get('csrftoken')
-        //   }
-        // },
         Authorization: {
             toString() {
                 const token = store.getters["auth/token"]
@@ -19,18 +14,7 @@ const request = axios.create({
             }
         }
     }
-    // validateStatus: function (status) {
-    //   return status < 500
-    // }
 })
-// request.interceptors.response.use(function (response) {
-//     return response;
-//   }, function (error) {
-//     // log to sentry
-//     if (error.response.status < 500)
-//       return error.response
-//     return Promise.reject(error)
-//   });
 request.interceptors.request.use(config => {
     config.sessionVersion = sessionVersion()
     return config

@@ -11,7 +11,7 @@
         name="password" :type="passVisible ? 'text' : 'password'" :horizontal="true"
         :placeholder="$t('common.password')" :autocomplete="true"
     >
-      <!--      <router-link to="/lost-pass" class="link-primary"> {{ $t("auth.lostPassword") }}?</router-link>-->
+
     </InputField>
     <div class="flex flex-col w-full items-center gap-1">
       <router-link class="text-lg text-active-primary underline" to="/sign-up">

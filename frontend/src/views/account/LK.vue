@@ -1,5 +1,5 @@
 <template class="relative">
-  <img class="absolute h-[300px] w-full bg-cover z-10" :src="game_images[game_alias].header"/>
+  <img class="absolute h-[300px] w-full bg-cover z-10" :src="game_images[game_alias]?.header"/>
   <Drawer :show-drawer="showDrawer" @close="showDrawer=false">
     <LKDrawer class="h-full" :game_alias="game_alias" @close-drawer="showDrawer=false"/>
   </Drawer>
@@ -16,7 +16,7 @@
           <div class="text-medium uppercase text-content-secondary"> {{ user.first_name }} {{ user.last_name }}</div>
         </div>
       </div>
-      <router-view class="w-full h-full z-20 md:p-6 md:pt-24"/>
+      <router-view :key="game_alias" class="w-full h-full z-20 md:p-6 md:pt-24"/>
     </div>
   </div>
 </template>
@@ -24,8 +24,7 @@
 <script setup lang="ts">
 import {game_images} from "@/constants/gameImages";
 import LKDrawer from "@/views/account/drawer/LKDrawer.vue";
-import gamesService from "@/services/gamesService";
-import {computed, ref} from "vue";
+import {computed, ref, onBeforeUnmount} from "vue";
 import {useStore} from "vuex";
 import Drawer from "@/layout/Drawer.vue"
 
@@ -34,18 +33,12 @@ const store = useStore()
 const user = computed(() => store.getters["auth/user"])
 const showDrawer = ref(false)
 
-gamesService.application(props.game_alias).then(({data}) => {
-  store.dispatch("games/setApplication", data)
-})
-gamesService.questions(props.game_alias).then(({data}) => {
-  store.dispatch("games/setQuestions", data)
-})
 const phoneScreen = ref(window.innerWidth < 768)
 const updateWidth = () => phoneScreen.value = window.innerWidth < 768
 const onLeave = () => {
   window.removeEventListener('resize', updateWidth);
-  window.removeEventListener('beforeunload', onLeave);
+
 }
 window.addEventListener('resize', updateWidth)
-window.addEventListener('beforeunload', onLeave)
+onBeforeUnmount(onLeave)
 </script>

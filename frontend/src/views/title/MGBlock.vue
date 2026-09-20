@@ -28,7 +28,6 @@
 <script setup lang="ts">
 
 
-import About from "@/views/games/About.vue";
 import Footer from "@/layout/Footer.vue";
 
 const props = defineProps({

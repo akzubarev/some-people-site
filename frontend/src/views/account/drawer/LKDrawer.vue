@@ -12,7 +12,7 @@
       </div>
       <div id="games" class="flex flex-col overflow-y-scroll no-scrollbar gap-medium">
         <LKGamesDrawer
-            v-for="game in games.filter(g=>g.alias=='whales')" :key="game.id"
+            v-for="game in games.filter(g=>g.alias===game_alias)" :key="game.id"
             :game_title="game.title" :game_alias="game.alias"
         />
       </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from "vue"
+import {computed, ref, onBeforeUnmount} from "vue"
 import {useStore} from "vuex";
 import LKGamesDrawer from "@/views/account/drawer/LKDrawerGame.vue";
 
@@ -40,8 +40,8 @@ const phoneScreen = ref(window.innerWidth < 768)
 const updateWidth = () => phoneScreen.value = window.innerWidth < 768
 const onLeave = () => {
   window.removeEventListener('resize', updateWidth);
-  window.removeEventListener('beforeunload', onLeave);
+
 }
 window.addEventListener('resize', updateWidth)
-window.addEventListener('beforeunload', onLeave)
+onBeforeUnmount(onLeave)
 </script>
