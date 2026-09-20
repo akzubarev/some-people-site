@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "068d2cb7872622982b50f9954fd58297b64205b10b4ad3568aba5cd5b85f3ab7"
+            "sha256": "020756bebe126d4ee4fa306c7abcdf594266f7c3412d223fbdd901108e5fa6d7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -38,6 +38,23 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==3.8.1"
+        },
+        "boto3": {
+            "hashes": [
+                "sha256:1ec732e023fb29c12dc8520f925b5bbbed29eeb36b5764b5a5c26052d7c721f7",
+                "sha256:7454f666a9e852a56db0a7fa23be33a899f64e27828930eac43c3edba7b34e17"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.10'",
+            "version": "==1.43.98"
+        },
+        "botocore": {
+            "hashes": [
+                "sha256:6135dd639ea6d1b3b49381bc253c8a139d61f7d44cb5f7dae8e7cd1791758572",
+                "sha256:84b35b10402c2fc0c265f634fbf86336eecc6489ee23f55074b329924b2cfd6f"
+            ],
+            "markers": "python_version >= '3.10'",
+            "version": "==1.43.98"
         },
         "cachetools": {
             "hashes": [
@@ -329,6 +346,17 @@
             "index": "pypi",
             "version": "==1.0.1"
         },
+        "django-storages": {
+            "extras": [
+                "s3"
+            ],
+            "hashes": [
+                "sha256:11b7b6200e1cb5ffcd9962bd3673a39c7d6a6109e8096f0e03d46fab3d3aabd9",
+                "sha256:7a25ce8f4214f69ac9c7ce87e2603887f7ae99326c316bc8d2d75375e09341c9"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==1.14.6"
+        },
         "django-yarnpkg": {
             "hashes": [
                 "sha256:468d525aa28ad359ff287cfeecc1ec44e4a7ae06ccdced379204c62da11dffb6"
@@ -409,6 +437,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==3.10"
+        },
+        "jmespath": {
+            "hashes": [
+                "sha256:472c87d80f36026ae83c6ddd0f1d05d4e510134ed462851fd5f754c8c3cbb88d",
+                "sha256:a5663118de4908c91729bea0acadca56526eb2698e83de10cd116ae0f4e97c64"
+            ],
+            "markers": "python_version >= '3.9'",
+            "version": "==1.1.0"
         },
         "oauthlib": {
             "hashes": [
@@ -624,6 +660,14 @@
             "markers": "python_version >= '3.8'",
             "version": "==2.22"
         },
+        "python-dateutil": {
+            "hashes": [
+                "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3",
+                "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "version": "==2.9.0.post0"
+        },
         "python-dotenv": {
             "hashes": [
                 "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca",
@@ -682,6 +726,14 @@
             "markers": "python_version >= '3.6' and python_version < '4'",
             "version": "==4.9"
         },
+        "s3transfer": {
+            "hashes": [
+                "sha256:ba0309fd86be3c27dbf78cdd813c13c5e1df16e5874b99d2535ebbdfb9892993",
+                "sha256:d8168eccca828cbb2cd573675333f3bddd254313a9c42494b84c76b539e8ba25"
+            ],
+            "markers": "python_version >= '3.10'",
+            "version": "==0.19.2"
+        },
         "six": {
             "hashes": [
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
@@ -705,6 +757,14 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==0.5.1"
+        },
+        "tzdata": {
+            "hashes": [
+                "sha256:c2169a8b0a7a5e9674da5a135ccdfb2b3e671b333ed9fed17b41f73c34476e81",
+                "sha256:f1b8bd365d8d210c55353f4d7f8d6d8561c0ba50d704b700d195a9424bba0d79"
+            ],
+            "markers": "python_version >= '2'",
+            "version": "==2026.4"
         },
         "tzlocal": {
             "hashes": [

@@ -4,6 +4,8 @@ import sys
 
 from dotenv import load_dotenv
 
+from .media import media_storages
+
 load_dotenv()
 
 # ___  _______  ____
@@ -23,7 +25,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [('landings', os.path.join(BASE_DIR, 'landings'))]
-CKEDITOR_UPLOAD_PATH = MEDIA_ROOT + '/ckeditor'
+CKEDITOR_UPLOAD_PATH = 'ckeditor/'
+MEDIA_STORAGE = os.getenv('MEDIA_STORAGE', 'local')
+STORAGES = media_storages(os.environ)
+if MEDIA_STORAGE == 's3':
+    CKEDITOR_STORAGE_BACKEND = 'config.media_storage.EditorMediaStorage'
 
 LOCALE_PATHS = [os.path.join(BACKEND_DIR, 'locale')]
 

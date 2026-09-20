@@ -5,7 +5,7 @@ import os
 os.environ['GOOGLE_API_KEY'] = 'synthetic-tests-only'
 
 # Existing project settings use dotenv; tests must not load a developer's secrets.
-with patch('dotenv.load_dotenv'):
+with patch('dotenv.load_dotenv'), patch.dict(os.environ, {'MEDIA_STORAGE': 'local'}):
     from .settings import *  # noqa: F403
 
 SECRET_KEY = 'synthetic-security-tests-only'
