@@ -1,6 +1,7 @@
 """Optional OCI S3 media configuration; local development stays filesystem-based."""
 from urllib.parse import urlsplit
 
+from botocore.config import Config
 from django.core.exceptions import ImproperlyConfigured
 
 
@@ -46,6 +47,14 @@ def media_storages(environ):
             'location': location,
             'addressing_style': 'path',
             'signature_version': 's3v4',
+            # OCI endpoints may reject the SDK's optional aws-chunked checksum
+            # trailers. Keep SigV4 payload integrity without those extensions.
+            'client_config': Config(
+                signature_version='s3v4',
+                s3={'addressing_style': 'path', 'payload_signing_enabled': True},
+                request_checksum_calculation='when_required',
+                response_checksum_validation='when_required',
+            ),
             # OCI uses bucket policies, not object ACLs.
             'default_acl': None,
             'querystring_auth': True,

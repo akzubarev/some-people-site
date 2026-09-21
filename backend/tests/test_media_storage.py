@@ -1,5 +1,6 @@
 """Media contracts using synthetic bytes and no database or real cloud credentials."""
 from io import StringIO
+from hashlib import sha256
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
@@ -75,11 +76,29 @@ class MediaConfiguration(SimpleTestCase):
         with Stubber(client) as stub:
             stub.add_response('put_object', {'ETag': '"synthetic"'}, {
                 'Bucket': 'synthetic-media', 'Key': 'users/avatars/test.png',
-                'Body': ANY, 'ContentType': 'image/png', 'ChecksumAlgorithm': ANY,
+                'Body': ANY, 'ContentType': 'image/png',
             })
             self.assertEqual(storage._save('users/avatars/test.png', ContentFile(b'synthetic-image')),
                              'users/avatars/test.png')
             stub.assert_no_pending_responses()
+
+    def test_wire_upload_signs_payload_without_optional_chunked_trailers(self):
+        storage = S3Storage(**media_storages(S3_ENV)['default']['OPTIONS'])
+        client = storage.connection.meta.client
+        requests = []
+
+        def capture(request, **kwargs):
+            requests.append(request)
+            raise RuntimeError('stop before network')
+
+        client.meta.events.register('before-send.s3.PutObject', capture)
+        payload = b'synthetic-avatar'
+        with self.assertRaisesMessage(RuntimeError, 'stop before network'):
+            client.put_object(Bucket='synthetic-media', Key='users/avatars/test.png', Body=payload)
+        headers = {key.lower(): value for key, value in requests[0].headers.items()}
+        self.assertEqual(headers['x-amz-content-sha256'], sha256(payload).hexdigest().encode())
+        self.assertNotIn('x-amz-trailer', headers)
+        self.assertNotIn(b'aws-chunked', headers.get('content-encoding', b''))
 
     @override_settings(STORAGES=media_storages(S3_ENV))
     def test_avatar_serializer_emits_signed_url_without_changing_file_name(self):
