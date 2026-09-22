@@ -1,9 +1,7 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router"
-import store from "@/store"
-import {Mutations} from "@/store/enums/StoreEnums"
 import {isAuth, isMg, guest} from "@/middleware/auth"
-import {loadUser, loadGames, loadApplication, loadQuestions} from "@/middleware/load"
-import {setPageTitle} from "@/store"
+import {loadUser, loadGames, loadAccount} from "@/middleware/load"
+import {setPageTitle, navigationPending} from "@/store"
 import Layout from "@/layout/Layout.vue"
 
 const routes: Array<RouteRecordRaw> = [
@@ -15,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
                 path: "/",
                 name: "main",
                 component: () => import("@/views/title/Title.vue"),
-                meta: {middleware: [loadUser, loadGames, guest]}
+                meta: {middleware: [loadUser, loadGames, guest], requiresGames: true}
             },
             {
                 path: "/mg",
@@ -23,18 +21,12 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import("@/views/title/MG.vue"),
                 meta: {middleware: [loadUser, isMg]}
             },
-            // {
-            //     path: "/games",
-            //     name: "games",
-            //     component: () => import("@/views/games/games/Games.vue"),
-            //     meta: {middleware: [loadUser, loadGames, isMg]}
-            // },
             {
                 path: "/game/:game_alias",
                 name: "game",
-                redirect: "/game/whales/about",
+                redirect: to => ({name: "game-about", params: to.params}),
                 component: () => import("@/views/games/GameRoot.vue"),
-                meta: {middleware: [loadUser, loadGames, guest]},
+                meta: {middleware: [loadUser, loadGames, guest], requiresGames: true},
                 props: true,
                 children: [
                     {
@@ -55,22 +47,6 @@ const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/games/roles/users/CharacterList.vue"),
                         props: true,
                     },
-                    // {
-                    //     path: "/game/:game_alias/application/:userId",
-                    //     name: "game-application",
-                    //     component: () => import("@/views/games/apply/Application.vue"),
-                    //     props: true,
-                    //     meta: {middleware: [isMg]}
-                    // },
-                    // {
-                    //     path: "/game/:game_alias/players",
-                    //     name: "game-players",
-                    //     component: () => import("@/views/games/game/Players.vue"),
-                    //     props: true,
-                    //     meta: {
-                    //         middleware: [loadUser, isMg]
-                    //     }
-                    // },
                 ]
             },
             {
@@ -85,7 +61,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "account",
                 redirect: "/account/whales/application",
                 component: () => import("@/views/account/LK.vue"),
-                meta: {middleware: [loadUser, isAuth, loadGames, loadApplication, loadQuestions]},
+                meta: {middleware: [loadUser, isAuth, loadGames, loadAccount], requiresGames: true, requiresAccount: true},
                 props: true,
                 children: [
                     {
@@ -122,29 +98,17 @@ const routes: Array<RouteRecordRaw> = [
                     component: () => import("@/views/auth/SignUp.vue"),
                     meta: {middleware: [guest]}
                 },
-                {
-                    path: "/lost-pass",
-                    name: "lost-pass",
-                    component: () => import("@/views/auth/LostPass.vue"),
-                    meta: {middleware: [loadUser, isAuth]}
-                },
+
                 {
                     path: "/sign-out",
                     name: "sign-out",
                     component: () => import("@/views/auth/SignOut.vue"),
                     meta: {middleware: [loadUser, isAuth]}
                 },
-                {
-                    path: "/reset-pass/:uid/:token",
-                    name: "reset-pass",
-                    component: () => import("@/views/auth/PasswordReset.vue"),
-                    props: true,
-                    meta: {middleware: [loadUser, isAuth]}
-                }
+
             ]
     },
     {
-        // the 404 route, when none of the above matches
         path: "/404",
         name: "404",
         component: () => import("@/views/error/Error404.vue")
@@ -158,12 +122,6 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    // scrollBehavior(to, from, savedPosition) {
-    //     if (to.hash)
-    //         return {el: to.hash, behavior: 'smooth'}
-    //     if (savedPosition)
-    //         return savedPosition
-    // }
 })
 
 function middlewarePipeline(context, middleware, index, next) {
@@ -184,18 +142,13 @@ function middlewarePipeline(context, middleware, index, next) {
 }
 
 router.beforeEach((to, from, next) => {
+    navigationPending.value = true
     setPageTitle("Какие-то люди")
-    store.commit("config/" + Mutations.RESET_LAYOUT_CONFIG)
     setTimeout(() => {
         window.scrollTo(0, 0)
     }, 100)
 
     const middleware = to.meta?.middleware
-    // updateSubscriptionInfo({next: () => undefined})
-
-    // if (middleware == undefined) {
-    //   return next();
-    // }
 
     const context = {
         to,
@@ -213,5 +166,8 @@ router.beforeEach((to, from, next) => {
         next()
     )
 })
+
+router.afterEach(() => { navigationPending.value = false })
+router.onError(() => { navigationPending.value = false })
 
 export default router

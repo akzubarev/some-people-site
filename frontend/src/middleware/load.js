@@ -1,58 +1,62 @@
-import store from "@/store"
+import store from '@/store'
 import axios from 'axios'
-import authService from "@/services/authService"
-import gamesService from "../services/gamesService";
-import {default_games} from "../constants/defaults";
+import authService from '@/services/authService'
+import gamesService from '@/services/gamesService'
 
+let gamesRequest = 0
+let accountRequest = 0
 
 export const loadUser = async ({next}) => {
-    if (!store.getters['auth/user']?.id)
-        try {
-            await authService.me().then(({data}) => {
-                if (data && data.id)
-                    store.dispatch('auth/setUser', data)
-            })
-        } catch (Exception) {
-            if (!axios.isCancel(Exception)) store.dispatch("auth/logout")
-        }
-    return next()
-}
-
-export const forceLoadUser = async ({next}) => {
-    if (!store.getters['auth/user']?.id)
+    if (!store.getters['auth/user']?.id) {
         try {
             const {data} = await authService.me()
-            if (data && data.id)
-                store.dispatch('auth/setUser', data)
-        } catch {
+            if (data?.id) await store.dispatch('auth/setUser', data)
+        } catch (error) {
+            if (!axios.isCancel(error)) await store.dispatch('auth/logout')
         }
-    return next()
-}
-
-
-export const loadGames = async ({next}) => {
-    if (!Object.keys(store.getters['games/games']).length)
-        store.dispatch("games/setGames", default_games)
-    gamesService.games().then(({data}) => {
-        const games = {}
-        data.forEach(game => (games[game.alias] = game))
-        store.dispatch("games/setGames", games)
-    })
-    return next()
-}
-
-export const loadApplication = async ({next}) => {
-    if (!Object.keys(store.getters['games/games']).length) {
-        const applicationData = await gamesService.application('whales')
-        store.dispatch("games/setApplication", applicationData.data)
-        const questionsData = await gamesService.questions('whales')
-        store.dispatch("games/setQuestions", questionsData.data)
     }
     return next()
 }
-export const loadQuestions = async ({next}) => {
-    gamesService.questions('whales').then(({data}) => {
-        store.dispatch("games/setQuestions", data)
-    })
+
+export const loadGames = async ({to, next}) => {
+    const request = ++gamesRequest
+    store.commit('games/SET_GAMES_ERROR', '')
+    try {
+        const {data} = await gamesService.games()
+        if (request !== gamesRequest) return next(false)
+        if (!Array.isArray(data)) throw new Error('Invalid games response')
+        const games = Object.fromEntries(data.map(game => [game.alias, game]))
+        store.commit('games/SET_GAMES', games)
+        if (to.params.game_alias && !games[to.params.game_alias]) return next('/404')
+    } catch (error) {
+        if (request !== gamesRequest || axios.isCancel(error)) return next(false)
+        store.commit('games/SET_GAMES', {})
+        store.commit('games/SET_GAMES_ERROR', 'Не удалось загрузить игры. Попробуйте ещё раз.')
+    }
+    return next()
+}
+
+export const loadAccount = async ({to, next}) => {
+    const request = ++accountRequest
+    store.commit('games/SET_APPLICATION', {})
+    store.commit('games/SET_QUESTIONS', [])
+    store.commit('games/SET_ACCOUNT_ERROR', '')
+    const alias = to.params.game_alias
+    store.commit('games/SET_ACCOUNT_ALIAS', alias || '')
+    if (!alias || store.state.games.gamesError) return next()
+    try {
+        const [application, questions] = await Promise.all([
+            gamesService.application(alias), gamesService.questions(alias),
+        ])
+        if (request !== accountRequest) return next(false)
+        if (!application.data || Array.isArray(application.data) || !Array.isArray(questions.data)) {
+            throw new Error('Invalid account response')
+        }
+        store.commit('games/SET_APPLICATION', application.data)
+        store.commit('games/SET_QUESTIONS', questions.data)
+    } catch (error) {
+        if (request !== accountRequest || axios.isCancel(error)) return next(false)
+        store.commit('games/SET_ACCOUNT_ERROR', 'Не удалось загрузить заявку. Попробуйте ещё раз.')
+    }
     return next()
 }

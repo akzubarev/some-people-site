@@ -1,18 +1,13 @@
 import { ref } from "vue"
-// import Swal from "sweetalert2"
-import { useStore } from "vuex"
 
 export default () => {
   const fieldsPages = ref(null)
   const errors = ref({})
   const data = ref({})
-  // const popup = Swal
   const currentPage = ref(0)
 
-  const store = useStore()
 
   const errorHandler = async () => {
-    // popup.close()
     let msg
     if (data.value["detail"]) {
       msg = data.value["detail"]
@@ -24,15 +19,6 @@ export default () => {
       msg = data.value["non_field_errors"][0]
     }
     if (msg) {
-      // await Swal.fire({
-      //   text: msg,
-      //   icon: "error",
-      //   buttonsStyling: false,
-      //   confirmButtonText: "OK",
-      //   customClass: {
-      //     confirmButton: "btn fw-bold btn-light-danger"
-      //   }
-      // })
       return
     }
     let minPageError = undefined
@@ -60,18 +46,12 @@ export default () => {
     }
   }
   const send = async dataHandler => {
-    // popup.showLoading()
-    // store.dispatch("body/showActionLoader")
     data.value = {}
     errors.value = {}
     try {
       await dataHandler()
-      // popup.close()
-      // store.dispatch("body/hideActionLoader")
       return true
     } catch (e) {
-      // store.dispatch("body/hideActionLoader")
-      console.log(e);
       data.value = {}
       try {
         data.value = e.response.data

@@ -4,7 +4,7 @@
     <meta v-for="(content, name) in metaData" :name="name" :content="content" :key="name"/>
   </teleport>
   <teleport to="body">
-    <div v-if="$store.getters['body/actionLoader']" class="ActionLoader">
+    <div v-if="$store.getters['body/actionLoader'] || navigationPending" class="ActionLoader" role="status" aria-label="Загрузка">
       <SpinLoder/>
     </div>
   </teleport>
@@ -133,34 +133,6 @@ div {
 }
 
 
-.swal2-popup {
-  background: #13161A !important;
-  border-radius: 1rem !important;
-  color: white i !important;
-}
-
-.swal2-icon {
-  border: 0 !important;
-}
-
-.swal2-popup {
-  background: theme('colors.gray.900');
-  border-radius: theme('borderRadius.2xl');
-  color: white;
-}
-
-.swal2-actions {
-  margin-top: 20px !important;
-}
-
-.swal2-backdrop-show {
-  background: rgba(0, 0, 0, 0.75) !important;
-}
-
-.swal2-close:focus {
-  box-shadow: unset !important;
-}
-
 .form-check {
   @apply flex flex-row gap-3 items-center cursor-pointer;
 }
@@ -190,7 +162,7 @@ div {
 </style>
 
 <script setup lang="ts">
-import {pageTitle, metaData} from "./store"
+import {pageTitle, metaData, navigationPending} from "./store"
 import SpinLoder from "@/components/SpinLoader.vue"
 import PullToRefresh from "@/components/PullToRefresh.vue"
 

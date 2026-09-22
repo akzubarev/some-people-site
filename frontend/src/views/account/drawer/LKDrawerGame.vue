@@ -45,12 +45,12 @@ const questions = computed(() => store.getters['games/questions'])
 const application = computed(() => store.getters['games/application'])
 const questionnaire_unfilled = computed(() => store.getters['games/questionnaire_unfilled'])
 const application_unfilled = computed(() => store.getters['games/application_unfilled'])
-const expanded = ref(props.game_alias == 'whales')
+const expanded = ref(true)
 
 const showLocked = ref(false)
 
 const noApplication = () => {
-  return ['deleted', '', null].includes(application.value.status)
+  return !application.value.status || application.value.status === 'deleted'
 }
 const openQuestionnaire = (game_alias) => {
   if (noApplication())

@@ -16,3 +16,24 @@ jobs:
       - name: Clean up synthetic test services
         if: always()
         run: docker compose -f docker/docker-compose.security-tests.yaml down --volumes
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.2'
+      - name: Install Yarn
+        run: npm install --global yarn@1.22.22
+      - name: Install frontend dependencies
+        # Legacy Vue CLI's node-ipc metadata predates supported Node releases.
+        run: yarn install --frozen-lockfile --non-interactive --ignore-engines
+      - name: Typecheck
+        run: yarn tsc --noEmit
+      - name: Build frontend
+        run: yarn build

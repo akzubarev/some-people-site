@@ -46,7 +46,7 @@
            :href="`/game/${game_alias}/roles`">
           -> Перейти в сетку
         </a>
-        <PopupWrapper v-if="!user.value?.likes">
+        <PopupWrapper v-if="!user.likes">
           <template #header>
             <inline-svg
                 v-if="phoneScreen && !character.player && !personal" class="w-6 h-6" @click="like()"
@@ -60,7 +60,7 @@
           </template>
         </PopupWrapper>
         <inline-svg
-            v-if="user.value?.likes && phoneScreen && !character.player && !personal" class="w-6 h-6" @click="like()"
+            v-if="user.likes && phoneScreen && !character.player && !personal" class="w-6 h-6" @click="like()"
             :src="require(`@/assets/images/icons/roles/heart-${liked ? 'filled': 'unfilled'}.svg`)"
         />
       </div>
@@ -78,7 +78,7 @@
              class="text-medium text-content-secondary-shadowed cursor-pointer">
           TG
         </div>
-        <PopupWrapper v-if="!character.player && !user.value?.likes">
+        <PopupWrapper v-if="!character.player && !user.likes">
           <template #header>
             <inline-svg
                 class="w-6 h-6" @click="like()"
@@ -92,16 +92,17 @@
           </template>
         </PopupWrapper>
         <inline-svg
-            v-if="user.value?.likes && phoneScreen && !character.player && !personal" class="w-6 h-6" @click="like()"
+            v-if="user.likes && !character.player && !personal" class="w-6 h-6" @click="like()"
             :src="require(`@/assets/images/icons/roles/heart-${liked ? 'filled': 'unfilled'}.svg`)"
         />
       </div>
     </div>
   </div>
+<p v-if="likeError" role="alert" class="text-content-secondary">{{ likeError }}</p>
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed, ref, onBeforeUnmount} from "vue";
 import gamesService from "@/services/gamesService";
 import CharacterPicture from "@/views/games/roles/groups/CharacterPicture.vue";
 import {useStore} from "vuex";
@@ -139,27 +140,30 @@ const openVK = (username) => {
   window.open(`https://vk.com/${username}`, '_blank').focus()
 }
 
-const like = () => {
-  if (!user.value) {
-    router.push('/sign-in')
-    return
-  }
-  const userToSet = user.value
-  const new_value = !liked.value
-  if (new_value)
-    userToSet.likes.push(props.character.id)
-  else
-    userToSet.likes = userToSet.likes.filter(ch_id => ch_id != props.character.id)
-  gamesService.like_character(props.game_alias, props.character.id, new_value).then(({data}) => {
-    store.dispatch('auth/setUser', userToSet)
-  })
+const likePending = ref(false)
+const likeError = ref('')
+const like = async () => {
+  if (!user.value.id) { router.push('/sign-in'); return }
+  if (likePending.value) return
+  const selected = !liked.value
+  likePending.value = true
+  likeError.value = ''
+  try {
+    await gamesService.like_character(props.game_alias, props.character.id, selected)
+    const likes = user.value.likes || []
+    await store.dispatch('auth/setUser', {...user.value, likes: selected
+      ? [...likes.filter(id => id !== props.character.id), props.character.id]
+      : likes.filter(id => id !== props.character.id)})
+  } catch {
+    likeError.value = 'Не удалось сохранить выбор. Попробуйте ещё раз.'
+  } finally { likePending.value = false }
 }
 const phoneScreen = ref(window.innerWidth < 768)
 const updateWidth = () => phoneScreen.value = window.innerWidth < 768
 const onLeave = () => {
   window.removeEventListener('resize', updateWidth);
-  window.removeEventListener('beforeunload', onLeave);
+
 }
 window.addEventListener('resize', updateWidth)
-window.addEventListener('beforeunload', onLeave)
+onBeforeUnmount(onLeave)
 </script>

@@ -13,9 +13,6 @@ export default class AuthModule extends VuexModule {
      * Get current user object
      * @returns User
      */
-    // get currentUser(): User {
-    //   return this.user;
-    // }
 
     /**
      * Verify user authentication
@@ -43,6 +40,7 @@ export default class AuthModule extends VuexModule {
     @Mutation
     [Mutations.SET_TOKEN](token) {
         invalidateSession()
+        this.userObj = {}
         this.authToken = token
         if (!!token)
             Cookies.set("auth_token", token, {expires: 365})
@@ -55,6 +53,10 @@ export default class AuthModule extends VuexModule {
 
     @Action
     [Actions.SET_TOKEN](token) {
+        this.context.commit(`games/SET_APPLICATION`, {}, {root: true})
+        this.context.commit(`games/SET_GROUPS`, [], {root: true})
+        this.context.commit(`games/SET_QUESTIONS`, [], {root: true})
+        this.context.commit(`games/SET_ACCOUNT_ALIAS`, '', {root: true})
         this.context.commit(Mutations.SET_TOKEN, token)
     }
 
@@ -65,6 +67,8 @@ export default class AuthModule extends VuexModule {
 
     @Action
     [Actions.LOGOUT]() {
+        this.context.commit(`games/SET_ACCOUNT_ALIAS`, "", {root: true})
+        this.context.commit(`games/SET_ACCOUNT_ERROR`, "", {root: true})
         this.context.commit(Mutations.SET_USER, {})
         this.context.commit(Mutations.SET_TOKEN, undefined)
         this.context.commit(`games/${Mutations.SET_APPLICATION}`, {}, {root: true})

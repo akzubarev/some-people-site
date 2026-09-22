@@ -1,12 +1,13 @@
 <template>
+  <PageState v-if="!game" message="Игра не найдена." />
   <ActionModal
       v-if="showLocked" type="lock" :title="lockedText"
       @close="() => {showLocked = false}"
       @submit="() => {showLocked = false}">
   </ActionModal>
-  <div
+  <div v-if="game"
       class="flex flex flex-col gap-1 md:gap-3 p-header md:justify-end bg-cover h-screen w-full bg-bottom md:bg-left-bottom"
-      :style="`background-image: url('${game_images[game_alias].background}')`">
+      :style="`background-image: url('${game_images[game_alias]?.background}')`">
     <div class="text-largest font-bold md:font-semibold uppercase px-6 md:px-12"
          :class="game_alias == 'frostpunk' ? 'text-content-primary ': 'text-content-secondary md:text-content-primary'">
       {{ game.title }}
@@ -39,10 +40,10 @@
                           :src="require('@/assets/images/icons/common/lock.svg')"/>
             </div>
           </div>
-          <inline-svg v-if="!phoneScreen && game_images[game_alias].logo"
-                      :src="game_images[game_alias].logo" class="h-full"/>
-          <img v-if="phoneScreen && game_images[game_alias].logo_half"
-               :src="game_images[game_alias].logo_half" class="h-full"/>
+          <inline-svg v-if="!phoneScreen && game_images[game_alias]?.logo"
+                      :src="game_images[game_alias]?.logo" class="h-full"/>
+          <img v-if="phoneScreen && game_images[game_alias]?.logo_half"
+               :src="game_images[game_alias]?.logo_half" class="h-full"/>
         </div>
         <div id="other_games" @click="otherGames()"
              class="flex flex-row gap-xs items-center md:w-[15%] md:min-w-[150px] md:justify-end cursor-pointer">
@@ -56,7 +57,8 @@
 
 
 <script setup lang="ts">
-import {computed, ref} from "vue"
+import {computed, ref, onBeforeUnmount} from "vue"
+import PageState from '@/components/PageState.vue'
 import ActionModal from "@/components/ActionModal.vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
@@ -107,8 +109,8 @@ const phoneScreen = ref(window.innerWidth < 768)
 const updateWidth = () => phoneScreen.value = window.innerWidth < 768
 const onLeave = () => {
   window.removeEventListener('resize', updateWidth);
-  window.removeEventListener('beforeunload', onLeave);
+
 }
 window.addEventListener('resize', updateWidth)
-window.addEventListener('beforeunload', onLeave)
+onBeforeUnmount(onLeave)
 </script>

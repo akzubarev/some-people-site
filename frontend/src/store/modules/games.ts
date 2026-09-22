@@ -4,6 +4,16 @@ import {Module, Action, Mutation, VuexModule} from "vuex-module-decorators"
 
 @Module
 export default class GameModule extends VuexModule {
+    gamesError = ""
+    accountError = ""
+    accountAlias = ""
+    @Mutation
+    SET_ACCOUNT_ALIAS(alias) { this.accountAlias = alias }
+    @Mutation
+    SET_GAMES_ERROR(message) { this.gamesError = message }
+    @Mutation
+    SET_ACCOUNT_ERROR(message) { this.accountError = message }
+
     gamesObj = {}
     groupsObj = []
     applicationObj = {}

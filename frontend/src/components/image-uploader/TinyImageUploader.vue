@@ -11,7 +11,7 @@
   >
     <div class="TinyImageUploader-Placeholder"></div>
     <div class="TinyImageUploader-Icon"></div>
-    <!-- <input class="TinyImageUploader-Input" type="file" @change="onUpload"> -->
+
     <div
       class="TinyImageUploader-Image"
       :style="image ? `background-image: url(${image})` : ''"
@@ -49,45 +49,15 @@ export default {
   },
   methods: {
     cropSuccess(imgDataUrl) {
-      // console.log(imgDataUrl);
       this.$emit("upload", imgDataUrl)
       this.$el.querySelector(
         ".TinyImageUploader-Image"
-      ).style.backgroundImage = imgDataUrl
+      ).style.backgroundImage = `url(${imgDataUrl})`
     },
     onClick() {
       this.show = true
-      // this.$el.querySelector('.TinyImageUploader-Input').dispatchEvent(
-      //   new MouseEvent('click')
-      // );
     }
   }
-  // methods: {
-  //   onClick() {
-  //     this.$el.querySelector('.TinyImageUploader-Input').dispatchEvent(
-  //       new MouseEvent('click')
-  //     );
-  //   },
-  //   onUpload() {
-  //     const input = this.$el.querySelector('.TinyImageUploader-Input');
-
-  //     if (input.files && input.files[0]) {
-  //       const reader = new FileReader();
-
-  //       reader.onload = (e) => {
-  //         const imageData = e.target.result;
-  //         this.$el.querySelector('.TinyImageUploader-Image').style.backgroundImage =
-  //           'url(' + imageData + ')';
-
-  //         this.$el.classList.add('TinyImageUploader_Loaded');
-
-  //         this.$emit('upload', imageData);
-  //       }
-
-  //       reader.readAsDataURL(input.files[0]);
-  //     }
-  //   }
-  // },
 }
 </script>
 <style scoped>

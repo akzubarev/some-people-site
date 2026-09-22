@@ -1,7 +1,5 @@
 <template>
-  <!-- 	<teleport to="head">
-      <meta name="theme-color" :content="gray800">
-    </teleport> -->
+
   <teleport to="body">
     <div class="Popup-Overlay"></div>
     <div class="Popup" @click.self="$emit('close')">
@@ -24,9 +22,6 @@
   </teleport>
 </template>
 <script setup>
-// import resolveConfig from 'tailwindcss/resolveConfig'
-// import tailwindConfig from '@/../tailwind.config.js'
-// const gray800 = resolveConfig(tailwindConfig)['colors']['gray']['900']
 
 defineEmits(['close'])
 const props = defineProps(['hideX'])
@@ -43,12 +38,6 @@ const props = defineProps(['hideX'])
   z-index: 200;
   height: 100%;
   width: 100%;
-  // &-Close {
-  // 	right: 18px;
-  // 	top: 18px;
-  // 	position: absolute;
-  // 	z-index: 201;
-  // }
   &-Content {
     background: theme('colors.gray.1000');
     width: 100%;
