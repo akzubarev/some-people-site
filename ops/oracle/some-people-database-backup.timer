@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Some People PostgreSQL off-VM backup
+
+[Timer]
+OnCalendar=*-*-* 02:30:00 UTC
+Persistent=true
+RandomizedDelaySec=20m
+Unit=some-people-database-backup.service
+
+[Install]
+WantedBy=timers.target

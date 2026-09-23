@@ -4,7 +4,17 @@ import sys
 
 from dotenv import load_dotenv
 
+from .media import media_storages
+
 load_dotenv()
+
+
+def env_bool(name, default=False):
+    """Read a conventional boolean value from the environment."""
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {'1', 'true', 'yes', 'on'}
 
 # ___  _______  ____
 # / _ \/  _/ _ \/ __/
@@ -22,8 +32,16 @@ BASE_DIR = BACKEND_DIR
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [('landings', os.path.join(BASE_DIR, 'landings'))]
-CKEDITOR_UPLOAD_PATH = MEDIA_ROOT + '/ckeditor'
+PROJECT_STATIC_DIR = os.path.join(BASE_DIR, 'static')
+LANDINGS_DIR = os.path.join(BASE_DIR, 'landings')
+STATICFILES_DIRS = [PROJECT_STATIC_DIR]
+if os.path.isdir(LANDINGS_DIR):
+    STATICFILES_DIRS.append(('landings', LANDINGS_DIR))
+CKEDITOR_UPLOAD_PATH = 'ckeditor/'
+MEDIA_STORAGE = os.getenv('MEDIA_STORAGE', 'local')
+STORAGES = media_storages(os.environ)
+if MEDIA_STORAGE == 's3':
+    CKEDITOR_STORAGE_BACKEND = 'config.media_storage.EditorMediaStorage'
 
 LOCALE_PATHS = [os.path.join(BACKEND_DIR, 'locale')]
 
@@ -38,7 +56,15 @@ DEBUG = bool(int(os.getenv('DEBUG', '0')))
 DOMAIN = 'somepeoplelarp.ru'
 ALLOWED_HOSTS = os.getenv('DOMAINS', '').split(',')
 
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE')
+SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE')
+SECURE_SSL_REDIRECT = env_bool('SECURE_SSL_REDIRECT')
+SECURE_HSTS_SECONDS = int(os.getenv('SECURE_HSTS_SECONDS', '0'))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool('SECURE_HSTS_INCLUDE_SUBDOMAINS')
+SECURE_HSTS_PRELOAD = env_bool('SECURE_HSTS_PRELOAD')
+
+if env_bool('TRUST_X_FORWARDED_PROTO'):
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 if os.getenv('CSRF_TRUSTED_ORIGINS'):
     CSRF_TRUSTED_ORIGINS = (os.getenv('CSRF_TRUSTED_ORIGINS') or '').split(',')
@@ -254,6 +280,9 @@ COMPANY_ID = int(os.getenv('COMPANY_ID', '0'))
 
 # logging
 
+LOG_DIR = os.getenv('LOG_DIR') or SETTINGS_DIR
+os.makedirs(LOG_DIR, exist_ok=True)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -286,15 +315,17 @@ LOGGING = {
             'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(SETTINGS_DIR, 'django.log'),
+            'filename': os.path.join(LOG_DIR, 'django.log'),
             'maxBytes': 16777216,  # 16 MB
+            'backupCount': 5,
             'formatter': 'verbose',
         },
         'file_error': {
             'level': 'ERROR',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(SETTINGS_DIR, 'django_error.log'),
+            'filename': os.path.join(LOG_DIR, 'django_error.log'),
             'maxBytes': 16777216,  # 16 MB
+            'backupCount': 5,
             'formatter': 'verbose',
         },
         'mail_admins': {
@@ -325,7 +356,8 @@ LOGGING = {
         },
         '': {
             'handlers': ['console', 'file_error', 'file'],
-            'level': 'DEBUG',
+            # Botocore includes signed request headers in DEBUG messages.
+            'level': 'INFO' if DEBUG else 'WARNING',
         },
         # 'django.request': {
         # 'handlers': ['telegram','mail_admins'],
@@ -338,6 +370,9 @@ LOGGING = {
         # }
     },
 }
+
+if not os.getenv('TELEGRAM_BOT_TOKEN'):
+    LOGGING['handlers'].pop('telegram', None)
 
 ####################################################
 
@@ -431,7 +466,7 @@ JAZZMIN_SETTINGS = {
     'site_title': 'Какие-то люди',
     'site_header': 'Какие-то люди',
     'site_brand': 'Какие-то люди',
-    'site_logo': 'img/some_people_logo.png',
+    'site_logo': 'img/some_people_logo.svg',
     'welcome_sign': 'Какие-то люди: Админ панель',
     'hide_apps': ['refresh_token', ],
     'hide_models': ['auth.group', ],

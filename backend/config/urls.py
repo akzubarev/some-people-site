@@ -5,6 +5,8 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
+from .media_storage import editor_media
+
 admin.site.enable_nav_sidebar = False
 admin.site.site_header = "Какие-то люди"
 admin.site.site_title = "Какие-то люди: Админ панель"
@@ -20,8 +22,10 @@ urlpatterns = [
     path('api/', include('apps.users.urls')),
     path('api/', include('apps.notifications.urls')),
     path('api/', include('apps.games.urls')),
+    path('api/media/editor/<str:token>/', editor_media, name='editor-media'),
 ]
 
 # DEV
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.MEDIA_STORAGE == 'local':
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

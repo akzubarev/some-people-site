@@ -3,7 +3,7 @@ import os
 from unittest.mock import patch
 
 os.environ['GOOGLE_API_KEY'] = 'synthetic-preview-only'
-with patch('dotenv.load_dotenv'):
+with patch('dotenv.load_dotenv'), patch.dict(os.environ, {'MEDIA_STORAGE': 'local'}):
     from .settings import *  # noqa: F403
 
 SECURITY_PREVIEW = True

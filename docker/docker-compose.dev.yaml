@@ -58,12 +58,12 @@ services:
 
 
   postgresql:
-    <<: [ *networks, *default_user ]
+    <<: [ *networks ]
     restart: always
-    image: 'bitnami/postgresql:15'
+    image: 'postgres:15-alpine'
     env_file: ../backend/.env
     volumes:
-      - postgres_data:/bitnami/postgresql/
+      - postgres_data:/var/lib/postgresql/data
       - ./postgres/initdb:/docker-entrypoint-initdb.d/
 
 
@@ -115,7 +115,7 @@ services:
     <<: [ *networks ]
     container_name: traefik
     restart: always
-    image: "traefik:v2.10"
+    image: "traefik:v3.7"
     command:
       - "--api.insecure=true"
       - "--log.level=DEBUG"

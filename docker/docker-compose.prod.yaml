@@ -1,85 +1,87 @@
 name: some-people-prod
 
-
 networks:
-  default-tier:
+  application:
     driver: bridge
-
 
 x-backend-base: &backend_base
   image: some-people.prod.backend
-  restart: always
+  restart: unless-stopped
   build:
     context: ..
-    dockerfile: ./docker/images/backend.Dockerfile
+    dockerfile: docker/images/backend.prod.Dockerfile
   env_file: ../backend/.env
-  working_dir: /app
-  volumes:
-    - ../backend:/app
   networks:
-    - default-tier
-
-x-frontend-base: &frontend_base
-  image: some-people.prod.frontend
-  restart: always
-  build:
-    context: ..
-    dockerfile: ./docker/images/frontend.Dockerfile
-  working_dir: /app
+    - application
   volumes:
-    - ../frontend:/app/
-  networks:
-    - default-tier
-
-x-container-user: &container_user
-  user: "1001:1001"
-  group_add:
-    - root
-
+    - ../runtime/media:/app/media
+    - ../runtime/staticfiles:/app/staticfiles
+    - ../runtime/logs:/var/log/some-people
 
 services:
-
   postgresql:
-    <<: [ *container_user ]
-    image: 'bitnami/postgresql:15'
-    restart: always
+    image: postgres:15-alpine
+    restart: unless-stopped
     env_file: ../backend/.env
-    # ports:
-    #   - "8432:5432"
     networks:
-      - default-tier
+      - application
     volumes:
-      - ./postgres/data:/bitnami/postgresql/
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
 
   api:
-    <<: [ *backend_base, *container_user ]
+    <<: *backend_base
     depends_on:
-      - postgresql
-    command:
-      - |
-        python manage.py runserver 0:8000
-    ports:
-      - "8101:8000"
+      postgresql:
+        condition: service_healthy
+    expose:
+      - "8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import socket; socket.create_connection(('127.0.0.1', 8000), 5).close()"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
 
-
+  # The bot is deliberately opt-in. It starts only with --profile bot.
   bot:
-    <<: [ *backend_base ]
-    restart: always
-    depends_on:
-      - postgresql
-    command:
-      - |
-        python bot/bot.py
-
-
-  builder.frontend:
-    <<: [ *frontend_base ] #, *container_user ]
-    restart: "no"
+    <<: *backend_base
     profiles:
-      - build
-    command:
-      - |
-        # yarn
-        yarn build
-        rm -rf dist
-        mv dist_tmp dist
+      - bot
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    command: ["python", "bot/bot.py"]
+
+  web:
+    image: some-people.prod.web
+    restart: unless-stopped
+    build:
+      context: ..
+      dockerfile: docker/images/frontend.prod.Dockerfile
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - application
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ../runtime/media:/srv/media:ro
+      - ../runtime/staticfiles:/srv/staticfiles:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  postgres_data:

@@ -11,6 +11,12 @@ class Group(models.Model):
     hidden = models.BooleanField(default=False, verbose_name='Секретная')
     family = models.BooleanField(default=False, verbose_name='Семья')
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
+    image = models.ImageField(
+        verbose_name='image',
+        upload_to='groups/images/',
+        blank=True,
+        null=True,
+    )
 
     game = models.ForeignKey(
         to='games.Game',

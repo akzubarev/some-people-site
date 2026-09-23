@@ -18,7 +18,6 @@ from apps.users.models import User
 from utils.text_utils import readable_exception
 
 logger = getLogger(__name__)
-google_creds = gspread.api_key(os.getenv('GOOGLE_API_KEY'))
 games_data = {
     'spreadsheet_id': '1ucdOv6Hid9toTFUSuTSNRh7z7wpeY2dgCkIOuZtgrz4',
     # 'spreadsheet_id': '1y1k7p41v9C7sSDES4Ojs1AOERYsXrnosQeKNoDgnxNI',
@@ -55,7 +54,10 @@ def get_image(path: str, order: int, target: str) -> ContentFile | None:
 
 def _get_worksheet(spreadsheet_id: str, worksheet_id: str) -> gspread.Worksheet:
     """Get a worksheet from Google Spreadsheet."""
-    return google_creds.open_by_key(key=spreadsheet_id).get_worksheet_by_id(id=worksheet_id)
+    api_key = os.getenv('GOOGLE_API_KEY')
+    if not api_key:
+        raise RuntimeError('GOOGLE_API_KEY is required to import characters')
+    return gspread.api_key(api_key).open_by_key(key=spreadsheet_id).get_worksheet_by_id(id=worksheet_id)
 
 
 def load_game(game_alias: str):

@@ -38,7 +38,7 @@ class Character(models.Model):
     kventa = models.FileField(upload_to='kventas/pdf/', blank=True, null=True)
     liked_by = models.ManyToManyField(
         to='users.User', verbose_name='Лайки',
-        related_name='likes', null=True, blank=True,
+        related_name='likes', blank=True,
     )
 
     class Meta:

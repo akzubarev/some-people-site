@@ -15,12 +15,15 @@ django-phonenumber-field = { extras = ["phonenumbers"], version = "==7.1.0" }
 django-related-admin = "==1.0.1"
 django-yarnpkg = "==6.1.0"
 gspread = "==6.1.2"
+gunicorn = "==23.0.0"
 openpyxl = "==3.1.5"
 pillow = "==10.4.0"
 psycopg2-binary = "==2.9.9"
 python-telegram-bot = { version = "==21.5", extras = ["job-queue"] }
 python-telegram-logger = "==1.4"
 python-dotenv = "==1.0.1" # for ptb
+django-storages = { extras = ["s3"], version = "==1.14.6" }
+boto3 = "==1.43.98"
 
 [dev-packages]
 mypy = "==1.11.2"
