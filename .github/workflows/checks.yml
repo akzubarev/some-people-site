@@ -3,6 +3,21 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
+  master-source:
+    if: github.event_name == 'pull_request' && github.base_ref == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require promotion from develop
+        env:
+          SOURCE_BRANCH: ${{ github.head_ref }}
+          SOURCE_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          TARGET_REPOSITORY: ${{ github.repository }}
+        run: |
+          if [[ "$SOURCE_BRANCH" != develop || "$SOURCE_REPOSITORY" != "$TARGET_REPOSITORY" ]]; then
+            echo "Pull requests to master must come from this repository's develop branch."
+            exit 1
+          fi
+
   backend:
     runs-on: ubuntu-latest
     steps:
