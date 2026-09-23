@@ -66,11 +66,11 @@ case "$command" in
   shell) "${compose[@]}" exec api sh "$@" ;;
   typecheck)
     [[ "$environment" == "dev" ]] || { echo "typecheck is available only in dev" >&2; exit 2; }
-    "${compose[@]}" exec app yarn tsc --noEmit "$@"
+    "${compose[@]}" exec app pnpm typecheck "$@"
     ;;
   frontend-build)
     if [[ "$environment" == "dev" ]]; then
-      "${compose[@]}" exec app yarn build "$@"
+      "${compose[@]}" exec app pnpm build "$@"
     else
       "${compose[@]}" build web "$@"
     fi

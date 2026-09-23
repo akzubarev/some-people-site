@@ -1,0 +1,50 @@
+name: some-people-react-preview
+services:
+  browser-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: security_tests
+      POSTGRES_USER: security_tests
+      POSTGRES_PASSWORD: synthetic-tests-only
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U security_tests"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  browser-api:
+    networks:
+      default:
+        aliases: [api]
+    build:
+      context: ..
+      dockerfile: docker/images/security-tests.Dockerfile
+    environment:
+      DJANGO_SETTINGS_MODULE: config.frontend_test_settings
+    volumes:
+      - ../backend:/app:ro
+      - browser_media:/tmp/browser-test-media
+    depends_on:
+      browser-db:
+        condition: service_healthy
+    command: ["sh", "-c", "python manage.py migrate --noinput && python manage.py shell -c 'import tests.seed_browser' && python manage.py runserver 0.0.0.0:8000 --noreload"]
+  browser-app:
+    build:
+      context: ..
+      dockerfile: docker/images/frontend.dev.Dockerfile
+    environment:
+      API_URL: http://browser-api:8000
+    ports:
+      - "127.0.0.1:5173:8080"
+    depends_on: [browser-api]
+  browser-web:
+    build:
+      context: ..
+      dockerfile: docker/images/frontend.prod.Dockerfile
+    ports:
+      - "127.0.0.1:5174:80"
+    volumes:
+      - browser_media:/srv/media:ro
+    depends_on: [browser-api]
+volumes:
+  browser_media:

@@ -20,6 +20,8 @@ from apps.users.serializers import UserCreateSerializer, UserPrivateSerializer, 
 from apps.users.serializers.user.private import UserProfileUpdateSerializer
 from apps.users.telegram_link import issue_link
 from rest_framework.throttling import UserRateThrottle
+from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiParameter
+from config.api_schema import TelegramLinkSerializer, StatusSerializer
 
 
 class TelegramLinkThrottle(UserRateThrottle):
@@ -33,6 +35,23 @@ class CharacterLikeSerializer(serializers.Serializer):
     like = serializers.BooleanField()
 
 
+class RegistrationTokenSerializer(UserCreateSerializer):
+    auth_token = serializers.CharField(read_only=True)
+
+    class Meta(UserCreateSerializer.Meta):
+        fields = UserCreateSerializer.Meta.fields + ['auth_token']
+
+
+@extend_schema_view(
+    me=extend_schema(responses={200: UserPrivateSerializer, 204: None}),
+    update_me=extend_schema(request=UserProfileUpdateSerializer, responses=UserPrivateSerializer),
+    telegram_link=extend_schema(request=None, responses=TelegramLinkSerializer),
+    register=extend_schema(request=UserCreateSerializer, responses={201: RegistrationTokenSerializer}),
+    players=extend_schema(parameters=[OpenApiParameter('game_alias', str, required=True)],
+                          responses=UserPublicSerializer(many=True)),
+    mg=extend_schema(responses=UserPublicSerializer(many=True)),
+    like_character=extend_schema(request=CharacterLikeSerializer, responses=StatusSerializer),
+)
 class UserViewSet(viewsets.GenericViewSet):
     """Users viewset."""
 

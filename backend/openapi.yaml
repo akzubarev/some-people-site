@@ -1,0 +1,1416 @@
+openapi: 3.0.3
+info:
+  title: Some People API
+  version: '1.0'
+paths:
+  /api/applications/:
+    get:
+      operationId: applications_list
+      description: Gets list of applications.
+      parameters:
+      - in: query
+        name: game_alias
+        schema:
+          type: string
+      tags:
+      - applications
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApplicationPrivate'
+          description: ''
+  /api/applications/{id}/:
+    get:
+      operationId: applications_retrieve
+      description: Gets an application.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Заявка.
+        required: true
+      tags:
+      - applications
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationPrivate'
+          description: ''
+  /api/applications/apply/:
+    post:
+      operationId: applications_apply_create
+      description: Creates an application.
+      tags:
+      - applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - game_alias
+              properties:
+                game_alias:
+                  type: string
+              additionalProperties:
+                nullable: true
+                oneOf:
+                - type: string
+                - type: array
+                  items:
+                    type: string
+                - type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+              description: 'Partial draft: game_alias and question_<id> answer keys.
+                Only questions belonging to the selected game are accepted.'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationPrivate'
+          description: ''
+  /api/applications/delete/:
+    post:
+      operationId: applications_delete_create
+      description: Deletes an application.
+      tags:
+      - applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameAliasRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GameAliasRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GameAliasRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationPrivate'
+          description: ''
+  /api/applications/get/:
+    get:
+      operationId: applications_get_retrieve
+      description: Gets an application.
+      parameters:
+      - in: query
+        name: game_alias
+        schema:
+          type: string
+        required: true
+      tags:
+      - applications
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ApplicationPrivate'
+                - type: object
+                  additionalProperties: false
+          description: ''
+  /api/applications/restore/:
+    post:
+      operationId: applications_restore_create
+      description: Restores an application.
+      tags:
+      - applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameAliasRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GameAliasRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GameAliasRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationPrivate'
+          description: ''
+  /api/games/:
+    get:
+      operationId: games_list
+      description: Gets games list.
+      tags:
+      - games
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+          description: ''
+  /api/games/{id}/:
+    get:
+      operationId: games_retrieve
+      description: Gets a games.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: Game alias or numeric ID
+        required: true
+      tags:
+      - games
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+  /api/games/characters/:
+    get:
+      operationId: games_characters_list
+      description: Gets games characters.
+      parameters:
+      - in: query
+        name: game_alias
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: search
+        schema:
+          type: string
+      - in: query
+        name: tag
+        schema:
+          type: string
+      tags:
+      - games
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Character'
+          description: ''
+  /api/games/groups/:
+    get:
+      operationId: games_groups_list
+      description: Gets games groups.
+      parameters:
+      - in: query
+        name: game_alias
+        schema:
+          type: string
+        required: true
+      tags:
+      - games
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+          description: ''
+  /api/games/tags/:
+    get:
+      operationId: games_tags_list
+      description: Gets games tags.
+      parameters:
+      - in: query
+        name: game_alias
+        schema:
+          type: string
+        required: true
+      tags:
+      - games
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+          description: ''
+  /api/notifications/:
+    get:
+      operationId: notifications_list
+      description: Get all the notifications.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - notifications
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedNotificationList'
+          description: ''
+  /api/notifications/viewed/:
+    post:
+      operationId: notifications_viewed_create
+      description: Set notification status as viewed.
+      tags:
+      - notifications
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/questions/:
+    get:
+      operationId: questions_list
+      description: Gets questions list.
+      parameters:
+      - in: query
+        name: game_alias
+        schema:
+          type: string
+      tags:
+      - questions
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+          description: ''
+  /api/questions/{id}/:
+    get:
+      operationId: questions_retrieve
+      description: Gets a question.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      tags:
+      - questions
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+  /api/session/:
+    get:
+      operationId: session_retrieve
+      tags:
+      - session
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+          description: ''
+    post:
+      operationId: session_create
+      tags:
+      - session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenCreateRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+          description: ''
+    delete:
+      operationId: session_destroy
+      tags:
+      - session
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/session/register/:
+    post:
+      operationId: session_register_create
+      tags:
+      - session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+          description: ''
+  /api/token/login/:
+    post:
+      operationId: token_login_create
+      description: Logs user in.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenCreateRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: ''
+  /api/token/logout/:
+    post:
+      operationId: token_logout_create
+      description: Logs user out.
+      tags:
+      - token
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/like_character/:
+    post:
+      operationId: users_like_character_create
+      description: Likes or dislikes a character.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CharacterLikeRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CharacterLikeRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CharacterLikeRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: ''
+  /api/users/me/:
+    get:
+      operationId: users_me_retrieve
+      description: Makes an action for current user based on query action.
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPrivate'
+          description: ''
+        '204':
+          description: No response body
+  /api/users/mg/:
+    get:
+      operationId: users_mg_list
+      description: Retrieves the list of master group users.
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserPublic'
+          description: ''
+  /api/users/players/:
+    get:
+      operationId: users_players_list
+      description: Retrieves the list of players for a games by alias.
+      parameters:
+      - in: query
+        name: game_alias
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserPublic'
+          description: ''
+  /api/users/register/:
+    post:
+      operationId: users_register_create
+      description: Create a new user.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationToken'
+          description: ''
+  /api/users/telegram_link/:
+    post:
+      operationId: users_telegram_link_create
+      description: Users viewset.
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramLink'
+          description: ''
+  /api/users/update_me/:
+    put:
+      operationId: users_update_me_update
+      description: Makes an action for current user based on query action.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdateRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPrivate'
+          description: ''
+components:
+  schemas:
+    ApplicationPrivate:
+      type: object
+      description: Application serializer.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        game:
+          type: integer
+          readOnly: true
+          title: Игра
+        character:
+          allOf:
+          - $ref: '#/components/schemas/Character'
+          readOnly: true
+          nullable: true
+        price:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Взнос
+        payed:
+          type: integer
+          readOnly: true
+          title: Оплачено
+        answers:
+          type: object
+          properties:
+            values:
+              type: object
+              additionalProperties:
+                oneOf:
+                - type: string
+                - type: array
+                  items:
+                    type: string
+                - type: array
+                  items:
+                    type: array
+                    items:
+                      type: string
+                nullable: true
+            unfilled:
+              type: array
+              items:
+                type: integer
+          required:
+          - unfilled
+          - values
+          description: Gets application answers.
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Статус
+      required:
+      - answers
+      - character
+      - game
+      - id
+      - payed
+      - price
+      - status
+    ApplicationPublic:
+      type: object
+      description: Application serializer.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        game:
+          type: integer
+          readOnly: true
+          title: Игра
+        character:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Персонаж
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Статус
+      required:
+      - character
+      - game
+      - id
+      - status
+    Character:
+      type: object
+      description: Character serializer.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+          title: Имя
+        name_eng:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Имя (Англ)
+        alias:
+          type: string
+          readOnly: true
+          title: Никнейм
+        description:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Описание
+        image:
+          type: string
+          format: uri
+          nullable: true
+          readOnly: true
+        player:
+          allOf:
+          - $ref: '#/components/schemas/UserPublic'
+          nullable: true
+          readOnly: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          readOnly: true
+      required:
+      - alias
+      - description
+      - id
+      - image
+      - name
+      - name_eng
+      - player
+      - tags
+    CharacterLikeRequest:
+      type: object
+      properties:
+        game_alias:
+          type: string
+          minLength: 1
+          maxLength: 20
+        character_id:
+          type: integer
+          minimum: 1
+        like:
+          type: boolean
+      required:
+      - character_id
+      - game_alias
+      - like
+    Game:
+      type: object
+      description: Game serializer.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        alias:
+          type: string
+          readOnly: true
+          title: Алиас
+        title:
+          type: string
+          readOnly: true
+          title: Название
+        location:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Место
+        description:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Описание
+        start:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Начало
+        end:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Конец
+        year:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Год
+        short_description:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Короткое описание
+        vk:
+          type: string
+          readOnly: true
+          nullable: true
+        tg:
+          type: string
+          readOnly: true
+          nullable: true
+        open_applications:
+          type: boolean
+          readOnly: true
+          title: Прием заявок открыт
+        open_character_list:
+          type: boolean
+          readOnly: true
+          title: Сетка открыта
+        player_count:
+          type: integer
+          readOnly: true
+      required:
+      - alias
+      - description
+      - end
+      - id
+      - location
+      - open_applications
+      - open_character_list
+      - player_count
+      - short_description
+      - start
+      - tg
+      - title
+      - vk
+      - year
+    GameAliasRequest:
+      type: object
+      properties:
+        game_alias:
+          type: string
+          minLength: 1
+          maxLength: 20
+      required:
+      - game_alias
+    Group:
+      type: object
+      description: Group serializer.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+          title: Порядковый номер
+        name:
+          type: string
+          readOnly: true
+          title: Название
+        alias:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Алиас
+        hidden:
+          type: boolean
+          readOnly: true
+          title: Секретная
+        family:
+          type: boolean
+          readOnly: true
+          title: Семья
+        description:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Описание
+        game:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Игра
+        parent:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Родительская фракция
+        characters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Character'
+          readOnly: true
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Character'
+          readOnly: true
+        subgroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          readOnly: true
+      required:
+      - alias
+      - characters
+      - description
+      - family
+      - game
+      - hidden
+      - id
+      - members
+      - name
+      - order
+      - parent
+      - subgroups
+    Notification:
+      type: object
+      description: Notification model serializer.
+      properties:
+        user:
+          type: integer
+          readOnly: true
+        mailing:
+          type: integer
+          readOnly: true
+          nullable: true
+        viewed:
+          type: boolean
+          readOnly: true
+      required:
+      - mailing
+      - user
+      - viewed
+    PaginatedNotificationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+    Question:
+      type: object
+      description: Question serializer.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+          title: Вопрос
+        description:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Описание
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEnum'
+          readOnly: true
+          title: Тип
+        choices:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: array
+            items:
+              type: array
+              items:
+                type: string
+          nullable: true
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+          title: Порядковый номер
+        required:
+          type: boolean
+          readOnly: true
+          title: Обязательный
+      required:
+      - choices
+      - description
+      - id
+      - order
+      - required
+      - title
+      - type
+    RegistrationToken:
+      type: object
+      description: User creation serializer.
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        first_name:
+          type: string
+          title: Name
+          maxLength: 100
+        last_name:
+          type: string
+          title: Surname
+          maxLength: 100
+        username:
+          type: string
+          title: Никнейм
+          maxLength: 30
+        auth_token:
+          type: string
+          readOnly: true
+      required:
+      - auth_token
+      - email
+      - first_name
+      - last_name
+      - username
+    Session:
+      type: object
+      properties:
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserPrivate'
+          readOnly: true
+          nullable: true
+        csrfToken:
+          type: string
+          readOnly: true
+      required:
+      - csrfToken
+      - user
+    Status:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
+    StatusEnum:
+      enum:
+      - pending
+      - discussing
+      - confirmed
+      - declined
+      - deleted
+      type: string
+      description: |-
+        * `pending` - Подана
+        * `discussing` - Обсуждается
+        * `confirmed` - Принята
+        * `declined` - Отклонена
+        * `deleted` - Удалена
+    Tag:
+      type: object
+      description: Tag serializer.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+          title: Название
+        color:
+          type: string
+          readOnly: true
+          title: Цвет
+      required:
+      - color
+      - id
+      - name
+    TelegramLink:
+      type: object
+      properties:
+        code:
+          type: string
+        expires_in:
+          type: integer
+        url:
+          type: string
+          format: uri
+      required:
+      - code
+      - expires_in
+      - url
+    Token:
+      type: object
+      description: Token serializer.
+      properties:
+        auth_token:
+          type: string
+      required:
+      - auth_token
+    TokenCreateRequest:
+      type: object
+      description: Token create serializer.
+      properties:
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        login_field:
+          type: string
+          minLength: 1
+      required:
+      - login_field
+      - password
+    TypeEnum:
+      enum:
+      - line
+      - paragraph
+      - single_choice
+      - multiple_choice
+      - scale
+      - matrix
+      - matrix_checkbox
+      type: string
+      description: |-
+        * `line` - Строка
+        * `paragraph` - Абзац
+        * `single_choice` - Одиночный выбор
+        * `multiple_choice` - Множественный выбор
+        * `scale` - Шкала
+        * `matrix` - Сетка
+        * `matrix_checkbox` - Сетка флажков
+    UserCreateRequest:
+      type: object
+      description: User creation serializer.
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 255
+        first_name:
+          type: string
+          minLength: 1
+          title: Name
+          maxLength: 100
+        last_name:
+          type: string
+          minLength: 1
+          title: Surname
+          maxLength: 100
+        username:
+          type: string
+          minLength: 1
+          title: Никнейм
+          maxLength: 30
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - email
+      - first_name
+      - last_name
+      - password
+      - username
+    UserPrivate:
+      type: object
+      description: Serializes for /me route.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          title: Никнейм
+        first_name:
+          type: string
+          readOnly: true
+          title: Name
+        last_name:
+          type: string
+          readOnly: true
+          title: Surname
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+        mg:
+          type: boolean
+          description: Gets user mg status.
+          readOnly: true
+        phone:
+          type: string
+          readOnly: true
+          nullable: true
+        vk:
+          type: string
+          readOnly: true
+          nullable: true
+        telegram:
+          type: string
+          nullable: true
+          description: Gets users telegram username.
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+          readOnly: true
+          title: Picture
+        applications:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ApplicationPublic'
+          readOnly: true
+        likes:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        vk_public:
+          type: boolean
+          readOnly: true
+        tg_public:
+          type: boolean
+          readOnly: true
+      required:
+      - applications
+      - avatar
+      - created_at
+      - email
+      - first_name
+      - id
+      - last_name
+      - likes
+      - mg
+      - phone
+      - telegram
+      - tg_public
+      - username
+      - uuid
+      - vk
+      - vk_public
+    UserProfileUpdateRequest:
+      type: object
+      description: Only these profile fields may be changed through the SPA.
+      properties:
+        username:
+          type: string
+          minLength: 1
+          title: Никнейм
+          maxLength: 30
+        first_name:
+          type: string
+          minLength: 1
+          title: Name
+          maxLength: 100
+        last_name:
+          type: string
+          minLength: 1
+          title: Surname
+          maxLength: 100
+        phone:
+          type: string
+          nullable: true
+          maxLength: 128
+        avatar:
+          type: string
+          format: binary
+          nullable: true
+        vk:
+          type: string
+          nullable: true
+          maxLength: 250
+        vk_public:
+          type: boolean
+        tg_public:
+          type: boolean
+      required:
+      - first_name
+      - last_name
+      - username
+    UserPublic:
+      type: object
+      description: Explicit public profile; never inherit private profile fields.
+      properties:
+        username:
+          type: string
+          readOnly: true
+          title: Никнейм
+        first_name:
+          type: string
+          readOnly: true
+          title: Name
+        last_name:
+          type: string
+          readOnly: true
+          title: Surname
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+          readOnly: true
+          title: Picture
+        vk:
+          type: string
+          nullable: true
+          description: Gets users vk username.
+          readOnly: true
+        telegram:
+          type: string
+          nullable: true
+          readOnly: true
+      required:
+      - avatar
+      - first_name
+      - last_name
+      - telegram
+      - username
+      - vk
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

@@ -8,6 +8,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema
 
 from apps.notifications.models import Notification
 from apps.notifications.serializers import NotificationSerializer
@@ -40,6 +41,7 @@ class NotificationViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         self.queryset = self.queryset.order_by('-id')
         return super().list(*args, **kwargs)
 
+    @extend_schema(request=None, responses={204: None})
     @action(methods=["post"], detail=False, permission_classes=[IsAuthenticated])
     def viewed(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Set notification status as viewed."""

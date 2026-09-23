@@ -1,5 +1,7 @@
 """Group serializers module."""
 from rest_framework import serializers
+from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.helpers import lazy_serializer
 
 from apps.games.models import Group
 from apps.games.visibility import public_characters, visible_group_ids
@@ -31,7 +33,9 @@ class GroupSerializer(serializers.ModelSerializer):
             'members',
             'subgroups',
         ]
+        read_only_fields = fields
 
+    @extend_schema_field(lazy_serializer('apps.games.serializers.GroupSerializer')(many=True))
     def get_subgroups(self, group: Group) -> list[dict]:
         visible = self.visible_ids(group)
         return GroupSerializer(group.subgroups.filter(pk__in=visible), many=True,
@@ -42,8 +46,10 @@ class GroupSerializer(serializers.ModelSerializer):
             self.context['visible_group_ids'] = visible_group_ids(group.game_id)
         return self.context['visible_group_ids']
 
+    @extend_schema_field(CharacterSerializer(many=True))
     def get_characters(self, group):
         return CharacterSerializer(public_characters(group.game_id, self.visible_ids(group)).filter(group=group), many=True).data
 
+    @extend_schema_field(CharacterSerializer(many=True))
     def get_members(self, group):
         return CharacterSerializer(public_characters(group.game_id, self.visible_ids(group)).filter(family=group), many=True).data

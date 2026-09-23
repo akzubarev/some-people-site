@@ -43,6 +43,8 @@ x-frontend-base: &frontend_base
     dockerfile: ./docker/images/frontend.dev.Dockerfile
   volumes:
     - ../frontend:/app/
+    - frontend_node_modules:/app/node_modules
+    - frontend_pnpm_store:/pnpm
 
 
 services:
@@ -99,9 +101,7 @@ services:
 
   app:
     <<: [ *networks, *default_user, *frontend_base ]
-    command:
-      - |
-        yarn serve
+    command: ["sh", "-c", "pnpm install --frozen-lockfile --store-dir /pnpm && pnpm dev"]
     expose: [ 8080 ]
     environment:
       - API_URL=http://api:8000/
@@ -130,3 +130,5 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 volumes:
   postgres_data: { }
+  frontend_node_modules: { }
+  frontend_pnpm_store: { }
