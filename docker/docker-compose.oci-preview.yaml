@@ -1,0 +1,17 @@
+# Apply on top of docker-compose.frontend-tests.yaml for an OCI preview backed by
+# a disposable copy of a database dump. The regular browser-test stack remains
+# synthetic and ephemeral.
+services:
+  browser-db:
+    tmpfs: !reset []
+    volumes:
+      - preview_database:/var/lib/postgresql/data
+
+  browser-api:
+    command:
+      - sh
+      - -c
+      - python manage.py migrate --noinput && exec python manage.py runserver 0.0.0.0:8000 --noreload
+
+volumes:
+  preview_database:
