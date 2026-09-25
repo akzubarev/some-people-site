@@ -27,7 +27,7 @@ input[type=checkbox], input[type=radio] { width: 24px; height: 24px; accent-colo
 form { display: flex; flex-direction: column; gap: 24px }
 fieldset { border: 0; padding: 0; min-width: 0; margin: 0 }
 legend { padding: 0; font-size: 20px }
-.button, button[type=submit]:not(.like), .panel > button, .crop-controls button {
+.button, button[type=submit]:not(.like), .panel > button {
   display: inline-flex; justify-content: center; align-items: center; padding: 4px 12px;
   border-radius: 12px; background: #696f7c; color: #dcdcdc;
 }
@@ -194,24 +194,40 @@ table { width: 100%; border-collapse: collapse }
 th, td { padding: 12px; text-align: center; font-weight: 400; }
 th[scope=row] { text-align: left; min-width: 130px }
 tbody tr:nth-child(odd) { background: #0000000d }
-.settings-page { padding-top: 80px; height: 100vh; overflow: auto; scrollbar-width: none }
-.settings { display: flex; flex-direction: column; padding: 24px; gap: 24px; border-radius: 12px; background: rgb(38 44 51 / .6); margin: 24px 12px 0 }
-.settings form { gap: 12px }
-.settings .form-grid { display: grid; grid-template-columns: 1fr; gap: 12px }
-.profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: #404b5f }
-.avatar-row { display: flex; align-items: center; gap: 24px; position: relative; }
-.avatar-editor > label { position: relative; width: 100px; height: 100px; border-radius: 50%; overflow: hidden; cursor: pointer; background: #404b5f }
-.avatar-editor label .profile-avatar { position: absolute; inset: 0 }
-.avatar-editor .camera-icon { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: #0004 }
-.avatar-editor > label:hover .camera-icon, .avatar-editor > label:focus-within .camera-icon { opacity: 1 }
-.avatar-editor input[type=file] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer }
-.crop-controls { max-width: 320px; display: grid; gap: 12px; margin-top: 16px }
-.crop-controls canvas { width: 240px; max-width: 100%; border-radius: 50%; background: white }
-.crop-controls input[type=range] { width: 100% }
-.settings .choice { font-size: 20px; margin-top: 4px }
-.settings button[type=submit] { align-self: flex-end }
-.settings h2 { font-size: 20px; }
-.settings .logout { margin-left: auto }
+.profile-settings > form, .profile-settings > section { width: 100%; max-width: 800px }
+.profile-settings h2, .profile-settings legend { font-size: 18px; line-height: 26px; font-weight: 600 }
+.profile-settings label, .avatar-dialog label { font-size: 16px; line-height: 24px; gap: 8px }
+.profile-settings input:not([type=checkbox],[type=file]), .profile-settings textarea {
+  background: #fff; color: var(--ink); border: 1px solid #c6cdcb; border-radius: 6px; font-size: 16px; line-height: 24px; padding: 10px 12px;
+}
+.profile-settings input[readonly] { background: #f0f3f2; color: var(--muted) }
+.profile-settings .form-grid { display: grid; grid-template-columns: 1fr; gap: 20px }
+.profile-section legend, .profile-visibility legend { margin-bottom: 16px }
+.profile-visibility > div, .profile-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px }
+.profile-visibility > div { gap: 24px }
+.profile-settings .profile-button, .profile-settings button[type=submit], .avatar-dialog .profile-button {
+  display: inline-flex; justify-content: center; align-items: center; min-height: 44px; width: fit-content; padding: 10px 18px;
+  border: 1px solid var(--ink); border-radius: 6px; background: var(--ink); color: #fff; font-size: 14px; line-height: 22px; font-weight: 600;
+}
+.profile-settings .profile-button--secondary, .profile-settings button[type=submit].profile-button--secondary, .avatar-dialog .profile-button--secondary { background: transparent; color: var(--ink); border-color: #9ba7a5 }
+.profile-button:hover { filter: brightness(.9) }
+.profile-avatar { width: 104px; height: 104px; object-fit: cover; border-radius: 50%; background: #cad3d1; flex-shrink: 0 }
+.avatar-editor { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid #c6cdcb }
+.avatar-editor-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1; min-width: 180px }
+.profile-settings .avatar-editor p, .profile-settings .telegram-link-result p { font-size: 14px; line-height: 22px; color: var(--muted) }
+.avatar-dialog { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; padding: 24px; border-radius: 12px; background: var(--paper); color: var(--ink) }
+.avatar-dialog[open] { display: flex; flex-direction: column; gap: 16px }
+.avatar-dialog::backdrop { background: #10191db3 }
+.avatar-dialog h2 { font-size: 20px; line-height: 28px; font-weight: 600 }
+.avatar-dialog > p, .avatar-position { font-size: 14px; line-height: 22px }
+.avatar-dialog canvas { width: min(240px, 100%); aspect-ratio: 1; border-radius: 50%; align-self: center; flex-shrink: 0; background: white; touch-action: none; cursor: grab }
+.avatar-dialog canvas:active { cursor: grabbing }
+.avatar-dialog input[type=range] { width: 100%; accent-color: var(--ink) }
+.avatar-position summary { cursor: pointer }
+.avatar-position label { margin-top: 12px }
+.avatar-dialog .profile-actions { justify-content: flex-end }
+.telegram-settings { display: flex; flex-direction: column; gap: 16px; border-top: 1px solid #c6cdcb; padding-top: 24px; padding-bottom: 32px }
+.telegram-link-result { display: flex; flex-direction: column; gap: 12px }
 .muted { color: var(--muted) }
 .characters-page { padding: 80px 12px 12px; }
 .characters-page > h1 { font-size: 20px; padding: 12px }
@@ -304,7 +320,6 @@ tbody tr:nth-child(odd) { background: #0000000d }
   .account-mobile-heading { display: none }
   .account-content { background: #fff3; padding: 96px 24px 24px; }
   .account-content > h1, .account-nav h2 { font-size: 30px; line-height: 36px }
-  .settings .form-grid { grid-template-columns: 1fr 1fr }
   .mobile-only { display: none }
 }
 @media (min-width: 1024px) {
@@ -319,6 +334,7 @@ tbody tr:nth-child(odd) { background: #0000000d }
   .auth { width: 50% }
   .account-sidebar { width: 22.5% }
   .account-main { width: 75% }
+  .profile-settings .form-grid { grid-template-columns: 1fr 1fr }
   .questionnaire > p { font-size: 14px; line-height: 20px }
 }
 @media (min-width: 1280px) {
@@ -333,7 +349,6 @@ tbody tr:nth-child(odd) { background: #0000000d }
   .drawer .account-nav-top > .back-link, .drawer .account-nav-heading { display: none }
   .drawer .account-nav { height: calc(100% - 64px) }
   .auth-page { overflow-y: auto }
-  .settings .logout { width: 100% }
 }
 @media (max-width: 315px) { .brand { font-size: 16px } }
 @media (prefers-reduced-motion: no-preference) { .spinner { animation: loading-spin .8s linear infinite } }
@@ -371,15 +386,6 @@ tbody tr:nth-child(odd) { background: #0000000d }
  .question-heading label, .choices .choice { font-size: 18px; line-height: 28px }
 }
 .group-navigation nav { margin-top: 12px }
-.field-heading { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap }
-.field-heading small { font-size: 16px; line-height: 24px }
-.avatar-row > span { font-size: 20px; line-height: 28px }
-.avatar-empty .profile-avatar { visibility: hidden }
-.avatar-editor .avatar-empty .camera-icon { opacity: 1; background: none }
-.avatar-editor .camera-icon .icon { width: 50px; height: 50px }
-.settings .choice input { width: 20px; height: 20px }
-.telegram-settings { display: flex; flex-direction: column; gap: 12px }
-.telegram-settings button[type=submit] { width: 100%; align-self: stretch }
 .player-popup summary { text-decoration: none }
 @media (min-width: 1024px) { .other-games { font-size: 18px; line-height: 28px } }
 .unfilled { display: inline-flex; align-items: center; justify-content: center; height: 16px; min-width: 16px; border-radius: 50%; background: #000b; color: #dcdcdc; font-size: 12px; line-height: 16px; font-weight: 400 }

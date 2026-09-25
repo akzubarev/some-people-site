@@ -39,6 +39,7 @@ test('real Django session, application, questionnaire, profile, and logout', asy
   })
   await expect(page.getByLabel('Предпросмотр аватара')).toBeVisible()
   await page.getByLabel('Масштаб', { exact: true }).fill('2')
+  await page.getByRole('button', { name: 'Применить фото', exact: true }).click()
   await page.getByRole('button', { name: 'Сохранить профиль' }).click()
   await expect(page.getByText('Профиль сохранён.')).toBeVisible()
   await page.reload()

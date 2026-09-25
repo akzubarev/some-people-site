@@ -4,7 +4,7 @@ import type { Application, Game, Group, Question, User } from '../src/shared/api
 const games: Game[] = ['whales', 'frostpunk'].map((alias, index) => ({
   id: index + 1, alias, title: alias === 'whales' ? 'Киты' : 'Frostpunk',
   short_description: 'Какие-то люди делают игры', description: 'Описание игры',
-  location: 'Полигон', start: null, end: null, year: 2026, vk: 'javascript:alert(1)', tg: null,
+  location: 'Полигон', start: null, end: null, year: null, vk: 'javascript:alert(1)', tg: null,
   open_applications: true, open_character_list: true, player_count: 1,
 }))
 const user: User = { id: 1, username: 'player', first_name: 'Test', last_name: 'Player', email: 'player@example.invalid',
@@ -228,7 +228,8 @@ test('profile submits explicit clearing and unchecked consent and can issue a Te
   expect(profile).toContain('name="vk_public"\r\n\r\nfalse')
   expect(profile).toContain('name="tg_public"\r\n\r\nfalse')
   await page.getByRole('button', { name: 'Получить ссылку для подключения' }).click()
-  await expect(page.getByRole('link', { name: 'Подключить Телеграм' })).toHaveAttribute('href', /start=synthetic/)
+  await expect(page.getByLabel('Ссылка для подключения')).toHaveValue('https://t.me/Somepeopllarpebot?start=synthetic')
+  await expect(page.getByRole('link', { name: 'Открыть Telegram' })).toHaveAttribute('href', /start=synthetic/)
 })
 test('all seven questionnaire fields autosave with the backend answer shapes', async ({ page }) => {
   const { writes } = await setup(page, true)
@@ -286,6 +287,9 @@ test('avatar cropping produces an upload on mobile as well as desktop', async ({
   })
   await expect(page.getByLabel('Предпросмотр аватара')).toBeVisible()
   await page.getByLabel('Масштаб', { exact: true }).fill('2')
+  await page.getByRole('button', { name: 'Применить фото', exact: true }).click()
+  await expect(page.getByRole('dialog')).toHaveCount(0)
+  await expect(page.getByAltText('Ваш аватар')).toHaveAttribute('src', /^blob:/)
   await page.getByRole('button', { name: 'Сохранить профиль' }).click()
   await expect(page.getByText('Профиль сохранён.')).toBeVisible()
   expect(String(writes.find(write => write.path.endsWith('/update_me/'))!.body)).toContain('filename="avatar.png"')
@@ -328,6 +332,85 @@ test('Vue layout is retained on the game landing page and role grid', async ({ p
     await expect(page.locator('.character-player .like .icon')).not.toHaveCSS('mask-image', 'none')
   }
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+})
+
+test('settings stays in the account layout and retains the selected game', async ({ page, isMobile }) => {
+  await setup(page, true)
+  await page.goto('/account/frostpunk/application')
+  if (isMobile) await page.getByRole('button', { name: 'Меню кабинета' }).click()
+  await page.getByRole('link', { name: 'Настройки', exact: true }).click()
+  await expect(page).toHaveURL(/account\/settings\?game=frostpunk/)
+  await expect(page.locator('.account-content').getByRole('heading', { name: 'Настройки профиля' })).toBeVisible()
+  await expect(page.locator('.settings-page')).toHaveCount(0)
+  if (isMobile) await page.getByRole('button', { name: 'Меню кабинета' }).click()
+  const account = page.getByRole('navigation', { name: 'Кабинет', exact: true })
+  await expect(account.getByRole('link', { name: 'Заявка', exact: true })).toHaveAttribute('href', '/account/frostpunk/application')
+  await account.getByRole('link', { name: 'Заявка', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Заявка подана' })).toBeVisible()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+})
+
+test('Telegram exposes the generated URL, copy feedback, and expiry', async ({ page }) => {
+  await setup(page, true)
+  await page.clock.install()
+  await page.goto('/account/settings')
+  await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true,
+    value: { writeText: async (text: string) => { sessionStorage.setItem('copied-test-link', text) } } }))
+  await page.getByRole('button', { name: 'Получить ссылку для подключения' }).click()
+  const url = 'https://t.me/Somepeopllarpebot?start=synthetic'
+  await expect(page.getByLabel('Ссылка для подключения')).toHaveValue(url)
+  await page.getByRole('button', { name: 'Скопировать ссылку', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Ссылка скопирована', exact: true })).toBeVisible()
+  expect(await page.evaluate(() => sessionStorage.getItem('copied-test-link'))).toBe(url)
+  await page.clock.fastForward(601_000)
+  await expect(page.getByText('Срок ссылки истёк. Получите новую ссылку.')).toBeVisible()
+  await expect(page.getByLabel('Ссылка для подключения')).toHaveCount(0)
+})
+
+test('avatar crop can be positioned and cancelled without replacing the selected photo', async ({ page }) => {
+  const { writes } = await setup(page, true)
+  await page.goto('/account/settings')
+  const encoded = await page.evaluate(() => {
+    const canvas = document.createElement('canvas'); canvas.width = 128; canvas.height = 64
+    const ctx = canvas.getContext('2d')!
+    ctx.fillStyle = 'red'; ctx.fillRect(0, 0, 64, 64)
+    ctx.fillStyle = 'blue'; ctx.fillRect(64, 0, 64, 64)
+    return canvas.toDataURL('image/png').split(',')[1]
+  })
+  const file = { name: 'wide.png', mimeType: 'image/png', buffer: Buffer.from(encoded, 'base64') }
+  await page.getByLabel('Аватар', { exact: true }).setInputFiles(file)
+  const dialog = page.getByRole('dialog', { name: 'Выберите область фото' })
+  await expect(dialog).toBeVisible()
+  await dialog.getByText('Точное положение', { exact: true }).click()
+  await page.getByLabel('По горизонтали', { exact: true }).fill('100')
+  await expect.poll(() => page.getByLabel('Предпросмотр аватара').evaluate(element =>
+    [...(element as HTMLCanvasElement).getContext('2d')!.getImageData(256, 256, 1, 1).data])).toEqual([0, 0, 255, 255])
+  await page.getByRole('button', { name: 'Применить фото', exact: true }).click()
+  await expect(page.getByAltText('Ваш аватар')).toHaveAttribute('src', /^blob:/)
+  const selected = await page.getByAltText('Ваш аватар').getAttribute('src')
+  await page.getByLabel('Аватар', { exact: true }).setInputFiles(file)
+  await expect(dialog).toBeVisible()
+  await page.getByRole('button', { name: 'Отмена', exact: true }).click()
+  await expect(dialog).toHaveCount(0)
+  await expect(page.getByAltText('Ваш аватар')).toHaveAttribute('src', selected!)
+  await page.getByRole('button', { name: 'Сохранить профиль' }).click()
+  await expect(page.getByText('Профиль сохранён.')).toBeVisible()
+  expect(String(writes.find(write => write.path.endsWith('/update_me/'))!.body)).toContain('filename="avatar.png"')
+})
+
+test('past games hide vacancies and likes while keeping assigned players visible', async ({ page, isMobile }) => {
+  await setup(page, true)
+  const assigned = { ...character, id: 2, name: 'Назначенный персонаж', player: { username: 'Assigned Player', avatar: null, vk: null, telegram: null } }
+  await page.route('**/api/games/', route => route.fulfill({ json: games.map(game => ({ ...game,
+    end: game.alias === 'frostpunk' ? '2020-01-01T00:00:00Z' : '2099-01-01T00:00:00Z' })) }))
+  await page.route('**/api/games/groups/**', route => route.fulfill({ json: [{ ...group, characters: [character, assigned] }] }))
+  await page.goto('/game/frostpunk/roles')
+  await expect(page.getByRole('heading', { name: /^Инженер/ })).toBeVisible()
+  await expect(page.getByText('Свободно', { exact: true })).toHaveCount(0)
+  await expect(page.locator('.like')).toHaveCount(0)
+  await expect(page.locator(isMobile ? '.player-popup' : '.character-player').getByText('Assigned Player', { exact: true })).toBeVisible()
+  await page.goto('/game/whales/roles')
+  await expect(page.getByRole('button', { name: 'В избранное: Инженер', exact: true })).toBeVisible()
 })
 
 test('auth retains the original standalone background and card without the site header', async ({ page }) => {

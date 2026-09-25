@@ -18,7 +18,7 @@ function AccountNav({ alias, onNavigate, unfilled }: { alias: string; onNavigate
           <NavLink onClick={onNavigate} to={'/account/' + alias + '/questionnaire'}>Опросник <Unfilled count={unfilled} /></NavLink>
         </div></details>)}</nav>
     </div>
-    <div className="account-nav-bottom"><nav aria-label="Профиль"><NavLink to="/account/settings" aria-label="Настройки" onClick={onNavigate}>Профиль</NavLink>
+    <div className="account-nav-bottom"><nav aria-label="Профиль"><NavLink to={'/account/settings?game=' + encodeURIComponent(alias)} aria-label="Настройки" onClick={onNavigate}>Профиль</NavLink>
       <Link to="/sign-out" onClick={onNavigate}>Выйти</Link></nav></div>
   </div>
 }
