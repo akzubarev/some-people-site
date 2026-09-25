@@ -61,3 +61,18 @@ class BrowserSessionTests(TestCase):
         response = self.client.post('/api/session/',
             {'login_field': 'browser', 'password': 'test-password-123'}, HTTP_X_CSRFTOKEN=csrf)
         self.assertEqual(response.status_code, 200)
+
+    def test_registration_preserves_password_whitespace_for_later_login(self):
+        password = '  different-password-123  '
+        response = self.client.post('/api/session/register/', {
+            'username': 'space-browser', 'email': 'spaces@example.invalid',
+            'first_name': 'Test', 'last_name': 'Person', 'password': password,
+        }, HTTP_X_CSRFTOKEN=self.bootstrap())
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(User.objects.get(username='space-browser').check_password(password))
+        self.client.delete('/api/session/', HTTP_X_CSRFTOKEN=response.data['csrfToken'])
+        response = self.client.post('/api/session/', {
+            'login_field': 'spaces@example.invalid', 'password': password,
+        }, HTTP_X_CSRFTOKEN=self.bootstrap())
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.client.get('/api/users/me/').data['username'], 'space-browser')

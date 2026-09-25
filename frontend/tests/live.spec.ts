@@ -10,13 +10,14 @@ test('Swagger renders the generated API contract', async ({ page }) => {
 
 test('real Django session, application, questionnaire, profile, and logout', async ({ page, context, isMobile }) => {
   const suffix = test.info().project.name + '-' + Date.now()
+  const password = '  browser-test-password-123  '
   await page.goto('/sign-up?next=/account/frostpunk/application')
   await page.getByLabel('Имя', { exact: true }).fill('Synthetic')
   await page.getByLabel('Фамилия', { exact: true }).fill('Player')
   await page.getByLabel('Никнейм', { exact: true }).fill(suffix)
   await page.getByLabel('Email', { exact: true }).fill(suffix + '@example.invalid')
-  await page.getByLabel('Пароль', { exact: true }).fill('browser-test-password-123')
-  await page.getByLabel('Повторите пароль').fill('browser-test-password-123')
+  await page.getByLabel('Пароль', { exact: true }).fill(password)
+  await page.getByLabel('Повторите пароль').fill(password)
   await page.getByRole('button', { name: 'Зарегистрироваться' }).click()
   await expect(page.getByRole('heading', { name: 'Заявка не подана' })).toBeVisible()
   const cookies = await context.cookies()
@@ -54,4 +55,8 @@ test('real Django session, application, questionnaire, profile, and logout', asy
   await expect(page.getByRole('link', { name: 'Войти', exact: true })).toBeVisible()
   await page.goto('/account/frostpunk/application')
   await expect(page).toHaveURL(/sign-in/)
+  await page.getByLabel('Email или никнейм').fill(suffix + '@example.invalid')
+  await page.getByLabel('Пароль', { exact: true }).fill(password)
+  await page.getByRole('button', { name: 'Войти', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Заявка подана', exact: true })).toBeVisible()
 })

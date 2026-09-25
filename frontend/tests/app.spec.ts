@@ -339,3 +339,73 @@ test('auth retains the original standalone background and card without the site 
   await expect(page.locator('.auth')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0.4)')
   await expect(page.getByRole('link', { name: 'Обратно на главную' })).toBeVisible()
 })
+
+test('nested role navigation preserves Vue expansion, parent links, and fragment scrolling', async ({ page, isMobile }) => {
+  await setup(page)
+  const leaf = (id: number, name: string): Group => ({ ...group, id, name,
+    characters: Array.from({ length: 5 }, (_, index) => ({ ...character, id: id * 10 + index, name: name + index })),
+    subgroups: [],
+  })
+  const company: Group = { ...group, id: 11, name: 'Сотрудники Hvalman K/FS', characters: [],
+    subgroups: [leaf(12, 'Семья'), leaf(13, 'Рабочие')] }
+  await page.route('**/api/games/groups/**', route => route.fulfill({ json: [{
+    ...group, name: 'Занятость', characters: [], subgroups: [
+      { ...group, id: 10, name: 'Жители', characters: [], subgroups: [leaf(14, 'Вступление'), company] },
+      { ...group, id: 20, name: 'Гости', characters: [], subgroups: [leaf(21, 'Экспедиция')] },
+    ],
+  }] }))
+  await page.goto('/game/whales/roles')
+  const openMenu = async () => { if (isMobile) await page.getByRole('button', { name: 'Открыть группы' }).first().click() }
+  await openMenu()
+  const nav = page.getByRole('navigation', { name: 'Группы', exact: true })
+  await expect(nav.getByRole('button', { name: 'Подгруппы: Жители', exact: true })).toHaveAttribute('aria-expanded', 'true')
+  const toggle = nav.getByRole('button', { name: 'Подгруппы: ' + company.name, exact: true })
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(nav.getByRole('button', { name: 'Подгруппы: Гости', exact: true })).toHaveAttribute('aria-expanded', 'false')
+  const link = nav.getByRole('link', { name: company.name, exact: true })
+  await expect(link).toHaveCSS('font-weight', '600')
+  await toggle.click()
+  await expect(nav.getByRole('link', { name: 'Семья', exact: true })).toBeVisible()
+  await expect(page).not.toHaveURL(/#./)
+  await toggle.click()
+  await link.click()
+  const aligned = () => page.evaluate(name => {
+    const target = document.getElementById(name)
+    const container = document.querySelector('.role-content')
+    return !!target && !!container && Math.abs(target.getBoundingClientRect().top - container.getBoundingClientRect().top - 10) < 2
+  }, company.name)
+  await expect.poll(aligned).toBe(true)
+  if (isMobile) await expect(page.getByRole('dialog')).toHaveCount(0)
+  await openMenu()
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  if (isMobile) await page.keyboard.press('Escape')
+  await page.reload()
+  await expect.poll(aligned).toBe(true)
+  // Clicking the same fragment again must still reposition the inner scroll area.
+  await page.locator('.role-content').evaluate(element => { element.scrollTop = 0 })
+  await openMenu()
+  await link.click()
+  await expect.poll(aligned).toBe(true)
+})
+
+test('rejected registration shows its validation error and a corrected retry opens the application', async ({ page }) => {
+  await setup(page)
+  await page.goto('/account/whales/application')
+  await page.getByRole('link', { name: 'Зарегистрироваться', exact: true }).click()
+  await page.getByLabel('Имя', { exact: true }).fill('Test')
+  await page.getByLabel('Фамилия', { exact: true }).fill('Player')
+  await page.getByLabel('Никнейм', { exact: true }).fill('new-player')
+  await page.getByLabel('Email', { exact: true }).fill('player@example.invalid')
+  await page.getByLabel('Пароль', { exact: true }).fill('test-password-123')
+  await page.getByLabel('Повторите пароль').fill('test-password-123')
+  await page.route('**/api/session/register/', route => route.fulfill({ status: 400,
+    json: { email: ['Этот адрес уже используется.'] } }), { times: 1 })
+  await page.getByRole('button', { name: 'Зарегистрироваться', exact: true }).click()
+  await expect(page.getByRole('alert')).toHaveText('Email: Этот адрес уже используется.')
+  await expect(page).toHaveURL(/sign-up/)
+  await expect(page.getByLabel('Никнейм', { exact: true })).toHaveValue('new-player')
+  await page.getByLabel('Email', { exact: true }).fill('new-player@example.invalid')
+  await page.getByRole('button', { name: 'Зарегистрироваться', exact: true }).click()
+  await expect(page).toHaveURL(/account\/whales\/application/)
+  await expect(page.getByRole('heading', { name: 'Заявка не подана', exact: true })).toBeVisible()
+})

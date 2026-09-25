@@ -102,7 +102,12 @@ legend { padding: 0; font-size: 20px }
 .tabs button[aria-pressed=true] { text-decoration: underline }
 .tabs span { display: none }
 .group-navigation nav { display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 20px }
-.group-navigation summary { cursor: pointer }
+.group-link-row { display: flex; align-items: center; gap: 8px }
+.group-link-parent > a { font-weight: 600 }
+.group-toggle { flex-shrink: 0; font-size: 14px; line-height: 20px }
+.group-toggle span { display: block }
+.group-toggle[aria-expanded=true] span { transform: rotate(90deg) }
+.group-tree { display: flex; flex-direction: column; gap: var(--gap-large); flex-shrink: 0 }
 .group-link { margin-left: 12px }
 .subgroup-links { display: flex; flex-direction: column; gap: 12px; padding-left: 16px; padding-top: 12px }
 .character { display: flex; flex-direction: column; justify-content: space-between; background: #fff3; padding: 8px 5%; }
