@@ -11,7 +11,10 @@ export async function rootLoader({ request }: LoaderFunctionArgs) {
 
 async function requireUser(request: Request) {
   const { user } = await session(request.signal)
-  if (!user) throw redirect('/sign-in?next=' + encodeURIComponent(new URL(request.url).pathname))
+  if (!user) {
+    const url = new URL(request.url)
+    throw redirect('/sign-in?next=' + encodeURIComponent(url.pathname + url.search))
+  }
   return user
 }
 

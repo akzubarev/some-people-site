@@ -348,6 +348,15 @@ test('settings stays in the account layout and retains the selected game', async
   await account.getByRole('link', { name: 'Заявка', exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Заявка подана' })).toBeVisible()
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  await page.goto('/sign-out')
+  await page.getByRole('button', { name: 'Выйти', exact: true }).click()
+  await page.goto('/account/settings?game=frostpunk')
+  await page.getByLabel('Email или никнейм').fill('player')
+  await page.getByLabel('Пароль', { exact: true }).fill('test-password')
+  await page.getByRole('button', { name: 'Войти', exact: true }).click()
+  await expect(page).toHaveURL(/account\/settings\?game=frostpunk/)
+  if (isMobile) await page.getByRole('button', { name: 'Меню кабинета' }).click()
+  await expect(account.getByRole('link', { name: 'Заявка', exact: true })).toHaveAttribute('href', '/account/frostpunk/application')
 })
 
 test('Telegram exposes the generated URL, copy feedback, and expiry', async ({ page }) => {
