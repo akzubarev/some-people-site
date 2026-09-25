@@ -1,0 +1,410 @@
+/* The original Vue layout and design tokens, expressed without a runtime UI framework. */
+:root {
+  font-family: Montserrat, sans-serif; color: #dcdcdc; background: #404b5f;
+  font-synthesis: none; --ink: #373c3c; --muted: #626a6a; --paper: #e0e5e4;
+  --accent: #bbc9ca; --focus: #176f84; line-height: 1.5;
+  --gap-xs: 4px; --gap-small: 12px; --gap-medium: 24px; --gap-large: 36px;
+}
+*, ::before, ::after { box-sizing: border-box; border: 0 solid }
+body { margin: 0; min-width: 280px }
+#root { min-height: 100vh; overflow: hidden }
+a { color: inherit; text-decoration: none; text-underline-offset: .2em }
+button, input, textarea, select { font: inherit; color: inherit; margin: 0 }
+button { background: transparent; padding: 0; cursor: pointer; text-align: inherit }
+button:disabled { opacity: .6; cursor: wait }
+button, a, input, textarea, select, summary { -webkit-tap-highlight-color: transparent }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px }
+h1, h2, h3, p, ul, figure { margin: 0; padding: 0; font-size: inherit; font-weight: inherit }
+ul { list-style: none }
+img, svg { display: block; max-width: 100%; vertical-align: middle }
+img { height: auto }
+label { display: flex; flex-direction: column; gap: 4px; font-size: 20px; line-height: 28px }
+input:not([type=checkbox],[type=radio],[type=file],[type=range]), textarea, select {
+  width: 100%; padding: 12px; border-radius: 12px; background: #404b5f; font-size: 18px; line-height: 28px;
+}
+input::placeholder, textarea::placeholder { color: #9ca3af; opacity: 1 }
+input[type=checkbox], input[type=radio] { width: 24px; height: 24px; accent-color: var(--ink); flex-shrink: 0 }
+form { display: flex; flex-direction: column; gap: 24px }
+fieldset { border: 0; padding: 0; min-width: 0; margin: 0 }
+legend { padding: 0; font-size: 20px }
+.button, button[type=submit]:not(.like), .panel > button {
+  display: inline-flex; justify-content: center; align-items: center; padding: 4px 12px;
+  border-radius: 12px; background: #696f7c; color: #dcdcdc;
+}
+.icon { display: inline-block; width: 24px; height: 24px; flex-shrink: 0; background: currentColor; mask: var(--icon) center / contain no-repeat }
+.icon-button { display: inline-flex; align-items: center; justify-content: center }
+.brand { display: flex; align-items: center; width: 100%; font-size: 16px; line-height: 24px; font-weight: 600; text-transform: uppercase; white-space: nowrap }
+.brand-mark { display: block; height: 64px; width: 44.24px; flex-shrink: 0; margin: -8px 0 -8px 8px; background: currentColor; mask-size: contain; mask-position: center; mask-repeat: no-repeat; }
+.site-header { position: absolute; top: 24px; left: 0; width: 100%; background: rgb(0 0 0 / .75); padding: 4px; z-index: 40 }
+.header-row { display: flex; align-items: center; justify-content: space-between; height: 32px; gap: var(--gap-small) }
+.site-header .brand { color: #fff4dd }
+.site-header .brand:hover { color: var(--accent) }
+.header-menu { margin-right: 12px }
+.header-menu .icon { width: 32px; height: 32px }
+.site-menu { display: none; flex-direction: row; justify-content: flex-end; width: 100%; gap: 5% }
+.site-menu button { display: flex; align-items: center; text-transform: uppercase; font-size: 20px; line-height: 28px; color: #8c8c8c; white-space: nowrap }
+.header-avatar { flex-shrink: 0 }
+.avatar { width: 56px; height: 56px; border: 2px solid #dcdcdc; border-radius: 50% }
+.drawer { position: fixed; inset: 0 auto 0 0; width: 80%; height: 100vh; max-height: none; max-width: none; margin: 0; padding: 24px 4px 0 24px; color: var(--ink); background: var(--paper); overflow: auto }
+.drawer::backdrop { background: transparent }
+.drawer .brand { margin-bottom: 12px }
+.drawer .site-menu { display: flex; flex-direction: column; gap: 24px; margin-top: 12px }
+.drawer-close { position: absolute; right: 4px; top: 50% }
+.drawer-close .icon { width: 48px; height: 48px; transform: rotate(90deg) }
+.drawer > :not(.drawer-close) { max-width: calc(100% - 20px) }
+.locked-dialog { padding: 48px; color: #dcdcdc; background: #101114; width: 500px; max-width: 100%; max-height: 100%; border-radius: 16px; text-align: center }
+.locked-dialog::backdrop { background: #000b }
+.locked-dialog img { margin: auto }
+.locked-dialog p { font-size: 30px; line-height: 36px; margin: 24px 0 }
+.dialog-close { position: absolute; right: 12px; top: 12px; font-size: 24px }
+.skip-link { position: fixed; top: -100px; z-index: 100; padding: 1rem; background: white; color: black }
+.skip-link:focus { top: 0 }
+.hero { display: flex; flex-direction: column; gap: 4px; padding-top: 80px; height: 100vh; width: 100%; background-position: center bottom; background-size: cover }
+.hero h1 { font-size: 60px; line-height: 1; font-weight: 700; text-transform: uppercase; padding: 0 24px }
+.hero--whales h1, .hero--whales .hero-description { color: var(--ink) }
+.hero-band { display: flex; flex-direction: column; align-items: center; height: 100%; gap: var(--gap-medium); justify-content: space-between }
+.hero-description { display: flex; flex-direction: column; gap: var(--gap-small); width: 100%; padding: 0 24px }
+.lead { font-size: 16px; line-height: 24px }
+.facts { display: flex; gap: 8px }
+.facts li { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 40px; padding: 4px; text-align: center; background: rgb(140 140 140 / .3); border-radius: 2px }
+.hero-navigation { display: flex; flex-direction: column; width: 100%; align-items: center; gap: var(--gap-large); justify-content: space-between }
+.hero-links-logo { display: flex; width: 100%; align-items: center; justify-content: space-between }
+.hero-links { display: flex; flex-direction: column; gap: 24px; justify-content: center; flex-shrink: 0 }
+.hero-links > * { display: flex; gap: var(--gap-xs); align-items: center; padding: 12px 48px 12px 24px; font-size: 24px; line-height: 32px; font-weight: 600; text-transform: uppercase; border-radius: 2px; background: #0006 }
+.hero-links > *:hover { color: var(--accent) }
+.hero-links .locked { color: #8c8c8c }
+.whale-logo { display: none }
+.whale-half { height: 100%; min-width: 0; object-fit: contain; object-position: right }
+.other-games { display: flex; align-items: center; gap: var(--gap-xs); cursor: pointer }
+.other-games span:not(.icon) { display: none }
+.other-games .icon { width: 48px; height: 48px; transform: rotate(90deg) }
+.preserve { white-space: pre-wrap; overflow-wrap: anywhere }
+.roles-page { display: flex; gap: 5%; padding-top: 80px; height: 100vh; background: var(--paper); color: var(--ink); position: relative }
+.roles-background { position: absolute; top: 0; left: 0; height: 300px; width: 100%; opacity: .2; pointer-events: none }
+.roles-stripe, .roles-sidebar { display: none }
+.role-content { display: flex; flex-direction: column; gap: var(--gap-large); width: 100%; overflow-y: auto; z-index: 1; scrollbar-width: none; min-width: 0 }
+.role-content::-webkit-scrollbar, .account-content::-webkit-scrollbar { display: none }
+.group { display: flex; flex-direction: column; gap: var(--gap-large); flex-shrink: 0 }
+.group-title { display: flex; align-items: center; padding: 0 2.5%; gap: 12px }
+.group-title > img { display: none; width: 48px; height: 48px }
+.group-title h2 { font-size: 16px; line-height: 24px; font-weight: 700; text-transform: uppercase }
+.group-title p { font-size: 14px; line-height: 20px; font-weight: 600 }
+.group-menu .icon { width: 64px; height: 64px; transform: rotate(180deg) }
+.group-characters { display: flex; flex-direction: column; gap: 12px }
+.group-navigation { display: flex; flex-direction: column; gap: 12px; padding: 12px 24px 12px 12px; height: 100% }
+.back-link { display: flex; align-items: center; gap: 12px; font-size: 20px; line-height: 28px }
+.back-link .icon { transform: rotate(180deg) }
+.group-navigation > .back-link, .group-navigation > h1 { display: none; margin-bottom: 24px }
+.group-navigation h1 { text-transform: uppercase; font-weight: 600; font-size: 24px; line-height: 32px }
+.group-navigation-scroll { overflow-y: auto; scrollbar-width: none }
+.tabs { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 12px; text-transform: uppercase; font-weight: 700 }
+.tabs button { text-transform: uppercase }
+.tabs button[aria-pressed=true] { text-decoration: underline }
+.tabs span { display: none }
+.group-navigation nav { display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 20px }
+.group-link-row { display: flex; align-items: center; gap: 8px }
+.group-link-parent > a { font-weight: 600 }
+.group-toggle { flex-shrink: 0; font-size: 14px; line-height: 20px }
+.group-toggle span { display: block }
+.group-toggle[aria-expanded=true] span { transform: rotate(90deg) }
+.group-tree { display: flex; flex-direction: column; gap: var(--gap-large); flex-shrink: 0 }
+.group-link { margin-left: 12px }
+.subgroup-links { display: flex; flex-direction: column; gap: 12px; padding-left: 16px; padding-top: 12px }
+.character { display: flex; flex-direction: column; justify-content: space-between; background: #fff3; padding: 8px 5%; }
+.character-mobile-title { display: flex; flex-direction: column; margin-bottom: 4px; width: 100% }
+.character-mobile-title > span { font-size: 12px; line-height: 16px }
+.character-mobile-title > div { display: flex; justify-content: space-between; gap: 8px }
+.character h3 { font-size: 16px; line-height: 24px; font-weight: 600 }
+.character-main { display: flex; gap: var(--gap-medium); width: 100%; min-width: 0 }
+.character-portrait { display: flex; width: 30%; flex-shrink: 1; min-width: 0 }
+.picture-frame { display: flex; flex-direction: column; padding: 4px; gap: 4px; background: white; height: fit-content; }
+.character-picture { width: 100%; max-width: 256px; max-height: 256px }
+.picture-caption { transform: rotate(6deg); font-family: "Nanum Brush Script", cursive; text-align: center; font-size: 16px; line-height: 24px }
+.character-description { display: flex; flex-direction: column; align-items: flex-end; width: 100%; gap: 4px; min-width: 0 }
+.character-description > h3 { display: none }
+.character p { font-size: 12px; line-height: 16px; color: var(--muted); width: 100% }
+.character-player { display: none }
+.character--personal .character-description { align-items: flex-start }
+.character--personal .character-description > h3 { display: block }
+.role-return { font-size: 14px; line-height: 20px; font-weight: 600 }
+.like { display: inline-flex; border: 0; padding: 0; width: 24px; height: 24px; color: black; background: none; }
+.like.pending-button { padding: 0 }
+.like .pending-button-icon { left: 0; background: var(--paper) }
+.social-links { display: flex; gap: 12px; color: var(--muted) }
+.player-popup { position: relative }
+.player-popup summary { list-style: none; text-decoration: underline; cursor: pointer }
+.player-popup .social-links { position: absolute; right: 0; padding: 4px; background: #000b; color: #dcdcdc; border-radius: 12px; z-index: 2 }
+.panel { min-width: 0 }
+.error { color: #932134; border-left: 4px solid currentColor; padding: 8px 16px; background: #fff8 }
+.error p { margin: 6px 0 }
+.error-page { max-width: 700px; margin: 0 auto; padding: 160px 24px 24px }
+.error-page h1 { font-size: 30px; margin-bottom: 24px }
+.error-page button { margin-top: 24px }
+.auth-page { display: flex; position: relative; min-height: 100vh; padding: 48px; align-items: center; justify-content: center; background: #404b5f }
+.auth-background { position: absolute; height: 100%; width: 100%; left: 0; top: 0; opacity: .2; background: #dcdcdc; mask: var(--logo) center / auto 100% no-repeat; pointer-events: none }
+.auth { display: flex; flex-direction: column; width: 100%; padding: 24px; gap: 12px; align-items: center; border-radius: 16px; background: #0006; z-index: 1 }
+.auth h1 { font-size: 24px; line-height: 32px; text-align: center }
+.auth form { width: 100%; max-width: 500px; padding: 12px; align-items: center }
+.auth .auth-fields { display: grid; grid-template-columns: 1fr; gap: 24px; width: 100% }
+.auth .auth-fields.signup { gap: 12px }
+.auth .auth-actions { display: flex; flex-direction: column; width: 100%; align-items: center; gap: 4px; font-size: 18px; line-height: 28px }
+.auth .auth-actions a { text-decoration: underline }
+.auth button[type=submit] { width: 100%; padding: 12px; font-size: 16px; line-height: 24px }
+.auth > a { font-size: 18px; line-height: 28px; text-align: center }
+.password-field { position: relative }
+.password-field input { padding-right: 44px !important }
+.password-field button { position: absolute; right: 8px; bottom: 12px; color: #8a9099; display: flex }
+.account-page { display: flex; gap: 5%; padding-top: 80px; height: 100vh; width: 100%; background: var(--paper); color: var(--ink); position: relative }
+.account-background { position: absolute; top: 0; left: 0; width: 100%; height: 300px; pointer-events: none }
+.account-sidebar { display: none }
+.account-nav { display: flex; flex-direction: column; gap: 12px; height: 100%; }
+.account-nav-top, .account-nav-bottom { display: flex; flex-direction: column; gap: 24px; padding: 24px }
+.account-nav-top { height: 100%; min-height: 0 }
+.account-nav-top > .back-link { margin-bottom: 16px }
+.account-nav h2, .account-mobile-heading h2 { font-size: 24px; line-height: 32px; font-weight: 600; text-transform: uppercase }
+.account-name { text-transform: uppercase; font-size: 16px; margin-top: var(--gap-xs) }
+.account-nav nav { display: flex; flex-direction: column; gap: 12px }
+.account-nav summary { font-weight: 700; text-transform: uppercase; cursor: pointer }
+.account-game-links { display: flex; flex-direction: column; margin-left: 24px; gap: 4px; margin-top: 12px }
+.account-nav-bottom { height: 60% }
+.account-nav-bottom a { text-transform: uppercase; font-weight: 600 }
+.account-nav-bottom a.active { text-decoration: underline }
+.account-main { display: flex; flex-direction: column; gap: 24px; width: 100%; min-width: 0; height: 100%; position: relative; padding-top: 24px }
+.account-mobile-heading { display: flex; align-items: center; gap: 12px; padding: 0 24px }
+.account-mobile-heading .icon { width: 32px; height: 32px }
+.account-content { padding: 0 24px; width: 100%; height: 100%; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 24px; min-height: 0 }
+.account-content > h1 { font-size: 24px; line-height: 32px }
+.account-content p { font-size: 16px }
+.account-content button[type=submit] { width: fit-content; font-size: 20px }
+.application-empty button[type=submit] { width: 100%; padding: 12px }
+.questionnaire > h1 { font-weight: 700; text-transform: uppercase }
+.questionnaire > p { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--muted) }
+.question { display: flex; flex-direction: column; gap: 12px; margin-bottom: var(--gap-medium); }
+.question > label, .question legend { font-size: 16px; line-height: 24px; font-weight: 600; }
+.question legend { margin-bottom: 4px }
+.question p { font-size: 16px; line-height: 24px; color: var(--muted) }
+.question p:empty { display: none }
+.question input:not([type=checkbox],[type=radio]), .question textarea { background: white; color: var(--ink) }
+.question textarea { height: 150px; resize: vertical }
+.choice { flex-direction: row; gap: 12px; align-items: center; font-size: 18px; line-height: 28px; cursor: pointer }
+.choices { display: flex; flex-direction: column; gap: 12px }
+.scale { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.table-scroll { overflow-x: auto }
+table { width: 100%; border-collapse: collapse }
+th, td { padding: 12px; text-align: center; font-weight: 400; }
+th[scope=row] { text-align: left; min-width: 130px }
+tbody tr:nth-child(odd) { background: #0000000d }
+.profile-settings > form, .profile-settings > section { width: 100%; max-width: 800px }
+.profile-settings h2, .profile-settings legend { font-size: 18px; line-height: 26px; font-weight: 600 }
+.profile-settings label, .avatar-dialog label { font-size: 16px; line-height: 24px; gap: 8px }
+.profile-settings input:not([type=checkbox],[type=file]), .profile-settings textarea {
+  background: #fff; color: var(--ink); border: 1px solid #c6cdcb; border-radius: 6px; font-size: 16px; line-height: 24px; padding: 10px 12px;
+}
+.profile-settings input[readonly] { background: #f0f3f2; color: var(--muted) }
+.profile-settings .form-grid { display: grid; grid-template-columns: 1fr; gap: 20px }
+.profile-section legend, .profile-visibility legend { margin-bottom: 16px }
+.profile-visibility > div, .profile-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px }
+.profile-visibility > div { gap: 24px }
+.profile-settings .profile-button, .profile-settings button[type=submit], .avatar-dialog .profile-button {
+  display: inline-flex; justify-content: center; align-items: center; min-height: 44px; width: fit-content; padding: 10px 18px;
+  border: 1px solid var(--ink); border-radius: 6px; background: var(--ink); color: #fff; font-size: 14px; line-height: 22px; font-weight: 600;
+}
+.profile-settings .profile-button--secondary, .profile-settings button[type=submit].profile-button--secondary, .avatar-dialog .profile-button--secondary { background: transparent; color: var(--ink); border-color: #9ba7a5 }
+.profile-button:hover { filter: brightness(.9) }
+.profile-avatar { width: 104px; height: 104px; object-fit: cover; border-radius: 50%; background: #cad3d1; flex-shrink: 0 }
+.avatar-editor { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid #c6cdcb }
+.avatar-editor-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1; min-width: 180px }
+.profile-settings .avatar-editor p, .profile-settings .telegram-link-result p { font-size: 14px; line-height: 22px; color: var(--muted) }
+.avatar-dialog { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; padding: 24px; border-radius: 12px; background: var(--paper); color: var(--ink) }
+.avatar-dialog[open] { display: flex; flex-direction: column; gap: 16px }
+.avatar-dialog::backdrop { background: #10191db3 }
+.avatar-dialog h2 { font-size: 20px; line-height: 28px; font-weight: 600 }
+.avatar-dialog > p, .avatar-position { font-size: 14px; line-height: 22px }
+.avatar-dialog canvas { width: min(240px, 100%); aspect-ratio: 1; border-radius: 50%; align-self: center; flex-shrink: 0; background: white; touch-action: none; cursor: grab }
+.avatar-dialog canvas:active { cursor: grabbing }
+.avatar-dialog input[type=range] { width: 100%; accent-color: var(--ink) }
+.avatar-position summary { cursor: pointer }
+.avatar-position label { margin-top: 12px }
+.avatar-dialog .profile-actions { justify-content: flex-end }
+.telegram-settings { display: flex; flex-direction: column; gap: 16px; border-top: 1px solid #c6cdcb; padding-top: 24px; padding-bottom: 32px }
+.telegram-link-result { display: flex; flex-direction: column; gap: 12px }
+.muted { color: var(--muted) }
+.characters-page { padding: 80px 12px 12px; }
+.characters-page > h1 { font-size: 20px; padding: 12px }
+.filters { padding: 12px; display: flex; gap: 12px }
+.filter-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 12px }
+.filter-tags > span { margin-right: 12px }
+.tag { display: inline-flex; padding: 2px 8px; border-radius: 4px; font-size: 14px; background: #0004 }
+.tag[aria-pressed=true] { outline: 2px solid currentColor }
+.character-results { padding: 12px; display: flex; flex-direction: column; gap: 24px }
+.masters-page { padding-top: 192px; display: flex; flex-direction: column; gap: 20px }
+.masters-page > h1 { font-size: 36px; line-height: 40px; text-align: center }
+.masters-section { padding: 0 12px }
+.masters-section > h2 { font-size: 24px; line-height: 32px }
+.master-list { padding: 12px; display: flex; flex-direction: column; gap: 24px }
+.master { display: flex; align-items: center; gap: 16px }
+.master > img { width: 100px; height: 100px; border-radius: 50%; z-index: 1 }
+.master > div { min-width: 0 }
+.master h3 { font-size: 20px; line-height: 28px; }
+.master p { background: rgb(29 33 38 / .6); padding: 12px 12px 12px 68px; margin-left: -56px; border-radius: 8px; font-size: 14px; line-height: 20px; }
+.master-footer { font-size: 12px }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0 }
+.spinner { display: inline-block; width: 1em; height: 1em; flex-shrink: 0; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50% }
+.loading-message { display: inline-flex; align-items: center; gap: .65rem }
+.loading-page { min-height: 100vh; display: grid; place-items: center; padding: 2rem }
+.loading--page { display: grid; justify-items: center; gap: 2rem; color: var(--accent) }
+.loading-brand { width: 72px; height: 96px; filter: invert(84%) }
+.loading--navigation { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 45; max-width: calc(100% - 32px); padding: 12px 18px; border-radius: 12px; background: #1d2126; color: #dcdcdc; pointer-events: none; animation: loading-appear 0s .18s both }
+.pending-button { position: relative }
+.pending-button-icon { position: absolute; left: 4px; top: 50%; transform: translateY(-50%); display: flex }
+.modal-backdrop { position: fixed; inset: 0; background: #000b; z-index: 60; display: grid; place-items: center; padding: 24px }
+.modal-backdrop .panel { max-width: 500px; padding: 48px; border-radius: 16px; background: #101114; color: #dcdcdc }
+.modal-backdrop button { margin: 12px }
+@keyframes loading-appear { from { visibility: hidden } to { visibility: visible } }
+@keyframes loading-spin { to { transform: rotate(360deg) } }
+@media (min-width: 640px) {
+  .brand { font-size: 18px; line-height: 28px }
+  .facts li { font-size: 14px; line-height: 20px }
+}
+@media (min-width: 768px) {
+  .header-row { height: 48px; padding-left: 40px; padding-right: 12px }
+  .brand { font-size: 24px; line-height: 32px }
+  .brand-mark { height: 96px; width: 66.36px; margin-top: -4px; margin-bottom: -4px }
+  .header-menu { display: none }
+  .site-menu { display: flex }
+  .header-avatar { margin-left: 5% }
+  .avatar { width: 80px; height: 80px }
+  .hero { justify-content: flex-end; gap: 12px; background-position: left bottom }
+  .hero h1 { padding: 0 48px; font-weight: 600 }
+  .hero--whales h1, .hero--whales .hero-description { color: #dcdcdc }
+  .hero-band { flex-direction: row; height: fit-content; padding: 24px 12px 24px 48px; margin-bottom: 48px; background: #0006; justify-content: normal }
+  .hero-description { width: 70%; padding: 0 }
+  .lead { font-size: 18px; line-height: 28px }
+  .facts li { font-size: 18px; line-height: 28px }
+  .hero-navigation { flex-direction: row; gap: 5% }
+  .hero-links-logo { justify-content: normal; gap: 5% }
+  .hero-links > * { padding: 0; font-size: 30px; line-height: 36px; background: transparent }
+  .whale-logo { display: block; height: 184px; width: 184px; flex-shrink: 1 }
+  .whale-half { display: none }
+  .other-games { width: 15%; min-width: 150px; justify-content: flex-end }
+  .other-games span:not(.icon) { display: block; min-width: 84px; text-align: right }
+  .other-games .icon { transform: none }
+  .roles-page { padding-left: 2.5%; padding-right: 2.5% }
+  .roles-stripe { display: block; position: absolute; top: 80px; bottom: 0; background: #fff3; pointer-events: none }
+  .roles-stripe--navigation { left: 2.5%; width: 20% }
+  .roles-stripe--characters { left: 25%; width: 57.5% }
+  .roles-stripe--players { right: 2.5%; width: 12.5% }
+  .roles-sidebar { display: flex; padding-top: 24px; padding-left: 12px; z-index: 1; width: 22.5%; flex-shrink: 1; min-width: 0 }
+  .group-navigation { padding: 12px 24px 12px 12px }
+  .group-navigation > h1, .group-navigation > .back-link { display: flex }
+  .group-navigation h1 { font-size: 30px; line-height: 36px }
+  .role-content { padding: 48px 8px 48px 24px }
+  .group-title { width: 80%; padding: 0 }
+  .group-title > img { display: block }
+  .group-menu { display: none }
+  .character { flex-direction: row; gap: 4%; background: transparent; padding: 0 }
+  .character-main { padding-right: 24px }
+  .character-portrait { width: 20% }
+  .picture-caption, .character-mobile-title, .character-mobile-like { display: none }
+  .character-description { align-items: flex-start }
+  .character-description > h3 { display: block }
+  .character p { font-size: 14px; line-height: 20px }
+  .character-player { display: flex; flex-direction: column; gap: 4px; width: 17.5%; overflow-wrap: anywhere; min-width: 0 }
+  .character-player form { gap: 4px }
+  .auth { width: 75% }
+  .auth .auth-fields.signup { grid-template-columns: 1fr 1fr }
+  .account-page { padding-left: 24px; padding-right: 96px }
+  .account-sidebar { display: block; width: 30%; z-index: 1 }
+  .account-nav-top, .account-nav-bottom { background: #fff3 }
+  .account-main { width: 65%; padding-top: 0 }
+  .account-mobile-heading { display: none }
+  .account-content { background: #fff3; padding: 96px 24px 24px; }
+  .account-content > h1, .account-nav h2 { font-size: 30px; line-height: 36px }
+  .mobile-only { display: none }
+}
+@media (min-width: 1024px) {
+  :root { --gap-xs: 12px; --gap-small: 24px; --gap-medium: 36px; --gap-large: 48px }
+  .site-menu { gap: 15% }
+  .lead { font-size: 24px; line-height: 32px }
+  .facts li { font-size: 20px; line-height: 28px; padding: 8px }
+  .roles-sidebar { padding-left: 24px }
+  .group-title h2, .character h3, .character-player, .group-navigation nav, .account-nav nav, .account-name, .account-content p, .question > label, .question legend, .question p { font-size: 18px; line-height: 28px }
+  .group-navigation nav { line-height: 20px }
+  .group-title p { font-size: 16px; line-height: 24px }
+  .auth { width: 50% }
+  .account-sidebar { width: 22.5% }
+  .account-main { width: 75% }
+  .profile-settings .form-grid { grid-template-columns: 1fr 1fr }
+  .questionnaire > p { font-size: 14px; line-height: 20px }
+}
+@media (min-width: 1280px) {
+  .hero h1 { font-size: 96px }
+  .tabs { flex-direction: row }
+  .tabs span { display: inline }
+}
+@media (min-width: 1536px) {
+  :root { --gap-xs: 24px; --gap-small: 36px; --gap-medium: 48px; --gap-large: 64px }
+}
+@media (max-width: 767px) {
+  .drawer .account-nav-top > .back-link, .drawer .account-nav-heading { display: none }
+  .drawer .account-nav { height: calc(100% - 64px) }
+  .auth-page { overflow-y: auto }
+}
+@media (max-width: 315px) { .brand { font-size: 16px } }
+@media (prefers-reduced-motion: no-preference) { .spinner { animation: loading-spin .8s linear infinite } }
+/* Source component spacing: GroupBlock uses gap-small inside each group. */
+.group { gap: var(--gap-small) }
+.site-menu button { gap: 4px }
+.brand-mark { height: 56px; width: 38.72px; margin-top: -4px; margin-bottom: -4px }
+.tag { border: 1px solid; border-radius: 12px; padding: 0 8px; font-size: 16px; line-height: 24px }
+.scale-progress { height: 8px; width: 100%; background: #404b5f; border-radius: 16px; overflow: hidden }
+.scale-progress > div { height: 100%; border-radius: 12px; background: linear-gradient(to right, #58405f, #44405f) }
+.scale { padding: 12px }
+.table-scroll table { table-layout: fixed; border-collapse: separate; border-spacing: 12px 24px }
+.table-scroll th, .table-scroll td { padding: 0 }
+.table-scroll th:first-child { width: 40% }
+.table-scroll tbody tr { background: transparent }
+@media (min-width: 768px) {
+  .brand-mark { height: 88px; width: 60.83px; margin-top: 0; margin-bottom: 0 }
+  .roles-sidebar { padding: 0; min-width: min-content }
+  .roles-sidebar .group-navigation { padding: 24px 24px 12px 12px; min-width: min-content }
+  .table-scroll table { border-spacing: 24px }
+}
+@media (min-width: 1024px) {
+  .roles-sidebar .group-navigation { padding-left: 24px }
+}
+.tabs > div { display: flex; gap: 4px; white-space: nowrap }
+.header-menu { width: 32px; min-width: 0; flex-shrink: 1 }
+.header-menu .icon { width: 100% }
+.password-field .icon { width: 30px; height: 30px }
+.question-heading { display: flex; flex-direction: column; gap: 4px }
+.question-heading label { font-size: 16px; line-height: 24px; font-weight: 600 }
+.choices .choice { font-size: 16px; line-height: 24px }
+.choices input { width: 20px; height: 20px }
+.account-nav-bottom nav { gap: 24px }
+@media (min-width: 1024px) {
+ .question-heading label, .choices .choice { font-size: 18px; line-height: 28px }
+}
+.group-navigation nav { margin-top: 12px }
+.player-popup summary { text-decoration: none }
+@media (min-width: 1024px) { .other-games { font-size: 18px; line-height: 28px } }
+.unfilled { display: inline-flex; align-items: center; justify-content: center; height: 16px; min-width: 16px; border-radius: 50%; background: #000b; color: #dcdcdc; font-size: 12px; line-height: 16px; font-weight: 400 }
+.account-game-links a { display: flex; align-items: center; gap: 8px }
+.application-details { display: flex; flex-direction: column; }
+.application-details p { display: flex; align-items: center; gap: 8px }
+.application-details a { text-decoration: underline }
+.application-details h2, .incomplete { font-weight: 700 }
+.application-details h2 { font-size: 16px; line-height: 24px }
+@media (min-width: 1024px) { .application-details h2 { font-size: 18px; line-height: 28px } }
+.auth-page { height: 100vh }
+.auth { max-height: 100vh }
+.auth h1, .auth > a { flex-shrink: 0 }
+.auth form { overflow-y: auto; scrollbar-width: none; min-height: 0 }
+.auth .auth-fields.signup { row-gap: 24px }
+@media (max-width: 767px) {
+  .auth .auth-fields.signup { row-gap: 12px }
+  .auth .auth-fields.signup > label:nth-child(2), .auth .auth-fields.signup > label:nth-child(4) { margin-bottom: 12px }
+}
+.master > div { display: flex; flex-direction: column; align-items: flex-start; gap: 4px }
+.master-footer { margin-top: 8px; padding: 4px 12px; font-size: 16px; line-height: 24px; color: #3c3c3c }
+.master-footer a { color: #dcdcdc }

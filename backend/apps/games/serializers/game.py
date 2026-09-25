@@ -32,11 +32,12 @@ class GameSerializer(serializers.ModelSerializer):
             'open_character_list',
             'player_count',
         ]
+        read_only_fields = fields
 
     # def get_groups(self, obj: Game):
     #     return GroupSerializer(
     #         obj.groups.filter(parent__isnull=True, hidden=False), many=True
     #     ).data
 
-    def get_player_count(self, obj: Game):
+    def get_player_count(self, obj: Game) -> int:
         return public_characters(obj.pk).count() if obj.open_character_list else 0

@@ -16,6 +16,10 @@ backend/staticfiles
 docker/postgres/data
 frontend/dist
 frontend/dist_tmp
+frontend/test-results
+frontend/live-test-results
+frontend/playwright-report
+refactoring-workplans
 runtime
 *.dump
 *.key

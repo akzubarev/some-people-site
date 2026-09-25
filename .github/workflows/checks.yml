@@ -28,6 +28,8 @@ jobs:
         run: docker compose -f docker/docker-compose.security-tests.yaml run --build --rm tests
       - name: User migration consistency
         run: docker compose -f docker/docker-compose.security-tests.yaml run --rm tests python manage.py makemigrations users --check --dry-run
+      - name: OpenAPI schema consistency
+        run: docker compose -f docker/docker-compose.security-tests.yaml run --rm tests sh -c 'python manage.py spectacular --file /tmp/openapi.yaml --validate --fail-on-warn && cmp openapi.yaml /tmp/openapi.yaml'
       - name: Clean up synthetic test services
         if: always()
         run: docker compose -f docker/docker-compose.security-tests.yaml down --volumes
@@ -43,12 +45,36 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.23.2'
-      - name: Install Yarn
-        run: npm install --global yarn@1.22.22
+      - name: Install pnpm
+        run: npm install --global pnpm@12.5.1
       - name: Install frontend dependencies
-        # Legacy Vue CLI's node-ipc metadata predates supported Node releases.
-        run: yarn install --frozen-lockfile --non-interactive --ignore-engines
+        run: pnpm install --frozen-lockfile
       - name: Typecheck
-        run: yarn tsc --noEmit
+        run: pnpm typecheck
+      - name: Generated API types consistency
+        run: pnpm api:check
+      - name: Lint
+        run: pnpm lint
+      - name: Unit tests
+        run: pnpm test
       - name: Build frontend
-        run: yarn build
+        run: pnpm build
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Browser tests
+        run: pnpm test:e2e
+      - name: Start synthetic Django browser stack
+        run: docker compose -f ../docker/docker-compose.frontend-tests.yaml up --build -d
+      - name: Real API browser tests
+        env:
+          LIVE_API: '1'
+          E2E_BASE_URL: http://127.0.0.1:5174
+        run: |
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:5174/api/session/ > /dev/null; then break; fi
+            sleep 2
+          done
+          pnpm test:e2e tests/live.spec.ts
+      - name: Clean up browser stack
+        if: always()
+        run: docker compose -f ../docker/docker-compose.frontend-tests.yaml down --volumes

@@ -4,11 +4,13 @@ from typing import Any
 from rest_framework import mixins, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiParameter
 
 from apps.games.models import Question
 from apps.games.serializers import QuestionSerializer
 
 
+@extend_schema_view(list=extend_schema(parameters=[OpenApiParameter('game_alias', str)]))
 class QuestionsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     """Questions viewset."""
     queryset = Question.objects
