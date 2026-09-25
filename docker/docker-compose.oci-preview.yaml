@@ -8,6 +8,8 @@ services:
       - preview_database:/var/lib/postgresql/data
 
   browser-api:
+    environment:
+      DJANGO_SETTINGS_MODULE: config.preview_settings
     command:
       - sh
       - -c
