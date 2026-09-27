@@ -256,23 +256,10 @@ USE_L10N = True
 # _\ \  / / / __ |/ / _/ // /__
 # /___/ /_/ /_/ |_/_/ /___/\___/
 
-# When Vue Builds, path will be `/static/css/...` so we will have Django Serve
-# In Production, it's recommended use an alternative approach such as:
-# http://whitenoise.evans.io/en/stable/django.html?highlight=django
-
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'django_yarnpkg.finders.NodeModulesFinder',
 ]
-
-NODE_MODULES_ROOT = os.path.join(BACKEND_DIR, 'node_modules')
-
-YARN_INSTALLED_APPS = (
-    'chartjs-adapter-date-fns',
-    'chart.js',
-    'air-datepicker'
-)
 
 STATIC_URL = '/staticfiles/'
 MEDIA_URL = '/media/'

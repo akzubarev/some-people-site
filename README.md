@@ -2,25 +2,19 @@
 
 Website for LARP community to help register and follow the MG "Some-people"
 
-# Aliases
+# Local development
 
-- `dcu` - `docker compose up`
-- `dce` - `docker exec -it`
-- `dcd` - `docker compose down --remove-orphans`
+Run the project helper from WSL. On first use, copy `backend/example.env` to
+`backend/.env` and fill in local values. Do not commit that file.
 
-# startup
+```bash
+./scripts/project.sh dev up
+./scripts/project.sh dev migrate
+./scripts/project.sh dev check
+```
 
-- Copy `backend/example.env` to `backend/.env`, change accordingly
-- `ln -s docker/docker-compose.prod.yaml docker/docker-compose.yaml`
-- `sh pre-startup.sh`
-- `dcu`
-- `dce api sh startup.sh`
-- `dc run builder.frontend yarn`
-- `dc run builder.frontend`
-
-## stop
-
-- `dcd`
+Use `./scripts/project.sh help` for the other commands. The frontend is React
+and Vite, with dependencies managed by pnpm.
 
 # dev
 

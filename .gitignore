@@ -12,8 +12,6 @@ staticfiles/
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 lerna-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -75,9 +73,6 @@ web_modules/
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
-.yarn-integrity
-
 # dotenv environment variables file
 .env
 .env.test
@@ -91,7 +86,6 @@ web_modules/
 *.dump
 *.sql.gz
 docker/postgres/*.sql
-dist_tmp/
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -108,9 +102,6 @@ dist
 # Comment in the public line in if your project uses Gatsby and not Next.js
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
-
-# vuepress build output
-.vuepress/dist
 
 # Serverless directories
 .serverless/
