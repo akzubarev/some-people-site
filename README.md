@@ -1,65 +1,27 @@
-# some-people-site
+# Some People
 
-Website for LARP community to help register and follow the MG "Some-people"
+Some People is a website for a live-action role-playing community. It connects game announcements and character selection with player applications, questionnaires, and communication with the organizing team. The interface is in Russian.
 
-# Aliases
+## What the application does
 
-- `dcu` - `docker compose up`
-- `dce` - `docker exec -it`
-- `dcd` - `docker compose down --remove-orphans`
+Visitors can read about games and browse published characters by faction, family, or tag. Registered players can save characters they are interested in, apply to a game, complete its questionnaire, and follow their application status in their personal account.
 
-# startup
+Organizers manage games, role visibility, character assignments, application decisions, participation fees, and mailings through Django admin. Players can connect Telegram to receive messages from the organizers.
 
-- Copy `backend/example.env` to `backend/.env`, change accordingly
-- `ln -s docker/docker-compose.prod.yaml docker/docker-compose.yaml`
-- `sh pre-startup.sh`
-- `dcu`
-- `dce api sh startup.sh`
-- `dc run builder.frontend yarn`
-- `dc run builder.frontend`
+## How it fits together
 
-## stop
+The React interface handles navigation, forms, and display. A Django REST API validates requests, controls access, and stores the application's records in PostgreSQL. Uploaded images and files use either filesystem storage or private S3-compatible object storage. A separate Telegram bot connects player accounts and delivers scheduled messages.
 
-- `dcd`
+| Part | Responsibility |
+| --- | --- |
+| React, TypeScript, React Router | Game pages, role grid, personal account, forms |
+| Django REST Framework | Application rules, authentication, API, validation |
+| Django admin | Organizer-facing content and application management |
+| PostgreSQL | Players, games, roles, applications, answers, mailings |
+| Media storage | Avatars, portraits, character files, rich-text uploads |
+| Telegram bot | Account linking and notification delivery |
 
-# dev
+## Documentation
 
-- traefik: http://localhost:9090/dashboard/#/
-- admin: http://v1.admin.some-people.localhost:1886/admin
-- app: http://v1.app.some-people.localhost:1886/
-
-# prod
-
-## app: http://{domain}/
-
-- `/` - main page
-- `/mg` - list of the master group
-- `/games` - games list with short info
-    - `/<alias>`
-        - `/about` - more info about the game
-        - `/roles` - roles list for the game
-        - `/apply` - application for the game
-- `/account`
-    - `/profile` - users profile
-    - `/settings` - user settings
-    - `/telegram` - telegram account linking
-    - `/notifications` - notifications list
-
-## api
-
-- `/auth/me/` - authorization
-- `/games` - games list
-    - `games/<alias>` - game info
-    - `/characters/` - game characters
-    - `tags` - tags for the characters and groups
-    - `/questions/` - questions for the application
-    - `/applications` - game applications
-        - `/get/` - get one application
-        - `/apply/` - create application
-- `/users` - users list
-    - `/mg` - list of master group
-    - `/users/{user_id}` - one user
-    - `/players` - list of players for the game
-    - `/telegram` - create telegram link code
-
-## admin: http://<domain>/admin
+- [Application behavior](docs/application.md): games and role visibility, the application lifecycle, questionnaires, profiles, and organizer workflows.
+- [Architecture](docs/architecture.md): domain relationships, request and data flow, sessions, API contracts, caching, media, and Telegram integration.
