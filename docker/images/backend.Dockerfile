@@ -18,8 +18,6 @@ RUN pipenv install --system --verbose --skip-lock
 COPY docker/images/scripts/entrypoint.sh /bin/entrypoint.sh
 RUN chmod +x /bin/entrypoint.sh
 
-RUN apk add yarn
-
 ENTRYPOINT ["/bin/sh", "/bin/entrypoint.sh"]
 
 WORKDIR /app
