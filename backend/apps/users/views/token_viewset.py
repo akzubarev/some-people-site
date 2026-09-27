@@ -8,10 +8,15 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema, extend_schema_view
 
 from apps.users.serializers import TokenCreateSerializer, TokenSerializer
 
 
+@extend_schema_view(
+    login=extend_schema(request=TokenCreateSerializer, responses=TokenSerializer),
+    logout=extend_schema(request=None, responses={204: None}),
+)
 class TokenViewSet(viewsets.GenericViewSet):
     """Token viewset."""
     serializer_class = TokenSerializer

@@ -15,7 +15,7 @@ class UserPublicSerializer(serializers.ModelSerializer):
         fields = ('username', 'first_name', 'last_name', 'avatar', 'vk', 'telegram')
         read_only_fields = fields
 
-    def get_vk(self, user: User) -> str:
+    def get_vk(self, user: User) -> str | None:
         """Gets users vk username."""
         return user.vk if user.vk_public else None
 

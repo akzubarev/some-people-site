@@ -32,9 +32,9 @@ services:
   preview-web:
     image: nginx:1.28-alpine
     ports:
-      - "127.0.0.1:1337:80"
+      - "127.0.0.1:1886:80"
     volumes:
-      - ../frontend/dist_tmp:/usr/share/nginx/html:ro
+      - ../frontend/dist:/usr/share/nginx/html:ro
       - ./nginx/security-preview.conf:/etc/nginx/conf.d/default.conf:ro
       - ../backend/media:/preview-media:ro
       - preview_static:/preview-static:ro

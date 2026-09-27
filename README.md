@@ -25,8 +25,8 @@ Website for LARP community to help register and follow the MG "Some-people"
 # dev
 
 - traefik: http://localhost:9090/dashboard/#/
-- admin: http://v1.admin.some-people.localhost:1337/admin
-- app: http://v1.app.some-people.localhost:1337/
+- admin: http://v1.admin.some-people.localhost:1886/admin
+- app: http://v1.app.some-people.localhost:1886/
 
 # prod
 

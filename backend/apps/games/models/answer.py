@@ -32,6 +32,6 @@ class Answer(models.Model):
     def filled(self) -> bool:
         """If question is fully answered."""
         if self.question.type in [Question.Type.MATRIX, Question.Type.MATRIX_CHECKBOX]:
-            return all(self.value)
+            return bool(self.value) and all(self.value)
         else:
             return bool(self.value)

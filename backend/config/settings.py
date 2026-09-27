@@ -170,6 +170,7 @@ DEFAULT_RENDERER_CLASSES = (
 )
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -186,6 +187,14 @@ REST_FRAMEWORK = {
         'anon': '10/minute',
         'user': '200/minute'
     }
+}
+
+INSTALLED_APPS += ['drf_spectacular']
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Some People API',
+    'VERSION': '1.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
 }
 
 # ___  ___

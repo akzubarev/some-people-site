@@ -1,14 +1,10 @@
-FROM node:22-alpine AS builder
-
+FROM node:22.23.2-bookworm-slim AS builder
+RUN npm install --global pnpm@12.5.1
 WORKDIR /app
-
-COPY frontend/package.json frontend/yarn.lock ./
-# Vue CLI's transitive node-ipc package has stale engine metadata capped at
-# Node 17. It is build-time-only; keep a supported Node and ignore that check.
-RUN yarn install --frozen-lockfile --non-interactive --ignore-engines
-
+COPY frontend/package.json frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY frontend/ ./
-RUN yarn build && mv dist_tmp dist
+RUN pnpm build
 
 FROM nginx:1.28-alpine
 COPY docker/nginx/oci.conf /etc/nginx/conf.d/default.conf

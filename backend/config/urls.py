@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from .media_storage import editor_media
 
@@ -19,6 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     # API
+    path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
     path('api/', include('apps.users.urls')),
     path('api/', include('apps.notifications.urls')),
     path('api/', include('apps.games.urls')),
