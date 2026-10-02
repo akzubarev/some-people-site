@@ -337,6 +337,105 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/organizer/games/:
+    get:
+      operationId: organizer_games_list
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizerGameIndex'
+          description: ''
+    post:
+      operationId: organizer_games_create
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizerGameRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizerGameRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizerGameRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerGame'
+          description: ''
+  /api/organizer/games/{id}/:
+    get:
+      operationId: organizer_games_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Игра.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerGame'
+          description: ''
+    patch:
+      operationId: organizer_games_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Игра.
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerGameRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerGameRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerGameRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerGame'
+          description: ''
+        '409':
+          description: No response body
   /api/questions/:
     get:
       operationId: questions_list
@@ -907,6 +1006,19 @@ components:
           maxLength: 20
       required:
       - game_alias
+    GamePermissions:
+      type: object
+      properties:
+        view:
+          type: boolean
+        add:
+          type: boolean
+        change:
+          type: boolean
+      required:
+      - add
+      - change
+      - view
     Group:
       type: object
       description: Group serializer.
@@ -996,6 +1108,166 @@ components:
       - mailing
       - user
       - viewed
+    OrganizerGame:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Название
+          maxLength: 100
+        alias:
+          type: string
+          maxLength: 20
+          pattern: ^[a-z][a-z0-9-]*$
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        short_description:
+          type: string
+          nullable: true
+          title: Короткое описание
+        price:
+          type: integer
+          minimum: 0
+          nullable: true
+        player_count:
+          type: integer
+          minimum: 0
+          nullable: true
+        location:
+          type: string
+          nullable: true
+          title: Место
+          maxLength: 100
+        year:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Год
+        start:
+          type: string
+          format: date-time
+          nullable: true
+          title: Начало
+        end:
+          type: string
+          format: date-time
+          nullable: true
+          title: Конец
+        open_character_list:
+          type: boolean
+          title: Сетка открыта
+        open_applications:
+          type: boolean
+          title: Прием заявок открыт
+        vk:
+          type: string
+          nullable: true
+          maxLength: 100
+        tg:
+          type: string
+          nullable: true
+          maxLength: 100
+        revision:
+          type: string
+          readOnly: true
+      required:
+      - alias
+      - id
+      - revision
+      - title
+    OrganizerGameIndex:
+      type: object
+      properties:
+        games:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizerGame'
+        permissions:
+          $ref: '#/components/schemas/GamePermissions'
+        timezone:
+          type: string
+      required:
+      - games
+      - permissions
+      - timezone
+    OrganizerGameRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          title: Название
+          maxLength: 100
+        alias:
+          type: string
+          minLength: 1
+          maxLength: 20
+          pattern: ^[a-z][a-z0-9-]*$
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        short_description:
+          type: string
+          nullable: true
+          title: Короткое описание
+        price:
+          type: integer
+          minimum: 0
+          nullable: true
+        player_count:
+          type: integer
+          minimum: 0
+          nullable: true
+        location:
+          type: string
+          nullable: true
+          title: Место
+          maxLength: 100
+        year:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Год
+        start:
+          type: string
+          format: date-time
+          nullable: true
+          title: Начало
+        end:
+          type: string
+          format: date-time
+          nullable: true
+          title: Конец
+        open_character_list:
+          type: boolean
+          title: Сетка открыта
+        open_applications:
+          type: boolean
+          title: Прием заявок открыт
+        vk:
+          type: string
+          nullable: true
+          maxLength: 100
+        tg:
+          type: string
+          nullable: true
+          maxLength: 100
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+          maxLength: 64
+      required:
+      - alias
+      - title
     PaginatedNotificationList:
       type: object
       required:
@@ -1019,6 +1291,75 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Notification'
+    PatchedOrganizerGameRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          title: Название
+          maxLength: 100
+        alias:
+          type: string
+          minLength: 1
+          maxLength: 20
+          pattern: ^[a-z][a-z0-9-]*$
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        short_description:
+          type: string
+          nullable: true
+          title: Короткое описание
+        price:
+          type: integer
+          minimum: 0
+          nullable: true
+        player_count:
+          type: integer
+          minimum: 0
+          nullable: true
+        location:
+          type: string
+          nullable: true
+          title: Место
+          maxLength: 100
+        year:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Год
+        start:
+          type: string
+          format: date-time
+          nullable: true
+          title: Начало
+        end:
+          type: string
+          format: date-time
+          nullable: true
+          title: Конец
+        open_character_list:
+          type: boolean
+          title: Сетка открыта
+        open_applications:
+          type: boolean
+          title: Прием заявок открыт
+        vk:
+          type: string
+          nullable: true
+          maxLength: 100
+        tg:
+          type: string
+          nullable: true
+          maxLength: 100
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+          maxLength: 64
     Question:
       type: object
       description: Question serializer.

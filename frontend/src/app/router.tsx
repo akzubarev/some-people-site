@@ -2,6 +2,7 @@ import { createBrowserRouter, redirect, type LoaderFunctionArgs } from 'react-ro
 import { Shell } from './Shell'
 import { RouteError } from '../shared/ui'
 import { PageLoading } from '../shared/Loading'
+import { organizerLoader } from '../features/organizer/data'
 import { rootLoader, gameLoader, rolesLoader, charactersLoader, accountLoader, settingsLoader,
   mgLoader, authAction, settingsAction, applicationAction, likeAction } from './data'
 
@@ -19,6 +20,9 @@ export const router = createBrowserRouter([{
     { path: 'account/:game_alias/questionnaire', loader: accountLoader, action: applicationAction, lazy: () => import('../features/account/Questionnaire') },
     { path: 'account/settings', loader: settingsLoader, action: settingsAction, lazy: () => import('../features/account/Settings') },
     { path: 'mg', loader: mgLoader, lazy: () => import('../features/account/Masters') },
+    ...['organizer', 'organizer/new', 'organizer/:game_id'].map(path => ({
+      path, loader: organizerLoader, lazy: () => import('../features/organizer/Organizer'),
+    })),
     ...['sign-in', 'sign-up', 'sign-out'].map(path => ({
       path, action: authAction, lazy: () => import('../features/auth/Auth'),
     })),

@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router'
+import { Link, useLoaderData } from 'react-router'
 import type { mgLoader } from '../../app/data'
 import { Picture, SocialLinks } from '../../shared/ui'
 import { avatar } from '../../shared/assets'
@@ -13,6 +13,7 @@ export function Component() {
     { title: 'Арт-блок', players: [] }, { title: 'Игротехи', players: [] },
   ]
   return <main className="masters-page"><h1>МГ «Какие-то Люди»</h1>
+    <p><Link to="/organizer">Управление играми →</Link></p>
     {sections.map(section => <section className="masters-section" key={section.title}><h2>{section.title}</h2>
       <div className="master-list">{section.players.map(player => {
         const master = mgData[player.username]

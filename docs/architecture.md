@@ -51,8 +51,13 @@ Group visibility is resolved from each game's root groups down through visible d
 | `/account/settings?game=:game_alias` | Profile and Telegram settings in the selected game's account layout |
 | `/sign-in`, `/sign-up`, `/sign-out` | Authentication |
 | `/mg` | Staff-restricted master-group listing |
+| `/organizer`, `/organizer/new`, `/organizer/:game_id` | Authorized game listing, creation and editing |
 
-Game and role pages consume public representations. Application and profile operations require authentication and limit access to the current player. Django admin supplies the separate organizer interface. [Application behavior](application.md) describes the user-facing lifecycle.
+Game and role pages consume public representations. Application and profile operations require authentication and limit access to the current player. The organizer cabinet has a separate game-editing contract; Django admin supplies the other management workflows. [Application behavior](application.md) describes the user-facing lifecycle.
+
+`/api/organizer/games/` lists game content, effective game permissions and the application's time zone, and accepts creation requests. `/api/organizer/games/{id}/` reads and patches a game. Every endpoint checks active organizer status and Django model permissions. Responses are marked `no-store`; organizer fields are not added to public serializers. The stored player capacity and default fee are available through this private contract.
+
+An update supplies `expected_revision`, a digest of the editable values read earlier. Inside a transaction, the API locks the game row, compares the digest, and returns HTTP 409 on a stale edit. A case-insensitive database constraint prevents duplicate aliases, including concurrent creation. Successful writes use ordinary model saves, reuse post-commit cache invalidation and record changed field names in Django's admin log. The editor preserves its draft on validation, network and conflict errors.
 
 ## Sessions and API contracts
 

@@ -52,7 +52,13 @@ Telegram connection begins in settings. The application issues a link that can b
 
 ## Organizer workflows and messages
 
-Django admin is the management interface for game content, nested groups, characters, tags, questions, applications, and mailings. Application management shows status, assigned character, fee, recorded payment, and the player's liked characters. Organizers can select applications as recipients for a mailing.
+The MG navigation opens an organizer cabinet. Its game editor contains the title, URL alias, full and short descriptions, location, dates, year, player capacity, default fee, social links, and separate switches for accepting applications and publishing the role grid. Dates are shown in the application's configured time zone. Organizer routes identify games by their stable database ID, so the editor remains reachable after an alias change; public game links use the alias and must be updated when it changes.
+
+Access requires an active staff or superuser account and the corresponding Django game permissions. View permission allows reading; change permission allows editing and reading; add permission allows creation. New games start with applications and the role grid closed, and can be opened in a subsequent save. Changing a game's default fee does not rewrite fees on existing applications. The organizer capacity field is the stored game value; the public API's player count continues to describe visible characters.
+
+Saving checks the version originally loaded by the editor. If another edit has changed the game, the server rejects the stale save, and the browser retains the draft so the organizer can review it before loading current data. Navigation warns about unsaved changes. Creation and changes are recorded in Django's admin history; public game caches are invalidated after commit. Aliases are unique without regard to letter case.
+
+Django admin remains the management interface for nested groups, characters, tags, questions, applications, and mailings. Application management shows status, assigned character, fee, recorded payment, and the player's liked characters. Organizers can select applications as recipients for a mailing.
 
 A mailing holds its text, scheduled time, and recipient selection. Saving a mailing marked ready creates recipient notification records; without a recipient selection, the model uses all users. The bot periodically looks for due, unsent notifications whose users have a linked Telegram chat. It sends the text and marks each successful delivery as sent. Failed sends remain unsent for a later attempt.
 

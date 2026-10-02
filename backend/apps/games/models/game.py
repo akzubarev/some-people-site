@@ -1,5 +1,6 @@
 """Game models."""
 from django.db import models
+from django.db.models.functions import Lower
 
 
 class Game(models.Model):
@@ -62,6 +63,7 @@ class Game(models.Model):
         verbose_name = 'Игра'
         verbose_name_plural = 'Игры'
         ordering = ["-id"]
+        constraints = [models.UniqueConstraint(Lower('alias'), name='game_alias_unique_ci')]
 
     def __str__(self):
         return self.title

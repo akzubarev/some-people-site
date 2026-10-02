@@ -225,6 +225,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/organizer/games/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_list"];
+        put?: never;
+        post: operations["organizer_games_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["organizer_games_partial_update"];
+        trace?: never;
+    };
     "/api/questions/": {
         parameters: {
             query?: never;
@@ -535,6 +567,11 @@ export interface components {
         GameAliasRequest: {
             game_alias: string;
         };
+        GamePermissions: {
+            view: boolean;
+            add: boolean;
+            change: boolean;
+        };
         /** @description Group serializer. */
         Group: {
             readonly id: number;
@@ -564,6 +601,76 @@ export interface components {
             readonly mailing: number | null;
             readonly viewed: boolean;
         };
+        OrganizerGame: {
+            readonly id: number;
+            /** Название */
+            title: string;
+            alias: string;
+            /** Описание */
+            description?: string | null;
+            /** Короткое описание */
+            short_description?: string | null;
+            price?: number | null;
+            player_count?: number | null;
+            /** Место */
+            location?: string | null;
+            /** Год */
+            year?: number | null;
+            /**
+             * Начало
+             * Format: date-time
+             */
+            start?: string | null;
+            /**
+             * Конец
+             * Format: date-time
+             */
+            end?: string | null;
+            /** Сетка открыта */
+            open_character_list?: boolean;
+            /** Прием заявок открыт */
+            open_applications?: boolean;
+            vk?: string | null;
+            tg?: string | null;
+            readonly revision: string;
+        };
+        OrganizerGameIndex: {
+            games: components["schemas"]["OrganizerGame"][];
+            permissions: components["schemas"]["GamePermissions"];
+            timezone: string;
+        };
+        OrganizerGameRequest: {
+            /** Название */
+            title: string;
+            alias: string;
+            /** Описание */
+            description?: string | null;
+            /** Короткое описание */
+            short_description?: string | null;
+            price?: number | null;
+            player_count?: number | null;
+            /** Место */
+            location?: string | null;
+            /** Год */
+            year?: number | null;
+            /**
+             * Начало
+             * Format: date-time
+             */
+            start?: string | null;
+            /**
+             * Конец
+             * Format: date-time
+             */
+            end?: string | null;
+            /** Сетка открыта */
+            open_character_list?: boolean;
+            /** Прием заявок открыт */
+            open_applications?: boolean;
+            vk?: string | null;
+            tg?: string | null;
+            expected_revision?: string;
+        };
         PaginatedNotificationList: {
             /** @example 123 */
             count: number;
@@ -578,6 +685,38 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Notification"][];
+        };
+        PatchedOrganizerGameRequest: {
+            /** Название */
+            title?: string;
+            alias?: string;
+            /** Описание */
+            description?: string | null;
+            /** Короткое описание */
+            short_description?: string | null;
+            price?: number | null;
+            player_count?: number | null;
+            /** Место */
+            location?: string | null;
+            /** Год */
+            year?: number | null;
+            /**
+             * Начало
+             * Format: date-time
+             */
+            start?: string | null;
+            /**
+             * Конец
+             * Format: date-time
+             */
+            end?: string | null;
+            /** Сетка открыта */
+            open_character_list?: boolean;
+            /** Прием заявок открыт */
+            open_applications?: boolean;
+            vk?: string | null;
+            tg?: string | null;
+            expected_revision?: string;
         };
         /** @description Question serializer. */
         Question: {
@@ -1024,6 +1163,107 @@ export interface operations {
         responses: {
             /** @description No response body */
             204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    organizer_games_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerGameIndex"][];
+                };
+            };
+        };
+    };
+    organizer_games_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizerGameRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["OrganizerGameRequest"];
+                "multipart/form-data": components["schemas"]["OrganizerGameRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerGame"];
+                };
+            };
+        };
+    };
+    organizer_games_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Игра. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerGame"];
+                };
+            };
+        };
+    };
+    organizer_games_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Игра. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedOrganizerGameRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedOrganizerGameRequest"];
+                "multipart/form-data": components["schemas"]["PatchedOrganizerGameRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerGame"];
+                };
+            };
+            /** @description No response body */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
