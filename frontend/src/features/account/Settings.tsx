@@ -5,6 +5,7 @@ import { Errors } from '../../shared/ui'
 import { PendingButton } from '../../shared/Loading'
 import { publicLink } from '../../shared/api/client'
 import { AvatarEditor } from './AvatarEditor'
+import { GoogleAuth } from '../auth/GoogleAuth'
 import type { User } from '../../shared/api/types'
 import { AccountLayout } from './AccountNav'
 import { useRoot } from '../../app/Shell'
@@ -78,5 +79,6 @@ function Profile({ user }: { user: User }) {
       </div>}
       {expiredCode && expiredCode === telegram.data?.code && <p role="status">Срок ссылки истёк. Получите новую ссылку.</p>}
     </section>
+    <GoogleAuth linking />
   </AccountLayout>
 }

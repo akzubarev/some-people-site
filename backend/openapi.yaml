@@ -434,6 +434,95 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/session/google/:
+    post:
+      operationId: session_google_create
+      tags:
+      - session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CredentialInputRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CredentialInputRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CredentialInputRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+          description: ''
+  /api/session/google/challenge/:
+    post:
+      operationId: session_google_challenge_create
+      tags:
+      - session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChallengeInputRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChallengeInputRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChallengeInputRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChallengeOutput'
+          description: ''
+    delete:
+      operationId: session_google_challenge_destroy
+      tags:
+      - session
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/session/google/identity/:
+    get:
+      operationId: session_google_identity_retrieve
+      tags:
+      - session
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleStatus'
+          description: ''
+    delete:
+      operationId: session_google_identity_destroy
+      tags:
+      - session
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/session/register/:
     post:
       operationId: session_register_create
@@ -752,6 +841,31 @@ components:
       - game
       - id
       - status
+    ChallengeInputRequest:
+      type: object
+      properties:
+        purpose:
+          $ref: '#/components/schemas/PurposeEnum'
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+          maxLength: 4096
+      required:
+      - purpose
+    ChallengeOutput:
+      type: object
+      properties:
+        nonce:
+          type: string
+        client_id:
+          type: string
+        expires_in:
+          type: integer
+      required:
+      - client_id
+      - expires_in
+      - nonce
     Character:
       type: object
       description: Character serializer.
@@ -817,6 +931,20 @@ components:
       - character_id
       - game_alias
       - like
+    CredentialInputRequest:
+      type: object
+      properties:
+        nonce:
+          type: string
+          minLength: 43
+          maxLength: 43
+        credential:
+          type: string
+          minLength: 1
+          maxLength: 16384
+      required:
+      - credential
+      - nonce
     Game:
       type: object
       description: Game serializer.
@@ -907,6 +1035,19 @@ components:
           maxLength: 20
       required:
       - game_alias
+    GoogleStatus:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        linked:
+          type: boolean
+        can_unlink:
+          type: boolean
+      required:
+      - can_unlink
+      - enabled
+      - linked
     Group:
       type: object
       description: Group serializer.
@@ -1019,6 +1160,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Notification'
+    PurposeEnum:
+      enum:
+      - signin
+      - link
+      type: string
+      description: |-
+        * `signin` - signin
+        * `link` - link
     Question:
       type: object
       description: Question serializer.

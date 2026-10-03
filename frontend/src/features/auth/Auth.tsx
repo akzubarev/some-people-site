@@ -1,4 +1,5 @@
 import { useState, type CSSProperties } from 'react'
+import { GoogleAuth } from './GoogleAuth'
 import { Form, Link, useActionData, useLocation, useNavigation, useSearchParams } from 'react-router'
 import type { ActionResult } from '../../app/data'
 import { Errors } from '../../shared/ui'
@@ -44,6 +45,7 @@ export function Component() {
         <PendingButton pending={navigation.state !== 'idle'}>{signout ? 'Выйти' : signup ? 'Зарегистрироваться' : 'Войти'}</PendingButton>
       </div>
     </Form>
+    {!signout && <GoogleAuth key={pathname} />}
     <Link to="/">Обратно на главную</Link>
   </section></main>
 }

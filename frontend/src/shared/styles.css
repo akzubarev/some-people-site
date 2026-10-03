@@ -408,3 +408,11 @@ tbody tr:nth-child(odd) { background: #0000000d }
 .master > div { display: flex; flex-direction: column; align-items: flex-start; gap: 4px }
 .master-footer { margin-top: 8px; padding: 4px 12px; font-size: 16px; line-height: 24px; color: #3c3c3c }
 .master-footer a { color: #dcdcdc }
+
+.google-auth { display: flex; flex-direction: column; gap: 12px; padding: 16px 0; max-width: 100%; }
+.google-auth > div { overflow: auto; }
+.google-auth > div[hidden] { display: none; }
+.google-auth button { min-height: 44px; }
+
+.auth > .google-auth { width: 100%; max-width: 500px; flex-shrink: 0; }
+.auth .google-auth > button { border: 1px solid #aab2bf; border-radius: 8px; padding: 10px 12px; background: #ffffff12; text-align: center; }
