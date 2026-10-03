@@ -506,3 +506,6 @@ JAZZMIN_UI_TWEAKS = {
         'success': 'btn-success'
     }
 }
+
+# Empty disables Google sign-in. Public OAuth web client ID, never a client secret.
+GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID', '')

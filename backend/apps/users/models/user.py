@@ -1,6 +1,7 @@
 """Users models."""
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.functions import Lower
 from phonenumber_field.modelfields import PhoneNumberField
 
 from mixins import AutoCreatedUpdatedMixin, UUIDMixin
@@ -55,6 +56,10 @@ class User(AutoCreatedUpdatedMixin, UUIDMixin, AbstractUser):
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
+
+    class Meta(AutoCreatedUpdatedMixin.Meta):
+        abstract = False
+        constraints = [models.UniqueConstraint(Lower('email'), name='unique_user_email_ci')]
 
     def __str__(self):
         return f'{self.username} ({self.first_name} {self.last_name})'

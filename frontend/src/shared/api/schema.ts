@@ -275,6 +275,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/session/google/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["session_google_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/session/google/challenge/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["session_google_challenge_create"];
+        delete: operations["session_google_challenge_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/session/google/identity/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["session_google_identity_retrieve"];
+        put?: never;
+        post?: never;
+        delete: operations["session_google_identity_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/session/register/": {
         parameters: {
             query?: never;
@@ -478,6 +526,15 @@ export interface components {
             /** Статус */
             readonly status: components["schemas"]["StatusEnum"];
         };
+        ChallengeInputRequest: {
+            purpose: components["schemas"]["PurposeEnum"];
+            password?: string;
+        };
+        ChallengeOutput: {
+            nonce: string;
+            client_id: string;
+            expires_in: number;
+        };
         /** @description Character serializer. */
         Character: {
             readonly id: number;
@@ -498,6 +555,10 @@ export interface components {
             game_alias: string;
             character_id: number;
             like: boolean;
+        };
+        CredentialInputRequest: {
+            nonce: string;
+            credential: string;
         };
         /** @description Game serializer. */
         Game: {
@@ -534,6 +595,11 @@ export interface components {
         };
         GameAliasRequest: {
             game_alias: string;
+        };
+        GoogleStatus: {
+            enabled: boolean;
+            linked: boolean;
+            can_unlink: boolean;
         };
         /** @description Group serializer. */
         Group: {
@@ -579,6 +645,12 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Notification"][];
         };
+        /**
+         * @description * `signin` - signin
+         *     * `link` - link
+         * @enum {string}
+         */
+        PurposeEnum: "signin" | "link";
         /** @description Question serializer. */
         Question: {
             readonly id: number;
@@ -1119,6 +1191,111 @@ export interface operations {
         };
     };
     session_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    session_google_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CredentialInputRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CredentialInputRequest"];
+                "multipart/form-data": components["schemas"]["CredentialInputRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Session"];
+                };
+            };
+        };
+    };
+    session_google_challenge_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChallengeInputRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ChallengeInputRequest"];
+                "multipart/form-data": components["schemas"]["ChallengeInputRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChallengeOutput"];
+                };
+            };
+        };
+    };
+    session_google_challenge_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    session_google_identity_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GoogleStatus"];
+                };
+            };
+        };
+    };
+    session_google_identity_destroy: {
         parameters: {
             query?: never;
             header?: never;

@@ -3,3 +3,5 @@ from .user import User
 from .one_time_token import OneTimeToken
 
 __all__ = ('User', 'OneTimeToken')
+
+from .google import GoogleChallenge, GoogleIdentity

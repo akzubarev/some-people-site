@@ -57,3 +57,11 @@ Django admin is the management interface for game content, nested groups, charac
 A mailing holds its text, scheduled time, and recipient selection. Saving a mailing marked ready creates recipient notification records; without a recipient selection, the model uses all users. The bot periodically looks for due, unsent notifications whose users have a linked Telegram chat. It sends the text and marks each successful delivery as sent. Failed sends remain unsent for a later attempt.
 
 The Telegram bot is a separate process from the website. Browsing, applications, and questionnaires do not depend on a bot response; account linking and delivery of Telegram messages do.
+
+## Google sign-in and account linking
+
+When enabled, the sign-in and registration pages offer Google alongside password login. A new Google identity creates a player account and a browser session. Its nickname is generated and can be edited in profile settings; its password is unusable. Returning Google sign-ins use the provider's stable subject identifier, so a Google email change does not move the identity to another player or overwrite their profile.
+
+If a Google email matches an existing account, sign-in stops and asks the player to sign in to that account first. Profile settings link Google only after the current password is confirmed. Email matching alone never links accounts. A Google identity can belong to only one player, and a player can have only one Google identity. Linking preserves the password. Unlinking also requires the current password and is unavailable when Google is the account's only login method.
+
+Closing the Google popup creates no account or session. The page provides cancellation and a new attempt; attempts expire after five minutes. Invalid credentials, expired attempts and reused attempts show an error without signing the player in.
