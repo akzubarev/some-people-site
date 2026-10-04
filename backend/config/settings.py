@@ -105,7 +105,6 @@ INSTALLED_APPS = [
     'phonenumber_field',
     # Django addons
     'django_filters',
-    'django_prose_editor',
     # APPS
     'apps.users',
     'apps.games',

@@ -3,7 +3,8 @@ import { Link, NavLink, useBeforeUnload, useBlocker, useLoaderData, useNavigate,
 import { ApiError, api, json } from '../../shared/api/client'
 import { gameImages } from '../../shared/assets'
 import { Errors } from '../../shared/ui'
-import { gameDateInput, type GameWrite, type OrganizerGame, type organizerLoader } from './data'
+import { gameDateInput, sectionNames, type GameWrite, type OrganizerGame, type organizerLoader } from './data'
+import { ContentWorkspace } from './ContentWorkspace'
 import './organizer.css'
 
 const textFields = ['title', 'alias', 'short_description', 'description', 'location', 'vk', 'tg'] as const
@@ -43,18 +44,24 @@ export function Component() {
       <button className="organizer-menu-toggle" aria-expanded={menu} onClick={() => setMenu(!menu)}>Разделы кабинета</button>
       <aside className={'organizer-sidebar' + (menu ? ' is-open' : '')}>
         <label>Игра<select aria-label="Выбрать игру" value={data.game?.id ?? ''} onChange={event => {
-          if (event.target.value) void navigate('/organizer/' + event.target.value)
+          if (event.target.value) void navigate('/organizer/' + event.target.value + (data.section ? '/' + data.section : ''))
         }}><option value="">Выберите игру</option>{data.games.map(game => <option value={game.id} key={game.id}>{game.title}</option>)}</select></label>
         <nav aria-label="Кабинет организатора">
           <NavLink end to="/organizer">Все игры</NavLink>
-          {data.game && <NavLink to={'/organizer/' + data.game.id}>Настройки игры</NavLink>}
+          {data.game && Object.entries(sectionNames).map(([key, label]) => {
+            const resource = key === 'contributions' ? 'applications' : key
+            const rights = data.context?.permissions[resource]
+            return key === 'overview' || rights?.view || rights?.change || rights?.add
+              ? <NavLink key={key} to={`/organizer/${data.game!.id}/${key}`}>{label}</NavLink> : null
+          })}
+          {data.game && <NavLink end to={'/organizer/' + data.game.id}>Настройки игры</NavLink>}
           {data.permissions.add && <NavLink to="/organizer/new">Создать игру</NavLink>}
           <Link to="/mg">Мастерская группа</Link>
         </nav>
         {data.game && <Link to={'/game/' + encodeURIComponent(data.game.alias) + '/about'}>Посмотреть страницу игры ↗</Link>}
       </aside>
       <main className="organizer-content"><div className="organizer-eyebrow">Кабинет организатора</div>
-        {data.game || data.creating
+        {data.section && data.game ? <ContentWorkspace key={`${data.game.id}:${data.section}`} data={data} /> : data.game || data.creating
           ? <GameEditor key={data.game?.id ?? 'new'} game={data.game} timezone={data.timezone}
             canEdit={data.game ? data.permissions.change : data.permissions.add} />
           : <><h1>Игры</h1><p>Выберите игру, чтобы изменить её содержание и публикацию.</p>

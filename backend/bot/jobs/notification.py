@@ -22,4 +22,5 @@ async def notify_users(context: ContextTypes.DEFAULT_TYPE) -> None:
             )
             await db.mark_notification_sent(notification_id=notification.id)
         except Exception as e:
-            logger.exception(e)
+            await db.mark_notification_failed(notification_id=notification.id, error_code=type(e).__name__)
+            logger.warning('Notification %s delivery failed: %s', notification.id, type(e).__name__)

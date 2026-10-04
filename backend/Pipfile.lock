@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "35beda3e3b9fee07bce03a6c127ff41de59c30aad9d3a9f99e93316b68dd9c1e"
+            "sha256": "f2c0bea77480800619ffcf0f228100a04bc5f129f203b03fdbdb9c6705afdbe8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -427,14 +427,6 @@
             "markers": "python_version >= '3.8'",
             "version": "==3.0.0"
         },
-        "django-js-asset": {
-            "hashes": [
-                "sha256:1013213eaee948fbfe32f8b575bafa299da3049f6bb777d0c1c9c0ae656133f6",
-                "sha256:73fdf6f65cf725b538c75c8996d0f19a862649b8add0a6fdc5517af17e194dc0"
-            ],
-            "markers": "python_version >= '3.10'",
-            "version": "==4.2.0"
-        },
         "django-phonenumber-field": {
             "extras": [
                 "phonenumbers"
@@ -445,17 +437,6 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==7.1.0"
-        },
-        "django-prose-editor": {
-            "extras": [
-                "sanitize"
-            ],
-            "hashes": [
-                "sha256:26d2a9d8f1fb9d07f041de909de26f68c1a3872680be24c1c9287064a172fba0",
-                "sha256:4be9801e0cf55b870dc13fa74af3df0cdfba5ed201d954c672649ee983094eae"
-            ],
-            "markers": "python_version >= '3.10'",
-            "version": "==0.27.3"
         },
         "django-related-admin": {
             "hashes": [
@@ -629,6 +610,7 @@
                 "sha256:f266d3f1b3647449923a8e406524632220dd5d8b647078dfe45b885d33d10479",
                 "sha256:fd4a70efb45d5372174f718878eb7a35c12677626a63b2f103b23b833457dcac"
             ],
+            "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==0.3.7"
         },

@@ -41,3 +41,13 @@ class TelegramHTMLTests(SimpleTestCase):
             await notify_users(SimpleNamespace(bot=bot))
             self.assertEqual(bot.send_message.call_args.kwargs['text'], 'Hello')
             mark.assert_awaited_once_with(notification_id=42)
+
+    async def test_failed_delivery_records_only_error_category(self):
+        notification = SimpleNamespace(id=42, chat_id='synthetic', text='<p>Hello</p>')
+        bot = SimpleNamespace(send_message=AsyncMock(side_effect=RuntimeError('private provider detail')))
+        with patch('bot.jobs.notification.db.get_notifications', AsyncMock(return_value=[notification])), \
+                patch('bot.jobs.notification.db.mark_notification_sent', AsyncMock()) as sent, \
+                patch('bot.jobs.notification.db.mark_notification_failed', AsyncMock()) as failed:
+            await notify_users(SimpleNamespace(bot=bot))
+            sent.assert_not_awaited()
+            failed.assert_awaited_once_with(notification_id=42, error_code='RuntimeError')

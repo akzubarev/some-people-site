@@ -4,7 +4,6 @@ from django.utils.translation import gettext as _
 
 from apps.users.models import User
 from mixins.create_update_mixin import AutoCreatedUpdatedMixin
-from .notification import Notification
 
 
 class Mailing(AutoCreatedUpdatedMixin):
@@ -32,12 +31,8 @@ class Mailing(AutoCreatedUpdatedMixin):
     )
 
     users = models.ManyToManyField(to=User, related_name='mailings')
-
-    def save(self, *args, **kwargs):
-        """Model save with notification creation."""
-        super().save(*args, **kwargs)
-        if self.ready:
-            users = self.users.all() if self.users.all().count() else User.objects.all()
-            Notification.objects.bulk_create([
-                Notification(user=user, mailing=self) for user in users
-            ])
+    game = models.ForeignKey('games.Game', on_delete=models.PROTECT, null=True, blank=True,
+                             related_name='mailings')
+    applications = models.ManyToManyField('games.Application', blank=True, related_name='mailings')
+    confirmed_at = models.DateTimeField(null=True, blank=True)
+    confirmation_key = models.UUIDField(null=True, blank=True, unique=True)

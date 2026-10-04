@@ -12,6 +12,7 @@ from rest_framework import serializers, viewsets
 from rest_framework.exceptions import APIException
 from rest_framework.permissions import BasePermission
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from .models import Game
 
@@ -104,11 +105,21 @@ class OrganizerGameIndexSerializer(serializers.Serializer):
     timezone = serializers.CharField()
 
 
+class OrganizerContextSerializer(serializers.Serializer):
+    permissions = serializers.DictField(child=serializers.DictField(child=serializers.BooleanField()))
+    masters = serializers.ListField(child=serializers.DictField())
+
+
 class OrganizerGameViewSet(viewsets.GenericViewSet):
     queryset = Game.objects.all()
     serializer_class = OrganizerGameSerializer
     permission_classes = (OrganizerGamePermission,)
     http_method_names = ['get', 'post', 'patch', 'head', 'options']
+
+    def get_throttles(self):
+        if self.request.method in ('GET', 'HEAD', 'OPTIONS'):
+            return []
+        return super().get_throttles()
 
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
@@ -122,6 +133,23 @@ class OrganizerGameViewSet(viewsets.GenericViewSet):
 
     def retrieve(self, request, pk=None):
         return Response(self.get_serializer(self.get_object()).data)
+
+    @extend_schema(responses=OrganizerContextSerializer)
+    @action(detail=True, methods=['get'])
+    def context(self, request, pk=None):
+        from .models import Group, Character, Tag, Question, Application
+        from .organizer_content import model_permissions
+        from apps.notifications.models import Mailing
+        from apps.users.models import User
+        self.get_object()
+        models = {'groups': Group, 'characters': Character, 'tags': Tag,
+                  'questions': Question, 'applications': Application, 'mailings': Mailing}
+        permissions = {key: model_permissions(request.user, model) for key, model in models.items()}
+        masters = []
+        if permissions['characters']['view'] or permissions['characters']['change'] or permissions['characters']['add']:
+            masters = [{'id': user.pk, 'name': str(user)} for user in
+                       User.objects.filter(is_active=True, is_staff=True).order_by('id')]
+        return Response({'permissions': permissions, 'masters': masters})
 
     def audit(self, instance, action, fields):
         LogEntry.objects.log_actions(

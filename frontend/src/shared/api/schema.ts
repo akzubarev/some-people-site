@@ -241,6 +241,246 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/organizer/games/{game_id}/applications/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_applications_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/applications/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_applications_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["organizer_games_applications_partial_update"];
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/characters/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_characters_list"];
+        put?: never;
+        post: operations["organizer_games_characters_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/characters/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_characters_retrieve"];
+        put?: never;
+        post?: never;
+        delete: operations["organizer_games_characters_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["organizer_games_characters_partial_update"];
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/groups/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_groups_list"];
+        put?: never;
+        post: operations["organizer_games_groups_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/groups/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_groups_retrieve"];
+        put?: never;
+        post?: never;
+        delete: operations["organizer_games_groups_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["organizer_games_groups_partial_update"];
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/mailings/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_mailings_list"];
+        put?: never;
+        post: operations["organizer_games_mailings_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/mailings/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_mailings_retrieve"];
+        put?: never;
+        post?: never;
+        delete: operations["organizer_games_mailings_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["organizer_games_mailings_partial_update"];
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/mailings/{id}/confirm/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["organizer_games_mailings_confirm_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/mailings/{id}/preview/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_mailings_preview_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/mailings/upload/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["organizer_games_mailings_upload_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/questions/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_questions_list"];
+        put?: never;
+        post: operations["organizer_games_questions_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/questions/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_questions_retrieve"];
+        put?: never;
+        post?: never;
+        delete: operations["organizer_games_questions_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["organizer_games_questions_partial_update"];
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/tags/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_tags_list"];
+        put?: never;
+        post: operations["organizer_games_tags_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organizer/games/{game_id}/tags/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_tags_retrieve"];
+        put?: never;
+        post?: never;
+        delete: operations["organizer_games_tags_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["organizer_games_tags_partial_update"];
+        trace?: never;
+    };
     "/api/organizer/games/{id}/": {
         parameters: {
             query?: never;
@@ -255,6 +495,22 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["organizer_games_partial_update"];
+        trace?: never;
+    };
+    "/api/organizer/games/{id}/context/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organizer_games_context_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/questions/": {
@@ -595,11 +851,113 @@ export interface components {
             readonly members: components["schemas"]["Character"][];
             readonly subgroups: components["schemas"]["Group"][];
         };
+        MailingConfirmRequest: {
+            audience_revision: string;
+            /** Format: uuid */
+            idempotency_key: string;
+        };
+        MailingImageRequest: {
+            /** Format: binary */
+            image: string;
+        };
+        MailingImageResult: {
+            url: string;
+        };
+        MailingPreview: {
+            selected: number;
+            eligible: number;
+            audience_revision: string;
+            application_ids: number[];
+        };
         /** @description Notification model serializer. */
         Notification: {
             readonly user: number;
             readonly mailing: number | null;
             readonly viewed: boolean;
+        };
+        OrganizerApplication: {
+            readonly id: number;
+            /** Игра */
+            readonly game: number;
+            readonly player: {
+                [key: string]: unknown;
+            };
+            /** Статус */
+            status?: components["schemas"]["StatusEnum"];
+            /** Персонаж */
+            character?: number | null;
+            price?: number | null;
+            payed?: number;
+            readonly missing_questions: number[];
+            readonly answers: {
+                [key: string]: unknown;
+            }[];
+            readonly likes: number[];
+            readonly revision: string;
+        };
+        OrganizerCharacter: {
+            readonly id: number;
+            /** Имя */
+            name: string;
+            /** Имя (Англ) */
+            name_eng?: string | null;
+            /** Никнейм */
+            alias: string;
+            /** Описание */
+            description?: string | null;
+            /** Порядковый номер */
+            order?: number;
+            /** Фракция */
+            group?: number | null;
+            /** Семья */
+            family?: number | null;
+            /** Мастер */
+            master?: number | null;
+            /** Format: uri */
+            image?: string | null;
+            /** Тэги */
+            tags?: number[];
+            /** Format: uri */
+            kventa?: string | null;
+            readonly assigned_application: number | null;
+            readonly revision: string;
+        };
+        OrganizerCharacterRequest: {
+            /** Имя */
+            name: string;
+            /** Имя (Англ) */
+            name_eng?: string | null;
+            /** Никнейм */
+            alias: string;
+            /** Описание */
+            description?: string | null;
+            /** Порядковый номер */
+            order?: number;
+            /** Фракция */
+            group?: number | null;
+            /** Семья */
+            family?: number | null;
+            /** Мастер */
+            master?: number | null;
+            /** Format: binary */
+            image?: string | null;
+            /** Тэги */
+            tags?: number[];
+            /** Format: binary */
+            kventa?: string | null;
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
+        OrganizerContext: {
+            permissions: {
+                [key: string]: {
+                    [key: string]: boolean;
+                };
+            };
+            masters: {
+                [key: string]: unknown;
+            }[];
         };
         OrganizerGame: {
             readonly id: number;
@@ -671,6 +1029,142 @@ export interface components {
             tg?: string | null;
             expected_revision?: string;
         };
+        OrganizerGroup: {
+            readonly id: number;
+            /** Название */
+            name: string;
+            /** Алиас */
+            alias?: string | null;
+            /** Описание */
+            description?: string | null;
+            /** Порядковый номер */
+            order?: number;
+            /** Родительская фракция */
+            parent?: number | null;
+            /** Семья */
+            family?: boolean;
+            /** Секретная */
+            hidden?: boolean;
+            /** Format: uri */
+            image?: string | null;
+            readonly descendants: number[];
+            readonly character_count: number;
+            readonly revision: string;
+        };
+        OrganizerGroupRequest: {
+            /** Название */
+            name: string;
+            /** Алиас */
+            alias?: string | null;
+            /** Описание */
+            description?: string | null;
+            /** Порядковый номер */
+            order?: number;
+            /** Родительская фракция */
+            parent?: number | null;
+            /** Семья */
+            family?: boolean;
+            /** Секретная */
+            hidden?: boolean;
+            /** Format: binary */
+            image?: string | null;
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
+        OrganizerMailing: {
+            readonly id: number;
+            text: string;
+            /** Format: date-time */
+            time: string;
+            applications?: number[];
+            readonly ready: boolean;
+            /** Format: date-time */
+            readonly confirmed_at: string | null;
+            readonly delivery: {
+                [key: string]: unknown;
+            };
+            readonly revision: string;
+        };
+        OrganizerMailingRequest: {
+            text: string;
+            /** Format: date-time */
+            time: string;
+            applications?: number[];
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
+        OrganizerMultipartRequest: {
+            /** @description JSON object using the resource request fields, including expected_revision for updates. */
+            payload: unknown;
+            /** Format: binary */
+            image?: string;
+            /** Format: binary */
+            kventa?: string;
+        };
+        OrganizerQuestion: {
+            readonly id: number;
+            /** Вопрос */
+            title: string;
+            /** Описание */
+            description?: string | null;
+            /** Тип */
+            type?: components["schemas"]["TypeEnum"];
+            /** Варианты */
+            choices?: unknown;
+            /** Обязательный */
+            required?: boolean;
+            /** Порядковый номер */
+            order?: number;
+            /** Игра */
+            games?: number[];
+            readonly answer_count: number;
+            readonly revision: string;
+        };
+        OrganizerQuestionRequest: {
+            /** Вопрос */
+            title: string;
+            /** Описание */
+            description?: string | null;
+            /** Тип */
+            type?: components["schemas"]["TypeEnum"];
+            /** Варианты */
+            choices?: unknown;
+            /** Обязательный */
+            required?: boolean;
+            /** Порядковый номер */
+            order?: number;
+            /** Игра */
+            games?: number[];
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
+        OrganizerTag: {
+            readonly id: number;
+            /** Название */
+            name: string;
+            color: string;
+            /** Виден только внутри тэга */
+            private?: boolean;
+            /** Виден только МГ */
+            mg?: boolean;
+            readonly used_games: number[];
+            readonly revision: string;
+        };
+        OrganizerTagRequest: {
+            /** Название */
+            name: string;
+            color: string;
+            /** Виден только внутри тэга */
+            private?: boolean;
+            /** Виден только МГ */
+            mg?: boolean;
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
         PaginatedNotificationList: {
             /** @example 123 */
             count: number;
@@ -685,6 +1179,45 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Notification"][];
+        };
+        PatchedOrganizerApplicationRequest: {
+            /** Статус */
+            status?: components["schemas"]["StatusEnum"];
+            /** Персонаж */
+            character?: number | null;
+            price?: number | null;
+            payed?: number;
+            reason?: string;
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
+        PatchedOrganizerCharacterRequest: {
+            /** Имя */
+            name?: string;
+            /** Имя (Англ) */
+            name_eng?: string | null;
+            /** Никнейм */
+            alias?: string;
+            /** Описание */
+            description?: string | null;
+            /** Порядковый номер */
+            order?: number;
+            /** Фракция */
+            group?: number | null;
+            /** Семья */
+            family?: number | null;
+            /** Мастер */
+            master?: number | null;
+            /** Format: binary */
+            image?: string | null;
+            /** Тэги */
+            tags?: number[];
+            /** Format: binary */
+            kventa?: string | null;
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
         };
         PatchedOrganizerGameRequest: {
             /** Название */
@@ -717,6 +1250,75 @@ export interface components {
             vk?: string | null;
             tg?: string | null;
             expected_revision?: string;
+        };
+        PatchedOrganizerGroupRequest: {
+            /** Название */
+            name?: string;
+            /** Алиас */
+            alias?: string | null;
+            /** Описание */
+            description?: string | null;
+            /** Порядковый номер */
+            order?: number;
+            /** Родительская фракция */
+            parent?: number | null;
+            /** Семья */
+            family?: boolean;
+            /** Секретная */
+            hidden?: boolean;
+            /** Format: binary */
+            image?: string | null;
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
+        PatchedOrganizerMailingRequest: {
+            text?: string;
+            /** Format: date-time */
+            time?: string;
+            applications?: number[];
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
+        PatchedOrganizerMultipartRequest: {
+            /** @description JSON object using the resource request fields, including expected_revision for updates. */
+            payload?: unknown;
+            /** Format: binary */
+            image?: string;
+            /** Format: binary */
+            kventa?: string;
+        };
+        PatchedOrganizerQuestionRequest: {
+            /** Вопрос */
+            title?: string;
+            /** Описание */
+            description?: string | null;
+            /** Тип */
+            type?: components["schemas"]["TypeEnum"];
+            /** Варианты */
+            choices?: unknown;
+            /** Обязательный */
+            required?: boolean;
+            /** Порядковый номер */
+            order?: number;
+            /** Игра */
+            games?: number[];
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
+        };
+        PatchedOrganizerTagRequest: {
+            /** Название */
+            name?: string;
+            color?: string;
+            /** Виден только внутри тэга */
+            private?: boolean;
+            /** Виден только МГ */
+            mg?: boolean;
+            expected_revision?: string;
+            /** @default false */
+            acknowledge_shared: boolean;
         };
         /** @description Question serializer. */
         Question: {
@@ -1214,6 +1816,757 @@ export interface operations {
             };
         };
     };
+    organizer_games_applications_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerApplication"][];
+                };
+            };
+        };
+    };
+    organizer_games_applications_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Заявка. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerApplication"];
+                };
+            };
+        };
+    };
+    organizer_games_applications_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Заявка. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedOrganizerApplicationRequest"];
+                "multipart/form-data": components["schemas"]["PatchedOrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerApplication"];
+                };
+            };
+        };
+    };
+    organizer_games_characters_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerCharacter"][];
+                };
+            };
+        };
+    };
+    organizer_games_characters_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizerCharacterRequest"];
+                "multipart/form-data": components["schemas"]["OrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerCharacter"];
+                };
+            };
+        };
+    };
+    organizer_games_characters_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Персонаж. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerCharacter"];
+                };
+            };
+        };
+    };
+    organizer_games_characters_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Персонаж. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    organizer_games_characters_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Персонаж. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedOrganizerCharacterRequest"];
+                "multipart/form-data": components["schemas"]["PatchedOrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerCharacter"];
+                };
+            };
+        };
+    };
+    organizer_games_groups_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerGroup"][];
+                };
+            };
+        };
+    };
+    organizer_games_groups_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizerGroupRequest"];
+                "multipart/form-data": components["schemas"]["OrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerGroup"];
+                };
+            };
+        };
+    };
+    organizer_games_groups_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Группа. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerGroup"];
+                };
+            };
+        };
+    };
+    organizer_games_groups_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Группа. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    organizer_games_groups_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Группа. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedOrganizerGroupRequest"];
+                "multipart/form-data": components["schemas"]["PatchedOrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerGroup"];
+                };
+            };
+        };
+    };
+    organizer_games_mailings_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerMailing"][];
+                };
+            };
+        };
+    };
+    organizer_games_mailings_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizerMailingRequest"];
+                "multipart/form-data": components["schemas"]["OrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerMailing"];
+                };
+            };
+        };
+    };
+    organizer_games_mailings_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this mailing. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerMailing"];
+                };
+            };
+        };
+    };
+    organizer_games_mailings_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this mailing. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    organizer_games_mailings_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this mailing. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedOrganizerMailingRequest"];
+                "multipart/form-data": components["schemas"]["PatchedOrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerMailing"];
+                };
+            };
+        };
+    };
+    organizer_games_mailings_confirm_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this mailing. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MailingConfirmRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["MailingConfirmRequest"];
+                "multipart/form-data": components["schemas"]["MailingConfirmRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerMailing"];
+                };
+            };
+        };
+    };
+    organizer_games_mailings_preview_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this mailing. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MailingPreview"];
+                };
+            };
+        };
+    };
+    organizer_games_mailings_upload_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MailingImageRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["MailingImageRequest"];
+                "multipart/form-data": components["schemas"]["MailingImageRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MailingImageResult"];
+                };
+            };
+        };
+    };
+    organizer_games_questions_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerQuestion"][];
+                };
+            };
+        };
+    };
+    organizer_games_questions_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizerQuestionRequest"];
+                "multipart/form-data": components["schemas"]["OrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerQuestion"];
+                };
+            };
+        };
+    };
+    organizer_games_questions_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Вопрос. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerQuestion"];
+                };
+            };
+        };
+    };
+    organizer_games_questions_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Вопрос. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    organizer_games_questions_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Вопрос. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedOrganizerQuestionRequest"];
+                "multipart/form-data": components["schemas"]["PatchedOrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerQuestion"];
+                };
+            };
+        };
+    };
+    organizer_games_tags_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerTag"][];
+                };
+            };
+        };
+    };
+    organizer_games_tags_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizerTagRequest"];
+                "multipart/form-data": components["schemas"]["OrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerTag"];
+                };
+            };
+        };
+    };
+    organizer_games_tags_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Тэг. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerTag"];
+                };
+            };
+        };
+    };
+    organizer_games_tags_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Тэг. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    organizer_games_tags_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                /** @description A unique integer value identifying this Тэг. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedOrganizerTagRequest"];
+                "multipart/form-data": components["schemas"]["PatchedOrganizerMultipartRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerTag"];
+                };
+            };
+        };
+    };
     organizer_games_retrieve: {
         parameters: {
             query?: never;
@@ -1268,6 +2621,28 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    organizer_games_context_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Игра. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizerContext"];
+                };
             };
         };
     };

@@ -380,6 +380,895 @@ paths:
               schema:
                 $ref: '#/components/schemas/OrganizerGame'
           description: ''
+  /api/organizer/games/{game_id}/applications/:
+    get:
+      operationId: organizer_games_applications_list
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizerApplication'
+          description: ''
+  /api/organizer/games/{game_id}/applications/{id}/:
+    get:
+      operationId: organizer_games_applications_retrieve
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Заявка.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerApplication'
+          description: ''
+    patch:
+      operationId: organizer_games_applications_partial_update
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Заявка.
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerApplicationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerMultipartRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerApplication'
+          description: ''
+  /api/organizer/games/{game_id}/characters/:
+    get:
+      operationId: organizer_games_characters_list
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizerCharacter'
+          description: ''
+    post:
+      operationId: organizer_games_characters_create
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizerCharacterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizerMultipartRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerCharacter'
+          description: ''
+  /api/organizer/games/{game_id}/characters/{id}/:
+    get:
+      operationId: organizer_games_characters_retrieve
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Персонаж.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerCharacter'
+          description: ''
+    patch:
+      operationId: organizer_games_characters_partial_update
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Персонаж.
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerCharacterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerMultipartRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerCharacter'
+          description: ''
+    delete:
+      operationId: organizer_games_characters_destroy
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Персонаж.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/organizer/games/{game_id}/groups/:
+    get:
+      operationId: organizer_games_groups_list
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizerGroup'
+          description: ''
+    post:
+      operationId: organizer_games_groups_create
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizerGroupRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizerMultipartRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerGroup'
+          description: ''
+  /api/organizer/games/{game_id}/groups/{id}/:
+    get:
+      operationId: organizer_games_groups_retrieve
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Группа.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerGroup'
+          description: ''
+    patch:
+      operationId: organizer_games_groups_partial_update
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Группа.
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerGroupRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerMultipartRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerGroup'
+          description: ''
+    delete:
+      operationId: organizer_games_groups_destroy
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Группа.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/organizer/games/{game_id}/mailings/:
+    get:
+      operationId: organizer_games_mailings_list
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizerMailing'
+          description: ''
+    post:
+      operationId: organizer_games_mailings_create
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizerMailingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizerMultipartRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerMailing'
+          description: ''
+  /api/organizer/games/{game_id}/mailings/{id}/:
+    get:
+      operationId: organizer_games_mailings_retrieve
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mailing.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerMailing'
+          description: ''
+    patch:
+      operationId: organizer_games_mailings_partial_update
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mailing.
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerMailingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerMultipartRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerMailing'
+          description: ''
+    delete:
+      operationId: organizer_games_mailings_destroy
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mailing.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/organizer/games/{game_id}/mailings/{id}/confirm/:
+    post:
+      operationId: organizer_games_mailings_confirm_create
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mailing.
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingConfirmRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MailingConfirmRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MailingConfirmRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerMailing'
+          description: ''
+  /api/organizer/games/{game_id}/mailings/{id}/preview/:
+    get:
+      operationId: organizer_games_mailings_preview_retrieve
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this mailing.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailingPreview'
+          description: ''
+  /api/organizer/games/{game_id}/mailings/upload/:
+    post:
+      operationId: organizer_games_mailings_upload_create
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingImageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MailingImageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MailingImageRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailingImageResult'
+          description: ''
+  /api/organizer/games/{game_id}/questions/:
+    get:
+      operationId: organizer_games_questions_list
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizerQuestion'
+          description: ''
+    post:
+      operationId: organizer_games_questions_create
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizerQuestionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizerMultipartRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerQuestion'
+          description: ''
+  /api/organizer/games/{game_id}/questions/{id}/:
+    get:
+      operationId: organizer_games_questions_retrieve
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerQuestion'
+          description: ''
+    patch:
+      operationId: organizer_games_questions_partial_update
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerQuestionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerMultipartRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerQuestion'
+          description: ''
+    delete:
+      operationId: organizer_games_questions_destroy
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Вопрос.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/organizer/games/{game_id}/tags/:
+    get:
+      operationId: organizer_games_tags_list
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizerTag'
+          description: ''
+    post:
+      operationId: organizer_games_tags_create
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizerTagRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizerMultipartRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerTag'
+          description: ''
+  /api/organizer/games/{game_id}/tags/{id}/:
+    get:
+      operationId: organizer_games_tags_retrieve
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Тэг.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerTag'
+          description: ''
+    patch:
+      operationId: organizer_games_tags_partial_update
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Тэг.
+        required: true
+      tags:
+      - organizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerTagRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizerMultipartRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerTag'
+          description: ''
+    delete:
+      operationId: organizer_games_tags_destroy
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: string
+          pattern: ^[0-9]+$
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Тэг.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/organizer/games/{id}/:
     get:
       operationId: organizer_games_retrieve
@@ -436,6 +1325,28 @@ paths:
           description: ''
         '409':
           description: No response body
+  /api/organizer/games/{id}/context/:
+    get:
+      operationId: organizer_games_context_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Игра.
+        required: true
+      tags:
+      - organizer
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizerContext'
+          description: ''
   /api/questions/:
     get:
       operationId: questions_list
@@ -1090,6 +2001,51 @@ components:
       - order
       - parent
       - subgroups
+    MailingConfirmRequest:
+      type: object
+      properties:
+        audience_revision:
+          type: string
+          minLength: 1
+        idempotency_key:
+          type: string
+          format: uuid
+      required:
+      - audience_revision
+      - idempotency_key
+    MailingImageRequest:
+      type: object
+      properties:
+        image:
+          type: string
+          format: binary
+      required:
+      - image
+    MailingImageResult:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    MailingPreview:
+      type: object
+      properties:
+        selected:
+          type: integer
+        eligible:
+          type: integer
+        audience_revision:
+          type: string
+        application_ids:
+          type: array
+          items:
+            type: integer
+      required:
+      - application_ids
+      - audience_revision
+      - eligible
+      - selected
     Notification:
       type: object
       description: Notification model serializer.
@@ -1108,6 +2064,210 @@ components:
       - mailing
       - user
       - viewed
+    OrganizerApplication:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        game:
+          type: integer
+          readOnly: true
+          title: Игра
+        player:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          title: Статус
+        character:
+          type: integer
+          nullable: true
+          title: Персонаж
+        price:
+          type: integer
+          minimum: 0
+          nullable: true
+        payed:
+          type: integer
+          minimum: 0
+        missing_questions:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        answers:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+        likes:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        revision:
+          type: string
+          readOnly: true
+      required:
+      - answers
+      - game
+      - id
+      - likes
+      - missing_questions
+      - player
+      - revision
+    OrganizerCharacter:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Имя
+          maxLength: 100
+        name_eng:
+          type: string
+          nullable: true
+          title: Имя (Англ)
+          maxLength: 100
+        alias:
+          type: string
+          title: Никнейм
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        group:
+          type: integer
+          nullable: true
+          title: Фракция
+        family:
+          type: integer
+          nullable: true
+          title: Семья
+        master:
+          type: integer
+          nullable: true
+          title: Мастер
+        image:
+          type: string
+          format: uri
+          nullable: true
+        tags:
+          type: array
+          items:
+            type: integer
+            title: Тэги
+          title: Тэги
+        kventa:
+          type: string
+          format: uri
+          nullable: true
+        assigned_application:
+          type: integer
+          nullable: true
+          readOnly: true
+        revision:
+          type: string
+          readOnly: true
+      required:
+      - alias
+      - assigned_application
+      - id
+      - name
+      - revision
+    OrganizerCharacterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Имя
+          maxLength: 100
+        name_eng:
+          type: string
+          nullable: true
+          title: Имя (Англ)
+          maxLength: 100
+        alias:
+          type: string
+          minLength: 1
+          title: Никнейм
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        group:
+          type: integer
+          nullable: true
+          title: Фракция
+        family:
+          type: integer
+          nullable: true
+          title: Семья
+        master:
+          type: integer
+          nullable: true
+          title: Мастер
+        image:
+          type: string
+          format: binary
+          nullable: true
+        tags:
+          type: array
+          items:
+            type: integer
+            title: Тэги
+          title: Тэги
+        kventa:
+          type: string
+          format: binary
+          nullable: true
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+      required:
+      - alias
+      - name
+    OrganizerContext:
+      type: object
+      properties:
+        permissions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: boolean
+        masters:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+      required:
+      - masters
+      - permissions
     OrganizerGame:
       type: object
       properties:
@@ -1268,6 +2428,336 @@ components:
       required:
       - alias
       - title
+    OrganizerGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Название
+          maxLength: 100
+        alias:
+          type: string
+          nullable: true
+          title: Алиас
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская фракция
+        family:
+          type: boolean
+          title: Семья
+        hidden:
+          type: boolean
+          title: Секретная
+        image:
+          type: string
+          format: uri
+          nullable: true
+        descendants:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        character_count:
+          type: integer
+          readOnly: true
+        revision:
+          type: string
+          readOnly: true
+      required:
+      - character_count
+      - descendants
+      - id
+      - name
+      - revision
+    OrganizerGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Название
+          maxLength: 100
+        alias:
+          type: string
+          nullable: true
+          title: Алиас
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская фракция
+        family:
+          type: boolean
+          title: Семья
+        hidden:
+          type: boolean
+          title: Секретная
+        image:
+          type: string
+          format: binary
+          nullable: true
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+      required:
+      - name
+    OrganizerMailing:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+          maxLength: 30000
+        time:
+          type: string
+          format: date-time
+        applications:
+          type: array
+          items:
+            type: integer
+        ready:
+          type: boolean
+          readOnly: true
+        confirmed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        delivery:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        revision:
+          type: string
+          readOnly: true
+      required:
+      - confirmed_at
+      - delivery
+      - id
+      - ready
+      - revision
+      - text
+      - time
+    OrganizerMailingRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 30000
+        time:
+          type: string
+          format: date-time
+        applications:
+          type: array
+          items:
+            type: integer
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+      required:
+      - text
+      - time
+    OrganizerMultipartRequest:
+      type: object
+      properties:
+        payload:
+          description: JSON object using the resource request fields, including expected_revision
+            for updates.
+        image:
+          type: string
+          format: binary
+        kventa:
+          type: string
+          format: binary
+      required:
+      - payload
+    OrganizerQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Вопрос
+          maxLength: 500
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEnum'
+          title: Тип
+        choices:
+          nullable: true
+          title: Варианты
+        required:
+          type: boolean
+          title: Обязательный
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        games:
+          type: array
+          items:
+            type: integer
+            title: Игра
+          title: Игра
+        answer_count:
+          type: integer
+          readOnly: true
+        revision:
+          type: string
+          readOnly: true
+      required:
+      - answer_count
+      - id
+      - revision
+      - title
+    OrganizerQuestionRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          title: Вопрос
+          maxLength: 500
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEnum'
+          title: Тип
+        choices:
+          nullable: true
+          title: Варианты
+        required:
+          type: boolean
+          title: Обязательный
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        games:
+          type: array
+          items:
+            type: integer
+            title: Игра
+          title: Игра
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+      required:
+      - title
+    OrganizerTag:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Название
+          maxLength: 100
+        color:
+          type: string
+          pattern: ^#[0-9a-fA-F]{6}$
+        private:
+          type: boolean
+          title: Виден только внутри тэга
+        mg:
+          type: boolean
+          title: Виден только МГ
+        used_games:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        revision:
+          type: string
+          readOnly: true
+      required:
+      - color
+      - id
+      - name
+      - revision
+      - used_games
+    OrganizerTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Название
+          maxLength: 100
+        color:
+          type: string
+          minLength: 1
+          pattern: ^#[0-9a-fA-F]{6}$
+        private:
+          type: boolean
+          title: Виден только внутри тэга
+        mg:
+          type: boolean
+          title: Виден только МГ
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+      required:
+      - color
+      - name
     PaginatedNotificationList:
       type: object
       required:
@@ -1291,6 +2781,98 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Notification'
+    PatchedOrganizerApplicationRequest:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          title: Статус
+        character:
+          type: integer
+          nullable: true
+          title: Персонаж
+        price:
+          type: integer
+          minimum: 0
+          nullable: true
+        payed:
+          type: integer
+          minimum: 0
+        reason:
+          type: string
+          writeOnly: true
+          minLength: 1
+          maxLength: 500
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+    PatchedOrganizerCharacterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Имя
+          maxLength: 100
+        name_eng:
+          type: string
+          nullable: true
+          title: Имя (Англ)
+          maxLength: 100
+        alias:
+          type: string
+          minLength: 1
+          title: Никнейм
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        group:
+          type: integer
+          nullable: true
+          title: Фракция
+        family:
+          type: integer
+          nullable: true
+          title: Семья
+        master:
+          type: integer
+          nullable: true
+          title: Мастер
+        image:
+          type: string
+          format: binary
+          nullable: true
+        tags:
+          type: array
+          items:
+            type: integer
+            title: Тэги
+          title: Тэги
+        kventa:
+          type: string
+          format: binary
+          nullable: true
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
     PatchedOrganizerGameRequest:
       type: object
       properties:
@@ -1360,6 +2942,151 @@ components:
           writeOnly: true
           minLength: 1
           maxLength: 64
+    PatchedOrganizerGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Название
+          maxLength: 100
+        alias:
+          type: string
+          nullable: true
+          title: Алиас
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        parent:
+          type: integer
+          nullable: true
+          title: Родительская фракция
+        family:
+          type: boolean
+          title: Семья
+        hidden:
+          type: boolean
+          title: Секретная
+        image:
+          type: string
+          format: binary
+          nullable: true
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+    PatchedOrganizerMailingRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 30000
+        time:
+          type: string
+          format: date-time
+        applications:
+          type: array
+          items:
+            type: integer
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+    PatchedOrganizerMultipartRequest:
+      type: object
+      properties:
+        payload:
+          description: JSON object using the resource request fields, including expected_revision
+            for updates.
+        image:
+          type: string
+          format: binary
+        kventa:
+          type: string
+          format: binary
+    PatchedOrganizerQuestionRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          title: Вопрос
+          maxLength: 500
+        description:
+          type: string
+          nullable: true
+          title: Описание
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEnum'
+          title: Тип
+        choices:
+          nullable: true
+          title: Варианты
+        required:
+          type: boolean
+          title: Обязательный
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Порядковый номер
+        games:
+          type: array
+          items:
+            type: integer
+            title: Игра
+          title: Игра
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
+    PatchedOrganizerTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Название
+          maxLength: 100
+        color:
+          type: string
+          minLength: 1
+          pattern: ^#[0-9a-fA-F]{6}$
+        private:
+          type: boolean
+          title: Виден только внутри тэга
+        mg:
+          type: boolean
+          title: Виден только МГ
+        expected_revision:
+          type: string
+          writeOnly: true
+          minLength: 1
+        acknowledge_shared:
+          type: boolean
+          writeOnly: true
+          default: false
     Question:
       type: object
       description: Question serializer.

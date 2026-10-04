@@ -1,6 +1,0 @@
-.editor-upload{color-scheme:dark;margin:0;padding:24px;background:#172021;color:#e5ece8;font:16px/1.6 system-ui,sans-serif}
-.editor-upload main{max-width:620px;margin:auto}.editor-upload h1{font-size:24px}.editor-upload label{display:block;margin-bottom:8px}
-.editor-upload input{box-sizing:border-box;max-width:100%;padding:10px;border:1px solid #6d857c;border-radius:5px;background:#253132;color:inherit}
-.editor-upload input[readonly]{width:100%}.editor-upload button,.editor-upload input::file-selector-button{padding:10px;border:0;border-radius:5px;background:#a6cfbd;color:#172923;cursor:pointer}
-.editor-upload :focus-visible{outline:3px solid #90cbb6;outline-offset:3px}.editor-upload .errorlist{color:#ffb3b3}
-.prose-editor,.prose-editor-dialog{color-scheme:dark;--body-bg:#253132;--body-fg:#e5ece8;--border-color:#6d857c;--prose-editor-background:#253132;--prose-editor-foreground:#e5ece8;--prose-editor-border-color:#6d857c;--prose-editor-active-color:#a6cfbd;--prose-editor-disabled-color:#84958d}.prose-editor .ProseMirror{min-height:260px}.prose-editor a{color:#abd8c5}.prose-editor-dialog input,.prose-editor-dialog textarea,.prose-editor-dialog select{background:#182324;color:#e5ece8}.prose-editor button:focus-visible,.prose-editor-dialog :focus-visible{outline:3px solid #90cbb6;outline-offset:2px}

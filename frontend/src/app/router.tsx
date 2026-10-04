@@ -20,7 +20,7 @@ export const router = createBrowserRouter([{
     { path: 'account/:game_alias/questionnaire', loader: accountLoader, action: applicationAction, lazy: () => import('../features/account/Questionnaire') },
     { path: 'account/settings', loader: settingsLoader, action: settingsAction, lazy: () => import('../features/account/Settings') },
     { path: 'mg', loader: mgLoader, lazy: () => import('../features/account/Masters') },
-    ...['organizer', 'organizer/new', 'organizer/:game_id'].map(path => ({
+    ...['organizer', 'organizer/new', 'organizer/:game_id', 'organizer/:game_id/:section', 'organizer/:game_id/:section/:record_id'].map(path => ({
       path, loader: organizerLoader, lazy: () => import('../features/organizer/Organizer'),
     })),
     ...['sign-in', 'sign-up', 'sign-out'].map(path => ({
