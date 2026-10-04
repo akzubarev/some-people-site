@@ -1,16 +1,41 @@
 """Mailing admin module."""
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
 from django.contrib import admin
 from django.utils.html import format_html, strip_tags
+from django.urls import reverse_lazy
+from django_prose_editor.fields import ProseEditorFormField
+from django_prose_editor.widgets import AdminProseEditorWidget
 
 from apps.notifications.models import Mailing
 from apps.users.models import User
 
 
+class MailingEditorWidget(AdminProseEditorWidget):
+    @property
+    def media(self):
+        return super().media + forms.Media(css={'all': [
+            'django_prose_editor/overrides.css', 'notifications/editor.css',
+        ]})
+
+
 class MailingAdminForm(forms.ModelForm):
     """Mailing admin form."""
-    text = forms.CharField(widget=CKEditorUploadingWidget())
+    text = ProseEditorFormField(
+        widget=MailingEditorWidget,
+        sanitize=True,
+        extensions={
+            'Bold': True, 'Italic': True, 'Underline': True, 'Strike': True,
+            'Subscript': True, 'Superscript': True, 'HardBreak': True,
+            'Heading': True, 'BulletList': True, 'OrderedList': True,
+            'ListItem': True, 'Blockquote': True, 'Code': True,
+            'CodeBlock': True, 'HorizontalRule': True,
+            'Link': {'protocols': ['http', 'https', 'mailto', 'tg']},
+            'Table': True, 'TableRow': True, 'TableHeader': True, 'TableCell': True,
+            'Figure': {'pickerUrl': reverse_lazy('editor-upload')},
+            'Image': True, 'Caption': True,
+            'History': True, 'HTML': True,
+        },
+    )
 
     class Meta:
         model = Mailing

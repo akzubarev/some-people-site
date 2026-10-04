@@ -52,7 +52,7 @@ Telegram connection begins in settings. The application issues a link that can b
 
 ## Organizer workflows and messages
 
-The MG navigation opens an organizer cabinet. Its game editor contains the title, URL alias, full and short descriptions, location, dates, year, player capacity, default fee, social links, and separate switches for accepting applications and publishing the role grid. Dates are shown in the application's configured time zone. Organizer routes identify games by their stable database ID, so the editor remains reachable after an alias change; public game links use the alias and must be updated when it changes.
+The MG navigation opens an organizer cabinet with a dark theme across its navigation, game forms and confirmation dialogs. Its game editor contains the title, URL alias, full and short descriptions, location, dates, year, player capacity, default fee, social links, and separate switches for accepting applications and publishing the role grid. Dates are shown in the application's configured time zone. Organizer routes identify games by their stable database ID, so the editor remains reachable after an alias change; public game links use the alias and must be updated when it changes.
 
 Access requires an active staff or superuser account and the corresponding Django game permissions. View permission allows reading; change permission allows editing and reading; add permission allows creation. New games start with applications and the role grid closed, and can be opened in a subsequent save. Changing a game's default fee does not rewrite fees on existing applications. The organizer capacity field is the stored game value; the public API's player count continues to describe visible characters.
 
@@ -61,5 +61,9 @@ Saving checks the version originally loaded by the editor. If another edit has c
 Django admin remains the management interface for nested groups, characters, tags, questions, applications, and mailings. Application management shows status, assigned character, fee, recorded payment, and the player's liked characters. Organizers can select applications as recipients for a mailing.
 
 A mailing holds its text, scheduled time, and recipient selection. Saving a mailing marked ready creates recipient notification records; without a recipient selection, the model uses all users. The bot periodically looks for due, unsent notifications whose users have a linked Telegram chat. It sends the text and marks each successful delivery as sent. Failed sends remain unsent for a later attempt.
+
+Mailing text is edited with a self-hosted ProseMirror/Tiptap editor in Django admin. It supports formatted text, lists, links, tables and images, and stores HTML in the existing text field. The server sanitizes submitted HTML. The image picker requires an active organizer with permission to add or change mailings; it accepts raster images up to 5 MB and 16 megapixels and re-encodes them as PNG without original metadata (animated images use their first frame). Local uploads receive media URLs; S3 uploads receive durable links which resolve to fresh signed URLs. Previously saved editor image links remain valid. Editing or uploading alone does not schedule or send a mailing.
+
+For Telegram delivery, stored HTML is converted to the formatting supported by the bot's message endpoint. Paragraphs become line breaks, list items and table cells become readable text, and embedded images become links; supported emphasis and links are retained. The stored website HTML is unchanged.
 
 The Telegram bot is a separate process from the website. Browsing, applications, and questionnaires do not depend on a bot response; account linking and delivery of Telegram messages do.

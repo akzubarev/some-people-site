@@ -9,7 +9,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 
 MEDIA_PREFIXES = ('users/avatars/', 'characters/images/', 'groups/images/',
-                  'mailing/images/', 'kventas/pdf/', 'ckeditor/')
+                  'mailing/images/', 'kventas/pdf/', 'ckeditor/', 'editor/')
 
 
 def digest(stream):

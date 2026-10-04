@@ -37,11 +37,8 @@ LANDINGS_DIR = os.path.join(BASE_DIR, 'landings')
 STATICFILES_DIRS = [PROJECT_STATIC_DIR]
 if os.path.isdir(LANDINGS_DIR):
     STATICFILES_DIRS.append(('landings', LANDINGS_DIR))
-CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 MEDIA_STORAGE = os.getenv('MEDIA_STORAGE', 'local')
 STORAGES = media_storages(os.environ)
-if MEDIA_STORAGE == 's3':
-    CKEDITOR_STORAGE_BACKEND = 'config.media_storage.EditorMediaStorage'
 
 LOCALE_PATHS = [os.path.join(BACKEND_DIR, 'locale')]
 
@@ -108,8 +105,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     # Django addons
     'django_filters',
-    'ckeditor',
-    'ckeditor_uploader',
+    'django_prose_editor',
     # APPS
     'apps.users',
     'apps.games',
@@ -382,81 +378,6 @@ CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-
-CKEDITOR_CONFIGS = {
-    'default': {
-        'skin': 'moono',
-        'enterMode': 'CKEDITOR.ENTER_BR',
-        'shiftEnterMode': 'CKEDITOR.ENTER_BR',
-        'indent': False,
-        'breakBeforeOpen': 'false',
-        'breakAfterOpen': 'false',
-        'breakBeforeClose': 'false',
-        'breakAfterClose': 'false',
-        # 'skin': 'office2013',
-        'toolbar_Basic': [
-            ['Source', '-', 'Bold', 'Italic']
-        ],
-        'toolbar_YourCustomToolbarConfig': [
-            {'name': 'document',
-             'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print',
-                       '-', 'Templates']},
-            {'name': 'clipboard',
-             'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord',
-                       '-', 'Undo', 'Redo']},
-            {'name': 'editing',
-             'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'forms',
-             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea',
-                       'Select', 'Button', 'ImageButton',
-                       'HiddenField']},
-            '/',
-            {'name': 'basicstyles',
-             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
-                       'Superscript', '-', 'RemoveFormat']},
-            {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList', '-', 'Outdent',
-                       'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-                       'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                       'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
-                       'Language']},
-            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert',
-             'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley',
-                       'SpecialChar', 'PageBreak', 'Iframe']},
-            '/',
-            {'name': 'styles',
-             'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
-            {'name': 'about', 'items': ['About']},
-            '/',  # put this to force next toolbar on new line
-            {'name': 'yourcustomtools', 'items': [
-                # put the name of your editor.ui.addButton here
-                'Preview',
-                'Maximize',
-
-            ]},
-        ],
-        'toolbar': 'YourCustomToolbarConfig',
-        'tabSpaces': 4,
-        'extraPlugins': ','.join([
-            'uploadimage',  # the upload image feature
-            # your extra plugins here
-            'div',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            'widget',
-            'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath'
-        ]),
-    }
-}
 
 JAZZMIN_SETTINGS = {
     'site_title': 'Какие-то люди',

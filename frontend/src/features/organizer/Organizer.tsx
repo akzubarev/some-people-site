@@ -38,7 +38,7 @@ export function Component() {
   const data = useLoaderData<typeof organizerLoader>()
   const navigate = useNavigate()
   const [menu, setMenu] = useState(false)
-  return <div className="organizer-page" style={{ backgroundImage: `linear-gradient(#e0e5e4a8, #e0e5e4 550px), url(${gameImages(data.game?.alias || '').header})` }}>
+  return <div className="organizer-page" style={{ backgroundImage: `linear-gradient(#172021d9, #172021 550px), url(${gameImages(data.game?.alias || '').header})` }}>
     <div className="organizer-layout">
       <button className="organizer-menu-toggle" aria-expanded={menu} onClick={() => setMenu(!menu)}>Разделы кабинета</button>
       <aside className={'organizer-sidebar' + (menu ? ' is-open' : '')}>

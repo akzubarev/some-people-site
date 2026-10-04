@@ -7,6 +7,7 @@ from rest_framework import routers
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from .media_storage import editor_media
+from apps.notifications.editor import editor_upload
 
 admin.site.enable_nav_sidebar = False
 admin.site.site_header = "Какие-то люди"
@@ -18,7 +19,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('editor/upload/', editor_upload, name='editor-upload'),
     # API
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
