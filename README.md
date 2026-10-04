@@ -6,7 +6,7 @@ Some People is a website for a live-action role-playing community. It connects g
 
 Visitors can read about games and browse published characters by faction, family, or tag. Registered players can save characters they are interested in, apply to a game, complete its questionnaire, and follow their application status in their personal account.
 
-Organizers manage games, role visibility, character assignments, application decisions, participation fees, and mailings through Django admin. Players can connect Telegram to receive messages from the organizers.
+Organizers manage games, role visibility, character assignments, application decisions, participation fees, and mailings through the in-site organizer cabinet. Django admin retains low-level record views. Players can connect Telegram to receive messages from the organizers.
 
 ## How it fits together
 

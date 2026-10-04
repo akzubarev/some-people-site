@@ -23,7 +23,9 @@ export function Shell() {
     return () => { channel?.close(); window.removeEventListener('focus', refresh) }
   }, [revalidator])
   const menu = <nav className="site-menu" aria-label="Основное меню">
-    {['Новичкам', 'МГ'].map(label => <button key={label} onClick={() => setLocked(true)}>{label}<Icon name="common/lock" /></button>)}
+    <button onClick={() => setLocked(true)}>Новичкам<Icon name="common/lock" /></button>
+    {user?.mg ? <Link className="organizer-entry" to="/organizer" onClick={() => setDrawer(false)}>МГ</Link>
+      : <button onClick={() => setLocked(true)}>МГ<Icon name="common/lock" /></button>}
   </nav>
   return <>
     <a className="skip-link" href="#main">К содержимому</a>

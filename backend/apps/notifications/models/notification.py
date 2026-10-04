@@ -24,6 +24,9 @@ class Notification(models.Model):
     )
     sent = models.BooleanField(default=False, blank=True)
     viewed = models.BooleanField(default=False, blank=True)
+    attempts = models.PositiveIntegerField(default=0)
+    last_attempt_at = models.DateTimeField(null=True, blank=True)
+    last_error = models.CharField(max_length=80, blank=True, default='')
 
     def data(self):
         """Returns a dataclass representation of the model."""

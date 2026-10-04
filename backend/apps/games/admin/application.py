@@ -1,7 +1,7 @@
 """Application admin module."""
+from django.http import HttpResponseRedirect
 from django.contrib import admin
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
 from django.urls import path
 from django.utils.html import format_html
 from django.views.decorators.http import require_POST
@@ -16,7 +16,7 @@ class ApplicationAdmin(admin.ModelAdmin):
 
     change_list_template = "games/applications_changelist.html"
     ordering = ('-id',)
-    actions = ('mailing',)
+    actions = ()
     list_filter = ['game', 'user__username', 'status', 'payed']
     list_display = [
         'id',
@@ -48,8 +48,3 @@ class ApplicationAdmin(admin.ModelAdmin):
     def unfinished(self, request):
         export_apps()
         return HttpResponseRedirect('../')
-
-    @admin.action(description='Создать рассылку')
-    def mailing(self, request, queryset):
-        users_ids = ','.join([str(obj.user.id) for obj in queryset])
-        return HttpResponseRedirect(f'/admin/notifications/mailing/add/?user_ids={users_ids}')

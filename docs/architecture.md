@@ -51,8 +51,13 @@ Group visibility is resolved from each game's root groups down through visible d
 | `/account/settings?game=:game_alias` | Profile and Telegram settings in the selected game's account layout |
 | `/sign-in`, `/sign-up`, `/sign-out` | Authentication |
 | `/mg` | Staff-restricted master-group listing |
+| `/organizer`, `/organizer/new`, `/organizer/:game_id` | Authorized game listing, creation and editing |
 
-Game and role pages consume public representations. Application and profile operations require authentication and limit access to the current player. Django admin supplies the separate organizer interface. [Application behavior](application.md) describes the user-facing lifecycle.
+Game and role pages consume public representations. Application and profile operations require authentication and limit access to the current player. The organizer cabinet has a separate game-editing contract; Django admin supplies the other management workflows. [Application behavior](application.md) describes the user-facing lifecycle.
+
+`/api/organizer/games/` lists game content, effective game permissions and the application's time zone, and accepts creation requests. `/api/organizer/games/{id}/` reads and patches a game. Every endpoint checks active organizer status and Django model permissions. Responses are marked `no-store`; organizer fields are not added to public serializers. The stored player capacity and default fee are available through this private contract.
+
+An update supplies `expected_revision`, a digest of the editable values read earlier. Inside a transaction, the API locks the game row, compares the digest, and returns HTTP 409 on a stale edit. A case-insensitive database constraint prevents duplicate aliases, including concurrent creation. Successful writes use ordinary model saves, reuse post-commit cache invalidation and record changed field names in Django's admin log. The editor preserves its draft on validation, network and conflict errors.
 
 ## Sessions and API contracts
 
@@ -79,3 +84,14 @@ Avatars, character portraits, character files, and rich-text uploads share this 
 The API issues an action-scoped `OneTimeToken` for Telegram linking and returns a deep link. Only a digest of the token is stored. The bot receives the code in a private chat and consumes it atomically while associating that chat with the player. Expiration, action scope, and consumed state determine whether the code is accepted.
 
 The API and bot use the same Django models and database, so the bot does not need to impersonate a browser session. A scheduled bot job runs every minute, selects due unsent notifications for linked chats, sends their text, and marks successful deliveries as sent. A send failure leaves the notification available for retry. This records successful sends; it is not a guarantee of exactly-once delivery if a process stops between sending a message and recording its result.
+
+
+## Organizer content and mailing transactions
+
+Game-scoped resources live under `/api/organizer/games/{game_id}/`: `groups`, `characters`, `tags`, `questions`, `applications` and `mailings`. The `context/` endpoint supplies model permissions and selectable masters. Organizer responses are not cached. Tags retain their global identity, and questions retain their many-to-many game relationship; the selected game does not duplicate these shared records.
+
+Content edits submit `expected_revision`. Mutations lock the game and target row, validate relationships, compare the current revision and write Django admin history. Questionnaire answer submission also locks the game and question rows before validation, preventing a choice edit from racing the first answer. Character assignment locks the character, while its one-to-one application relation enforces unique occupancy. Fee changes store an explicit reason alongside the change log.
+
+Mailing `preview/` hashes the current draft and eligible application/user audience. `confirm/` locks the draft and recipient rows, verifies that hash and requires an idempotency UUID. It freezes recipient users and creates the queue atomically. Saving the Mailing model has no queue-building side effect. The confirmation key is unique, and a confirmed draft cannot be edited or deleted through the organizer API. This prevents duplicate queue creation; Telegram delivery still has the send/acknowledgement limitation described above.
+
+The React editor consumes generated OpenAPI types. Multipart writes combine a JSON `payload` with optional file fields. Uploaded portraits are re-encoded raster images, character documents must be PDFs, and mailing inline images use the same durable editor-media route as older HTML. Rich-text editing lives in the frontend; the backend retains sanitization and storage only.

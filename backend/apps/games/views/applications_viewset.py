@@ -12,7 +12,7 @@ from rest_framework.exceptions import ValidationError
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiParameter
 from config.api_schema import APPLICATION_INPUT_SCHEMA, GameAliasSerializer
 
-from apps.games.models import Answer, Application, Game
+from apps.games.models import Answer, Application, Game, Question
 from apps.games.serializers import ApplicationPrivateSerializer
 from apps.games.application_input import validated_answers
 from apps.users.models import User
@@ -73,7 +73,8 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def apply(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Creates an application."""
         user, data = request.user, request.data
-        game = get_object_or_404(Game, alias=data.get('game_alias'))
+        game = get_object_or_404(Game.objects.select_for_update(), alias=data.get('game_alias'))
+        list(Question.objects.filter(games=game).order_by('pk').select_for_update(of=('self',)))
         answers = validated_answers(game, data)
         # Serialize creates and draft saves for one player without changing other players.
         User.objects.select_for_update().get(pk=user.pk)
@@ -97,7 +98,8 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def delete(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Deletes an application."""
         user, game_alias = request.user, request.data.get('game_alias')
-        application = get_object_or_404(self.get_queryset(), game__alias=game_alias)
+        game = get_object_or_404(Game.objects.select_for_update(), alias=game_alias)
+        application = get_object_or_404(self.get_queryset().select_for_update(), game=game)
         User.objects.select_for_update().get(pk=user.pk)
         application.status = Application.Status.DELETED
         application.save()
@@ -109,7 +111,8 @@ class ApplicationsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     def restore(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         """Restores an application."""
         user, game_alias = request.user, request.data.get('game_alias')
-        application = get_object_or_404(self.get_queryset(), game__alias=game_alias)
+        game = get_object_or_404(Game.objects.select_for_update(), alias=game_alias)
+        application = get_object_or_404(self.get_queryset().select_for_update(), game=game)
         User.objects.select_for_update().get(pk=user.pk)
         application.status = Application.Status.PENDING
         application.save()

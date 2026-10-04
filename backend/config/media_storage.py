@@ -1,4 +1,4 @@
-"""Durable image links for HTML saved by CKEditor."""
+"""Durable editor image links, including links in previously saved HTML."""
 from pathlib import PurePosixPath
 
 from django.conf import settings
@@ -15,7 +15,7 @@ EDITOR_LINK_SALT = 'some-people.editor-media'
 
 
 def valid_editor_name(name):
-    return (isinstance(name, str) and name.startswith('ckeditor/')
+    return (isinstance(name, str) and name.startswith(('editor/', 'ckeditor/'))
             and not any(part in ('', '.', '..') for part in name.split('/'))
             and '\\' not in name and not PurePosixPath(name).is_absolute())
 
@@ -28,7 +28,7 @@ class EditorMediaStorage(S3Storage):
 
     def url(self, name, parameters=None, expire=None, http_method=None):
         if not valid_editor_name(name):
-            raise ValueError('Editor media must be inside ckeditor/.')
+            raise ValueError('Editor media must be inside editor/ or ckeditor/.')
         token = signing.dumps(name, salt=EDITOR_LINK_SALT)
         return reverse('editor-media', kwargs={'token': token})
 
