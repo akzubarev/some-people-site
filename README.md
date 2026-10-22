@@ -22,7 +22,7 @@ values. Never commit the resulting environment file.
 - Traefik dashboard: http://localhost:9090/dashboard/
 
 `./scripts/project.sh help` lists the other explicit Compose commands.
-Frontend scripts are in `frontend/package.json`; use Node 22.23.2 and pnpm
+Frontend scripts are in `frontend/package.json`; use Node 22.23.4 and pnpm
 12.5.1 when running them outside Docker.
 
 ## Verification and API contracts

@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+certifi = "==2026.10.19"
 cryptography = "==43.0.1"
 django = "==5.1.1"
 djangorestframework = "==3.15.2"

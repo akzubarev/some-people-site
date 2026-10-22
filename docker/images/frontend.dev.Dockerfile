@@ -1,4 +1,7 @@
-FROM node:22.23.2-bookworm-slim
+FROM node:22.23.4-bookworm-slim
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 RUN npm install --global pnpm@12.5.1
 WORKDIR /app
 RUN mkdir -p /pnpm && chown node:node /app /pnpm
